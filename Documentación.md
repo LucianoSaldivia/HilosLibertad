@@ -1,5 +1,6 @@
 --------	Registrador    --------
 
+
 * Definiciones
 Estado de la máquina                    -> States (<STOPPED> o <WORKING>)
 Vector de estados                       -> Sample
