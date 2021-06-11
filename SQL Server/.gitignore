@@ -1,0 +1,10 @@
+# Ignorar Todo
+*
+**/*
+
+# Excepto los tipos
+!*.gitignore
+!*.sql
+
+# Incluso si están en un subdirectorio (afecta a los anteriores tipos)
+!*/
