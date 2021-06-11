@@ -1,7 +1,8 @@
 # EstadosEventosSesiones.py
 
 import enum
-from datetime import datetime
+import datetime
+import time
 
 
 # Número de máquinas 
@@ -24,7 +25,6 @@ N_MAQ = 20
 #    |
 #    |
 #    |
-
 # Número máximo de máquinas (NO CAMBIAR)
 MAX_MAQ = 200
 
@@ -41,13 +41,12 @@ class Event(enum.IntEnum):
     SESSION_CONTINUES   = 2     # Sesión Activa -> continua
     SESSION_FINISHED    = 3     # Sesión Activa -> termina
 
-
 # Estado inicial de cada máquina por default
 INIT_STATE = State.STOPPED.value
 
 
 # Inicialización de una muestra (lista de estados de las máquinas)
-def sampleInit(sample: list = None, offset: int = 1) -> list:
+def sampleInit(sample: list = None, offset: int = 1, state: State = INIT_STATE) -> list:
     """Retorna una lista de largo MAX_MAQ + 1.
     Si no se pasa lista, retorna:
         [datetime.now(), STOPPED, STOPPED, ...]
@@ -57,24 +56,26 @@ def sampleInit(sample: list = None, offset: int = 1) -> list:
         debe cumplirse: offset >= 1 and offset < ( MAX_MAQ - len(sample) )
     """
     
-    # Inicio todas en INIT_STATE por default
+    # Inicio todas en state (INIT_STATE) por default
     if sample is None:
-        # out[0] = datetime.now()
-        out = list( [datetime.now()] )
-        out.extend( [INIT_STATE] * (MAX_MAQ) )
+        # out[0] = datetime.datetime.now()
+        out = list( [datetime.datetime.now()] )
+        out.extend( [state] * (MAX_MAQ) )
         return out
 
     # Tengo un muestreo incompleto, testeo offset
     elif not ( 1 <= offset < MAX_MAQ - len(sample) ):
-        raise Exception("Debe cumplirse: 1 <= offset < MAX_MAQ - len(sample)")
+        raise Exception(f"""Debe cumplirse: 1 <= offset < MAX_MAQ - len(sample)
+        offset = {offset}
+        MAX_MAQ - len(sample) = {MAX_MAQ - len(sample)}""")
     else:
         
-        # out[0] = datetime.now()
-        out = list( [datetime.now()] )
+        # out[0] = datetime.datetime.now()
+        out = list( [datetime.datetime.now()] )
 
         # Agrego lo que esté antes del offset
         for i in range(1, offset):
-            out.append(INIT_STATE)
+            out.append(state)
 
         # Agrego sample a partir de offset
         for i in sample:
@@ -85,7 +86,7 @@ def sampleInit(sample: list = None, offset: int = 1) -> list:
         
         # Agrego el resto
         for i in range(offset + len(sample), MAX_MAQ + 1):
-            out.append(INIT_STATE)
+            out.append(state)
 
         return out
 
@@ -106,7 +107,9 @@ def getReportList(prev_st: list, curr_st: list, lastReport: list = None) -> list
     """
     # Si las listas tienen distinto tamaño, no se pueden comparar
     if len(prev_st) != len(curr_st):
-        raise Exception("Debe cumplirse: len(prev_st) == len(curr_st)")
+        raise Exception(f"""Debe cumplirse: len(prev_st) == len(curr_st)
+        len(prev_st) = {len(prev_st)}
+        len(curr_st) = {len(curr_st)}""")
     else:
         
         # Nuevo reporte (luego de escritura a base de datos)
@@ -164,71 +167,169 @@ def getReportList(prev_st: list, curr_st: list, lastReport: list = None) -> list
             return lastReport    
 
 
-if __name__ == "__main__":
-    from time import time
-    # Sesión de Testeo
-        #
-        #   0. Todo apagado
-        #   1. Empiezan 1, 2 y 3
-        #   2. Continúa 1, 2 y 3
-        #   3. Finaliza 1, continúa 2 y 3
-        #   4. Continúan 2 y 3
-        #   5. Finalizan 2 y 3
-        #   6. Todo apagado
-        #   7. Empieza 1, 3 y 4
-        #   8. Finalizan 1 y 4
-        #   9. Finaliza 3
-        #
 
-
-    # 0. Todo apagado
-    sample_prev = sampleInit()
-    sample_cur = sampleInit()
-
-    reporte = getReportList(sample_prev, sample_cur)
-    print( reporte )
-
-    # 1. Empiezan máquina 1, 2 y 3
-    sample_prev = sampleInit()
-    sample_cur = sampleInit([1, 1, 1])
-    print( getReportList(sample_prev, sample_cur, reporte) )
-
-    # 2. Continúan 1, 2 y 3
-    sample_prev = sample_cur
-    sample_cur = sample_cur
-    print( getReportList(sample_prev, sample_cur, reporte) )
-
-    # 3. Finaliza 1, continúan 2 y 3
-    sample_prev = sample_cur
-    sample_cur = sampleInit([0, 1, 1])
-    print( getReportList(sample_prev, sample_cur, reporte) )
-
-    # 4. Continúan 2 y 3
-    sample_prev = sample_cur
-    sample_cur = sample_cur
-    print( getReportList(sample_prev, sample_cur, reporte) )
-
-    # 5. Finalizan 2 y 3
-    sample_prev = sample_cur
-    sample_cur = sampleInit()
-    print( getReportList(sample_prev, sample_cur, reporte) )
-
-    # 6. Todo apagado
-    sample_prev = sample_cur
-    sample_cur = sample_cur
-    print( getReportList(sample_prev, sample_cur, reporte) )
-
-    # 7. Empieza 1, 3 y 4
-    sample_prev = sample_cur
-    sample_cur = sampleInit([1, 0, 1, 1])
-    print( getReportList(sample_prev, sample_cur, reporte) )
+def _testSession(session_n: int, lastReport: list = None, lastSample: list = None, secs_between_samples: float = 0.03) -> tuple[list, list]:
+    """Hace una sesión de testeo. Si todo sale bien, devuelve:
+    (reportList, lastSample)
+    Sesiones de testeo, según session_n:
+        0.  Empiezan todas 
+            Terminan todas
         
-    #   8. Finalizan 1 y 4
-    sample_prev = sample_cur
-    sample_cur = sampleInit([0, 0, 1])
-    print( getReportList(sample_prev, sample_cur, reporte) )
-         
-    #   9. Finaliza 3
-    sample_prev = sample_cur
-    sample_cur = sampleInit()
-    print( getReportList(sample_prev, sample_cur, reporte) )
+        1.  Empiezan todas
+            Termina la primera mitad
+            Termina la segunda mitad
+        
+        2.  Empieza la primera mitad
+            Termina la primera mitad y empieza la segunda
+            Termina la segunda mitad
+        
+        3.  Empiezan todas
+            Terminan las impares
+            Terminan las pares
+        
+        4.  Empizan las pares
+            Terminan las pares y empiezan las impares
+            Terminan las impares y empiezan las pares
+    """
+    if session_n < 0:
+        raise Exception(f"""session_n debe ser positivo.
+        session_n = {session_n}""")
+    else:
+        if lastSample == None:
+            prev_sample = sampleInit()
+        else:
+            prev_sample = lastSample
+    
+    if   session_n == 0:
+        # Empiezan todas
+        curr_sample = sampleInit(state=State.WORKING)
+        reporte = getReportList(prev_sample, curr_sample, lastReport)
+
+        # Doy tiempo entre samples
+        time.sleep( secs_between_samples )
+        
+        # Terminan todas
+        prev_sample = curr_sample
+        curr_sample = sampleInit()
+        return getReportList(prev_sample, curr_sample, reporte), curr_sample
+    
+    elif session_n == 1:
+        # Empiezan todas
+        curr_sample = sampleInit(state=State.WORKING)
+        reporte = getReportList(prev_sample, curr_sample, lastReport)
+
+        # Doy tiempo entre samples
+        time.sleep( secs_between_samples )
+        
+        # Termina la primera mitad
+        prev_sample = curr_sample
+        curr_sample = sampleInit(state=State.WORKING)
+        for i in range( 1, int(len(curr_sample)/2) ):
+            curr_sample[i] = State.STOPPED
+        reporte = getReportList(prev_sample, curr_sample, reporte)
+
+        # Doy tiempo entre samples
+        time.sleep( secs_between_samples )
+
+        # Termina la segunda mitad
+        prev_sample = curr_sample
+        curr_sample = sampleInit()
+        return getReportList(prev_sample, curr_sample, reporte), curr_sample
+    
+    elif session_n == 2:
+        # Empieza la primera mitad
+        curr_sample = sampleInit()
+        for i in range( 1, int(len(curr_sample)/2) ):
+            curr_sample[i] = State.WORKING
+        reporte = getReportList(prev_sample, curr_sample, lastReport)
+
+        # Doy tiempo entre samples
+        time.sleep( secs_between_samples )
+        
+        # Termina la primera mitad y empieza la segunda
+        prev_sample = curr_sample
+        curr_sample = sampleInit()
+        for i in range( int(len(curr_sample)/2), len(curr_sample) ):
+            curr_sample[i] = State.WORKING
+        reporte = getReportList(prev_sample, curr_sample, reporte)
+
+        # Doy tiempo entre samples
+        time.sleep( secs_between_samples )
+
+        # 2. Termina la segunda mitad
+        prev_sample = curr_sample
+        curr_sample = sampleInit()
+        return getReportList(prev_sample, curr_sample, reporte), curr_sample
+    
+    elif session_n == 3:
+        # Empiezan todas
+        curr_sample = sampleInit(state=State.WORKING)
+        reporte = getReportList(prev_sample, curr_sample, lastReport)
+        
+        # Doy tiempo entre samples
+        time.sleep( secs_between_samples )
+
+        # Terminan las impares
+        prev_sample = curr_sample
+        curr_sample = sampleInit(state=State.WORKING)
+        for i in range(1, len(curr_sample), 2):
+            curr_sample[i] = State.STOPPED
+        reporte = getReportList(prev_sample, curr_sample, reporte)
+
+        # Doy tiempo entre samples
+        time.sleep( secs_between_samples )
+
+        # Terminan las pares
+        prev_sample = curr_sample
+        curr_sample = sampleInit()
+        return getReportList(prev_sample, curr_sample, reporte), curr_sample
+    
+    elif session_n == 4:
+        # Empiezan las pares
+        curr_sample = sampleInit(state=State.STOPPED)
+        for i in range(2, len(curr_sample), 2):
+            curr_sample[i] = State.WORKING
+        reporte = getReportList(prev_sample, curr_sample, lastReport)
+        
+        # Doy tiempo entre samples
+        time.sleep( secs_between_samples )
+
+        # Terminan las pares y empiezan las impares
+        prev_sample = curr_sample
+        curr_sample = sampleInit(state=State.STOPPED)
+        for i in range(1, len(curr_sample), 2):
+            curr_sample[i] = State.WORKING
+        reporte = getReportList(prev_sample, curr_sample, reporte)
+
+        # Doy tiempo entre samples
+        time.sleep( secs_between_samples )
+
+        # Terminan las impares
+        prev_sample = curr_sample
+        curr_sample = sampleInit()
+        return getReportList(prev_sample, curr_sample, reporte), curr_sample
+
+if __name__ == "__main__":
+
+    # # Testeo una sesión
+        # session_under_test = 1
+
+        # report, lastSample = testSession2( session_under_test )
+        # print( *report, sep = "\n")
+        # print()
+
+    # Testeo todas las sesiones en orden
+    report, last_sample = _testSession(session_n=0)
+    time.sleep(.2)
+    report, last_sample = _testSession(session_n=1, lastSample=last_sample, lastReport=report)
+    time.sleep(.2)
+    report, last_sample = _testSession(session_n=2, lastSample=last_sample, lastReport=report)
+    time.sleep(.2)
+    report, last_sample = _testSession(session_n=3, lastSample=last_sample, lastReport=report)
+    time.sleep(.2)
+    report, last_sample = _testSession(session_n=4, lastSample=last_sample, lastReport=report)
+
+    print( *report, sep = "\n")
+    print(f"len(report) = {len(report)}")
+    print()
+
