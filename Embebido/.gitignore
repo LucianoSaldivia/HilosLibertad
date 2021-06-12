@@ -1,0 +1,20 @@
+# Ignorar Todo
+*
+**/*
+
+# Excepto los tipos
+!*.gitignore
+!*.c
+!*.h
+!*.s
+!*.ls
+!*.launch
+!*.cfg
+!*.ioc
+!*.project
+!*.cproject
+!*.mxproject
+
+
+# Incluso si están en un subdirectorio (afecta a los anteriores tipos)
+!*/

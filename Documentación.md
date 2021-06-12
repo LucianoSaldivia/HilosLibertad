@@ -1,3 +1,12 @@
+--------	Embebido    --------
+
++ Driver para conversor USB <-> RS485
+Tutorial:
+https://www.youtube.com/watch?v=3Hqu0T8qEy8
+Link para el archivo:
+http://descargas.todomicro.com.ar/productos/USB-RS485/drivers.zip
+
+
 --------	Registrador    --------
 .gitignore agregado
 
