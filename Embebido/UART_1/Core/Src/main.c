@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "communicationUart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,7 +36,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define R_SIZE	50
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -66,8 +66,10 @@ static void MX_USART3_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+  uint8_t received = 0;
   uint8_t data_t[11] = "Hola mundo#";
-  uint8_t data_r[1] = "";
+  uint8_t data_r[R_SIZE] = "";
+  int bytes_to_send;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -100,12 +102,22 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  uartEnableTransmit();
 	  if( HAL_UART_Transmit(&huart3, data_t, 11, HAL_MAX_DELAY) != HAL_OK ){
 		  Error_Handler();
 	  }
-	  while(1){
-		  if( HAL_UART_Receive(&huart3, data_r, 11, 30) == HAL_OK ){
-			  HAL_UART_Transmit(&huart3, data_r, 1, 1000);
+
+	  received = HAL_OK;
+	  while( received != HAL_TIMEOUT ){
+		  // Recibo con timeout de 5 segundos
+		  uartEnableReceive();
+		  received = HAL_UART_Receive(&huart3, data_r, 4, 5000);
+		  if( received == HAL_OK ){
+			  bytes_to_send = sizeUntilSlashZero(data_r, R_SIZE);
+
+			  uartEnableTransmit();
+			  HAL_UART_Transmit(&huart3, data_r, bytes_to_send, 1000);
+			  clearAll(data_r, R_SIZE);
 		  }
 	  }
 

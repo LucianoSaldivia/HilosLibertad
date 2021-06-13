@@ -1,5 +1,8 @@
 --------	Embebido    --------
 
++ Conexión a módulo RS485 (Half-Duplex)
+https://www.luisllamas.es/arduino-rs485-max485/
+
 + Driver para conversor USB <-> RS485
 Tutorial:
 https://www.youtube.com/watch?v=3Hqu0T8qEy8
