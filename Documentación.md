@@ -29,6 +29,9 @@ Faltan Terminar:
     + Registrador.py
     + SQL_Writer.py
 
+Paquetes instalados:
+    "pip install pyserial" (import serial)
+    "pip install crc8" (import crc8)
 
 --------	SQL Server    --------
 .gitignore agregado

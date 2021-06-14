@@ -69,6 +69,7 @@ int main(void)
   uint8_t received = 0;
   uint8_t data_t[12] = "Hola mundo#";
   uint8_t data_r[R_SIZE] = "";
+  uint8_t crc;
   int bytes_to_send;
   /* USER CODE END 1 */
 
@@ -93,6 +94,10 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  crc = crc8(data_t, 11);
+
+  data_t[11] = crc;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -103,7 +108,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  uartEnableTransmit();
-	  if( HAL_UART_Transmit(&huart3, data_t, 11, HAL_MAX_DELAY) != HAL_OK ){
+	  if( HAL_UART_Transmit(&huart3, data_t, 12, HAL_MAX_DELAY) != HAL_OK ){
 		  Error_Handler();
 	  }
 
