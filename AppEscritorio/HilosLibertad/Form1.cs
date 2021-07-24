@@ -19,6 +19,13 @@ namespace HilosLibertad
 
         private void FormularioPrincipal_Load(object sender, EventArgs e)
         {
+            // Conexión con la base de datos
+            conexionConBaseDeDatos conexion = new conexionConBaseDeDatos();
+            conexion.abrir();
+
+
+            // Datos predeterminados
+            
             dateTimePicker_Desde.Value = DateTime.Today;
             dateTimePicker_Hasta.Value = DateTime.Today.AddDays(1);
 
