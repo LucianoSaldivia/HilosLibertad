@@ -640,7 +640,7 @@ namespace HilosLibertad
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(504, 177);
+            this.label1.Location = new System.Drawing.Point(529, 191);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(204, 13);
             this.label1.TabIndex = 35;
@@ -658,7 +658,7 @@ namespace HilosLibertad
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(476, 494);
+            this.label3.Location = new System.Drawing.Point(529, 494);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(104, 13);
             this.label3.TabIndex = 37;

@@ -81,9 +81,134 @@ INSERT INTO HILOSLIBERTAD.maquinas (idSector, nombreMaquinaUsuario) VALUES (3, '
 
 
 
+--NUEVOS STORED PROCEDURES
+		--STORED PROCEDURE "SESSION STARTS": inserta el idMaquina y su fecha/hora de encendido.
+		--DROP PROCEDURE insertarSesion
+		CREATE OR ALTER PROCEDURE insertarSesion
+			@idMaquina NUMERIC(18,0),
+			@fechaHoraEncendida SMALLDATETIME
+		AS
+		BEGIN
+			INSERT INTO HILOSLIBERTAD.registros (idMaquina,
+												 fechaHoraEncendida,
+												 fechaHoraUltimoRegistroEncendida,
+												 fueApagadaPorOperarioOPorFallaParticular,
+												 cantidadMinutosEncendida)
+				VALUES (@idMaquina,
+						@fechaHoraEncendida,
+						@fechaHoraEncendida,
+						0,
+						0)
+		END
+		GO
+
+		--STORED PROCEDURE "SESSION CONTINUES": actualiza la fecha/hora del último registro de encendido de esa máquina.
+		--DROP PROCEDURE actualizarSesion
+		CREATE OR ALTER PROCEDURE actualizarSesion
+			@idMaquina NUMERIC(18, 0),
+			@fechaHoraUltimoRegistroEncendida SMALLDATETIME
+		AS
+		BEGIN
+			UPDATE HILOSLIBERTAD.registros
+				SET fechaHoraUltimoRegistroEncendida = @fechaHoraUltimoRegistroEncendida
+				WHERE idRegistro = (SELECT TOP 1 idRegistro
+									FROM HILOSLIBERTAD.registros
+									WHERE idMaquina = @idMaquina
+									ORDER BY fechaHoraUltimoRegistroEncendida DESC)
+		END
+		GO
+
+		--STORED PROCEDURE "SESSION FINISHES": actualiza la fecha/hora del último registro de encendido de esa máquina, indicando que ésta fue apagada por operario o por falla particular.
+		--DROP PROCEDURE terminarSesion
+		CREATE OR ALTER PROCEDURE terminarSesion
+			@idmaquina NUMERIC(18, 0),
+			@fechaHoraUltimoRegistroEncendida SMALLDATETIME
+		AS
+		BEGIN
+			UPDATE HILOSLIBERTAD.registros
+				SET fechaHoraUltimoRegistroEncendida = @fechaHoraUltimoRegistroEncendida,
+					fueApagadaPorOperarioOPorFallaParticular = 1
+				WHERE idRegistro = (SELECT TOP 1 idRegistro
+									FROM HILOSLIBERTAD.registros
+									WHERE idMaquina = @idMaquina
+									ORDER BY fechaHoraUltimoRegistroEncendida DESC)
+		END
+		GO
+--
+
+--NUEVO TRIGGER
+
+		--DROP TRIGGER HILOSLIBERTAD.trigger1
+		CREATE OR ALTER TRIGGER trigger1
+		ON HILOSLIBERTAD.registros
+		AFTER UPDATE
+		AS
+		BEGIN
+			DECLARE @idReg NUMERIC(18,0),
+					@idMaq NUMERIC(18,0),
+					@fhEnc SMALLDATETIME,
+					@fhUltRegEnc SMALLDATETIME,
+					@cantMinEnc INT
+			DECLARE cursor1 CURSOR FOR
+				SELECT d.idRegistro,
+					   d.idMaquina,
+					   d.fechaHoraEncendida,
+					   i.fechaHoraUltimoRegistroEncendida
+				FROM inserted i JOIN deleted d ON (i.idRegistro = d.idRegistro)
+			OPEN cursor1
+			FETCH NEXT FROM cursor1
+				INTO @idReg, @idMaq, @fhEnc, @fhUltRegEnc
+
+			WHILE @@FETCH_STATUS = 0
+			BEGIN
+				SET @cantMinEnc = DATEDIFF(MINUTE, @fhEnc, @fhUltRegEnc)
+
+				UPDATE HILOSLIBERTAD.registros
+					SET cantidadMinutosEncendida = @cantMinEnc
+					WHERE idRegistro = (SELECT TOP 1 idRegistro
+										FROM HILOSLIBERTAD.registros
+										WHERE idMaquina = @idMaq
+										ORDER BY fechaHoraUltimoRegistroEncendida DESC)
+
+				FETCH NEXT FROM cursor1
+					INTO @idReg, @idMaq, @fhEnc, @fhUltRegEnc
+			END
+			
+			CLOSE cursor1
+			DEALLOCATE cursor1
+		END
+
+--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
 --CREACIÓN DE TRIGGERS
---DROP TRIGGER HILOSLIBERTAD.registros_actualizarCantidadMinutosEncendida
-CREATE TRIGGER registros_actualizarCantidadMinutosEncendida
+--DROP TRIGGER HILOSLIBERTAD.trigger_actualizarCantidadMinutosEncendida
+CREATE TRIGGER trigger_actualizarCantidadMinutosEncendida
 ON HILOSLIBERTAD.registros
 INSTEAD OF INSERT, UPDATE
 AS
@@ -122,7 +247,9 @@ BEGIN
 					UPDATE HILOSLIBERTAD.registros
 						SET cantidadMinutosEncendida = @cantidadMinutosEncendida
 						WHERE idRegistro = @idRegistro
-					
+					UPDATE HILOSLIBERTAD.registros
+						SET fechaHoraUltimoRegistroEncendida = @fechaHoraUltimoRegistroEncendida
+						WHERE idRegistro = @idRegistro				
 				END
 			COMMIT TRANSACTION
 		END TRY
@@ -156,9 +283,9 @@ BEGIN
 END
 GO
 
---STORED PROCEDURE "SESSION STARTS", para insertar una fecha/hora de máquina encendida
---DROP PROCEDURE insertarUnaFecha
-CREATE OR ALTER PROCEDURE insertarFechaHoraEncendida
+--STORED PROCEDURE "SESSION STARTS": inserta el idMaquina y su fecha/hora de encendido.
+--DROP PROCEDURE insertarSesion
+CREATE OR ALTER PROCEDURE insertarSesion
 	@idMaquina NUMERIC(18,0),
 	@fechaHoraEncendida SMALLDATETIME
 AS
@@ -168,9 +295,9 @@ BEGIN
 END
 GO
 
---STORED PROCEDURE "SESSION CONTINUES", para insertar una fecha/hora de último registro de máquina encendida
---DROP PROCEDURE actualizarFechaHoraUltimoRegistroEncendida
-CREATE OR ALTER PROCEDURE actualizarFechaHoraUltimoRegistroEncendida
+--STORED PROCEDURE "SESSION CONTINUES": actualiza la fecha/hora del último registro de encendido de esa máquina.
+--DROP PROCEDURE actualizarSesion
+CREATE OR ALTER PROCEDURE actualizarSesion
 	@idMaquina NUMERIC(18, 0),
 	@fechaHoraUltimoRegistroEncendida SMALLDATETIME
 AS
@@ -184,17 +311,21 @@ BEGIN
 END
 GO
 
-
---STORED PROCEDURE "SESSION FINISHES", para
---DROP PROCEDURE procedureOtro
-CREATE OR ALTER PROCEDURE procedureOtro
+--STORED PROCEDURE "SESSION FINISHES": actualiza la fecha/hora del último registro de encendido de esa máquina, indicando que ésta fue apagada por operario o por falla particular.
+--DROP PROCEDURE terminarSesion
+CREATE OR ALTER PROCEDURE terminarSesion
 	@idmaquina NUMERIC(18, 0),
 	@fechaHoraUltimoRegistroEncendida SMALLDATETIME
 AS
 BEGIN
 	UPDATE HILOSLIBERTAD.registros
-		SET fechaHoraUltimoRegistroEncendida = @fechaHoraUltimoRegistroEncendida,
-			fueApagadaPorOperarioOPorFallaParticular = 1
+		SET fechaHoraUltimoRegistroEncendida = @fechaHoraUltimoRegistroEncendida
+		WHERE idRegistro = (SELECT TOP 1 idRegistro
+							FROM HILOSLIBERTAD.registros
+							WHERE idMaquina = @idMaquina
+							ORDER BY fechaHoraUltimoRegistroEncendida DESC)
+	UPDATE HILOSLIBERTAD.registros
+		SET fueApagadaPorOperarioOPorFallaParticular = 1
 		WHERE idRegistro = (SELECT TOP 1 idRegistro
 							FROM HILOSLIBERTAD.registros
 							WHERE idMaquina = @idMaquina
@@ -202,9 +333,9 @@ BEGIN
 END
 GO
 
---poner nombres pertinentes a los STORED PROCEDURES
 
 
+*/
 
 
 
@@ -216,47 +347,82 @@ GO
 
 
 DELETE FROM HILOSLIBERTAD.registros
+DBCC CHECKIDENT ('HILOSLIBERTAD.registros', RESEED, 0)
 
-EXEC insertar2fechas 1, '2018-12-09 16:00:00', '2022-07-24 23:59:00'
-SELECT * FROM HILOSLIBERTAD.registros
 
-EXEC insertarFechaHoraEncendida 1, '2018-12-09 16:00:00'
-SELECT * FROM HILOSLIBERTAD.registros
-
-EXEC insertar2fechas 1, '2018-12-09 16:00:00', '2018-12-09 16:00:01'
-EXEC insertar2fechas 1, '2018-12-09 16:00:00', '2018-12-09 16:01:00'
-EXEC insertar2fechas 1, '2018-12-09 16:00:00', '2018-12-09 17:00:00'
-EXEC insertar2fechas 1, '2018-12-09 16:00:00', '2018-12-09 16:00:00'
-EXEC insertar2fechas 1, '2018-12-09 16:00:00', '2018-12-10 16:00:00'
-EXEC insertar2fechas 1, '2018-12-09 16:00:00', '2019-01-09 16:00:00'
-
+--Líneas de prueba de STORED PROCEDURES
 
 SELECT * FROM HILOSLIBERTAD.registros
-
-INSERT INTO HILOSLIBERTAD.registros (idMaquina, fechaHoraEncendida, fechaHoraUltimoRegistroEncendida)
-	VALUES (1, CONVERT(SMALLDATETIME, '2018-12-09 16:00:00', 120), CONVERT(SMALLDATETIME, '2018-12-09 16:00:00', 120))
+EXEC insertarSesion 1, '2018-12-09 16:00:00'
+SELECT * FROM HILOSLIBERTAD.registros
+EXEC actualizarSesion 1, '2018-12-09 16:05:00'
+SELECT * FROM HILOSLIBERTAD.registros
+EXEC terminarSesion 1, '2018-12-09 16:45:00'
 SELECT * FROM HILOSLIBERTAD.registros
 
-INSERT INTO HILOSLIBERTAD.registros (idMaquina, fechaHoraEncendida, fechaHoraUltimoRegistroEncendida)
-	VALUES (1, '2018-12-09 16:00:00', '2018-12-09 16:01:00')
-INSERT INTO HILOSLIBERTAD.registros (idMaquina, fechaHoraEncendida, fechaHoraUltimoRegistroEncendida)
-	VALUES (1, '2018-12-09 16:00:00', '2018-12-09 17:00:00')
-INSERT INTO HILOSLIBERTAD.registros (idMaquina, fechaHoraEncendida, fechaHoraUltimoRegistroEncendida)
-	VALUES (1, '2018-12-09 16:00:00', '2018-12-10 16:00:00')
-INSERT INTO HILOSLIBERTAD.registros (idMaquina, fechaHoraEncendida, fechaHoraUltimoRegistroEncendida)
-	VALUES (1, '2018-12-09 16:00:00', '2018-01-09 16:00:00')
-INSERT INTO HILOSLIBERTAD.registros (idMaquina, fechaHoraEncendida, fechaHoraUltimoRegistroEncendida)
-	VALUES (1, '2018-12-09 16:00:00', '2019-12-09 16:00:00')
-
-INSERT INTO HILOSLIBERTAD.registros (idMaquina, fechaHoraEncendida, fechaHoraUltimoRegistroEncendida)
-	VALUES (1, CONVERT(SMALLDATETIME, '2018-12-09 16:00:00', 20), CONVERT(SMALLDATETIME, '2019-12-09 16:00:00', 20))
-
+SELECT * FROM HILOSLIBERTAD.registros
+EXEC insertarSesion 1, '2019-04-04 04:00:00'
+SELECT * FROM HILOSLIBERTAD.registros
+EXEC actualizarSesion 1, '2019-04-04 04:01:00'
+SELECT * FROM HILOSLIBERTAD.registros
+EXEC actualizarSesion 1, '2019-04-04 04:02:00'
+SELECT * FROM HILOSLIBERTAD.registros
+EXEC actualizarSesion 1, '2019-04-04 04:10:00'
+SELECT * FROM HILOSLIBERTAD.registros
+EXEC terminarSesion 1, '2019-04-05 04:15:00'
 SELECT * FROM HILOSLIBERTAD.registros
 
 
 
-SELECT CONVERT(SMALLDATETIME, GETDATE(), 20)	
-SELECT '2018-12-09 16:00:00'
+
+
+
+
+--Query de muestra (bruto)
+SELECT *
+	FROM HILOSLIBERTAD.sectores s
+	JOIN HILOSLIBERTAD.maquinas m ON (s.idSector = m.idSector)
+	JOIN HILOSLIBERTAD.registros r ON (m.idMaquina = r.idMaquina)
+
+--Query de muestra (simpático)
+SELECT m.numeroMaquinaUsuario AS 'Número de Máquina',
+	   m.nombreMaquinaUsuario AS 'Máquina',
+	   s.nombreSector AS 'Sector',
+	   r.cantidadMinutosEncendida AS 'Minutos Encendida'
+	FROM HILOSLIBERTAD.sectores s
+	JOIN HILOSLIBERTAD.maquinas m ON (s.idSector = m.idSector)
+	JOIN HILOSLIBERTAD.registros r ON (m.idMaquina = r.idMaquina)
+
+
+
+
+
+--Vista para pruebas del Registrador
+--AL BORRAR LA VISTA, TAMBIÉN SE BORRAN/VACÍAN LOS DATOS DE LA TABLA ASOCIADA --> DELETE vista_registrador 
+--DROP VIEW vista_registrador 
+CREATE OR ALTER VIEW vista_registrador AS (
+	SELECT r.idMaquina AS 'idMaq',
+		   r.fechaHoraEncendida AS 'INIT_DT',
+		   r.fechaHoraUltimoRegistroEncendida AS 'LAST_DT',
+		   r.fueApagadaPorOperarioOPorFallaParticular AS 'TRND_OFF'
+	FROM HILOSLIBERTAD.registros r
+)
+GO
+
+SELECT * FROM vista_registrador
+
+
+--Tener en cuenta que las fechas son siempre crecientes.
+--A la hora de actualizar una fecha, siempre se actualizará la más reciente
+
+--Agregar vista pedida por Lucho --> aclarar bien qué quiere que se muestre
+
+--Considerar todo tipo de casos de prueba: 2 INSERTs seguidos con el mismo idMaquina
+
+
+
+
+
 
 
 
