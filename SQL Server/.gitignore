@@ -5,6 +5,8 @@
 # Excepto los tipos
 !*.gitignore
 !*.sql
+!*.mdf
+!*.ldf
 
 # Incluso si están en un subdirectorio (afecta a los anteriores tipos)
 !*/

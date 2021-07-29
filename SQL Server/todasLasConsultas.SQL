@@ -409,12 +409,12 @@ CREATE OR ALTER VIEW vista_registrador AS (
 GO
 
 SELECT * FROM vista_registrador
+SELECT TOP 1 * FROM vista_registrador
+SELECT TOP 1 * FROM vista_registrador ORDER BY LAST_DT DESC
 
 
 --Tener en cuenta que las fechas son siempre crecientes.
 --A la hora de actualizar una fecha, siempre se actualizará la más reciente
-
---Agregar vista pedida por Lucho --> aclarar bien qué quiere que se muestre
 
 --Considerar todo tipo de casos de prueba: 2 INSERTs seguidos con el mismo idMaquina
 
