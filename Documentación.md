@@ -53,12 +53,6 @@ PB1  -> Output - Enable Tx UART3 (0 -> RxOnly, 1 -> TxOnly)
 
 
 
-
-
-
-
-
-
 --------	Registrador    --------
 .gitignore agregado
 
