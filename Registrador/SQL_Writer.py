@@ -14,23 +14,23 @@ db_name = "master"
 # table_name = "testTable"
 
 
-VIEW_NAME = "vista_registrador"
+VIEW_NAME = "v_registrador"
 PROC_INSERT = "sp_insertarSesion"
 PROC_UPDATE = "sp_actualizarSesion"
 PROC_FINISH = "sp_terminarSesion"
 
 #   Select Functions
 def selectLast(conn: any, n: int):
-    """Hago un SELECT de los últimos n registros, según la vista "vista_registrador":
-    SELECT TOP n * FROM vista_registrador ORDER BY LAST_DT DEST
+    """Hago un SELECT de los últimos n registros, según la vista VIEW_NAME:
+    SELECT TOP n * FROM v_registrador ORDER BY LAST_DT DEST
     """
     print(f"Select last {n} from table")
     cursor = conn.cursor()
     cursor.execute(f"SELECT TOP {n} * FROM {VIEW_NAME} ORDER BY LAST_DT DESC")
     _showSelectedRows(cursor)
 def selectAll(conn: any):
-    """Hago un SELECT de toda la tabla, según la vista "vista_registrador":
-    SELECT * FROM vista_registrador ORDER BY LAST_DT DESC
+    """Hago un SELECT de toda la tabla, según la vista VIEW_NAME:
+    SELECT * FROM v_registrador ORDER BY LAST_DT DESC
     """
     print("Select complete table")
     cursor = conn.cursor()
