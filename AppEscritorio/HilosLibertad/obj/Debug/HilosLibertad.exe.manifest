@@ -49,17 +49,17 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>A83PGU6u4xEPrsEq8HEwJezIyPKY6G1LsX0HqhmXW0k=</dsig:DigestValue>
+        <dsig:DigestValue>DbkIRHgzy9N2Y6K92HpbA6W3VcEANdI6G0LkUoAa+aA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="HilosLibertad.exe.config" size="189">
+  <file name="HilosLibertad.exe.config" size="456">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>R+Wg8QGvQVHX8T0ta/qbhH1bXkqY0fRnS3wBV3J0bN8=</dsig:DigestValue>
+      <dsig:DigestValue>IAD3b1ByH62wx0aT38KeomKqOXABLS+SOIC62S4k6Fo=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

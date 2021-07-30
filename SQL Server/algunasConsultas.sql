@@ -103,7 +103,7 @@
 
 		--STORED PROCEDURE insertarSesion --> "SESSION STARTS"
 		--Sirve para insertar el idMaquina y su fecha/hora de encendido.
-		CREATE OR ALTER PROCEDURE insertarSesion
+		CREATE OR ALTER PROCEDURE sp_insertarSesion
 			@idMaq NUMERIC(18,0),
 			@fHEnc SMALLDATETIME
 		AS BEGIN
@@ -112,11 +112,11 @@
 				VALUES (@idMaq,	   @fHEnc,			   @fHEnc,							 0,										   0)
 		END
 		GO
-		--Para eliminar el STORED PROCEDURE: DROP PROCEDURE insertarSesion
+		--Para eliminar el STORED PROCEDURE: DROP PROCEDURE sp_insertarSesion
 		
 		--STORED PROCEDURE actualizarSesion --> "SESSION CONTINUES"
 		--Sirve para actualizar la fecha/hora del último registro de encendido de cierta máquina (cuyo ID se pasa por parámetro).
-		CREATE OR ALTER PROCEDURE actualizarSesion
+		CREATE OR ALTER PROCEDURE sp_actualizarSesion
 			@idMaq NUMERIC(18, 0),
 			@fHUltRegEnc SMALLDATETIME
 		AS BEGIN
@@ -128,11 +128,11 @@
 									ORDER BY fechaHoraUltimoRegistroEncendida DESC)
 		END
 		GO
-		--Para eliminar el STORED PROCEDURE: DROP PROCEDURE actualizarSesion
+		--Para eliminar el STORED PROCEDURE: DROP PROCEDURE sp_actualizarSesion
 
 		--STORED PROCEDURE terminarSesion --> "SESSION FINISHES"
 		--Sirve para actualizar la fecha/hora del último registro de encendido de cierta máquina (cuyo ID se pasa por parámetro), indicando que fue apagada por un operario o por una falla particular.
-		CREATE OR ALTER PROCEDURE terminarSesion
+		CREATE OR ALTER PROCEDURE sp_terminarSesion
 			@idMaq NUMERIC(18, 0),
 			@fHUltRegEnc SMALLDATETIME
 		AS BEGIN
@@ -145,7 +145,7 @@
 									ORDER BY fechaHoraUltimoRegistroEncendida DESC)
 		END
 		GO
-		--Para eliminar el STORED PROCEDURE: DROP PROCEDURE terminarSesion
+		--Para eliminar el STORED PROCEDURE: DROP PROCEDURE sp_terminarSesion
 
 
 
@@ -158,7 +158,7 @@
 		
 		--TRIGGER actualizarCantidadMinutosEncendida
 		--Al actualizarse la TABLA registros, se actualiza (automáticamente) la cantidad de minutos que estuvo la máquina encendida.
-		CREATE OR ALTER TRIGGER actualizarCantidadMinutosEncendida
+		CREATE OR ALTER TRIGGER t_actualizarCantidadMinutosEncendida
 		ON HILOSLIBERTAD.registros
 		AFTER UPDATE
 		AS BEGIN
@@ -188,11 +188,11 @@
 			CLOSE cursor1
 			DEALLOCATE cursor1
 		END
-		--Para eliminar el TRIGGER: DROP TRIGGER HILOSLIBERTAD.actualizarCantidadMinutosEncendida
+		--Para eliminar el TRIGGER: DROP TRIGGER HILOSLIBERTAD.t_actualizarCantidadMinutosEncendida
 		
 
 
-
+-- SE PUEDEN CREAR STORED PROCEDURES SOBRE CONSULTAS SELECT
 
 
 
@@ -203,7 +203,7 @@
 
 		--VISTA vista_registrador
 		--Usada para pruebas en el Registrador
-		CREATE OR ALTER VIEW vista_registrador AS (
+		CREATE OR ALTER VIEW v_registrador AS (
 			SELECT r.idMaquina AS 'idMaq',
 				   r.fechaHoraEncendida AS 'INIT_DT',
 				   r.fechaHoraUltimoRegistroEncendida AS 'LAST_DT',
@@ -213,11 +213,11 @@
 		GO
 		--Ejemplo de uso: SELECT TOP 1 * FROM vista_registrador ORDER BY LAST_DT DESC
 		--Para borrar la vista: DROP VIEW vista_registrador
-		--TENER EN CUENTA QUE, AL BORRAR LA VISTA, TAMBIÉN SE BORRAN LOS DATOS DE LA TABLA ASOCIADA --> DELETE vista_registrador 
+		--TENER EN CUENTA QUE, AL BORRAR LA VISTA, TAMBIÉN SE BORRAN LOS DATOS DE LA TABLA ASOCIADA --> DELETE HILOSLIBERTAD.v_registrador 
 		--DROP VIEW vista_registrador 
 		
 
-		SELECT * FROM vista_registrador
+		SELECT * FROM v_registrador
 
 
 
