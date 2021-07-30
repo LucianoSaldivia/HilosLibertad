@@ -13,3 +13,18 @@ D:\Trabajo - Hilos Libertad\HilosLibertad\AppEscritorio\HilosLibertad\bin\Debug\
 D:\Trabajo - Hilos Libertad\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.TrustInfo.xml
 D:\Trabajo - Hilos Libertad\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.exe.manifest
 D:\Trabajo - Hilos Libertad\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.application
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.csproj.AssemblyReference.cache
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.Properties.Resources.resources
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.csproj.GenerateResource.cache
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.csproj.CoreCompileInputs.cache
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.exe
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.pdb
+D:\HilosLibertad\AppEscritorio\HilosLibertad\bin\Debug\HilosLibertad.exe.config
+D:\HilosLibertad\AppEscritorio\HilosLibertad\bin\Debug\HilosLibertad.exe.manifest
+D:\HilosLibertad\AppEscritorio\HilosLibertad\bin\Debug\HilosLibertad.application
+D:\HilosLibertad\AppEscritorio\HilosLibertad\bin\Debug\HilosLibertad.exe
+D:\HilosLibertad\AppEscritorio\HilosLibertad\bin\Debug\HilosLibertad.pdb
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.TrustInfo.xml
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.exe.manifest
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.application
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.frm_Home.resources
