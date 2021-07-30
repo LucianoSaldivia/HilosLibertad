@@ -68,6 +68,8 @@ Lista de Sesiones Activas               -> ActiveSessionEvents
 Estado de Sesión                        -> Reports
 Lista de Reportes                       -> Reports List
 
+Sample 	-> Lista [datetime.now(), State1, State2, ..., StateN]
+
 Faltan Terminar:
     + Registrador.py
     + SQL_Writer.py
