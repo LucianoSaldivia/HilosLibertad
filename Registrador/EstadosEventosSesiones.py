@@ -16,7 +16,7 @@ import time
 #  \   /
 #   \ /
 #    V
-N_MAQ = 20
+N_MAQ = 32
 #    A
 #   / \
 #  /   \
@@ -166,8 +166,6 @@ def getReportList(prev_st: list, curr_st: list, lastReport: list = None) -> list
                                 break
             return lastReport    
 
-
-
 def _testSession(session_n: int, lastReport: list = None, lastSample: list = None, secs_between_samples: float = 0.03) -> tuple[list, list]:
     """Hace una sesión de testeo. Si todo sale bien, devuelve:
     (reportList, lastSample)
@@ -308,6 +306,7 @@ def _testSession(session_n: int, lastReport: list = None, lastSample: list = Non
         prev_sample = curr_sample
         curr_sample = sampleInit()
         return getReportList(prev_sample, curr_sample, reporte), curr_sample
+
 
 if __name__ == "__main__":
 
