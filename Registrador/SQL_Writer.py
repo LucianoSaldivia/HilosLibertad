@@ -15,9 +15,9 @@ db_name = "master"
 
 
 VIEW_NAME = "vista_registrador"
-PROC_INSERT = "insertarSesion"
-PROC_UPDATE = "actualizarSesion"
-PROC_FINISH = "terminarSesion"
+PROC_INSERT = "sp_insertarSesion"
+PROC_UPDATE = "sp_actualizarSesion"
+PROC_FINISH = "sp_terminarSesion"
 
 #   Select Functions
 def selectLast(conn: any, n: int):
@@ -40,7 +40,7 @@ def selectAll(conn: any):
 #   Procedures Queries Functions
 def sessionStarts(conn, data: dict):
     """Llamo al procedimiento PROC_INSERT como en el siguiente ejemplo:
-    EXEC insertarSesion 1, '2018-12-09 16:00:00'
+    EXEC sp_insertarSesion 1, '2018-12-09 16:00:00'
     donde le paso:
         ID_MAQ
 		INIT_DT como 'YYYY-MM-DD HH:MM:SS'
@@ -54,7 +54,7 @@ def sessionStarts(conn, data: dict):
     conn.commit()
 def sessionContinues(conn, data: dict):
     """Llamo al procedimiento PROC_UPDATE como en el siguiente ejemplo:
-    EXEC actualizarSesion 1, '2018-12-09 16:05:00'
+    EXEC sp_actualizarSesion 1, '2018-12-09 16:05:00'
     donde le paso:
         ID_MAQ
 		LAST_DT como 'YYYY-MM-DD HH:MM:SS'
@@ -68,7 +68,7 @@ def sessionContinues(conn, data: dict):
     conn.commit()
 def sessionFinishes(conn, data: dict):
     """Llamo al procedimiento PROC_FINISH como en el siguiente ejemplo:
-    EXEC terminarSesion 1, '2018-12-09 16:45:00'
+    EXEC sp_terminarSesion 1, '2018-12-09 16:45:00'
     donde le paso:
         ID_MAQ
 		LAST_DT como 'YYYY-MM-DD HH:MM:SS'
