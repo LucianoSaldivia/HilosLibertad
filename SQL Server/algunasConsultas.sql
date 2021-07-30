@@ -108,6 +108,7 @@
 			@idMaq NUMERIC(18,0),
 			@fHEnc SMALLDATETIME
 		AS BEGIN
+			SET DATEFORMAT YMD
 			INSERT INTO HL.registros
 					   (idMaquina, fechaHoraEncendida, fechaHoraUltimoRegistroEncendida, fueApagadaPorOperarioOPorFallaParticular, cantidadMinutosEncendida)
 				VALUES (@idMaq,	   @fHEnc,			   @fHEnc,							 0,										   0)
@@ -121,6 +122,7 @@
 			@idMaq NUMERIC(18, 0),
 			@fHUltRegEnc SMALLDATETIME
 		AS BEGIN
+			SET DATEFORMAT YMD
 			UPDATE HL.registros
 				SET fechaHoraUltimoRegistroEncendida = @fHUltRegEnc
 				WHERE idRegistro = (SELECT TOP 1 idRegistro
@@ -137,6 +139,7 @@
 			@idMaq NUMERIC(18, 0),
 			@fHUltRegEnc SMALLDATETIME
 		AS BEGIN
+			SET DATEFORMAT YMD
 			UPDATE HL.registros
 				SET fechaHoraUltimoRegistroEncendida = @fHUltRegEnc,
 					fueApagadaPorOperarioOPorFallaParticular = 1
@@ -219,5 +222,30 @@
 
 		SELECT * FROM HL.v_registrador
 
+
+
+
+
+--Líneas de prueba de STORED PROCEDURES
+
+SELECT * FROM HL.registros
+EXEC HL.sp_insertarSesion 1, '2018-12-09 16:00:00'
+SELECT * FROM HL.registros
+EXEC HL.sp_actualizarSesion 1, '2018-12-09 16:05:00'
+SELECT * FROM HL.registros
+EXEC HL.sp_terminarSesion 1, '2018-12-09 16:45:00'
+SELECT * FROM HL.registros
+
+SELECT * FROM HL.registros
+EXEC HL.sp_insertarSesion 1, '2019-04-04 04:00:00'
+SELECT * FROM HL.registros
+EXEC HL.sp_actualizarSesion 1, '2019-04-04 04:01:00'
+SELECT * FROM HL.registros
+EXEC HL.sp_actualizarSesion 1, '2019-04-04 04:02:00'
+SELECT * FROM HL.registros
+EXEC HL.sp_actualizarSesion 1, '2019-04-04 04:10:00'
+SELECT * FROM HL.registros
+EXEC HL.sp_terminarSesion 1, '2019-04-05 04:15:00'
+SELECT * FROM HL.registros
 
 
