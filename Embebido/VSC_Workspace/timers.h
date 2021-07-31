@@ -1,5 +1,5 @@
-#ifndef _TIMERS_
-#define	_TIMERS_
+#ifndef _TIMERS_H_
+#define	_TIMERS_H_
 
     #include <stdint.h>
     
@@ -17,7 +17,6 @@
         uint32_t time_left;
         TIMER_STATE state;
         /* 
-
         state = 
             WAITING     ->  Esperando a ser disparado
             WORKING     ->  Funcionando
@@ -26,7 +25,6 @@
         Empieza en WAITING si sólo se lo configura, cuando se lo dispara, pasa a estado 
         WORKING. Una vez llega a 0, queda en estaod FINISHED por 1 sólo SysTick, luego 
         pasa nuevamente a WAITING, dado que espera ser disparado nuevamente.
-        
         */
         
     } Timer;

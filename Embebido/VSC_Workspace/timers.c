@@ -76,6 +76,9 @@ void configTimer( Timer *timer, uint32_t time_ms ){
     // Seteo el tiempo
     timer->init_time = time_ms;
     timer->time_left = time_ms;
+    
+    // Lo dejo esperando
+    timer->state = WAITING;
 
 }
 // Dispara el timer con su configuración previa
@@ -83,6 +86,7 @@ void fireTimer( Timer *timer ){
     
     // Seteo el tiempo configurado previamente
     timer->time_left = timer->init_time;
+    
     // Disparo el timer
     timer->state = WORKING;
 
@@ -117,8 +121,10 @@ void playTimer( Timer *timer ){
 // Apagar el timer
 void stopTimer( Timer *timer ){
 
-    // Apago el timer, sin dejar que aparezca como finished
+    // Lo dejo sin tiempo restante
     timer->time_left = 0;
+
+    // Lo dejo esperando
     timer->state = WAITING;
 
 }
