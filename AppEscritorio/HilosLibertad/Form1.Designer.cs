@@ -159,6 +159,7 @@ namespace HilosLibertad
             this.chk_Telar1.TabIndex = 7;
             this.chk_Telar1.Text = "Telar 1";
             this.chk_Telar1.UseVisualStyleBackColor = true;
+            this.chk_Telar1.CheckedChanged += new System.EventHandler(this.chk_Telar1_CheckedChanged);
             // 
             // chk_Telar4
             // 
@@ -352,6 +353,7 @@ namespace HilosLibertad
             this.chk_Cordonera1.TabIndex = 7;
             this.chk_Cordonera1.Text = "Cordonera 1";
             this.chk_Cordonera1.UseVisualStyleBackColor = true;
+            this.chk_Cordonera1.CheckedChanged += new System.EventHandler(this.chk_Cordonera1_CheckedChanged);
             // 
             // chk_Cordonera2
             // 
@@ -448,6 +450,7 @@ namespace HilosLibertad
             this.btn_Mostrar.TabIndex = 24;
             this.btn_Mostrar.Text = "Mostrar";
             this.btn_Mostrar.UseVisualStyleBackColor = true;
+            this.btn_Mostrar.Click += new System.EventHandler(this.btn_Mostrar_Click);
             // 
             // btn_ResetearFiltros
             // 

@@ -15,7 +15,7 @@ namespace HilosLibertad
 
         // 
         public DataTable mostrarCantidadDeHorasPorMaquina() {
-            string consulta = "SELECT * FROM HILOSLIBERTAD.sectores";
+            string consulta = "SELECT * FROM HL.sectores";
             SqlDataAdapter da = new SqlDataAdapter(consulta, cn.LeerCadena());
 
             // Lo que sigue es solamente para procedimientos almacenados
