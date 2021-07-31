@@ -1,5 +1,5 @@
-#ifndef ANTIRREBOTE
-#define	ANTIRREBOTE
+#ifndef _ANTIRREBOTE_H_
+#define	_ANTIRREBOTE_H_
 
 	#include <stdint.h>
 
@@ -60,7 +60,8 @@
 
 	// Inicialización del botón a debouncear
 	void initDebounce( debouncedButton *s, activeType active_type, uint16_t counts_to_validate );
-	// FSM del Debounce
+
+	// Debouncear un botón
 	void FSM_Debounce( debouncedButton *s, uint32_t raw_state );
 
 	// Lecturas rápidas del botón debounceado

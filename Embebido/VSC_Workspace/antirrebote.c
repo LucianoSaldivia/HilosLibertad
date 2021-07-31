@@ -20,7 +20,7 @@ void initDebounce(debouncedButton *s, activeType active_type, uint16_t counts_to
     s->_fsm_state = _IDLE;
 }
 
-// FSM del Debounce
+// Debouncear un botón
 void FSM_Debounce(debouncedButton *s, uint32_t raw_state){
     
     /* Hecho para IDLE o ACTIVE 
@@ -128,7 +128,6 @@ void FSM_Debounce(debouncedButton *s, uint32_t raw_state){
     }
 
 }
-
 
 // Lecturas rápidas del botón debounceado
 uint8_t btnIsIDLE(debouncedButton *s){

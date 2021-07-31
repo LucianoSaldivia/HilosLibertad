@@ -54,10 +54,6 @@ void FSM_RefreshAllTimers( Timer *timers, uint8_t cant ){
 
     } 
 
-    else {
-        return;
-    }
-
 }
 
 // Configura y dispara el timer

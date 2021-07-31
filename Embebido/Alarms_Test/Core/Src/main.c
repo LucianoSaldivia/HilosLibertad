@@ -38,15 +38,18 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define ALARM_TYPE_TO_TEST SINGLE_LONG_BEEP
+#define 	ALARM_TYPE_TO_TEST 	LONG_SINGLE_BEEP
 /* En el archivo alarm.h...
+
 typedef enum{
 	NONE,
 	SINGLE_BEEP,
 	DOUBLE_BEEP,
 	TRIPLE_BEEP,
-	SINGLE_LONG_BEEP
+	QUADRUPLE_BEEP,
+	LONG_SINGLE_BEEP
 } AlarmType;
+
 */
 
 /* USER CODE END PM */

@@ -1,7 +1,7 @@
 #ifndef _TIMERS_H_
 #define	_TIMERS_H_
 
-    #include <stdint.h>
+    //#include <stdint.h>
 	// define de NULL
 	#include <stddef.h>
 	#include "main.h"
@@ -10,7 +10,7 @@
         WAITING,
         WORKING,
         FINISHED
-    } TIMER_STATE;
+    } timerState;
 
     // Estructura con todos los flags usados
     typedef struct {
@@ -18,12 +18,14 @@
         uint32_t __last_systick;
         uint32_t init_time;
         uint32_t time_left;
-        TIMER_STATE state;
+        timerState state;
         /* 
         state = 
             WAITING     ->  Esperando a ser disparado
             WORKING     ->  Funcionando
             FINISHED    ->  Terminado (éste estado SÓLO DURA UN SysTick!)
+                                a menos que se llame a stopTimer() para forzar 
+                                el estado WAITING
         
         Empieza en WAITING si sólo se lo configura, cuando se lo dispara, pasa a estado 
         WORKING. Una vez llega a 0, queda en estaod FINISHED por 1 sólo SysTick, luego 
