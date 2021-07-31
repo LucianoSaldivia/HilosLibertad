@@ -1,5 +1,5 @@
-#ifndef _PIN_CONNECTIONS_
-#define	_PIN_CONNECTIONS_
+#ifndef _PIN_CONNECTIONS_H_
+#define	_PIN_CONNECTIONS_H_
 
     /* MUXED INPUTS */
     #ifndef _GROUP_INPUTS_WXYZ_

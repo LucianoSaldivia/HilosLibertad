@@ -2,6 +2,9 @@
 #define	_TIMERS_H_
 
     #include <stdint.h>
+	// define de NULL
+	#include <stddef.h>
+	#include "main.h"
     
     typedef enum {
         WAITING,

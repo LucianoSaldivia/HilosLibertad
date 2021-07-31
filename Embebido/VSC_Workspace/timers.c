@@ -8,11 +8,12 @@ void FSM_RefreshTimer( Timer *timer ){
         case WAITING:
             break;
 
-        case WORKING:
-            
+        case WORKING:;
+
             int16_t delta;
             // delta es el tiempo (en ms = ticks) que pasó de la última actualización
-            if( delta = HAL_GetTick() - timer->__last_systick > 0 ){
+            delta = HAL_GetTick() - timer->__last_systick;
+            if( delta > 0 ){
 
                 // Si el delta es mayor (o igual) a lo que quedaba, el timer terminó
                 if( delta >= timer->time_left ){

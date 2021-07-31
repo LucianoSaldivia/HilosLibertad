@@ -1,8 +1,10 @@
 #ifndef _ALARM_H_
 #define _ALARM_H_
 
-    #include <stdint.h>
+    //#include <stdint.h>
     #include "timers.h"
+	#include "main.h"
+	#include "pin_connections.h"
 
     #define CYCLE_TIME              1000
     #define DEFAULT_BEEP_TIME       50
@@ -35,7 +37,7 @@
         SINGLE_BEEP,
         DOUBLE_BEEP,
         TRIPLE_BEEP,
-        LONG_BEEP
+        SINGLE_LONG_BEEP
     } AlarmType;
 
     typedef enum{
@@ -59,9 +61,15 @@
     void initAlarm( Alarm *alarm );
     // FSM de la Alarma
     void FSM_Alarm( Alarm *alarm );
+
+    // Seteo la alarma
+    void setAlarm( Alarm *alarm, AlarmType type );
+    // Reseteo la alarma
+    void resetAlarm( Alarm *alarm );
+
     // Encender el Beeper
-    void turnOnBeeper( void );
+    void __turnOnBeeper( void );
     // Apagar el Beeper
-    void turnOffBeeper( void );
+    void __turnOffBeeper( void );
 
 #endif
