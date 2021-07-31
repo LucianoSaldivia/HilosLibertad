@@ -42,24 +42,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HilosLibertad.exe" size="45496">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HilosLibertad.exe" size="46520">
       <assemblyIdentity name="HilosLibertad" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>DbkIRHgzy9N2Y6K92HpbA6W3VcEANdI6G0LkUoAa+aA=</dsig:DigestValue>
+        <dsig:DigestValue>yZOikgbgcbc8Yun/5uHZsV8YwIbLKCetU5bUdL74jKU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="HilosLibertad.exe.config" size="456">
+  <file name="HilosLibertad.exe.config" size="448">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>IAD3b1ByH62wx0aT38KeomKqOXABLS+SOIC62S4k6Fo=</dsig:DigestValue>
+      <dsig:DigestValue>dm7XrH8f5fXv88IYuB+stIcg6Ygi6n/A4DqiK5XDUys=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

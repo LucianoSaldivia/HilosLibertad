@@ -45,106 +45,163 @@ namespace HilosLibertad
 
         private void checkBox_SectorTelares_CheckedChanged(object sender, EventArgs e)
         {
-            if (chk_SectorTelares.Checked)
+            if (chk_SectorTelares.CheckState == CheckState.Checked)
             {
-                chk_Telar1.Checked = true;
-                chk_Telar2.Checked = true;
-                chk_Telar3.Checked = true;
-                chk_Telar4.Checked = true;
-                chk_Telar5.Checked = true;
-                chk_Telar6.Checked = true;
-                chk_Telar7.Checked = true;
-                chk_Telar8.Checked = true;
-                chk_Telar9.Checked = true;
-                chk_Urdidora.Checked = true;
+                setCheckButtonsTelares(true);
             }
             else {
-                chk_Telar1.Checked = false;
-                chk_Telar2.Checked = false;
-                chk_Telar3.Checked = false;
-                chk_Telar4.Checked = false;
-                chk_Telar5.Checked = false;
-                chk_Telar6.Checked = false;
-                chk_Telar7.Checked = false;
-                chk_Telar8.Checked = false;
-                chk_Telar9.Checked = false;
-                chk_Urdidora.Checked = false;
+                setCheckButtonsTelares(false);
             }
             
         }
 
         private void checkBox_SectorCordoneras_CheckedChanged(object sender, EventArgs e)
         {
-            if (chk_SectorCordoneras.Checked)
+            if (chk_SectorCordoneras.CheckState == CheckState.Checked)
             {
-                chk_Cordonera1.Checked = true;
-                chk_Cordonera2.Checked = true;
-                chk_Cordonera3.Checked = true;
-                chk_Cordonera4.Checked = true;
-                chk_Cordonera5.Checked = true;
-                chk_Cordonera6.Checked = true;
-                chk_Cordonera7.Checked = true;
-                chk_Cordonera8.Checked = true;
-                chk_Cordonera9.Checked = true;
+                setCheckButtonsCordoneras(true);
             }
             else
             {
-                chk_Cordonera1.Checked = false;
-                chk_Cordonera2.Checked = false;
-                chk_Cordonera3.Checked = false;
-                chk_Cordonera4.Checked = false;
-                chk_Cordonera5.Checked = false;
-                chk_Cordonera6.Checked = false;
-                chk_Cordonera7.Checked = false;
-                chk_Cordonera8.Checked = false;
-                chk_Cordonera9.Checked = false;
+                setCheckButtonsCordoneras(false);
             }
         }
 
         private void checkBox_SectorTerminacion_CheckedChanged(object sender, EventArgs e)
         {
-            if (chk_SectorTerminacion.Checked)
+            if (chk_SectorTerminacion.CheckState == CheckState.Checked)
             {
-                chk_Terminacion1.Checked = true;
-                chk_Terminacion2.Checked = true;
-                chk_Terminacion3.Checked = true;
+                setCheckButtonsTerminacion(true);
             }
             else {
-                chk_Terminacion1.Checked = false;
-                chk_Terminacion2.Checked = false;
-                chk_Terminacion3.Checked = false;
+                setCheckButtonsTerminacion(false);
             }
         }
 
         private void button_ResetearFiltros_Click(object sender, EventArgs e)
         {
-            chk_SectorTelares.Checked = false;
-            chk_Telar1.Checked = false;
-            chk_Telar2.Checked = false;
-            chk_Telar3.Checked = false;
-            chk_Telar4.Checked = false;
-            chk_Telar5.Checked = false;
-            chk_Telar6.Checked = false;
-            chk_Telar7.Checked = false;
-            chk_Telar8.Checked = false;
-            chk_Telar9.Checked = false;
-            chk_Urdidora.Checked = false;
+            setCheckButtonSectorTelares(false);
+            setCheckButtonsTelares(false);
+            setCheckButtonSectorCordoneras(false);
+            setCheckButtonsCordoneras(false);
+            setCheckButtonSectorTerminacion(false);
+            setCheckButtonsTerminacion(false);
+        }
 
-            chk_SectorCordoneras.Checked = false;
-            chk_Cordonera1.Checked = false;
-            chk_Cordonera2.Checked = false;
-            chk_Cordonera3.Checked = false;
-            chk_Cordonera4.Checked = false;
-            chk_Cordonera5.Checked = false;
-            chk_Cordonera6.Checked = false;
-            chk_Cordonera7.Checked = false;
-            chk_Cordonera8.Checked = false;
-            chk_Cordonera9.Checked = false;
+        private void setCheckButtonSectorTelares(bool valor) {
+            chk_SectorTelares.Checked = valor;
+        }
 
-            chk_SectorTerminacion.Checked = false;
-            chk_Terminacion1.Checked = false;
-            chk_Terminacion2.Checked = false;
-            chk_Terminacion3.Checked = false;
+        private void setCheckButtonSectorCordoneras(bool valor)
+        {
+            chk_SectorCordoneras.Checked = valor;
+        }
+
+        private void setCheckButtonSectorTerminacion(bool valor)
+        {
+            chk_SectorTerminacion.Checked = valor;
+        }
+
+
+        private void setCheckButtonsTelares(bool valor) {
+            chk_Telar1.Checked = valor;
+            chk_Telar2.Checked = valor;
+            chk_Telar3.Checked = valor;
+            chk_Telar4.Checked = valor;
+            chk_Telar5.Checked = valor;
+            chk_Telar6.Checked = valor;
+            chk_Telar7.Checked = valor;
+            chk_Telar8.Checked = valor;
+            chk_Telar9.Checked = valor;
+            chk_Urdidora.Checked = valor;
+        }
+
+        private void setCheckButtonsCordoneras(bool valor) {
+            chk_Cordonera1.Checked = valor;
+            chk_Cordonera2.Checked = valor;
+            chk_Cordonera3.Checked = valor;
+            chk_Cordonera4.Checked = valor;
+            chk_Cordonera5.Checked = valor;
+            chk_Cordonera6.Checked = valor;
+            chk_Cordonera7.Checked = valor;
+            chk_Cordonera8.Checked = valor;
+            chk_Cordonera9.Checked = valor;
+        }
+        
+        private void setCheckButtonsTerminacion(bool valor)
+        {
+            chk_Terminacion1.Checked = valor;
+            chk_Terminacion2.Checked = valor;
+            chk_Terminacion3.Checked = valor;
+        }
+
+
+        /*
+        private bool estanTildadosTodosLosTelares() {
+            if (chk_Telar1.Checked && chk_Telar2.Checked && chk_Telar3.Checked && chk_Telar4.Checked && chk_Telar5.Checked && chk_Telar6.Checked && chk_Telar7.Checked && chk_Telar8.Checked && chk_Telar9.Checked)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool estanDestildadosTodosLosTelares()
+        {
+            if (!chk_Telar1.Checked && !chk_Telar2.Checked && !chk_Telar3.Checked && !chk_Telar4.Checked && !chk_Telar5.Checked && !chk_Telar6.Checked && !chk_Telar7.Checked && !chk_Telar8.Checked && !chk_Telar9.Checked)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        */
+
+        // CORREGIR ESTA VALIDACIÓN Y AGREGAR LAS OTRAS DOS
+
+        /*
+        public void validarCheckButtonSectorTelares() {
+
+            // if (!estanTildadosTodosLosTelares() && !estanDestildadosTodosLosTelares()) chk_SectorTelares.CheckState = CheckState.Indeterminate;
+
+            
+            if (estanTildadosTodosLosTelares()) 
+            {
+                chk_SectorTelares.CheckState = CheckState.Checked;
+            }
+            else
+            {
+                if (estanDestildadosTodosLosTelares())
+                {
+                    chk_SectorTelares.CheckState = CheckState.Unchecked;
+                }
+                else
+                {
+                    chk_SectorTelares.CheckState = CheckState.Indeterminate;
+                }
+            }
+            
+        }
+        */
+
+
+        private void chk_Telar1_CheckedChanged(object sender, EventArgs e)
+        {
+            //validarCheckButtonSectorTelares();
+        }
+
+        private void chk_Cordonera1_CheckedChanged(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void btn_Mostrar_Click(object sender, EventArgs e)
+        {
+            //
         }
     }
 }
