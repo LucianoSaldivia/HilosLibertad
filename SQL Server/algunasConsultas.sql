@@ -211,7 +211,8 @@
 			SELECT r.idMaquina AS 'idMaq',
 				   r.fechaHoraEncendida AS 'INIT_DT',
 				   r.fechaHoraUltimoRegistroEncendida AS 'LAST_DT',
-				   r.fueApagadaPorOperarioOPorFallaParticular AS 'TRND_OFF'
+				   r.fueApagadaPorOperarioOPorFallaParticular AS 'TRND_OFF',
+				   r.cantidadMinutosEncendida AS 'MINS_ON'
 			FROM HL.registros r
 		)
 		GO
