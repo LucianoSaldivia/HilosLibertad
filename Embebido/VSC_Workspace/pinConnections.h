@@ -71,15 +71,21 @@
     #ifndef _GROUP_UART_
     #define _GROUP_UART_
         
-        // Outputs (RX3, TX3, ENR)
+        // UART3 (RX3, TX3)
         #define PORT_RX3    GPIOB
         #define PIN_RX3     GPIO_PIN_11
         #define PORT_TX3    GPIOB
         #define PIN_TX3     GPIO_PIN_10
-        #define PORT_EN_T   GPIOB
-        #define PIN_EN_T    GPIO_PIN_1
+        // Enable Tx (Output)
+        #define PORT_EN_TX3 GPIOB
+        #define PIN_EN_TX3  GPIO_PIN_1
 
     #endif
+
+    /* LED Testigo */
+    #define PORT_OB_LED     GPIOC
+    #define PIN_OB_LED      GPIO_PIN_13
+
 
 
 #endif

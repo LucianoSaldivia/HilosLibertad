@@ -1,10 +1,9 @@
 #ifndef _ALARM_H_
 #define _ALARM_H_
 
-    //#include <stdint.h>
     #include "timers.h"
-	#include "main.h"
-	#include "pin_connections.h"
+	#include "types.h"
+	#include "pinConnections.h"
 
 
     // Tiempos por default para beeps y espacios

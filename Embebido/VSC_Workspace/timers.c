@@ -5,10 +5,10 @@
 void FSM_RefreshTimer( Timer *timer ){
 
     switch( timer->state ){
-        case WAITING:
+        case TIMER_WAITING:
             break;
 
-        case WORKING:;
+        case TIMER_WORKING:;
 
             int16_t delta;
             // delta es el tiempo (en ms = ticks) que pasó de la última actualización
@@ -18,7 +18,7 @@ void FSM_RefreshTimer( Timer *timer ){
                 // Si el delta es mayor (o igual) a lo que quedaba, el timer terminó
                 if( delta >= timer->time_left ){
                     timer->time_left = 0;
-                    timer->state = FINISHED;
+                    timer->state = TIMER_FINISHED;
                 } 
 
                 // Sino, sólamente resto el tiempo
@@ -29,14 +29,14 @@ void FSM_RefreshTimer( Timer *timer ){
             timer->__last_systick += delta;
             break;
 
-        case FINISHED:
+        case TIMER_FINISHED:
             
             // Si pasó al menos 1 SysTick, paso a WAITING
-            timer->state = ( HAL_GetTick() - timer->__last_systick > 0 ) ? WAITING : FINISHED;
+            timer->state = ( HAL_GetTick() - timer->__last_systick > 0 ) ? TIMER_WAITING : TIMER_FINISHED;
             break;
 
         default:
-            timer->state = WAITING;
+            timer->state = TIMER_WAITING;
             break;
     } 
 
@@ -64,7 +64,7 @@ void startTimer( Timer *timer, uint32_t time_ms ){
     timer->time_left = time_ms;
 
     // Disparo el timer
-    timer->state = WORKING;
+    timer->state = TIMER_WORKING;
 
 }
 // Configura sin disparar
@@ -75,7 +75,7 @@ void configTimer( Timer *timer, uint32_t time_ms ){
     timer->time_left = time_ms;
     
     // Lo dejo esperando
-    timer->state = WAITING;
+    timer->state = TIMER_WAITING;
 
 }
 // Dispara el timer con su configuración previa
@@ -85,34 +85,34 @@ void fireTimer( Timer *timer ){
     timer->time_left = timer->init_time;
     
     // Disparo el timer
-    timer->state = WORKING;
+    timer->state = TIMER_WORKING;
 
 }
 
 
 // Chequeos del estado del timer
 uint8_t timerIsWaiting( Timer *timer ){
-    return (timer->state == WAITING) ? 1 : 0;
+    return (timer->state == TIMER_WAITING) ? 1 : 0;
 }
 uint8_t timerIsWorking( Timer *timer ){
-    return (timer->state == WORKING) ? 1 : 0;
+    return (timer->state == TIMER_WORKING) ? 1 : 0;
 }
 uint8_t timerJustFinished( Timer *timer ){
-    return (timer->state == FINISHED) ? 1 : 0;
+    return (timer->state == TIMER_FINISHED) ? 1 : 0;
 }
 
 // Pausar el timer
 void pauseTimer( Timer *timer ){
 
     // Pauso el timer
-    timer->state = WAITING;
+    timer->state = TIMER_WAITING;
 
 }
 // Continuar el timer
 void playTimer( Timer *timer ){
 
     // Dejo que siga donde quedó
-    timer->state = WORKING;
+    timer->state = TIMER_WORKING;
 
 }
 // Apagar el timer
@@ -122,6 +122,6 @@ void stopTimer( Timer *timer ){
     timer->time_left = 0;
 
     // Lo dejo esperando
-    timer->state = WAITING;
+    timer->state = TIMER_WAITING;
 
 }

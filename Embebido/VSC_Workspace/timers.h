@@ -1,15 +1,12 @@
 #ifndef _TIMERS_H_
 #define	_TIMERS_H_
 
-    //#include <stdint.h>
-	// define de NULL
-	#include <stddef.h>
-	#include "main.h"
+	#include "types.h"
     
     typedef enum {
-        WAITING,
-        WORKING,
-        FINISHED
+        TIMER_WAITING,
+        TIMER_WORKING,
+        TIMER_FINISHED
     } timerState;
 
     // Estructura con todos los flags usados
