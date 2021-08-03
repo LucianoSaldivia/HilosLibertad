@@ -40,5 +40,5 @@ static UART_HandleTypeDef huart3;
 void HAL_GPIO_WritePin( char dummy_port, uint8_t dummy_uint8_pin, uint8_t dummy_uint8_state );
 uint8_t HAL_GPIO_ReadPin( char dummy_port, uint8_t dummy_uint8_pin );
 
-HAL_UART_Receive_IT( UART_HandleTypeDef *uart, uint8_t *buffer, uint16_t size); 
-HAL_UART_Transmit_IT( UART_HandleTypeDef *uart, uint8_t *buffer, uint16_t size);
+void HAL_UART_Receive_IT( UART_HandleTypeDef *uart, uint8_t *buffer, uint16_t size); 
+void HAL_UART_Transmit_IT( UART_HandleTypeDef *uart, uint8_t *buffer, uint16_t size);
