@@ -9,6 +9,9 @@ Tutorial:
 Link para el archivo:
 	http://descargas.todomicro.com.ar/productos/USB-RS485/drivers.zip
 
++ UART por interrupciones:
+	https://www.youtube.com/watch?v=R11GONhe5Ks
+
 + Pines Blue Pill
 
  * Entradas de Lectura (0)
