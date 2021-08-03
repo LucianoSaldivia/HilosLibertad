@@ -5,7 +5,7 @@
 // Inicializo el lector
 void initMuxReader( MuxReader *r ){
 
-    r->state = READER_READY;
+    r->state = READER_START;
     r->readings.sample = 0;
     stopTimer( &(r->timer) );
     _writeAB( 0, 0 );
@@ -18,26 +18,38 @@ void FSM_MuxReader( MuxReader *r ){
     FSM_RefreshTimer( &(r->timer) );
 
     switch( r->state ){
+        // Sólo la primera vez
+        case READER_START:
+            // Si el timer está esperando
+        	if( timerIsWaiting( &(r->timer) ) ){
+        		// Disparo el timer para la siguiente lectura
+        		startTimer( &(r->timer), TIME_BETWEEM_READS );
+        	}
+        	else if( timerJustFinished( &(r->timer) ) ){
+        		// Apago el timer
+        		stopTimer( &(r->timer) );
+        		// Limpio las lecturas
+        		r->readings.sample = 0;
+        		// Paso a leer
+        		r->state = READER_WORKING_00;
+        	}
+            break;
         case READER_READY:
             
             // Si el timer está andando, me voy
             if( timerIsWorking( &(r->timer) ) ) 
                 break;
             // Si el timer terminó
-            if( timerJustFinished( &(r->timer) ) ){
+            else if( timerJustFinished( &(r->timer) ) ){
                 // Apago el timer
-                stopTimer( &r->timer );
+                stopTimer( &(r->timer) );
                 // No disparo el timer TIME_BETWEEN_WRITE_AND_READ, porque AB ya deberían estar en 00
                 // ...
+                // Limpio las lecturas
+                r->readings.sample = 0;
                 // Voy al siguiente estado
                 r->state = READER_WORKING_00;
             }
-            // Primera vez
-            else{
-                // Disparo el timer para la siguiente lectura
-                startTimer( &(r->timer), TIME_BETWEEM_READS );
-            }
-            break;
 
         case READER_WORKING_00:
 
@@ -150,25 +162,25 @@ void _read16Inputs( sample *readings, MuxReaderStates state ){
     }
 
     // Board 0
-    readings->nibbles.W0 = HAL_GPIO_ReadPin( PORT_W0, PIN_W0 ) << offset;
-    readings->nibbles.X0 = HAL_GPIO_ReadPin( PORT_X0, PIN_X0 ) << offset;
-    readings->nibbles.Y0 = HAL_GPIO_ReadPin( PORT_Y0, PIN_Y0 ) << offset;
-    readings->nibbles.Z0 = HAL_GPIO_ReadPin( PORT_Z0, PIN_Z0 ) << offset;
+    readings->nibbles.W0 |= HAL_GPIO_ReadPin( PORT_W0, PIN_W0 ) << offset;
+    readings->nibbles.X0 |= HAL_GPIO_ReadPin( PORT_X0, PIN_X0 ) << offset;
+    readings->nibbles.Y0 |= HAL_GPIO_ReadPin( PORT_Y0, PIN_Y0 ) << offset;
+    readings->nibbles.Z0 |= HAL_GPIO_ReadPin( PORT_Z0, PIN_Z0 ) << offset;
     // Board 1
-    readings->nibbles.W1 = HAL_GPIO_ReadPin( PORT_W1, PIN_W1 ) << offset;
-    readings->nibbles.X1 = HAL_GPIO_ReadPin( PORT_X1, PIN_X1 ) << offset;
-    readings->nibbles.Y1 = HAL_GPIO_ReadPin( PORT_Y1, PIN_Y1 ) << offset;
-    readings->nibbles.Z1 = HAL_GPIO_ReadPin( PORT_Z1, PIN_Z1 ) << offset;
+    readings->nibbles.W1 |= HAL_GPIO_ReadPin( PORT_W1, PIN_W1 ) << offset;
+    readings->nibbles.X1 |= HAL_GPIO_ReadPin( PORT_X1, PIN_X1 ) << offset;
+    readings->nibbles.Y1 |= HAL_GPIO_ReadPin( PORT_Y1, PIN_Y1 ) << offset;
+    readings->nibbles.Z1 |= HAL_GPIO_ReadPin( PORT_Z1, PIN_Z1 ) << offset;
     // Board 2
-    readings->nibbles.W2 = HAL_GPIO_ReadPin( PORT_W2, PIN_W2 ) << offset;
-    readings->nibbles.X2 = HAL_GPIO_ReadPin( PORT_X2, PIN_X2 ) << offset;
-    readings->nibbles.Y2 = HAL_GPIO_ReadPin( PORT_Y2, PIN_Y2 ) << offset;
-    readings->nibbles.Z2 = HAL_GPIO_ReadPin( PORT_Z2, PIN_Z2 ) << offset;
+    readings->nibbles.W2 |= HAL_GPIO_ReadPin( PORT_W2, PIN_W2 ) << offset;
+    readings->nibbles.X2 |= HAL_GPIO_ReadPin( PORT_X2, PIN_X2 ) << offset;
+    readings->nibbles.Y2 |= HAL_GPIO_ReadPin( PORT_Y2, PIN_Y2 ) << offset;
+    readings->nibbles.Z2 |= HAL_GPIO_ReadPin( PORT_Z2, PIN_Z2 ) << offset;
     // Board 3
-    readings->nibbles.W3 = HAL_GPIO_ReadPin( PORT_W3, PIN_W3 ) << offset;
-    readings->nibbles.X3 = HAL_GPIO_ReadPin( PORT_X3, PIN_X3 ) << offset;
-    readings->nibbles.Y3 = HAL_GPIO_ReadPin( PORT_Y3, PIN_Y3 ) << offset;
-    readings->nibbles.Z3 = HAL_GPIO_ReadPin( PORT_Z3, PIN_Z3 ) << offset;
+    readings->nibbles.W3 |= HAL_GPIO_ReadPin( PORT_W3, PIN_W3 ) << offset;
+    readings->nibbles.X3 |= HAL_GPIO_ReadPin( PORT_X3, PIN_X3 ) << offset;
+    readings->nibbles.Y3 |= HAL_GPIO_ReadPin( PORT_Y3, PIN_Y3 ) << offset;
+    readings->nibbles.Z3 |= HAL_GPIO_ReadPin( PORT_Z3, PIN_Z3 ) << offset;
 
 }
 

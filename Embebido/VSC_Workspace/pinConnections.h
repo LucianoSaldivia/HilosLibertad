@@ -1,9 +1,27 @@
 #ifndef _PIN_CONNECTIONS_H_
 #define	_PIN_CONNECTIONS_H_
 
+    /* GPIOS LIBRES */
+    #ifndef _GROUP_FREE_
+    #define _GROUP_FREE_
+        #define PORT_FREE_1     GPIOA
+        #define PIN_FREE_1      GPIO_PIN_1
+        #define PORT_FREE_2     GPIOA
+        #define PIN_FREE_2      GPIO_PIN_2
+        #define PORT_FREE_3     GPIOA
+        #define PIN_FREE_3      GPIO_PIN_3
+        #define PORT_FREE_4     GPIOA
+        #define PIN_FREE_4      GPIO_PIN_4
+        #define PORT_FREE_5     GPIOA
+        #define PIN_FREE_5      GPIO_PIN_5
+        #define PORT_FREE_6     GPIOA
+        #define PIN_FREE_6      GPIO_PIN_6
+    #endif /* _GROUP_FREE_ */
+
     /* MUXED INPUTS */
     #ifndef _GROUP_INPUTS_WXYZ_
-    #define _GROUP_INPUTS_WXYZ_       
+    #define _GROUP_INPUTS_WXYZ_
+	// DEBEN SER (No Pull-Up and No Pull-Down)
         // Inputs 0 (W0, X0, Y0, Z0)
         #define PORT_W0     GPIOB
         #define PIN_W0      GPIO_PIN_5
@@ -14,8 +32,9 @@
         #define PORT_Z0     GPIOB
         #define PIN_Z0      GPIO_PIN_8     
         // Inputs 1 (W1, X1, Y1, Z1)
-        #define PORT_W1     GPIOA
-        #define PIN_W1      GPIO_PIN_12
+            // W1 originalmente era A12, quemado y cambiado por A1
+        #define PORT_W1     PORT_FREE_1/* GPIOA */
+        #define PIN_W1      PIN_FREE_1/* GPIO_PIN_12 */
         #define PORT_X1     GPIOA
         #define PIN_X1      GPIO_PIN_15
         #define PORT_Y1     GPIOB
@@ -77,5 +96,6 @@
     /* LED Testigo */
     #define PORT_OB_LED     GPIOC
     #define PIN_OB_LED      GPIO_PIN_13
+
 
 #endif /* _PIN_CONNECTIONS_H_ */
