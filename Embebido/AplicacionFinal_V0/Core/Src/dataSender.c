@@ -49,7 +49,7 @@ void FSM_DataSender( DataSender *sender, DS_UartInterruptionFlags *flags ){
 
 		case DS_SENDING_DATA:
 			// Envío las lecturas cargadas
-			_sendLoadedSample( sender );
+			_sendLoadedSample( sender, flags );
 			// Paso a esperar el fin de la transmisión
 			sender->state = DS_WAITING_FOR_TX_COMPLETE;
 			break;
@@ -69,8 +69,39 @@ void FSM_DataSender( DataSender *sender, DS_UartInterruptionFlags *flags ){
 			break;
 
 		case DS_WAITING_ANSWER:
-
-			// Si se recibió respuesta (antes o justo en el Timeout)
+			// Si hubo Timeout
+			if( timerJustFinished( &(sender->timer) ) && !flags->RxComplete ){
+				// Apago el timer
+				stopTimer( &(sender->timer) );
+				// Cuento el timeout
+				sender->timeout_ctr ++;
+				// Si llegué a la cantidad máxima de timeouts consecutivos por envío
+				if( sender->timeout_ctr >= MAX_TIMEOUTS ){
+					// ESTE dato se perdió, vuelvo al estado DS_IDLE
+					sender->state = DS_IDLE;
+					// Para el próximo envío, tengo 0 Timeouts
+					sender->timeout_ctr = 0;
+					// Cuento el dato perdido
+					sender->data_loss_timeouts_ctr ++;
+					// Si llegué a la cantidad máxima de datos perdidos por Timeouts consecutivos
+					if( sender->data_loss_timeouts_ctr >= MAX_DATA_LOSS_TIMEOUT ){
+						// Disparo la alarma sino estaba funcionando
+						if( alarmIsOff( &(sender->alarma) ) ){
+							fireAlarm( &(sender->alarma), TIMEOUT_ALARM_TYPE );
+						}
+						// Dejo MAX_DATA_LOSS_TIMEOUT como techo del contador (satura en ese número)
+						sender->data_loss_timeouts_ctr = MAX_DATA_LOSS_TIMEOUT;
+					}
+				}
+				// Si no llegué a la cantidad máxima de timeouts por envío
+				else{
+					// Intento enviar nuevamente, todavía no se perdió el dato
+					_sendLoadedSample( sender, flags );
+					// Paso a esperar el fin de la transmisión
+					sender->state = DS_WAITING_FOR_TX_COMPLETE;
+				}
+			}
+			// Si se recibió respuesta
 			if( flags->RxComplete ){
 				// Apago el timer
 				stopTimer( &(sender->timer) );
@@ -122,7 +153,7 @@ void FSM_DataSender( DataSender *sender, DS_UartInterruptionFlags *flags ){
 						// Si no llegué a la cantidad máxima de NAKs por envío
 						else{
 							// Intento enviar nuevamente, todavía no se perdió el dato
-							_sendLoadedSample( sender );
+							_sendLoadedSample( sender, flags );
 							// Paso a esperar el fin de la transmisión
 							sender->state = DS_WAITING_FOR_TX_COMPLETE;
 						}
@@ -153,45 +184,13 @@ void FSM_DataSender( DataSender *sender, DS_UartInterruptionFlags *flags ){
 						// Si no llegué a la cantidad máxima de Respuestas Inesperadas por envío
 						else{
 							// Intento enviar nuevamente, todavía no se perdió el dato
-							_sendLoadedSample( sender );
+							_sendLoadedSample( sender, flags );
 							// Paso a esperar el fin de la transmisión
 							sender->state = DS_WAITING_FOR_TX_COMPLETE;
 						}
 						break;
 				}
 
-			}
-			// Si hubo Timeout
-			else if( timerJustFinished( &(sender->timer) ) && !flags->RxComplete ){
-				// Apago el timer
-				stopTimer( &(sender->timer) );
-				// Cuento el timeout
-				sender->timeout_ctr ++;
-				// Si llegué a la cantidad máxima de timeouts consecutivos por envío
-				if( sender->timeout_ctr >= MAX_TIMEOUTS ){
-					// ESTE dato se perdió, vuelvo al estado DS_IDLE
-					sender->state = DS_IDLE;
-					// Para el próximo envío, tengo 0 Timeouts
-					sender->timeout_ctr = 0;
-					// Cuento el dato perdido
-					sender->data_loss_timeouts_ctr ++;
-					// Si llegué a la cantidad máxima de datos perdidos por Timeouts consecutivos
-					if( sender->data_loss_timeouts_ctr >= MAX_DATA_LOSS_TIMEOUT ){
-						// Disparo la alarma sino estaba funcionando
-						if( alarmIsOff( &(sender->alarma) ) ){
-							fireAlarm( &(sender->alarma), TIMEOUT_ALARM_TYPE );
-						}
-						// Dejo MAX_DATA_LOSS_TIMEOUT como techo del contador (satura en ese número)
-						sender->data_loss_timeouts_ctr = MAX_DATA_LOSS_TIMEOUT;
-					}
-				}
-				// Si no llegué a la cantidad máxima de timeouts por envío
-				else{
-					// Intento enviar nuevamente, todavía no se perdió el dato
-					_sendLoadedSample( sender );
-					// Paso a esperar el fin de la transmisión
-					sender->state = DS_WAITING_FOR_TX_COMPLETE;
-				}
 			}
 
 			// Chequeo la recepción
@@ -224,24 +223,28 @@ void sendSample( DataSender *sender, sample data ){
 // Funciones "privadas"
 
 // Transmito un sample
-void _sendLoadedSample( DataSender *sender ){
+void _sendLoadedSample( DataSender *sender, DS_UartInterruptionFlags *flags ){
 	uint8_t with_info;
 
 	// Habilito el envío de datos
 	_enableTransmit();
 
+	// Limpio la recepción (porque pueden quedar respuestas anteriores atrasadas)
+	sender->rxBuffer = 0;
+	flags->RxComplete = 0;
+
 	// DATA SEL: (0 -> OnlyData, 1 -> Data+Info)
 	with_info = HAL_GPIO_ReadPin(PORT_DATA_SEL, PIN_DATA_SEL);
 
 	// Datos de lecturas
-	sender->txBuffer[0] = (uint8_t) sender->data.bytes.WX0.byte;
-	sender->txBuffer[1] = (uint8_t) sender->data.bytes.YZ0.byte;
-	sender->txBuffer[2] = (uint8_t) sender->data.bytes.WX1.byte;
-	sender->txBuffer[3] = (uint8_t) sender->data.bytes.YZ1.byte;
-	sender->txBuffer[4] = (uint8_t) sender->data.bytes.WX2.byte;
-	sender->txBuffer[5] = (uint8_t) sender->data.bytes.YZ2.byte;
-	sender->txBuffer[6] = (uint8_t) sender->data.bytes.WX3.byte;
-	sender->txBuffer[7] = (uint8_t) sender->data.bytes.YZ3.byte;
+	sender->txBuffer[0] = (uint8_t) sender->data.bytes.YZ3.byte;
+	sender->txBuffer[1] = (uint8_t) sender->data.bytes.WX3.byte;
+	sender->txBuffer[2] = (uint8_t) sender->data.bytes.YZ2.byte;
+	sender->txBuffer[3] = (uint8_t) sender->data.bytes.WX2.byte;
+	sender->txBuffer[4] = (uint8_t) sender->data.bytes.YZ1.byte;
+	sender->txBuffer[5] = (uint8_t) sender->data.bytes.WX1.byte;
+	sender->txBuffer[6] = (uint8_t) sender->data.bytes.YZ0.byte;
+	sender->txBuffer[7] = (uint8_t) sender->data.bytes.WX0.byte;
 	// CRC
 	sender->txBuffer[8] = _crc8( sender->txBuffer, DATA_SIZE );
 

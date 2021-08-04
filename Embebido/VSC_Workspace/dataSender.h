@@ -8,7 +8,7 @@
 
 
     // Tiempo de Timeout
-    #define TIMEOUT_TIME            (uint32_t) 250*MILISEG /* 200*MILISEG */
+    #define TIMEOUT_TIME            (uint32_t) 1*SEG /* 200*MILISEG */
     // Timeouts                 (+ probable)
     #define MAX_TIMEOUTS            (uint8_t) 5
     #define MAX_DATA_LOSS_TIMEOUT   (uint8_t) 5
@@ -141,7 +141,7 @@
     // Funciones "privadas"
     
     // Transmito un sample
-    void _sendLoadedSample( DataSender *sender );
+    void _sendLoadedSample( DataSender *sender, DS_UartInterruptionFlags *flags );
     // Control de Envío/Recepción
     void _enableReceive( void );
     void _enableTransmit( void );

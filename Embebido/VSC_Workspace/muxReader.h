@@ -7,7 +7,7 @@
 
 
 
-    #define TIME_BETWEEM_READS              (uint16_t) 20*SEG/* 1*MIN */
+    #define TIME_BETWEEM_READS              (uint16_t) 18*SEG/* 1*MIN */
     #define TIME_BETWEEN_WRITE_AND_READ     (uint16_t) 10*MILISEG
 
 

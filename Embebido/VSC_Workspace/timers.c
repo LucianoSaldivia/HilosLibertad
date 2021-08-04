@@ -63,6 +63,9 @@ void startTimer( Timer *timer, uint32_t time_ms ){
     timer->init_time = time_ms;
     timer->time_left = time_ms;
 
+    // Actualizo el último systick
+    timer->__last_systick = HAL_GetTick();
+
     // Disparo el timer
     timer->state = TIMER_WORKING;
 
@@ -84,6 +87,9 @@ void fireTimer( Timer *timer ){
     // Seteo el tiempo configurado previamente
     timer->time_left = timer->init_time;
     
+    // Actualizo el último systick
+	timer->__last_systick = HAL_GetTick();
+
     // Disparo el timer
     timer->state = TIMER_WORKING;
 
@@ -111,7 +117,10 @@ void pauseTimer( Timer *timer ){
 // Continuar el timer
 void playTimer( Timer *timer ){
 
-    // Dejo que siga donde quedó
+	// Actualizo el último systick
+	timer->__last_systick = HAL_GetTick();
+
+	// Dejo que siga donde quedó
     timer->state = TIMER_WORKING;
 
 }
