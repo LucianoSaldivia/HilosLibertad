@@ -32,7 +32,7 @@ namespace HilosLibertad
             this.dtp_Desde = new System.Windows.Forms.DateTimePicker();
             this.pic_logoEmpresa = new System.Windows.Forms.PictureBox();
             this.grp_Telares = new System.Windows.Forms.GroupBox();
-            this.chk_SectorTelares = new System.Windows.Forms.CheckBox();
+            this.btn_SeleccionSectorTelares = new System.Windows.Forms.Button();
             this.chk_Telar5 = new System.Windows.Forms.CheckBox();
             this.chk_Telar1 = new System.Windows.Forms.CheckBox();
             this.chk_Telar4 = new System.Windows.Forms.CheckBox();
@@ -45,7 +45,7 @@ namespace HilosLibertad
             this.chk_Telar7 = new System.Windows.Forms.CheckBox();
             this.dgv_CantHorasPorMaquina = new System.Windows.Forms.DataGridView();
             this.grp_Cordoneras = new System.Windows.Forms.GroupBox();
-            this.chk_SectorCordoneras = new System.Windows.Forms.CheckBox();
+            this.btn_SeleccionSectorCordoneras = new System.Windows.Forms.Button();
             this.chk_Cordonera7 = new System.Windows.Forms.CheckBox();
             this.chk_Cordonera8 = new System.Windows.Forms.CheckBox();
             this.chk_Cordonera9 = new System.Windows.Forms.CheckBox();
@@ -56,13 +56,12 @@ namespace HilosLibertad
             this.chk_Cordonera2 = new System.Windows.Forms.CheckBox();
             this.chk_Cordonera3 = new System.Windows.Forms.CheckBox();
             this.grp_Terminacion = new System.Windows.Forms.GroupBox();
-            this.chk_SectorTerminacion = new System.Windows.Forms.CheckBox();
+            this.btn_SeleccionSectorTerminacion = new System.Windows.Forms.Button();
             this.chk_Terminacion3 = new System.Windows.Forms.CheckBox();
             this.chk_Terminacion2 = new System.Windows.Forms.CheckBox();
             this.chk_Terminacion1 = new System.Windows.Forms.CheckBox();
             this.dgv_CantHorasPorSector = new System.Windows.Forms.DataGridView();
             this.btn_Mostrar = new System.Windows.Forms.Button();
-            this.btn_ResetearFiltros = new System.Windows.Forms.Button();
             this.lbl_CantidadHorasPorMaquina = new System.Windows.Forms.Label();
             this.lbl_CantidadHorasPorSector = new System.Windows.Forms.Label();
             this.dgv_CantTotalHorasMaquina = new System.Windows.Forms.DataGridView();
@@ -79,6 +78,8 @@ namespace HilosLibertad
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.grp_FiltroSectoresMaquinas = new System.Windows.Forms.GroupBox();
+            this.btn_DeseleccionarTodo = new System.Windows.Forms.Button();
+            this.btn_SeleccionarTodo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pic_logoEmpresa)).BeginInit();
             this.grp_Telares.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_CantHorasPorMaquina)).BeginInit();
@@ -110,7 +111,7 @@ namespace HilosLibertad
             // 
             // grp_Telares
             // 
-            this.grp_Telares.Controls.Add(this.chk_SectorTelares);
+            this.grp_Telares.Controls.Add(this.btn_SeleccionSectorTelares);
             this.grp_Telares.Controls.Add(this.chk_Telar5);
             this.grp_Telares.Controls.Add(this.chk_Telar1);
             this.grp_Telares.Controls.Add(this.chk_Telar4);
@@ -124,21 +125,21 @@ namespace HilosLibertad
             this.grp_Telares.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grp_Telares.Location = new System.Drawing.Point(12, 26);
             this.grp_Telares.Name = "grp_Telares";
-            this.grp_Telares.Size = new System.Drawing.Size(105, 266);
+            this.grp_Telares.Size = new System.Drawing.Size(105, 310);
             this.grp_Telares.TabIndex = 5;
             this.grp_Telares.TabStop = false;
+            this.grp_Telares.Text = "Telares";
             // 
-            // chk_SectorTelares
+            // btn_SeleccionSectorTelares
             // 
-            this.chk_SectorTelares.AutoSize = true;
-            this.chk_SectorTelares.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chk_SectorTelares.Location = new System.Drawing.Point(8, 0);
-            this.chk_SectorTelares.Name = "chk_SectorTelares";
-            this.chk_SectorTelares.Size = new System.Drawing.Size(67, 19);
-            this.chk_SectorTelares.TabIndex = 26;
-            this.chk_SectorTelares.Text = "Telares";
-            this.chk_SectorTelares.UseVisualStyleBackColor = true;
-            this.chk_SectorTelares.CheckedChanged += new System.EventHandler(this.checkBox_SectorTelares_CheckedChanged);
+            this.btn_SeleccionSectorTelares.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_SeleccionSectorTelares.Location = new System.Drawing.Point(6, 263);
+            this.btn_SeleccionSectorTelares.Name = "btn_SeleccionSectorTelares";
+            this.btn_SeleccionSectorTelares.Size = new System.Drawing.Size(93, 40);
+            this.btn_SeleccionSectorTelares.TabIndex = 18;
+            this.btn_SeleccionSectorTelares.Text = "Deseleccionar\r\ntodo el sector";
+            this.btn_SeleccionSectorTelares.UseVisualStyleBackColor = true;
+            this.btn_SeleccionSectorTelares.Click += new System.EventHandler(this.btn_SeleccionSectorTelares_Click);
             // 
             // chk_Telar5
             // 
@@ -149,6 +150,7 @@ namespace HilosLibertad
             this.chk_Telar5.TabIndex = 17;
             this.chk_Telar5.Text = "Telar 5";
             this.chk_Telar5.UseVisualStyleBackColor = true;
+            this.chk_Telar5.CheckedChanged += new System.EventHandler(this.chk_Telar5_CheckedChanged);
             // 
             // chk_Telar1
             // 
@@ -170,6 +172,7 @@ namespace HilosLibertad
             this.chk_Telar4.TabIndex = 16;
             this.chk_Telar4.Text = "Telar 4";
             this.chk_Telar4.UseVisualStyleBackColor = true;
+            this.chk_Telar4.CheckedChanged += new System.EventHandler(this.chk_Telar4_CheckedChanged);
             // 
             // chk_Telar2
             // 
@@ -180,6 +183,7 @@ namespace HilosLibertad
             this.chk_Telar2.TabIndex = 8;
             this.chk_Telar2.Text = "Telar 2";
             this.chk_Telar2.UseVisualStyleBackColor = true;
+            this.chk_Telar2.CheckedChanged += new System.EventHandler(this.chk_Telar2_CheckedChanged);
             // 
             // chk_Urdidora
             // 
@@ -191,6 +195,7 @@ namespace HilosLibertad
             this.chk_Urdidora.TabIndex = 14;
             this.chk_Urdidora.Text = "Urdidora";
             this.chk_Urdidora.UseVisualStyleBackColor = true;
+            this.chk_Urdidora.CheckedChanged += new System.EventHandler(this.chk_Urdidora_CheckedChanged);
             // 
             // chk_Telar3
             // 
@@ -201,6 +206,7 @@ namespace HilosLibertad
             this.chk_Telar3.TabIndex = 9;
             this.chk_Telar3.Text = "Telar 3";
             this.chk_Telar3.UseVisualStyleBackColor = true;
+            this.chk_Telar3.CheckedChanged += new System.EventHandler(this.chk_Telar3_CheckedChanged);
             // 
             // chk_Telar9
             // 
@@ -211,6 +217,7 @@ namespace HilosLibertad
             this.chk_Telar9.TabIndex = 13;
             this.chk_Telar9.Text = "Telar 9";
             this.chk_Telar9.UseVisualStyleBackColor = true;
+            this.chk_Telar9.CheckedChanged += new System.EventHandler(this.chk_Telar9_CheckedChanged);
             // 
             // chk_Telar6
             // 
@@ -221,6 +228,7 @@ namespace HilosLibertad
             this.chk_Telar6.TabIndex = 10;
             this.chk_Telar6.Text = "Telar 6";
             this.chk_Telar6.UseVisualStyleBackColor = true;
+            this.chk_Telar6.CheckedChanged += new System.EventHandler(this.chk_Telar6_CheckedChanged);
             // 
             // chk_Telar8
             // 
@@ -231,6 +239,7 @@ namespace HilosLibertad
             this.chk_Telar8.TabIndex = 12;
             this.chk_Telar8.Text = "Telar 8";
             this.chk_Telar8.UseVisualStyleBackColor = true;
+            this.chk_Telar8.CheckedChanged += new System.EventHandler(this.chk_Telar8_CheckedChanged);
             // 
             // chk_Telar7
             // 
@@ -241,6 +250,7 @@ namespace HilosLibertad
             this.chk_Telar7.TabIndex = 11;
             this.chk_Telar7.Text = "Telar 7";
             this.chk_Telar7.UseVisualStyleBackColor = true;
+            this.chk_Telar7.CheckedChanged += new System.EventHandler(this.chk_Telar7_CheckedChanged);
             // 
             // dgv_CantHorasPorMaquina
             // 
@@ -255,7 +265,7 @@ namespace HilosLibertad
             // 
             // grp_Cordoneras
             // 
-            this.grp_Cordoneras.Controls.Add(this.chk_SectorCordoneras);
+            this.grp_Cordoneras.Controls.Add(this.btn_SeleccionSectorCordoneras);
             this.grp_Cordoneras.Controls.Add(this.chk_Cordonera7);
             this.grp_Cordoneras.Controls.Add(this.chk_Cordonera8);
             this.grp_Cordoneras.Controls.Add(this.chk_Cordonera9);
@@ -268,21 +278,21 @@ namespace HilosLibertad
             this.grp_Cordoneras.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grp_Cordoneras.Location = new System.Drawing.Point(126, 26);
             this.grp_Cordoneras.Name = "grp_Cordoneras";
-            this.grp_Cordoneras.Size = new System.Drawing.Size(125, 242);
+            this.grp_Cordoneras.Size = new System.Drawing.Size(125, 310);
             this.grp_Cordoneras.TabIndex = 18;
             this.grp_Cordoneras.TabStop = false;
+            this.grp_Cordoneras.Text = "Cordoneras";
             // 
-            // chk_SectorCordoneras
+            // btn_SeleccionSectorCordoneras
             // 
-            this.chk_SectorCordoneras.AutoSize = true;
-            this.chk_SectorCordoneras.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chk_SectorCordoneras.Location = new System.Drawing.Point(8, 0);
-            this.chk_SectorCordoneras.Name = "chk_SectorCordoneras";
-            this.chk_SectorCordoneras.Size = new System.Drawing.Size(90, 19);
-            this.chk_SectorCordoneras.TabIndex = 27;
-            this.chk_SectorCordoneras.Text = "Cordoneras";
-            this.chk_SectorCordoneras.UseVisualStyleBackColor = true;
-            this.chk_SectorCordoneras.CheckedChanged += new System.EventHandler(this.checkBox_SectorCordoneras_CheckedChanged);
+            this.btn_SeleccionSectorCordoneras.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_SeleccionSectorCordoneras.Location = new System.Drawing.Point(6, 263);
+            this.btn_SeleccionSectorCordoneras.Name = "btn_SeleccionSectorCordoneras";
+            this.btn_SeleccionSectorCordoneras.Size = new System.Drawing.Size(113, 40);
+            this.btn_SeleccionSectorCordoneras.TabIndex = 19;
+            this.btn_SeleccionSectorCordoneras.Text = "Deseleccionar\r\ntodo el sector";
+            this.btn_SeleccionSectorCordoneras.UseVisualStyleBackColor = true;
+            this.btn_SeleccionSectorCordoneras.Click += new System.EventHandler(this.btn_SeleccionSectorCordoneras_Click);
             // 
             // chk_Cordonera7
             // 
@@ -293,6 +303,7 @@ namespace HilosLibertad
             this.chk_Cordonera7.TabIndex = 19;
             this.chk_Cordonera7.Text = "Cordonera 7";
             this.chk_Cordonera7.UseVisualStyleBackColor = true;
+            this.chk_Cordonera7.CheckedChanged += new System.EventHandler(this.chk_Cordonera7_CheckedChanged);
             // 
             // chk_Cordonera8
             // 
@@ -303,6 +314,7 @@ namespace HilosLibertad
             this.chk_Cordonera8.TabIndex = 20;
             this.chk_Cordonera8.Text = "Cordonera 8";
             this.chk_Cordonera8.UseVisualStyleBackColor = true;
+            this.chk_Cordonera8.CheckedChanged += new System.EventHandler(this.chk_Cordonera8_CheckedChanged);
             // 
             // chk_Cordonera9
             // 
@@ -313,6 +325,7 @@ namespace HilosLibertad
             this.chk_Cordonera9.TabIndex = 21;
             this.chk_Cordonera9.Text = "Cordonera 9";
             this.chk_Cordonera9.UseVisualStyleBackColor = true;
+            this.chk_Cordonera9.CheckedChanged += new System.EventHandler(this.chk_Cordonera9_CheckedChanged);
             // 
             // chk_Cordonera4
             // 
@@ -323,6 +336,7 @@ namespace HilosLibertad
             this.chk_Cordonera4.TabIndex = 10;
             this.chk_Cordonera4.Text = "Cordonera 4";
             this.chk_Cordonera4.UseVisualStyleBackColor = true;
+            this.chk_Cordonera4.CheckedChanged += new System.EventHandler(this.chk_Cordonera4_CheckedChanged);
             // 
             // chk_Cordonera5
             // 
@@ -333,6 +347,7 @@ namespace HilosLibertad
             this.chk_Cordonera5.TabIndex = 11;
             this.chk_Cordonera5.Text = "Cordonera 5";
             this.chk_Cordonera5.UseVisualStyleBackColor = true;
+            this.chk_Cordonera5.CheckedChanged += new System.EventHandler(this.chk_Cordonera5_CheckedChanged);
             // 
             // chk_Cordonera6
             // 
@@ -343,6 +358,7 @@ namespace HilosLibertad
             this.chk_Cordonera6.TabIndex = 12;
             this.chk_Cordonera6.Text = "Cordonera 6";
             this.chk_Cordonera6.UseVisualStyleBackColor = true;
+            this.chk_Cordonera6.CheckedChanged += new System.EventHandler(this.chk_Cordonera6_CheckedChanged);
             // 
             // chk_Cordonera1
             // 
@@ -364,6 +380,7 @@ namespace HilosLibertad
             this.chk_Cordonera2.TabIndex = 8;
             this.chk_Cordonera2.Text = "Cordonera 2";
             this.chk_Cordonera2.UseVisualStyleBackColor = true;
+            this.chk_Cordonera2.CheckedChanged += new System.EventHandler(this.chk_Cordonera2_CheckedChanged);
             // 
             // chk_Cordonera3
             // 
@@ -374,31 +391,32 @@ namespace HilosLibertad
             this.chk_Cordonera3.TabIndex = 9;
             this.chk_Cordonera3.Text = "Cordonera 3";
             this.chk_Cordonera3.UseVisualStyleBackColor = true;
+            this.chk_Cordonera3.CheckedChanged += new System.EventHandler(this.chk_Cordonera3_CheckedChanged);
             // 
             // grp_Terminacion
             // 
-            this.grp_Terminacion.Controls.Add(this.chk_SectorTerminacion);
+            this.grp_Terminacion.Controls.Add(this.btn_SeleccionSectorTerminacion);
             this.grp_Terminacion.Controls.Add(this.chk_Terminacion3);
             this.grp_Terminacion.Controls.Add(this.chk_Terminacion2);
             this.grp_Terminacion.Controls.Add(this.chk_Terminacion1);
             this.grp_Terminacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grp_Terminacion.Location = new System.Drawing.Point(260, 26);
             this.grp_Terminacion.Name = "grp_Terminacion";
-            this.grp_Terminacion.Size = new System.Drawing.Size(135, 104);
+            this.grp_Terminacion.Size = new System.Drawing.Size(135, 310);
             this.grp_Terminacion.TabIndex = 22;
             this.grp_Terminacion.TabStop = false;
+            this.grp_Terminacion.Text = "Terminación";
             // 
-            // chk_SectorTerminacion
+            // btn_SeleccionSectorTerminacion
             // 
-            this.chk_SectorTerminacion.AutoSize = true;
-            this.chk_SectorTerminacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chk_SectorTerminacion.Location = new System.Drawing.Point(8, 0);
-            this.chk_SectorTerminacion.Name = "chk_SectorTerminacion";
-            this.chk_SectorTerminacion.Size = new System.Drawing.Size(95, 19);
-            this.chk_SectorTerminacion.TabIndex = 28;
-            this.chk_SectorTerminacion.Text = "Terminación";
-            this.chk_SectorTerminacion.UseVisualStyleBackColor = true;
-            this.chk_SectorTerminacion.CheckedChanged += new System.EventHandler(this.checkBox_SectorTerminacion_CheckedChanged);
+            this.btn_SeleccionSectorTerminacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_SeleccionSectorTerminacion.Location = new System.Drawing.Point(6, 263);
+            this.btn_SeleccionSectorTerminacion.Name = "btn_SeleccionSectorTerminacion";
+            this.btn_SeleccionSectorTerminacion.Size = new System.Drawing.Size(123, 40);
+            this.btn_SeleccionSectorTerminacion.TabIndex = 22;
+            this.btn_SeleccionSectorTerminacion.Text = "Deseleccionar\r\ntodo el sector";
+            this.btn_SeleccionSectorTerminacion.UseVisualStyleBackColor = true;
+            this.btn_SeleccionSectorTerminacion.Click += new System.EventHandler(this.btn_SeleccionSectorTerminacion_Click);
             // 
             // chk_Terminacion3
             // 
@@ -409,6 +427,7 @@ namespace HilosLibertad
             this.chk_Terminacion3.TabIndex = 19;
             this.chk_Terminacion3.Text = "Terminación 3";
             this.chk_Terminacion3.UseVisualStyleBackColor = true;
+            this.chk_Terminacion3.CheckedChanged += new System.EventHandler(this.chk_Terminacion3_CheckedChanged);
             // 
             // chk_Terminacion2
             // 
@@ -419,6 +438,7 @@ namespace HilosLibertad
             this.chk_Terminacion2.TabIndex = 10;
             this.chk_Terminacion2.Text = "Terminación 2";
             this.chk_Terminacion2.UseVisualStyleBackColor = true;
+            this.chk_Terminacion2.CheckedChanged += new System.EventHandler(this.chk_Terminacion2_CheckedChanged);
             // 
             // chk_Terminacion1
             // 
@@ -429,6 +449,7 @@ namespace HilosLibertad
             this.chk_Terminacion1.TabIndex = 7;
             this.chk_Terminacion1.Text = "Terminación 1";
             this.chk_Terminacion1.UseVisualStyleBackColor = true;
+            this.chk_Terminacion1.CheckedChanged += new System.EventHandler(this.chk_Terminacion1_CheckedChanged);
             // 
             // dgv_CantHorasPorSector
             // 
@@ -444,24 +465,13 @@ namespace HilosLibertad
             // btn_Mostrar
             // 
             this.btn_Mostrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Mostrar.Location = new System.Drawing.Point(18, 481);
+            this.btn_Mostrar.Location = new System.Drawing.Point(18, 565);
             this.btn_Mostrar.Name = "btn_Mostrar";
-            this.btn_Mostrar.Size = new System.Drawing.Size(409, 36);
+            this.btn_Mostrar.Size = new System.Drawing.Size(409, 40);
             this.btn_Mostrar.TabIndex = 24;
             this.btn_Mostrar.Text = "Mostrar";
             this.btn_Mostrar.UseVisualStyleBackColor = true;
             this.btn_Mostrar.Click += new System.EventHandler(this.btn_Mostrar_Click);
-            // 
-            // btn_ResetearFiltros
-            // 
-            this.btn_ResetearFiltros.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_ResetearFiltros.Location = new System.Drawing.Point(276, 264);
-            this.btn_ResetearFiltros.Name = "btn_ResetearFiltros";
-            this.btn_ResetearFiltros.Size = new System.Drawing.Size(122, 28);
-            this.btn_ResetearFiltros.TabIndex = 26;
-            this.btn_ResetearFiltros.Text = "Resetear Filtros";
-            this.btn_ResetearFiltros.UseVisualStyleBackColor = true;
-            this.btn_ResetearFiltros.Click += new System.EventHandler(this.button_ResetearFiltros_Click);
             // 
             // lbl_CantidadHorasPorMaquina
             // 
@@ -486,10 +496,10 @@ namespace HilosLibertad
             this.dgv_CantTotalHorasMaquina.AllowUserToAddRows = false;
             this.dgv_CantTotalHorasMaquina.AllowUserToDeleteRows = false;
             this.dgv_CantTotalHorasMaquina.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_CantTotalHorasMaquina.Location = new System.Drawing.Point(453, 484);
+            this.dgv_CantTotalHorasMaquina.Location = new System.Drawing.Point(453, 518);
             this.dgv_CantTotalHorasMaquina.Name = "dgv_CantTotalHorasMaquina";
             this.dgv_CantTotalHorasMaquina.ReadOnly = true;
-            this.dgv_CantTotalHorasMaquina.Size = new System.Drawing.Size(390, 32);
+            this.dgv_CantTotalHorasMaquina.Size = new System.Drawing.Size(390, 37);
             this.dgv_CantTotalHorasMaquina.TabIndex = 30;
             // 
             // lbl_CantidadTotalHorasMaquina
@@ -670,7 +680,7 @@ namespace HilosLibertad
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(730, 494);
+            this.label3.Location = new System.Drawing.Point(729, 530);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(104, 13);
             this.label3.TabIndex = 37;
@@ -678,23 +688,46 @@ namespace HilosLibertad
             // 
             // grp_FiltroSectoresMaquinas
             // 
+            this.grp_FiltroSectoresMaquinas.Controls.Add(this.btn_DeseleccionarTodo);
+            this.grp_FiltroSectoresMaquinas.Controls.Add(this.btn_SeleccionarTodo);
             this.grp_FiltroSectoresMaquinas.Controls.Add(this.grp_Telares);
             this.grp_FiltroSectoresMaquinas.Controls.Add(this.grp_Cordoneras);
             this.grp_FiltroSectoresMaquinas.Controls.Add(this.grp_Terminacion);
-            this.grp_FiltroSectoresMaquinas.Controls.Add(this.btn_ResetearFiltros);
             this.grp_FiltroSectoresMaquinas.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grp_FiltroSectoresMaquinas.Location = new System.Drawing.Point(18, 165);
             this.grp_FiltroSectoresMaquinas.Name = "grp_FiltroSectoresMaquinas";
-            this.grp_FiltroSectoresMaquinas.Size = new System.Drawing.Size(409, 304);
+            this.grp_FiltroSectoresMaquinas.Size = new System.Drawing.Size(409, 390);
             this.grp_FiltroSectoresMaquinas.TabIndex = 40;
             this.grp_FiltroSectoresMaquinas.TabStop = false;
             this.grp_FiltroSectoresMaquinas.Text = "Filtro por Sectores/Máquinas";
+            // 
+            // btn_DeseleccionarTodo
+            // 
+            this.btn_DeseleccionarTodo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_DeseleccionarTodo.Location = new System.Drawing.Point(12, 344);
+            this.btn_DeseleccionarTodo.Name = "btn_DeseleccionarTodo";
+            this.btn_DeseleccionarTodo.Size = new System.Drawing.Size(172, 34);
+            this.btn_DeseleccionarTodo.TabIndex = 24;
+            this.btn_DeseleccionarTodo.Text = "Deseleccionar todo";
+            this.btn_DeseleccionarTodo.UseVisualStyleBackColor = true;
+            this.btn_DeseleccionarTodo.Click += new System.EventHandler(this.btn_ResetearTodo_Click);
+            // 
+            // btn_SeleccionarTodo
+            // 
+            this.btn_SeleccionarTodo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_SeleccionarTodo.Location = new System.Drawing.Point(190, 344);
+            this.btn_SeleccionarTodo.Name = "btn_SeleccionarTodo";
+            this.btn_SeleccionarTodo.Size = new System.Drawing.Size(205, 34);
+            this.btn_SeleccionarTodo.TabIndex = 23;
+            this.btn_SeleccionarTodo.Text = "Seleccionar todo";
+            this.btn_SeleccionarTodo.UseVisualStyleBackColor = true;
+            this.btn_SeleccionarTodo.Click += new System.EventHandler(this.btn_SeleccionarTodo_Click);
             // 
             // frm_Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(863, 535);
+            this.ClientSize = new System.Drawing.Size(863, 624);
             this.Controls.Add(this.grp_FiltroSectoresMaquinas);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -763,10 +796,6 @@ namespace HilosLibertad
         private System.Windows.Forms.CheckBox chk_Terminacion1;
         private System.Windows.Forms.DataGridView dgv_CantHorasPorSector;
         private System.Windows.Forms.Button btn_Mostrar;
-        private System.Windows.Forms.CheckBox chk_SectorTelares;
-        private System.Windows.Forms.CheckBox chk_SectorCordoneras;
-        private System.Windows.Forms.CheckBox chk_SectorTerminacion;
-        private System.Windows.Forms.Button btn_ResetearFiltros;
         private System.Windows.Forms.Label lbl_CantidadHorasPorMaquina;
         private System.Windows.Forms.Label lbl_CantidadHorasPorSector;
         private System.Windows.Forms.DataGridView dgv_CantTotalHorasMaquina;
@@ -783,6 +812,11 @@ namespace HilosLibertad
         private System.Windows.Forms.Label lbl_Hasta;
         private System.Windows.Forms.Label lbl_Desde;
         private System.Windows.Forms.GroupBox grp_FiltroSectoresMaquinas;
+        private System.Windows.Forms.Button btn_SeleccionSectorTelares;
+        private System.Windows.Forms.Button btn_SeleccionSectorCordoneras;
+        private System.Windows.Forms.Button btn_SeleccionSectorTerminacion;
+        private System.Windows.Forms.Button btn_SeleccionarTodo;
+        private System.Windows.Forms.Button btn_DeseleccionarTodo;
     }
 }
 
