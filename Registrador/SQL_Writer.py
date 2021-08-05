@@ -1,5 +1,6 @@
 import pyodbc
 from datetime import datetime, timedelta
+import Registrador
 
 # Tutoriales y fuentes:
     #
@@ -15,9 +16,9 @@ table_name = "HL.registros"
 
 
 VIEW_NAME = "HL.v_registrador"
-PROC_INSERT = "HL.sp_insertarSesion"
-PROC_UPDATE = "HL.sp_actualizarSesion"
-PROC_FINISH = "HL.sp_terminarSesion"
+PROC_SESSION_STARTED    = "HL.sp_insertarSesion"
+PROC_SESSION_CONTINUES  = "HL.sp_actualizarSesion"
+PROC_SESSION_FINISHED   = "HL.sp_terminarSesion"
 
 #   Select Functions
 def selectLast(conn: any, n: int):
@@ -38,52 +39,55 @@ def selectAll(conn: any):
     cursor.execute(f"SELECT * FROM {VIEW_NAME} ORDER BY LAST_DT DESC")
     _showSelectedRows(cursor)
 
+
 #   Procedures Queries Functions
-def sessionStarts(conn, data: dict):
-    """Llamo al procedimiento PROC_INSERT como en el siguiente ejemplo:
+def sessionStarted(conn, id_maq: int, timestamp: datetime):
+    """Llamo al procedimiento PROC_SESSION_STARTED como en el siguiente ejemplo:
     EXEC HL.sp_insertarSesion 1, '2018-30-09 16:00:00'
     donde le paso:
-        ID_MAQ
-		INIT_DT como 'YYYY-DD-MM HH:MM:SS'
+        id_maq
+		timestamp como 'YYYY-DD-MM HH:MM:SS'
     """
-    print("sessionStarts")
+
+    print("sessionStarted")
     cursor = conn.cursor()
 
-    init_dt_str = data[INIT_DT].strftime("%Y-%d-%m %H:%M:%S")
+    formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
     # Ejecuto el procedimiento
-    cursor.execute( f"EXEC {PROC_INSERT} {data[ID_MAQ]}, '{init_dt_str}'" )
+    cursor.execute( f"EXEC {PROC_SESSION_STARTED} {id_maq}, '{formatted_timestamp}'" )
     conn.commit()
-def sessionContinues(conn, data: dict):
-    """Llamo al procedimiento PROC_UPDATE como en el siguiente ejemplo:
+def sessionContinues(conn, id_maq: int, timestamp: datetime):
+    """Llamo al procedimiento PROC_SESSION_CONTINUES como en el siguiente ejemplo:
     EXEC HL.sp_actualizarSesion 1, '2018-30-09 16:05:00'
     donde le paso:
-        ID_MAQ
-		LAST_DT como 'YYYY-DD-MM HH:MM:SS'
+        id_maq
+		timestamp como 'YYYY-DD-MM HH:MM:SS'
     """
     print("sessionContinues")
     cursor = conn.cursor()
 
-    last_dt_str = data[LAST_DT].strftime("%Y-%d-%m %H:%M:%S")
+    formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
     # Ejecuto el procedimiento  
-    cursor.execute( f"EXEC {PROC_UPDATE} {data[ID_MAQ]}, '{last_dt_str}'" )
+    cursor.execute( f"EXEC {PROC_SESSION_CONTINUES} {id_maq}, '{formatted_timestamp}'" )
     conn.commit()
-def sessionFinishes(conn, data: dict):
-    """Llamo al procedimiento PROC_FINISH como en el siguiente ejemplo:
+def sessionFinished(conn, id_maq: int, timestamp: datetime):
+    """Llamo al procedimiento PROC_SESSION_FINISHED como en el siguiente ejemplo:
     EXEC HL.sp_terminarSesion 1, '2018-30-09 16:45:00'
     donde le paso:
-        ID_MAQ
-		LAST_DT como 'YYYY-DD-MM HH:MM:SS'
+        id_maq
+		timestamp como 'YYYY-DD-MM HH:MM:SS'
     """
     print("sessionFinishes")
     cursor = conn.cursor()
 
-    last_dt_str = data[LAST_DT].strftime("%Y-%d-%m %H:%M:%S")
+    formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
     # Ejecuto el procedimiento
-    cursor.execute( f"EXEC {PROC_FINISH} {data[ID_MAQ]}, '{last_dt_str}'" )
+    cursor.execute( f"EXEC {PROC_SESSION_FINISHED} {id_maq}, '{formatted_timestamp}'" )
     conn.commit()
 
-#   Delete table Function
-def deleteTable(conn, table: str):
+
+#   Clear Table Function
+def clearTable(conn, table: str):
     """Limpio la tabla table completa, como se haría en el siguiente ejemplo:
     DELETE FROM HL.registros
     DBCC CHECKIDENT ('HL.registros', RESEED, 0)
@@ -94,8 +98,7 @@ def deleteTable(conn, table: str):
     conn.commit()
     # Resiembro (próximo entra con índice 1)
     cursor.execute( f"DBCC CHECKIDENT ('{table}', RESEED, 0)" )
-    conn.commit()
-    
+    conn.commit()  
 #   Connection Function
 def connectToDatabase():
     driver_str = _getDriverName()
@@ -109,14 +112,41 @@ def connectToDatabase():
 
     try:
         conn = pyodbc.connect(connection_str)
+        return conn
     except:
         print("Hubo un problema en la conexión a la base de datos...")
-    return conn
 
-ID_MAQ = "idMaquina"
-INIT_DT = "fechaHoraEncendido"
-LAST_DT = "fechaHoraUltimoRegistroEncendido"
-TRND_OFF = "fueApagadaPorOperarioOPorFallaParticular"
+
+#   OLD Procedures Queries Functions
+    # def sessionStarts(conn, data: dict):
+    #     """Llamo al procedimiento PROC_SESSION_STARTED como en el siguiente ejemplo:
+    #     EXEC HL.sp_insertarSesion 1, '2018-30-09 16:00:00'
+    #     donde le paso:
+    #         ID_MAQ
+    # 		INIT_DT como 'YYYY-DD-MM HH:MM:SS'
+    #     """
+    #     print("sessionStarts")
+    #     cursor = conn.cursor()
+
+    #     init_dt_str = data[INIT_DT].strftime("%Y-%d-%m %H:%M:%S")
+    #     # Ejecuto el procedimiento
+    #     cursor.execute( f"EXEC {PROC_SESSION_STARTED} {data[ID_MAQ]}, '{init_dt_str}'" )
+    #     conn.commit()
+    # def sessionContinues(conn, data: dict):
+    #     """Llamo al procedimiento PROC_SESSION_CONTINUES como en el siguiente ejemplo:
+    #     EXEC HL.sp_actualizarSesion 1, '2018-30-09 16:05:00'
+    #     donde le paso:
+    #         ID_MAQ
+    # 		LAST_DT como 'YYYY-DD-MM HH:MM:SS'
+    #     """
+    #     print("sessionContinues")
+    #     cursor = conn.cursor()
+
+    #     last_dt_str = data[LAST_DT].strftime("%Y-%d-%m %H:%M:%S")
+    #     # Ejecuto el procedimiento  
+    #     cursor.execute( f"EXEC {PROC_SESSION_CONTINUES} {data[ID_MAQ]}, '{last_dt_str}'" )
+    #     conn.commit()
+    # def sessionFinishes(conn, data: dict):
 
 #   Private Functions
 def _showSelectedRows(c: any):
@@ -177,37 +207,36 @@ if __name__ == "__main__":
 
     with connectToDatabase() as conn:
 
-        new_data = {
-            ID_MAQ: 1,
-            INIT_DT: datetime.now() - timedelta(minutes = 45),
-            LAST_DT: datetime.now(),
-            TRND_OFF: 0
-        }
+        new_data = [
+            1, 
+            Registrador.Event.SESSION_STARTED, 
+            datetime.now() - timedelta(minutes = 45)
+        ]
 
-        sessionStarts(conn, new_data)
+        sessionStarted(conn, new_data[0], new_data[2])
+        selectLast(conn, 30)
         
-        new_data2 = {
-            ID_MAQ: 1,
-            INIT_DT: datetime.now() - timedelta(minutes = 45),
-            LAST_DT: datetime.now() + timedelta(hours = 2),
-            TRND_OFF: 0
-        }
+        new_data = [
+            1, 
+            Registrador.Event.SESSION_CONTINUES, 
+            datetime.now() + timedelta(hours = 2)
+        ]
 
-        sessionContinues(conn, new_data2)
+        sessionContinues(conn, new_data[0], new_data[2])
         selectLast(conn, 30)
 
-        new_data3 = {
-            ID_MAQ: 1,
-            INIT_DT: datetime.now() - timedelta(minutes = 45),
-            LAST_DT: datetime.now() + timedelta(hours = 2, minutes= 15),
-            TRND_OFF: 0
-        }
+        new_data = [
+            1, 
+            Registrador.Event.SESSION_FINISHED, 
+            datetime.now() + timedelta(hours = 2, minutes= 15)
+        ]
 
-        sessionFinishes(conn, new_data3)
+        sessionFinished(conn, new_data[0], new_data[2])
 
         selectLast(conn, 30)
         print()
 
-        deleteTable(conn, table_name)
+        clearTable(conn, table_name)
+        print("Table cleared OK")
 
     print("Todo OK")
