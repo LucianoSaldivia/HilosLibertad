@@ -7,8 +7,16 @@
 
 
 
-    #define TIME_BETWEEM_READS              (uint16_t) 18*SEG/* 1*MIN */
-    #define TIME_BETWEEN_WRITE_AND_READ     (uint16_t) 10*MILISEG
+    /* TIEMPOS --- LEER
+
+    TIME_DESIRED_BETWEEN_READS >= 30 * TIMEOUT_TIME
+    * -> el define de TIMEOUT_TIME está en dataSender.h
+
+    */
+	#define TIME_DESIRED_BETWEEN_READS		((uint16_t) (12 * SEG))	/* (1 * MIN) */
+    #define TIME_BETWEEN_WRITE_AND_READ     ((uint16_t) (10 * MILISEG))
+
+	#define TIME_BETWEEN_READS              ((uint16_t) (TIME_DESIRED_BETWEEN_READS - 4*TIME_BETWEEN_WRITE_AND_READ))
 
 
     // estados del lector

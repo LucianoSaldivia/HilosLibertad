@@ -21,7 +21,7 @@ PB7  -> Y0
 PB8  -> Z0
 
  * Entradas de Lectura (1)
-PA12 -> W1
+PA12 -> W1 (A1)
 PA15 -> X1
 PB3  -> Y1
 PB4  -> Z1
@@ -54,6 +54,23 @@ PB10 -> UART3 - Tx
 PB1  -> Output - Enable Tx UART3 (0 -> RxOnly, 1 -> TxOnly)
 
 
++ Trama enviada ONLY DATA MODE
+10 bytes en total:
+	- 8 bytes que contienen los estados de las máquinas (en este orden: M63 a M0)
+	- 1 byte de CRC, calculado a partir de los anteriores 8 bytes
+	- 1 byte de fin de trama
++ Trama enviada INFO DATA MODE
+19 bytes en total:
+	- 8 bytes que contienen los estados de las máquinas (en este orden: M63 a M0)
+	- 1 byte de CRC, calculado a partir de los anteriores 8 bytes
+	- 3 bytes de timeouts (TXY), donde T es el caracter 'T', X es la cuenta de datos perdidos por timeouts e Y son los timeouts de ESTA trama
+	- 3 bytes de NAKs (NXY), donde N es el caracter 'N', X es la cuenta de datos perdidos por NAKs e Y son los NAKs de ESTA trama
+	- 3 bytes de unex_ans (UXY), donde U es el caracter 'U', X es la cuenta de datos perdidos por unex_ans e Y son los unex_ans de ESTA trama
+	- 1 byte de fin de trama
+	
+	* Cuando un contador Y llega a 5, se reinicia y se cuenta un dato perdido por ésta causa.
+	* Cuando un contador X llega a 5, queda en 5 como techo, por más que se sigan perdiendo datos.
+	* Cuando se recibe un ACK, todos los contadores es reinician.
 
 
 --------	Registrador    --------

@@ -23,7 +23,7 @@ void FSM_MuxReader( MuxReader *r ){
             // Si el timer está esperando
         	if( timerIsWaiting( &(r->timer) ) ){
         		// Disparo el timer para la siguiente lectura
-        		startTimer( &(r->timer), TIME_BETWEEM_READS );
+        		startTimer( &(r->timer), TIME_BETWEEN_READS );
         	}
         	else if( timerJustFinished( &(r->timer) ) ){
         		// Apago el timer
@@ -115,7 +115,7 @@ void FSM_MuxReader( MuxReader *r ){
                 // Cambio las salidas AB a 00
                 _writeAB( 0, 0 );
                 // Disparo el timer para la próxima lectura
-                startTimer( &(r->timer), TIME_BETWEEM_READS );
+                startTimer( &(r->timer), TIME_BETWEEN_READS );
                 // Voy al siguiente estado
                 r->state = READER_READY;
             }
