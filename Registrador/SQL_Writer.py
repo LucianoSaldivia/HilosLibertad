@@ -1,3 +1,5 @@
+# SQL_Writer.py
+
 import pyodbc
 from datetime import datetime, timedelta
 import Registrador

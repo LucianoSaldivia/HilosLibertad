@@ -92,6 +92,9 @@ Paquetes instalados:
     "pip install pyserial" (import serial)
     "pip install crc8" (import crc8)
 
+	+ Si detecta desconexión por timeout del serial_port, guarda los reportes que tenga en la base de datos, resetea samples y reportes, y espera próxima trama sin timeout. Así, la próxima trama será como una primera trama, tomando cada máquina encendida como una SESSION_STARTED.
+	+ Si hay un ACK, duerme por un tiempo (menor al tiempo entre sampleados del Embebido, pero mayor al tiempo máximo de peor caso entre la primer y última trama), y limpia el buffer de recepción. De esta forma, si al enviar "ACK" el Embebido recibe "unex_ans" y reenvía el paquete, el Registrador no lo toma como un paquete nuevo, y simplemente lo limpia. NO SE TOMA EN CUENTA EL POSIBLE CASO: aunque muy poco probable, de que el Registrador siga respondiendo "ACK", y el Embebido siga recibiendo "unex_ans", por lo que el Embebido llegaría a un estado de alarma, pero el Registrador, seguiría registrando normalmente.
+
 --------	SQL Server    --------
 .gitignore agregado
 

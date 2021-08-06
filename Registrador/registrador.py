@@ -1,9 +1,12 @@
-# test_hilos_main.py
+# Registrador.py
 
 import serial
 import crc8
 from datetime import datetime
 import enum
+import defines
+import time
+
 # import Sesiones
 import SQL_Writer
 
@@ -18,14 +21,12 @@ import SQL_Writer
 # Definiciones útiles
 PUERTO = "COM3"
 MAX_FRAMES_TO_WRITE = 5
-MAX_CANT_RECEPCIONES = 300
-CANT_MAQ = 64
 
-ACK = b'%'
-NAK = b'?'
-CHAR_FINISH_PDU = b'#'
-BUFFER_SIZE_ONLY_DATA_MODE = 10
-BUFFER_SIZE_DATA_INFO_MODE = 19
+CLEAR_RX_BUFFER_TIME = 14 * defines.TIMEOUT_TIME
+DISCONNECTION_TIME = 2 * defines.TIME_DESIRED_BETWEEN_READS
+
+MAX_CANT_RECEPCIONES = 300
+
 
 
 # Posibles estados de cada máquina
@@ -60,10 +61,10 @@ def showReceivedPDU(PDU_bytes: bytes) -> None:
     bits_string = str()
     ascii_string = str()
     # Convierto los datos [0:7] y el CRC [8] a string
-    for i in range(0, BUFFER_SIZE_ONLY_DATA_MODE - 1):
+    for i in range(0, defines.BUFFER_SIZE_ONLY_DATA_MODE - 1):
         bits_string += "{0:08b}".format( ord(PDU_bytes.decode()[i]) ) + " "
     # Si la trama es DATA + INFO, muestro el resto en ascii [9:17]
-    if len(PDU_bytes) == BUFFER_SIZE_DATA_INFO_MODE:
+    if len(PDU_bytes) == defines.BUFFER_SIZE_DATA_INFO_MODE:
         ascii_string += chr(PDU_bytes[9]) + ":" \
                         + chr(PDU_bytes[10]) \
                         + chr(PDU_bytes[11]) \
@@ -87,7 +88,7 @@ def initSample() -> list:
     out.append( datetime.now() )
 
     # Estados de 64 máquinas en 0
-    for i in range(1, CANT_MAQ+1):
+    for i in range(1, defines.CANT_MAQ+1):
         out.append( State.STOPPED )  
     return out
 # Obtener Samples a partir de Trama
@@ -222,24 +223,6 @@ def writeDatabaseFromReports(report_list: list, db_con: any):
 
 if __name__ == "__main__":
 
-
-    # def bytes_frombitstring(s: str):
-    #     return int(s, 2).to_bytes(len(s) // 8, byteorder='big')
-
-    # # last_raw_sample = bytes.fromhex( "0000" + "0000" + "0000" + "0001" )
-    # last_raw_sample = bytes_frombitstring( "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000001" )
-    # curr_raw_sample = bytes_frombitstring( "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000001" )
-
-    # last_sample = Sesiones.getSamplesFromFrame( last_raw_sample, datetime.now() )  
-    # curr_sample = Sesiones.getSamplesFromFrame( curr_raw_sample, datetime.now() )
-
-    # print( last_sample[0] )
-    # print( last_sample[1:len(last_sample)] )
-    # print( curr_sample[0] )
-    # print( curr_sample[1:len(curr_sample)] )
-
-    # new_reports = Sesiones.getReportList( last_sample, curr_sample )
-
     # Inicio los Samples
     prev_sample = initSample()
     curr_sample = initSample()
@@ -255,66 +238,130 @@ if __name__ == "__main__":
                         baudrate = 115200,
                         parity = serial.PARITY_NONE,
                         stopbits = serial.STOPBITS_ONE,
-                        bytesize = serial.EIGHTBITS ) as serial_port:
+                        bytesize = serial.EIGHTBITS,
+                        timeout = DISCONNECTION_TIME 
+                        ) as serial_port:
 
         # Limpio cualquier basura previa en el puerto
         serial_port.flush()
 
         # Loop principal
+        trama = bytes()
+        hubo_desconexion = False
         contador_tramas = 1
         tramas_a_escribir = 0
         while contador_tramas <= MAX_CANT_RECEPCIONES:
             
-            # Recibo hasta CHAR_FINISH_PDU
-            trama = serial_port.read_until( CHAR_FINISH_PDU )
+            # Si todo anda bien
+            if not hubo_desconexion:
+                # Recibo hasta CHAR_FINISH_PDU, con DISCONNECTION_TIME segundos como límite
+                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+            # Si hubo desconexion
+            else:
+                # Saco el timeout
+                serial_port.timeout = None
+                # Recibo hasta CHAR_FINISH_PDU, sin límite de tiempo
+                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+
             
-            # Si la trama no se recibió completa
-            # TESTEAR EL USO NON-BLOCKING
+            # Si se recibió una trama completa
+            if len(trama) >= defines.BUFFER_SIZE_ONLY_DATA_MODE:
             
-            # Chequeo el PDU
-            check = checkReceivedPDU(trama)
+                # Chequeo el PDU
+                check = checkReceivedPDU(trama)
 
-            # ACK
-            if check == True:
-                # Respondo ACK
-                serial_port.write(ACK)
+                # ACK
+                if check == True:
+                    # Respondo ACK
+                    serial_port.write(defines.ACK)
 
-                # Genero el Sample a partir de la trama recibida
-                curr_sample = getSamplesFromFrame(trama, datetime.now())
+                    # Si se recompuso la conexion
+                    if hubo_desconexion:
+                        print( "Se logro una nueva conexión" )
+                        # Reseteo el flag de desconexion
+                        hubo_desconexion = False
+                        # Pongo el timeout nuevamente
+                        serial_port.timeout = DISCONNECTION_TIME
 
-                # Cuento la trama a escribir
-                tramas_a_escribir += 1
+                    # Aviso que llegó algo
+                    print( "Trama recibida" )
 
-                # Si es la primera trama luego de una escritura
-                if tramas_a_escribir == 1:
-                    # Limpio la lista de Reportes previa
-                    prev_report_list.clear()
-                
-                # Genero/actualizo la lista de Reportes
-                curr_report_list = getReportsFromSample( curr_sample, prev_sample, prev_report_list )
+                    # Genero el Sample a partir de la trama recibida
+                    curr_sample = getSamplesFromFrame(trama, datetime.now())
+
+                    # Cuento la trama a escribir
+                    tramas_a_escribir += 1
+
+                    # Si es la primera trama luego de una escritura
+                    if tramas_a_escribir == 1:
+                        # Limpio la lista de Reportes previa
+                        prev_report_list.clear()
                     
-                # Si tengo todas las tramas para escribir
-                if tramas_a_escribir >= MAX_FRAMES_TO_WRITE:
+                    # Genero/actualizo la lista de Reportes
+                    curr_report_list = getReportsFromSample( curr_sample, prev_sample, prev_report_list )
+                        
+                    # Si tengo todas las tramas para escribir
+                    if tramas_a_escribir >= MAX_FRAMES_TO_WRITE:
+                        # Escribo en la base todos los reportes
+                        writeDatabaseFromReports( curr_report_list, db_con )                                 
+                        # Reseteo el contador de tramas a escribir
+                        tramas_a_escribir = 0
+                        # Muestro la tabla actualizada
+                        SQL_Writer.selectLast(db_con, 50)
+
+                    # Actualizo el Sample previo
+                    prev_sample = curr_sample
+                    # Actualizo la lista de Reportes previa
+                    prev_report_list = curr_report_list
+                    
+                    # Espero para limpiar el buffer de recepción, 
+                    time.sleep(CLEAR_RX_BUFFER_TIME)
+                    # Limpio el buffer de recepción por posible unex_ans recibida en el embebido
+                    serial_port.reset_input_buffer()
+                    # Limpio la trama para recibir una nueva
+                    trama = bytes()
+                    
+                # NAK
+                else:
+                    # Respondo NAK
+                    serial_port.write(defines.NAK)
+
+                    # Muestro la trama
+                    showReceivedPDU(trama)
+
+                    # Limpio la trama para recibir una nueva
+                    trama = bytes()
+                    
+                # Cuento la trama recibida (sin importar ACK o NAK)
+                contador_tramas += 1
+            
+            # Sino se recibió una trama, hubo una DESCONEXIÓN
+            else:
+                # Seteo el flag de desconexion
+                hubo_desconexion = True
+
+                # Si hay tramas a escribir en la base
+                if tramas_a_escribir != 0:
+                    # Aviso que se perdió al menos una trama
+                    print( "DESCONEXION: Al menos una trama se PERDIÓ! Guardo en la base lo que tengo" )
+
                     # Escribo en la base todos los reportes
                     writeDatabaseFromReports( curr_report_list, db_con )                                 
                     # Reseteo el contador de tramas a escribir
                     tramas_a_escribir = 0
                     # Muestro la tabla actualizada
                     SQL_Writer.selectLast(db_con, 50)
-
-                # Actualizo el Sample previo
-                prev_sample = curr_sample
-                # Actualizo la lista de Reportes previa
-                prev_report_list = curr_report_list
-
-
-            # NAK
-            else:
-                # Respondo NAK
-                serial_port.write(NAK)
-
-                # Muestro la trama
-                showReceivedPDU(trama)
+                # No hay tramas a escribir en la base
+                else:
+                    # Aviso que se perdió al menos una trama
+                    print( "DESCONEXION: Al menos una trama se PERDIÓ! Nada para escribir en la base" )
                 
-            # Cuento la trama recibida (sin importar ACK o NAK)
-            contador_tramas += 1
+                # Reseteo los samples
+                # Asumo que ninguna máquina continúa, sino que se perdió registro, y las próximas son todas SESSION_STARTED
+                curr_sample = initSample()
+                prev_sample = initSample()
+                # Reseteo los reportes, por la misma razón
+                curr_report_list = list()
+                prev_report_list = list()
+
+            

@@ -19,16 +19,20 @@ if __name__ == "__main__":
     print()
     print( vaciadorDeListas(a) )
 
+    # def bytes_frombitstring(s: str):
+    #     return int(s, 2).to_bytes(len(s) // 8, byteorder='big')
 
+    # # last_raw_sample = bytes.fromhex( "0000" + "0000" + "0000" + "0001" )
+    # last_raw_sample = bytes_frombitstring( "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000001" )
+    # curr_raw_sample = bytes_frombitstring( "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000000" + "00000001" )
 
+    # last_sample = Sesiones.getSamplesFromFrame( last_raw_sample, datetime.now() )  
+    # curr_sample = Sesiones.getSamplesFromFrame( curr_raw_sample, datetime.now() )
 
+    # print( last_sample[0] )
+    # print( last_sample[1:len(last_sample)] )
+    # print( curr_sample[0] )
+    # print( curr_sample[1:len(curr_sample)] )
 
-    # a = b"hola"
-    # # Debería ser False
-    # True if (int.from_bytes(a,"little")>>0 & 0x01) else False
-    # # Debería ser False
-    # True if (int.from_bytes(a,"little")>>1 & 0x01) else False
-    # # Debería ser False
-    # True if (int.from_bytes(a,"little")>>2 & 0x01) else False
-    # # Debería ser True
-    # True if (int.from_bytes(a,"little")>>3 & 0x01) else False
+    # new_reports = Sesiones.getReportList( last_sample, curr_sample )
+
