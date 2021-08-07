@@ -1,7 +1,7 @@
 # SQL_Writer.py
 
 import pyodbc
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 import Registrador
 
 # Tutoriales y fuentes:
@@ -203,42 +203,172 @@ def _getDriverName() -> str:
     else:
         return '(No suitable driver found. Cannot connect.)'
 
-
-
-if __name__ == "__main__":
-
-    with connectToDatabase() as conn:
-
-        new_data = [
+def test1(conn):
+    """Prueba simple de inicio, continuación y terminación de sesión
+    """
+    new_data = [
             1, 
             Registrador.Event.SESSION_STARTED, 
             datetime.now() - timedelta(minutes = 45)
         ]
 
-        sessionStarted(conn, new_data[0], new_data[2])
-        selectLast(conn, 30)
+    sessionStarted(conn, new_data[0], new_data[2])
+    selectLast(conn, 30)
+    
+    new_data = [
+        1, 
+        Registrador.Event.SESSION_CONTINUES, 
+        datetime.now() + timedelta(hours = 2)
+    ]
+
+    sessionContinues(conn, new_data[0], new_data[2])
+    selectLast(conn, 30)
+
+    new_data = [
+        1, 
+        Registrador.Event.SESSION_FINISHED, 
+        datetime.now() + timedelta(hours = 2, minutes= 15)
+    ]
+
+    sessionFinished(conn, new_data[0], new_data[2])
+
+    selectLast(conn, 30)
+    print()
+
+    clearTable(conn, table_name)
+    print("Table cleared OK")
+
+def test2(conn):
+    """Prueba de bug encontrado:
+    El update ordena por última HoraFecha, pero si hay dos máquinas que terminan en la misma HoraFecha
+    puede actualizar mal.
+    Este ejemplo, NO anda mal, porque usa sólo UNA máquina."""
+    
+
+    # Muestro la tabla completa
+    selectAll(conn)
+
+    # Inicio de sesión
+    sessionStarted(
+        conn,
+        4,
+        datetime(year=2021, month=8, day=6, hour=00, minute=58, second=00)
+    )
+
+    # Muestro la tabla completa
+    selectAll(conn)
+
+    # Último update de la sesión
+    sessionContinues(
+        conn,
+        4,
+        datetime(year=2021, month=8, day=6, hour=1, minute=9, second=00)
+    )
+
+    # Muestro la tabla completa
+    selectAll(conn)
+
+    # Inicio de sesión
+    sessionStarted(
+        conn,
+        4,
+        datetime(year=2021, month=8, day=6, hour=1, minute=9, second=00)
+    )
+
+    # Muestro la tabla completa
+    selectAll(conn)
+
+    # Último update de la sesión
+    sessionContinues(
+        conn,
+        4,
+        datetime(year=2021, month=8, day=6, hour=1, minute=10, second=00)
+    )
+
+    # Muestro la tabla completa
+    selectAll(conn)
+
+
+    pass
+
+def test3(conn):
+    """Prueba de bug encontrado:
+    El update ordena por última HoraFecha, pero si hay dos máquinas que terminan en la misma HoraFecha
+    puede actualizar mal.
+    Este ejemplo, SI anda mal, porque usa MÁS de una máquina."""
+
+    # Muestro la tabla completa
+    selectAll(conn)
+
+    # Inicio de sesión
+    sessionStarted(
+        conn,
+        1,
+        datetime(year=2021, month=8, day=6, hour=00, minute=58, second=00)
+    )
+    sessionStarted(
+        conn,
+        4,
+        datetime(year=2021, month=8, day=6, hour=00, minute=58, second=00)
+    )
+
+    # Muestro la tabla completa
+    selectAll(conn)
+
+    # Último update de la sesión
+    sessionContinues(
+        conn,
+        1,
+        datetime(year=2021, month=8, day=6, hour=1, minute=9, second=00)
+    )
+    sessionContinues(
+        conn,
+        4,
+        datetime(year=2021, month=8, day=6, hour=1, minute=9, second=00)
+    )
+
+    # Muestro la tabla completa
+    selectAll(conn)
+
+    # Inicio de sesión
+    sessionStarted(
+        conn,
+        1,
+        datetime(year=2021, month=8, day=6, hour=1, minute=9, second=00)
+    )
+    sessionStarted(
+        conn,
+        4,
+        datetime(year=2021, month=8, day=6, hour=1, minute=9, second=00)
+    )
+
+    # Muestro la tabla completa
+    selectAll(conn)
+
+    # Último update de la sesión
+    sessionContinues(
+        conn,
+        1,
+        datetime(year=2021, month=8, day=6, hour=1, minute=10, second=00)
+    )
+    sessionContinues(
+        conn,
+        4,
+        datetime(year=2021, month=8, day=6, hour=1, minute=10, second=00)
+    )
+
+    # Muestro la tabla completa
+    selectAll(conn)
+
+
+    pass
+
+if __name__ == "__main__":
+
+    with connectToDatabase() as conn:
+
+        #test1(conn)
         
-        new_data = [
-            1, 
-            Registrador.Event.SESSION_CONTINUES, 
-            datetime.now() + timedelta(hours = 2)
-        ]
-
-        sessionContinues(conn, new_data[0], new_data[2])
-        selectLast(conn, 30)
-
-        new_data = [
-            1, 
-            Registrador.Event.SESSION_FINISHED, 
-            datetime.now() + timedelta(hours = 2, minutes= 15)
-        ]
-
-        sessionFinished(conn, new_data[0], new_data[2])
-
-        selectLast(conn, 30)
-        print()
-
         clearTable(conn, table_name)
-        print("Table cleared OK")
 
     print("Todo OK")
