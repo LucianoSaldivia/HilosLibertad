@@ -1,7 +1,7 @@
 -- CONFIGURACIONES INICIALES
 		--Se usa la base de datos de nombre "pruebaDB"
 		--USE DB_HilosLibertad
-		USE prueba1
+		USE prueba2
 		GO
 		--Se crea el esquema
 		CREATE SCHEMA HL

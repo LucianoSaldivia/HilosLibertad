@@ -1,7 +1,7 @@
 -- CONFIGURACIONES INICIALES
 		--Se usa la base de datos de nombre "pruebaDB"
 		--USE DB_HilosLibertad
-		USE prueba1
+		USE prueba2
 		GO
 		--Se crea el esquema
 		CREATE SCHEMA HL
@@ -67,4 +67,22 @@
 		--Para eliminar el STORED PROCEDURE: DROP PROCEDURE HL.sp_terminarSesion
 
 
+		--FUNCIÓN
+		--Dado un INT en minutos, devuelve un NUMERIC(15,3) en horas
+		CREATE OR ALTER FUNCTION HL.f_transformarMinutosEnHoras
+			(@minutos INT)
+		RETURNS NUMERIC(15,3)
+		AS BEGIN
+			DECLARE @horas NUMERIC(15,3)
+			SET @horas = @minutos / 60.0
+			RETURN @horas
+		END
+		GO
 
+		--DROP FUNCTION HL.f_transformarMinutosEnHoras
+		/*
+		Ejemplos de uso:
+		SELECT 45 AS 'minutos', HL.f_transformarMinutosEnHoras(45) AS 'f_horas'
+		SELECT 630 AS 'minutos', HL.f_transformarMinutosEnHoras(630) AS 'f_horas'
+		*/
+			   
