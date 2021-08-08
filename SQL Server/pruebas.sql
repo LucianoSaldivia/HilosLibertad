@@ -47,7 +47,42 @@ GROUP BY m.numeroMaquinaUSUARIO, m.nombreMaquinaUSUARIO
 
 
 -- CONSULTA 2
+/* 
+	ID_MÁQUINA = 7
+dateTimes para pruebas de la función obtenerMinutos
+Antes de iniciar:
+	'2021-07-08 07:43'
 
+Inicio sesión 1:
+	'2021-07-08 08:22'
+Mitad de sesión 1:
+	'2021-07-08 09:15'
+Fin de sesión 1:
+	'2021-07-08 10:58'
 
+Entre sesiones 1 y 2:
+	'2021-07-08 12:05'
+
+Inicio sesión 2:
+	'2021-07-08 13:12'
+Mitad de sesión 2:
+	'2021-07-08 15:49'
+Fin de sesión 2:
+	'2021-07-08 17:33'
+
+Entre sesiones 2 y 3:
+	'2021-07-08 18:17'
+
+Inicio sesión 3:
+	'2021-07-08 20:38'
+Mitad de sesión 3:
+	'2021-07-08 21:22'
+Fin de sesión 3:
+	'2021-07-08 21:43'
+
+Luego de finalizar:
+	'2021-07-08 23:18'
+
+*/
 
 -- CONSULTA 3
