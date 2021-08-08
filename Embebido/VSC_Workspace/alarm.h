@@ -93,6 +93,7 @@
         Timer timer;
     } Alarm;
 
+
     // Inicializar la Alarma
     void initAlarm( Alarm *alarm );
     // FSM de la Alarma

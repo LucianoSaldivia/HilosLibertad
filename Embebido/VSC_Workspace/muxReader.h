@@ -7,11 +7,18 @@
 
 
 
-    #define TIME_BETWEEM_READS              (uint16_t) 18*SEG/* 1*MIN */
-    #define TIME_BETWEEN_WRITE_AND_READ     (uint16_t) 10*MILISEG
+    /* TIEMPOS --- LEER
+
+    TIME_DESIRED_BETWEEN_READS >= 30 * TIMEOUT_TIME
+    * -> el define de TIMEOUT_TIME está en dataSender.h
+
+    */
+	#define TIME_DESIRED_BETWEEN_READS		((uint16_t) (12 * SEG))	/* (1 * MIN) */
+    #define TIME_BETWEEN_WRITE_AND_READ     ((uint16_t) (10 * MILISEG))
+
+	#define TIME_BETWEEN_READS              ((uint16_t) (TIME_DESIRED_BETWEEN_READS - 4*TIME_BETWEEN_WRITE_AND_READ))
 
 
-    // estados del lector
     typedef enum MuxReaderStates{
         READER_START,
         READER_READY,
@@ -21,7 +28,6 @@
         READER_WORKING_11
     } MuxReaderStates;
     
-    // struct MuxReader
     typedef struct MuxReader{
         MuxReaderStates state;
         sample readings;
@@ -29,15 +35,21 @@
         Timer timer;
     } MuxReader;
 
+
     // Inicializar el lector
     void initMuxReader( MuxReader *reader );
 
     // FSM del lector
     void FSM_MuxReader( MuxReader *reader );
+    void FSM_FAST_READ_MuxReader( MuxReader *reader );
+    void FSM_TIM_READ_MuxReader( MuxReader *reader );
+
+
     // Escribir A y B
     void _writeAB( uint8_t a, uint8_t b );
     // Leer todas las entradas
     void _read16Inputs( sample *readings, MuxReaderStates state );
+    void _read64Inputs( sample *readings );
 
     // Chequear el estado
     uint8_t muxReaderIsReady( MuxReader *reader );

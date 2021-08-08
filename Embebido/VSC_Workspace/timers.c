@@ -36,6 +36,7 @@ void FSM_RefreshTimer( Timer *timer ){
             break;
 
         default:
+            // Por default, sólo cambio el estado
             timer->state = TIMER_WAITING;
             break;
     } 

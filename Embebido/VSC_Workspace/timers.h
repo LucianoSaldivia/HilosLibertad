@@ -10,7 +10,6 @@
         TIMER_FINISHED
     } TimerState;
 
-    // Estructura con todos los flags usados
     typedef struct Timer{
         TimerState state;
         

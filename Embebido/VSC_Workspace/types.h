@@ -10,6 +10,7 @@
     #define SEG                             1000*MILISEG
     #define MIN                             60*SEG
 
+
     // struct byte (bits, nibbles)
     typedef struct byte_bits{
         uint8_t bit0 : 1;

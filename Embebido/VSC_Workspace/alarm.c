@@ -64,8 +64,8 @@ void FSM_Alarm( Alarm *alarm ){
             break;
 
         default:
-            // Sino hay secuencia seteada, reseteo la alarma
-            stopAlarm( alarm );
+            // Por default, inicializo nuevamente
+            initAlarm( alarm );
             break;
 
     }
