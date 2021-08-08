@@ -662,25 +662,25 @@ namespace HilosLibertad
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(466, 309);
+            this.label1.Location = new System.Drawing.Point(583, 220);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(204, 13);
+            this.label1.Size = new System.Drawing.Size(132, 39);
             this.label1.TabIndex = 35;
-            this.label1.Text = "numMaquina · nombreMaq · hsEncendida";
+            this.label1.Text = "numeroMaquinaUSUARIO\r\nnombreMaquinaUSUARIO\r\nhorasEncendida";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(466, 430);
+            this.label2.Location = new System.Drawing.Point(571, 401);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(204, 13);
+            this.label2.Size = new System.Drawing.Size(122, 26);
             this.label2.TabIndex = 36;
-            this.label2.Text = "numSector · nombreSector · hsEncendido";
+            this.label2.Text = "nombreSectorUSUARIO\r\nhorasEncendido";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(729, 530);
+            this.label3.Location = new System.Drawing.Point(589, 530);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(104, 13);
             this.label3.TabIndex = 37;
