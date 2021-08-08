@@ -37,6 +37,8 @@ typedef struct UART_HandleTypeDef{
 
 static UART_HandleTypeDef huart3;
 
+uint32_t HAL_GetTick( void );
+
 void HAL_GPIO_WritePin( char dummy_port, uint8_t dummy_uint8_pin, uint8_t dummy_uint8_state );
 uint8_t HAL_GPIO_ReadPin( char dummy_port, uint8_t dummy_uint8_pin );
 

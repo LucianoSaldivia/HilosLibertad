@@ -42,6 +42,7 @@
 
     // FSM del lector
     void FSM_MuxReader( MuxReader *reader );
+
     // Escribir A y B
     void _writeAB( uint8_t a, uint8_t b );
     // Leer todas las entradas

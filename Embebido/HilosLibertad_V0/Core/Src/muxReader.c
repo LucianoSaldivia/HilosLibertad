@@ -123,12 +123,16 @@ void FSM_MuxReader( MuxReader *r ){
         
 
         default:
-            // Por default, el estado será READER_READY
-            r->state = READER_READY;
+            // Por default, el estado será READER_START
+            r->state = READER_START;
             break;
     }
 
 }
+
+
+
+
 // Escribo A y B (en la salida tienen que estar negados)
 void _writeAB( uint8_t a, uint8_t b ){
     HAL_GPIO_WritePin( PORT_A, PIN_A, !(a) );
@@ -183,6 +187,8 @@ void _read16Inputs( sample *readings, MuxReaderStates state ){
     readings->nibbles.Z3 |= HAL_GPIO_ReadPin( PORT_Z3, PIN_Z3 ) << offset;
 
 }
+
+
 
 // Chequeo de estado
 uint8_t muxReaderIsReady( MuxReader *r ){
