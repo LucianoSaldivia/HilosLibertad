@@ -228,8 +228,19 @@ SELECT * FROM HL.registros
 		GROUP BY f1.numMaqUSUARIO, f1.nomMaqUSUARIO
 		-----------------------------------------------------------------------------------------------------------------------------------
 		-----------------------------------------------------------------------------------------------------------------------------------
+		SELECT f1.numMaqUSUARIO AS '# Máq.', f1.nomMaqUSUARIO AS 'Máquina', SUM(HL.f_getMinutosEncendida (f1.FH_Rini, f1.FH_Rfin, STRING_FECHA_DESDE, STRING_FECHA_HASTA)) AS 'Minutos encendida' FROM (SELECT r.idRegistro AS 'idReg', m.idMaquina AS 'idMaq', m.numeroMaquinaUSUARIO AS 'numMaqUSUARIO', m.nombreMaquinaUSUARIO AS 'nomMaqUSUARIO', r.fechaHoraEncendida AS 'FH_Rini', r.fechaHoraUltimoRegistroEncendida AS 'FH_Rfin' FROM HL.registros r JOIN HL.maquinas m ON (r.idMaquina = m.idMaquina) WHERE (r.idMaquina IN STRING_LISTA_idMaquina) AND (r.fechaHoraUltimoRegistroEncendida > STRING_FECHA_DESDE AND r.fechaHoraEncendida < STRING_FECHA_HASTA) ) AS f1 GROUP BY f1.numMaqUSUARIO, f1.nomMaqUSUARIO
+		-------------------------------------------------
+		
+		
+		-- Ejemplo:
+		SELECT f1.numMaqUSUARIO AS '# Máq.', f1.nomMaqUSUARIO AS 'Máquina', SUM(HL.f_getMinutosEncendida (f1.FH_Rini, f1.FH_Rfin, '2021-07-08 00:00', '2021-07-08 23:45')) AS 'Minutos encendida' FROM (SELECT r.idRegistro AS 'idReg', m.idMaquina AS 'idMaq', m.numeroMaquinaUSUARIO AS 'numMaqUSUARIO', m.nombreMaquinaUSUARIO AS 'nomMaqUSUARIO', r.fechaHoraEncendida AS 'FH_Rini', r.fechaHoraUltimoRegistroEncendida AS 'FH_Rfin' FROM HL.registros r JOIN HL.maquinas m ON (r.idMaquina = m.idMaquina) WHERE (r.idMaquina IN (000, 7, 8, 000)) AND (r.fechaHoraUltimoRegistroEncendida > '2021-07-08 00:00' AND r.fechaHoraEncendida < '2021-07-08 23:45') ) AS f1 GROUP BY f1.numMaqUSUARIO, f1.nomMaqUSUARIO
+
+		-----------------------------------
 
 
+
+		select *, DATEPART(MONTH, fechaHoraEncendida)
+		from HL.registros
 
 
 
@@ -252,13 +263,19 @@ SELECT * FROM HL.registros
 				  ) AS f2 -- filtro 2
 			GROUP BY f2.nomSec
 
+
+
+			---------------------------------------------------
+			SELECT f2.nomSec AS 'Sector', SUM(HL.f_getMinutosEncendida (f2.FH_Rini, f2.FH_Rfin, '2021-07-08 07:43', '2021-07-08 15:49')) AS 'Minutos encendida' FROM (SELECT r.idRegistro AS 'idReg', m.idMaquina AS 'idMaq', s.nombreSectorUSUARIO AS 'nomSec', m.numeroMaquinaUSUARIO AS 'numMaqUSUARIO', m.nombreMaquinaUSUARIO AS 'nomMaqUSUARIO', r.fechaHoraEncendida AS 'FH_Rini', r.fechaHoraUltimoRegistroEncendida AS 'FH_Rfin' FROM HL.sectores s JOIN HL.maquinas m ON (s.idSector = m.idSector) JOIN HL.registros r ON (m.idMaquina = r.idMaquina) WHERE (r.fechaHoraUltimoRegistroEncendida > '2021-07-08 07:43' AND r.fechaHoraEncendida < '2021-07-08 15:49')) AS f2 GROUP BY f2.nomSec
+			---------------------------------------------------
+
 			
 			
 			
 			
 		--Ejemplo de CONSULTA 3
 		
-			SELECT SUM(HL.f_getMinutosEncendida (f2.FH_Rini, f2.FH_Rfin, '2021-07-08 07:43', '2021-07-08 15:49')) AS 'Minutos encendida'
+			SELECT SUM(HL.f_getMinutosEncendida (f3.FH_Rini, f3.FH_Rfin, '2021-07-08 07:43', '2021-07-08 15:49')) AS 'Minutos encendida'
 			FROM (SELECT r.idRegistro AS 'idReg',
 						 m.idMaquina AS 'idMaq',
 						 s.nombreSectorUSUARIO AS 'nomSec',
@@ -270,8 +287,11 @@ SELECT * FROM HL.registros
 				  JOIN HL.maquinas m ON (s.idSector = m.idSector)
 				  JOIN HL.registros r ON (m.idMaquina = r.idMaquina)
 				  WHERE (r.fechaHoraUltimoRegistroEncendida > '2021-07-08 07:43' AND r.fechaHoraEncendida < '2021-07-08 15:49')
-				  ) AS f2 -- filtro 2
+				  ) AS f3 --filtro 3
 			
+			---------------------------------------------------------------------------------------------------
+			SELECT SUM(HL.f_getMinutosEncendida (f3.FH_Rini, f3.FH_Rfin, '2021-07-08 07:43', '2021-07-08 15:49')) AS 'Minutos encendida' FROM (SELECT r.idRegistro AS 'idReg', m.idMaquina AS 'idMaq', s.nombreSectorUSUARIO AS 'nomSec', m.numeroMaquinaUSUARIO AS 'numMaqUSUARIO', m.nombreMaquinaUSUARIO AS 'nomMaqUSUARIO', r.fechaHoraEncendida AS 'FH_Rini', r.fechaHoraUltimoRegistroEncendida AS 'FH_Rfin' FROM HL.sectores s JOIN HL.maquinas m ON (s.idSector = m.idSector) JOIN HL.registros r ON (m.idMaquina = r.idMaquina) WHERE (r.fechaHoraUltimoRegistroEncendida > '2021-07-08 07:43' AND r.fechaHoraEncendida < '2021-07-08 15:49')) AS f3
+			---------------------------------------------------------------------------------------------------
 
 
 

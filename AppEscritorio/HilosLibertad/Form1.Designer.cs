@@ -74,12 +74,10 @@ namespace HilosLibertad
             this.cmb_HoraHasta = new System.Windows.Forms.ComboBox();
             this.dtp_Hasta = new System.Windows.Forms.DateTimePicker();
             this.cmb_HoraDesde = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.grp_FiltroSectoresMaquinas = new System.Windows.Forms.GroupBox();
             this.btn_DeseleccionarTodo = new System.Windows.Forms.Button();
             this.btn_SeleccionarTodo = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pic_logoEmpresa)).BeginInit();
             this.grp_Telares.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_CantHorasPorMaquina)).BeginInit();
@@ -98,6 +96,7 @@ namespace HilosLibertad
             this.dtp_Desde.Name = "dtp_Desde";
             this.dtp_Desde.Size = new System.Drawing.Size(269, 22);
             this.dtp_Desde.TabIndex = 1;
+            this.dtp_Desde.ValueChanged += new System.EventHandler(this.dtp_Desde_ValueChanged);
             // 
             // pic_logoEmpresa
             // 
@@ -150,7 +149,6 @@ namespace HilosLibertad
             this.chk_Telar5.TabIndex = 17;
             this.chk_Telar5.Text = "Telar 5";
             this.chk_Telar5.UseVisualStyleBackColor = true;
-            this.chk_Telar5.CheckedChanged += new System.EventHandler(this.chk_Telar5_CheckedChanged);
             // 
             // chk_Telar1
             // 
@@ -161,7 +159,6 @@ namespace HilosLibertad
             this.chk_Telar1.TabIndex = 7;
             this.chk_Telar1.Text = "Telar 1";
             this.chk_Telar1.UseVisualStyleBackColor = true;
-            this.chk_Telar1.CheckedChanged += new System.EventHandler(this.chk_Telar1_CheckedChanged);
             // 
             // chk_Telar4
             // 
@@ -172,7 +169,6 @@ namespace HilosLibertad
             this.chk_Telar4.TabIndex = 16;
             this.chk_Telar4.Text = "Telar 4";
             this.chk_Telar4.UseVisualStyleBackColor = true;
-            this.chk_Telar4.CheckedChanged += new System.EventHandler(this.chk_Telar4_CheckedChanged);
             // 
             // chk_Telar2
             // 
@@ -183,7 +179,6 @@ namespace HilosLibertad
             this.chk_Telar2.TabIndex = 8;
             this.chk_Telar2.Text = "Telar 2";
             this.chk_Telar2.UseVisualStyleBackColor = true;
-            this.chk_Telar2.CheckedChanged += new System.EventHandler(this.chk_Telar2_CheckedChanged);
             // 
             // chk_Urdidora
             // 
@@ -195,7 +190,6 @@ namespace HilosLibertad
             this.chk_Urdidora.TabIndex = 14;
             this.chk_Urdidora.Text = "Urdidora";
             this.chk_Urdidora.UseVisualStyleBackColor = true;
-            this.chk_Urdidora.CheckedChanged += new System.EventHandler(this.chk_Urdidora_CheckedChanged);
             // 
             // chk_Telar3
             // 
@@ -206,7 +200,6 @@ namespace HilosLibertad
             this.chk_Telar3.TabIndex = 9;
             this.chk_Telar3.Text = "Telar 3";
             this.chk_Telar3.UseVisualStyleBackColor = true;
-            this.chk_Telar3.CheckedChanged += new System.EventHandler(this.chk_Telar3_CheckedChanged);
             // 
             // chk_Telar9
             // 
@@ -217,7 +210,6 @@ namespace HilosLibertad
             this.chk_Telar9.TabIndex = 13;
             this.chk_Telar9.Text = "Telar 9";
             this.chk_Telar9.UseVisualStyleBackColor = true;
-            this.chk_Telar9.CheckedChanged += new System.EventHandler(this.chk_Telar9_CheckedChanged);
             // 
             // chk_Telar6
             // 
@@ -228,7 +220,6 @@ namespace HilosLibertad
             this.chk_Telar6.TabIndex = 10;
             this.chk_Telar6.Text = "Telar 6";
             this.chk_Telar6.UseVisualStyleBackColor = true;
-            this.chk_Telar6.CheckedChanged += new System.EventHandler(this.chk_Telar6_CheckedChanged);
             // 
             // chk_Telar8
             // 
@@ -239,7 +230,6 @@ namespace HilosLibertad
             this.chk_Telar8.TabIndex = 12;
             this.chk_Telar8.Text = "Telar 8";
             this.chk_Telar8.UseVisualStyleBackColor = true;
-            this.chk_Telar8.CheckedChanged += new System.EventHandler(this.chk_Telar8_CheckedChanged);
             // 
             // chk_Telar7
             // 
@@ -250,7 +240,6 @@ namespace HilosLibertad
             this.chk_Telar7.TabIndex = 11;
             this.chk_Telar7.Text = "Telar 7";
             this.chk_Telar7.UseVisualStyleBackColor = true;
-            this.chk_Telar7.CheckedChanged += new System.EventHandler(this.chk_Telar7_CheckedChanged);
             // 
             // dgv_CantHorasPorMaquina
             // 
@@ -303,7 +292,6 @@ namespace HilosLibertad
             this.chk_Cordonera7.TabIndex = 19;
             this.chk_Cordonera7.Text = "Cordonera 7";
             this.chk_Cordonera7.UseVisualStyleBackColor = true;
-            this.chk_Cordonera7.CheckedChanged += new System.EventHandler(this.chk_Cordonera7_CheckedChanged);
             // 
             // chk_Cordonera8
             // 
@@ -314,7 +302,6 @@ namespace HilosLibertad
             this.chk_Cordonera8.TabIndex = 20;
             this.chk_Cordonera8.Text = "Cordonera 8";
             this.chk_Cordonera8.UseVisualStyleBackColor = true;
-            this.chk_Cordonera8.CheckedChanged += new System.EventHandler(this.chk_Cordonera8_CheckedChanged);
             // 
             // chk_Cordonera9
             // 
@@ -325,7 +312,6 @@ namespace HilosLibertad
             this.chk_Cordonera9.TabIndex = 21;
             this.chk_Cordonera9.Text = "Cordonera 9";
             this.chk_Cordonera9.UseVisualStyleBackColor = true;
-            this.chk_Cordonera9.CheckedChanged += new System.EventHandler(this.chk_Cordonera9_CheckedChanged);
             // 
             // chk_Cordonera4
             // 
@@ -336,7 +322,6 @@ namespace HilosLibertad
             this.chk_Cordonera4.TabIndex = 10;
             this.chk_Cordonera4.Text = "Cordonera 4";
             this.chk_Cordonera4.UseVisualStyleBackColor = true;
-            this.chk_Cordonera4.CheckedChanged += new System.EventHandler(this.chk_Cordonera4_CheckedChanged);
             // 
             // chk_Cordonera5
             // 
@@ -347,7 +332,6 @@ namespace HilosLibertad
             this.chk_Cordonera5.TabIndex = 11;
             this.chk_Cordonera5.Text = "Cordonera 5";
             this.chk_Cordonera5.UseVisualStyleBackColor = true;
-            this.chk_Cordonera5.CheckedChanged += new System.EventHandler(this.chk_Cordonera5_CheckedChanged);
             // 
             // chk_Cordonera6
             // 
@@ -358,7 +342,6 @@ namespace HilosLibertad
             this.chk_Cordonera6.TabIndex = 12;
             this.chk_Cordonera6.Text = "Cordonera 6";
             this.chk_Cordonera6.UseVisualStyleBackColor = true;
-            this.chk_Cordonera6.CheckedChanged += new System.EventHandler(this.chk_Cordonera6_CheckedChanged);
             // 
             // chk_Cordonera1
             // 
@@ -369,7 +352,6 @@ namespace HilosLibertad
             this.chk_Cordonera1.TabIndex = 7;
             this.chk_Cordonera1.Text = "Cordonera 1";
             this.chk_Cordonera1.UseVisualStyleBackColor = true;
-            this.chk_Cordonera1.CheckedChanged += new System.EventHandler(this.chk_Cordonera1_CheckedChanged);
             // 
             // chk_Cordonera2
             // 
@@ -380,7 +362,6 @@ namespace HilosLibertad
             this.chk_Cordonera2.TabIndex = 8;
             this.chk_Cordonera2.Text = "Cordonera 2";
             this.chk_Cordonera2.UseVisualStyleBackColor = true;
-            this.chk_Cordonera2.CheckedChanged += new System.EventHandler(this.chk_Cordonera2_CheckedChanged);
             // 
             // chk_Cordonera3
             // 
@@ -391,7 +372,6 @@ namespace HilosLibertad
             this.chk_Cordonera3.TabIndex = 9;
             this.chk_Cordonera3.Text = "Cordonera 3";
             this.chk_Cordonera3.UseVisualStyleBackColor = true;
-            this.chk_Cordonera3.CheckedChanged += new System.EventHandler(this.chk_Cordonera3_CheckedChanged);
             // 
             // grp_Terminacion
             // 
@@ -427,7 +407,6 @@ namespace HilosLibertad
             this.chk_Terminacion3.TabIndex = 19;
             this.chk_Terminacion3.Text = "Terminación 3";
             this.chk_Terminacion3.UseVisualStyleBackColor = true;
-            this.chk_Terminacion3.CheckedChanged += new System.EventHandler(this.chk_Terminacion3_CheckedChanged);
             // 
             // chk_Terminacion2
             // 
@@ -438,7 +417,6 @@ namespace HilosLibertad
             this.chk_Terminacion2.TabIndex = 10;
             this.chk_Terminacion2.Text = "Terminación 2";
             this.chk_Terminacion2.UseVisualStyleBackColor = true;
-            this.chk_Terminacion2.CheckedChanged += new System.EventHandler(this.chk_Terminacion2_CheckedChanged);
             // 
             // chk_Terminacion1
             // 
@@ -449,7 +427,6 @@ namespace HilosLibertad
             this.chk_Terminacion1.TabIndex = 7;
             this.chk_Terminacion1.Text = "Terminación 1";
             this.chk_Terminacion1.UseVisualStyleBackColor = true;
-            this.chk_Terminacion1.CheckedChanged += new System.EventHandler(this.chk_Terminacion1_CheckedChanged);
             // 
             // dgv_CantHorasPorSector
             // 
@@ -496,10 +473,10 @@ namespace HilosLibertad
             this.dgv_CantTotalHorasMaquina.AllowUserToAddRows = false;
             this.dgv_CantTotalHorasMaquina.AllowUserToDeleteRows = false;
             this.dgv_CantTotalHorasMaquina.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_CantTotalHorasMaquina.Location = new System.Drawing.Point(453, 518);
+            this.dgv_CantTotalHorasMaquina.Location = new System.Drawing.Point(453, 484);
             this.dgv_CantTotalHorasMaquina.Name = "dgv_CantTotalHorasMaquina";
             this.dgv_CantTotalHorasMaquina.ReadOnly = true;
-            this.dgv_CantTotalHorasMaquina.Size = new System.Drawing.Size(390, 37);
+            this.dgv_CantTotalHorasMaquina.Size = new System.Drawing.Size(390, 71);
             this.dgv_CantTotalHorasMaquina.TabIndex = 30;
             // 
             // lbl_CantidadTotalHorasMaquina
@@ -507,9 +484,9 @@ namespace HilosLibertad
             this.lbl_CantidadTotalHorasMaquina.AutoSize = true;
             this.lbl_CantidadTotalHorasMaquina.Location = new System.Drawing.Point(456, 468);
             this.lbl_CantidadTotalHorasMaquina.Name = "lbl_CantidadTotalHorasMaquina";
-            this.lbl_CantidadTotalHorasMaquina.Size = new System.Drawing.Size(169, 13);
+            this.lbl_CantidadTotalHorasMaquina.Size = new System.Drawing.Size(211, 13);
             this.lbl_CantidadTotalHorasMaquina.TabIndex = 31;
-            this.lbl_CantidadTotalHorasMaquina.Text = "Cantidad Total de Horas Máquina:";
+            this.lbl_CantidadTotalHorasMaquina.Text = "Cantidad de Horas de Todas las Máquinas:";
             // 
             // grp_FiltroFechaHora
             // 
@@ -565,6 +542,7 @@ namespace HilosLibertad
             this.cmb_MinutoHasta.Name = "cmb_MinutoHasta";
             this.cmb_MinutoHasta.Size = new System.Drawing.Size(40, 23);
             this.cmb_MinutoHasta.TabIndex = 11;
+            this.cmb_MinutoHasta.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoHasta_SelectedIndexChanged);
             // 
             // cmb_MinutoDesde
             // 
@@ -580,6 +558,7 @@ namespace HilosLibertad
             this.cmb_MinutoDesde.Name = "cmb_MinutoDesde";
             this.cmb_MinutoDesde.Size = new System.Drawing.Size(40, 23);
             this.cmb_MinutoDesde.TabIndex = 9;
+            this.cmb_MinutoDesde.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoDesde_SelectedIndexChanged);
             // 
             // cmb_HoraHasta
             // 
@@ -615,6 +594,7 @@ namespace HilosLibertad
             this.cmb_HoraHasta.Name = "cmb_HoraHasta";
             this.cmb_HoraHasta.Size = new System.Drawing.Size(40, 23);
             this.cmb_HoraHasta.TabIndex = 7;
+            this.cmb_HoraHasta.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraHasta_SelectedIndexChanged);
             // 
             // dtp_Hasta
             // 
@@ -623,6 +603,7 @@ namespace HilosLibertad
             this.dtp_Hasta.Name = "dtp_Hasta";
             this.dtp_Hasta.Size = new System.Drawing.Size(269, 22);
             this.dtp_Hasta.TabIndex = 5;
+            this.dtp_Hasta.ValueChanged += new System.EventHandler(this.dtp_Hasta_ValueChanged);
             // 
             // cmb_HoraDesde
             // 
@@ -658,33 +639,7 @@ namespace HilosLibertad
             this.cmb_HoraDesde.Name = "cmb_HoraDesde";
             this.cmb_HoraDesde.Size = new System.Drawing.Size(40, 23);
             this.cmb_HoraDesde.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(583, 220);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 39);
-            this.label1.TabIndex = 35;
-            this.label1.Text = "numeroMaquinaUSUARIO\r\nnombreMaquinaUSUARIO\r\nhorasEncendida";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(571, 401);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 26);
-            this.label2.TabIndex = 36;
-            this.label2.Text = "nombreSectorUSUARIO\r\nhorasEncendido";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(589, 530);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(104, 13);
-            this.label3.TabIndex = 37;
-            this.label3.Text = "hsTotalesEncendido";
+            this.cmb_HoraDesde.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraDesde_SelectedIndexChanged);
             // 
             // grp_FiltroSectoresMaquinas
             // 
@@ -723,15 +678,26 @@ namespace HilosLibertad
             this.btn_SeleccionarTodo.UseVisualStyleBackColor = true;
             this.btn_SeleccionarTodo.Click += new System.EventHandler(this.btn_SeleccionarTodo_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label1.Location = new System.Drawing.Point(456, 566);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(350, 39);
+            this.label1.TabIndex = 41;
+            this.label1.Text = "En los tres casos, la columna correspondiente a los minutos está de más:\r\n- Solam" +
+    "ente se requieren las horas, no los minutos.\r\n- Los minutos se muestran únicamen" +
+    "te para comprobar tiempos.";
+            // 
             // frm_Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 624);
-            this.Controls.Add(this.grp_FiltroSectoresMaquinas);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.grp_FiltroSectoresMaquinas);
             this.Controls.Add(this.grp_FiltroFechaHora);
             this.Controls.Add(this.lbl_CantidadTotalHorasMaquina);
             this.Controls.Add(this.dgv_CantTotalHorasMaquina);
@@ -802,9 +768,6 @@ namespace HilosLibertad
         private System.Windows.Forms.Label lbl_CantidadTotalHorasMaquina;
         private System.Windows.Forms.GroupBox grp_FiltroFechaHora;
         private System.Windows.Forms.ComboBox cmb_HoraDesde;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cmb_HoraHasta;
         private System.Windows.Forms.DateTimePicker dtp_Hasta;
         private System.Windows.Forms.ComboBox cmb_MinutoHasta;
@@ -817,6 +780,7 @@ namespace HilosLibertad
         private System.Windows.Forms.Button btn_SeleccionSectorTerminacion;
         private System.Windows.Forms.Button btn_SeleccionarTodo;
         private System.Windows.Forms.Button btn_DeseleccionarTodo;
+        private System.Windows.Forms.Label label1;
     }
 }
 
