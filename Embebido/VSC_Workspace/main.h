@@ -35,12 +35,21 @@ typedef struct UART_HandleTypeDef{
     uint8_t Instance;
 } UART_HandleTypeDef;
 
+typedef struct TIM_Handle_TypeDef{
+    uint8_t dummy;
+    uint8_t Instance;
+} TIM_HandleTypeDef;
+
 static UART_HandleTypeDef huart3;
+
 
 uint32_t HAL_GetTick( void );
 
 void HAL_GPIO_WritePin( char dummy_port, uint8_t dummy_uint8_pin, uint8_t dummy_uint8_state );
 uint8_t HAL_GPIO_ReadPin( char dummy_port, uint8_t dummy_uint8_pin );
 
-void HAL_UART_Receive_IT( UART_HandleTypeDef *uart, uint8_t *buffer, uint16_t size); 
-void HAL_UART_Transmit_IT( UART_HandleTypeDef *uart, uint8_t *buffer, uint16_t size);
+void HAL_UART_Receive_IT( UART_HandleTypeDef *huart, uint8_t *buffer, uint16_t size); 
+void HAL_UART_Transmit_IT( UART_HandleTypeDef *huart, uint8_t *buffer, uint16_t size);
+
+void HAL_TIM_Base_Start_IT( TIM_HandleTypeDef *htim );
+void HAL_TIM_Base_Stop_IT( TIM_HandleTypeDef *htim );

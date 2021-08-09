@@ -18,14 +18,14 @@ import SQL_Writer
     # Tutorial: Enviar Queries de python a SQL Server
     # https://www.youtube.com/watch?v=aF552bMEcO4
 
-# Definiciones útiles
+# Conexión
 PUERTO = "COM3"
+# Configuración para escritura en Base
 MAX_FRAMES_TO_WRITE = 5
 
+# Tiempos de desconexión y limpieza de buffer de recepción
 CLEAR_RX_BUFFER_TIME = 14 * defines.TIMEOUT_TIME
 DISCONNECTION_TIME = 2 * defines.TIME_DESIRED_BETWEEN_READS
-
-MAX_CANT_RECEPCIONES = 300
 
 
 
@@ -244,13 +244,13 @@ if __name__ == "__main__":
 
         # Limpio cualquier basura previa en el puerto
         serial_port.flush()
+        serial_port.reset_input_buffer()
 
         # Loop principal
         trama = bytes()
         hubo_desconexion = False
-        contador_tramas = 1
         tramas_a_escribir = 0
-        while contador_tramas <= MAX_CANT_RECEPCIONES:
+        while 1:
             
             # Si todo anda bien
             if not hubo_desconexion:
@@ -331,9 +331,6 @@ if __name__ == "__main__":
 
                     # Limpio la trama para recibir una nueva
                     trama = bytes()
-                    
-                # Cuento la trama recibida (sin importar ACK o NAK)
-                contador_tramas += 1
             
             # Sino se recibió una trama, hubo una DESCONEXIÓN
             else:
@@ -343,7 +340,7 @@ if __name__ == "__main__":
                 # Si hay tramas a escribir en la base
                 if tramas_a_escribir != 0:
                     # Aviso que se perdió al menos una trama
-                    print( "DESCONEXION: Al menos una trama se PERDIÓ! Guardo en la base lo que tengo" )
+                    print( "DESCONEXION: Al menos una trama se perdió! Guardo en la base lo que tengo" )
 
                     # Escribo en la base todos los reportes
                     writeDatabaseFromReports( curr_report_list, db_con )                                 
@@ -354,7 +351,7 @@ if __name__ == "__main__":
                 # No hay tramas a escribir en la base
                 else:
                     # Aviso que se perdió al menos una trama
-                    print( "DESCONEXION: Al menos una trama se PERDIÓ! Nada para escribir en la base" )
+                    print( "DESCONEXION: Al menos una trama se perdió! Nada para escribir en la base" )
                 
                 # Reseteo los samples
                 # Asumo que ninguna máquina continúa, sino que se perdió registro, y las próximas son todas SESSION_STARTED
