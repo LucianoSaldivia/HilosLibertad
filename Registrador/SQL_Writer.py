@@ -13,7 +13,7 @@ import Registrador
     # https://www.youtube.com/watch?v=aF552bMEcO4
 
 device_name = "LUCIANO-PC"
-db_name = "prueba1"
+db_name = "prueba2"
 table_name = "HL.registros"
 
 
@@ -363,12 +363,59 @@ def test3(conn):
 
     pass
 
+def test4(conn):
+    """Creo sesiones (como están en el docs.sheet de drive) para testear
+    la función que obtiene minutos activos de una máquina."""
+    
+    # Primera sesión (8:22 a 10:58)
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=8, day=7, hour=8, minute=22, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=8, day=7, hour=10, minute=58, second=0)
+    )
+
+    # Segunda sesión (13:12 a 17:33)
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=8, day=7, hour=13, minute=12, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=8, day=7, hour=17, minute=33, second=0)
+    )
+
+    # Tercera sesión (20:38 a 21:43)
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=8, day=7, hour=20, minute=38, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=8, day=7, hour=21, minute=43, second=0)
+    )
+
+    # Muestro todo para chequear los registros y los horarios
+    selectLast(
+        conn=conn, 
+        n=5
+    )
+
 if __name__ == "__main__":
 
     with connectToDatabase() as conn:
 
-        #test1(conn)
-        
         clearTable(conn, table_name)
+
+        test4(conn)
+        
 
     print("Todo OK")
