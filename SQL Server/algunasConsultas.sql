@@ -296,5 +296,7 @@ DBCC CHECKIDENT ('HL.registros', RESEED, 0)
 
 
 
-
+select *
+from HL.maquinas m
+where m.idMaquina IN (0, 1, 00)
 

@@ -66,20 +66,21 @@ namespace HilosLibertad
             this.lbl_CantidadHorasPorSector = new System.Windows.Forms.Label();
             this.dgv_CantTotalHorasMaquina = new System.Windows.Forms.DataGridView();
             this.lbl_CantidadTotalHorasMaquina = new System.Windows.Forms.Label();
-            this.grp_FiltroFechaHora = new System.Windows.Forms.GroupBox();
-            this.lbl_Hasta = new System.Windows.Forms.Label();
-            this.lbl_Desde = new System.Windows.Forms.Label();
-            this.cmb_MinutoHasta = new System.Windows.Forms.ComboBox();
-            this.cmb_MinutoDesde = new System.Windows.Forms.ComboBox();
-            this.cmb_HoraHasta = new System.Windows.Forms.ComboBox();
+            this.grp_FiltroFecha = new System.Windows.Forms.GroupBox();
+            this.lbl_FechaFinal = new System.Windows.Forms.Label();
+            this.lbl_FechaInicial = new System.Windows.Forms.Label();
+            this.cmb_MinutoFinal = new System.Windows.Forms.ComboBox();
+            this.cmb_MinutoInicial = new System.Windows.Forms.ComboBox();
+            this.cmb_HoraFinal = new System.Windows.Forms.ComboBox();
             this.dtp_Hasta = new System.Windows.Forms.DateTimePicker();
-            this.cmb_HoraDesde = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.grp_FiltroSectoresMaquinas = new System.Windows.Forms.GroupBox();
+            this.cmb_HoraInicial = new System.Windows.Forms.ComboBox();
+            this.grp_FiltroMaquinasSectores = new System.Windows.Forms.GroupBox();
             this.btn_DeseleccionarTodo = new System.Windows.Forms.Button();
             this.btn_SeleccionarTodo = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.grp_FiltroFranjaHoraria = new System.Windows.Forms.GroupBox();
+            this.lbl_HorarioFinal = new System.Windows.Forms.Label();
+            this.lbl_HorarioInicial = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pic_logoEmpresa)).BeginInit();
             this.grp_Telares.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_CantHorasPorMaquina)).BeginInit();
@@ -87,22 +88,24 @@ namespace HilosLibertad
             this.grp_Terminacion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_CantHorasPorSector)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_CantTotalHorasMaquina)).BeginInit();
-            this.grp_FiltroFechaHora.SuspendLayout();
-            this.grp_FiltroSectoresMaquinas.SuspendLayout();
+            this.grp_FiltroFecha.SuspendLayout();
+            this.grp_FiltroMaquinasSectores.SuspendLayout();
+            this.grp_FiltroFranjaHoraria.SuspendLayout();
             this.SuspendLayout();
             // 
             // dtp_Desde
             // 
             this.dtp_Desde.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtp_Desde.Location = new System.Drawing.Point(24, 42);
+            this.dtp_Desde.Location = new System.Drawing.Point(113, 30);
             this.dtp_Desde.Name = "dtp_Desde";
-            this.dtp_Desde.Size = new System.Drawing.Size(269, 22);
+            this.dtp_Desde.Size = new System.Drawing.Size(272, 22);
             this.dtp_Desde.TabIndex = 1;
+            this.dtp_Desde.ValueChanged += new System.EventHandler(this.dtp_Desde_ValueChanged);
             // 
             // pic_logoEmpresa
             // 
             this.pic_logoEmpresa.Image = global::HilosLibertad.Properties.Resources.logoEmpresa;
-            this.pic_logoEmpresa.Location = new System.Drawing.Point(453, 23);
+            this.pic_logoEmpresa.Location = new System.Drawing.Point(486, 18);
             this.pic_logoEmpresa.Name = "pic_logoEmpresa";
             this.pic_logoEmpresa.Size = new System.Drawing.Size(390, 60);
             this.pic_logoEmpresa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -150,7 +153,6 @@ namespace HilosLibertad
             this.chk_Telar5.TabIndex = 17;
             this.chk_Telar5.Text = "Telar 5";
             this.chk_Telar5.UseVisualStyleBackColor = true;
-            this.chk_Telar5.CheckedChanged += new System.EventHandler(this.chk_Telar5_CheckedChanged);
             // 
             // chk_Telar1
             // 
@@ -161,7 +163,6 @@ namespace HilosLibertad
             this.chk_Telar1.TabIndex = 7;
             this.chk_Telar1.Text = "Telar 1";
             this.chk_Telar1.UseVisualStyleBackColor = true;
-            this.chk_Telar1.CheckedChanged += new System.EventHandler(this.chk_Telar1_CheckedChanged);
             // 
             // chk_Telar4
             // 
@@ -172,7 +173,6 @@ namespace HilosLibertad
             this.chk_Telar4.TabIndex = 16;
             this.chk_Telar4.Text = "Telar 4";
             this.chk_Telar4.UseVisualStyleBackColor = true;
-            this.chk_Telar4.CheckedChanged += new System.EventHandler(this.chk_Telar4_CheckedChanged);
             // 
             // chk_Telar2
             // 
@@ -183,7 +183,6 @@ namespace HilosLibertad
             this.chk_Telar2.TabIndex = 8;
             this.chk_Telar2.Text = "Telar 2";
             this.chk_Telar2.UseVisualStyleBackColor = true;
-            this.chk_Telar2.CheckedChanged += new System.EventHandler(this.chk_Telar2_CheckedChanged);
             // 
             // chk_Urdidora
             // 
@@ -195,7 +194,6 @@ namespace HilosLibertad
             this.chk_Urdidora.TabIndex = 14;
             this.chk_Urdidora.Text = "Urdidora";
             this.chk_Urdidora.UseVisualStyleBackColor = true;
-            this.chk_Urdidora.CheckedChanged += new System.EventHandler(this.chk_Urdidora_CheckedChanged);
             // 
             // chk_Telar3
             // 
@@ -206,7 +204,6 @@ namespace HilosLibertad
             this.chk_Telar3.TabIndex = 9;
             this.chk_Telar3.Text = "Telar 3";
             this.chk_Telar3.UseVisualStyleBackColor = true;
-            this.chk_Telar3.CheckedChanged += new System.EventHandler(this.chk_Telar3_CheckedChanged);
             // 
             // chk_Telar9
             // 
@@ -217,7 +214,6 @@ namespace HilosLibertad
             this.chk_Telar9.TabIndex = 13;
             this.chk_Telar9.Text = "Telar 9";
             this.chk_Telar9.UseVisualStyleBackColor = true;
-            this.chk_Telar9.CheckedChanged += new System.EventHandler(this.chk_Telar9_CheckedChanged);
             // 
             // chk_Telar6
             // 
@@ -228,7 +224,6 @@ namespace HilosLibertad
             this.chk_Telar6.TabIndex = 10;
             this.chk_Telar6.Text = "Telar 6";
             this.chk_Telar6.UseVisualStyleBackColor = true;
-            this.chk_Telar6.CheckedChanged += new System.EventHandler(this.chk_Telar6_CheckedChanged);
             // 
             // chk_Telar8
             // 
@@ -239,7 +234,6 @@ namespace HilosLibertad
             this.chk_Telar8.TabIndex = 12;
             this.chk_Telar8.Text = "Telar 8";
             this.chk_Telar8.UseVisualStyleBackColor = true;
-            this.chk_Telar8.CheckedChanged += new System.EventHandler(this.chk_Telar8_CheckedChanged);
             // 
             // chk_Telar7
             // 
@@ -250,17 +244,16 @@ namespace HilosLibertad
             this.chk_Telar7.TabIndex = 11;
             this.chk_Telar7.Text = "Telar 7";
             this.chk_Telar7.UseVisualStyleBackColor = true;
-            this.chk_Telar7.CheckedChanged += new System.EventHandler(this.chk_Telar7_CheckedChanged);
             // 
             // dgv_CantHorasPorMaquina
             // 
             this.dgv_CantHorasPorMaquina.AllowUserToAddRows = false;
             this.dgv_CantHorasPorMaquina.AllowUserToDeleteRows = false;
             this.dgv_CantHorasPorMaquina.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_CantHorasPorMaquina.Location = new System.Drawing.Point(453, 140);
+            this.dgv_CantHorasPorMaquina.Location = new System.Drawing.Point(446, 139);
             this.dgv_CantHorasPorMaquina.Name = "dgv_CantHorasPorMaquina";
             this.dgv_CantHorasPorMaquina.ReadOnly = true;
-            this.dgv_CantHorasPorMaquina.Size = new System.Drawing.Size(390, 206);
+            this.dgv_CantHorasPorMaquina.Size = new System.Drawing.Size(430, 252);
             this.dgv_CantHorasPorMaquina.TabIndex = 6;
             // 
             // grp_Cordoneras
@@ -303,7 +296,6 @@ namespace HilosLibertad
             this.chk_Cordonera7.TabIndex = 19;
             this.chk_Cordonera7.Text = "Cordonera 7";
             this.chk_Cordonera7.UseVisualStyleBackColor = true;
-            this.chk_Cordonera7.CheckedChanged += new System.EventHandler(this.chk_Cordonera7_CheckedChanged);
             // 
             // chk_Cordonera8
             // 
@@ -314,7 +306,6 @@ namespace HilosLibertad
             this.chk_Cordonera8.TabIndex = 20;
             this.chk_Cordonera8.Text = "Cordonera 8";
             this.chk_Cordonera8.UseVisualStyleBackColor = true;
-            this.chk_Cordonera8.CheckedChanged += new System.EventHandler(this.chk_Cordonera8_CheckedChanged);
             // 
             // chk_Cordonera9
             // 
@@ -325,7 +316,6 @@ namespace HilosLibertad
             this.chk_Cordonera9.TabIndex = 21;
             this.chk_Cordonera9.Text = "Cordonera 9";
             this.chk_Cordonera9.UseVisualStyleBackColor = true;
-            this.chk_Cordonera9.CheckedChanged += new System.EventHandler(this.chk_Cordonera9_CheckedChanged);
             // 
             // chk_Cordonera4
             // 
@@ -336,7 +326,6 @@ namespace HilosLibertad
             this.chk_Cordonera4.TabIndex = 10;
             this.chk_Cordonera4.Text = "Cordonera 4";
             this.chk_Cordonera4.UseVisualStyleBackColor = true;
-            this.chk_Cordonera4.CheckedChanged += new System.EventHandler(this.chk_Cordonera4_CheckedChanged);
             // 
             // chk_Cordonera5
             // 
@@ -347,7 +336,6 @@ namespace HilosLibertad
             this.chk_Cordonera5.TabIndex = 11;
             this.chk_Cordonera5.Text = "Cordonera 5";
             this.chk_Cordonera5.UseVisualStyleBackColor = true;
-            this.chk_Cordonera5.CheckedChanged += new System.EventHandler(this.chk_Cordonera5_CheckedChanged);
             // 
             // chk_Cordonera6
             // 
@@ -358,7 +346,6 @@ namespace HilosLibertad
             this.chk_Cordonera6.TabIndex = 12;
             this.chk_Cordonera6.Text = "Cordonera 6";
             this.chk_Cordonera6.UseVisualStyleBackColor = true;
-            this.chk_Cordonera6.CheckedChanged += new System.EventHandler(this.chk_Cordonera6_CheckedChanged);
             // 
             // chk_Cordonera1
             // 
@@ -369,7 +356,6 @@ namespace HilosLibertad
             this.chk_Cordonera1.TabIndex = 7;
             this.chk_Cordonera1.Text = "Cordonera 1";
             this.chk_Cordonera1.UseVisualStyleBackColor = true;
-            this.chk_Cordonera1.CheckedChanged += new System.EventHandler(this.chk_Cordonera1_CheckedChanged);
             // 
             // chk_Cordonera2
             // 
@@ -380,7 +366,6 @@ namespace HilosLibertad
             this.chk_Cordonera2.TabIndex = 8;
             this.chk_Cordonera2.Text = "Cordonera 2";
             this.chk_Cordonera2.UseVisualStyleBackColor = true;
-            this.chk_Cordonera2.CheckedChanged += new System.EventHandler(this.chk_Cordonera2_CheckedChanged);
             // 
             // chk_Cordonera3
             // 
@@ -391,7 +376,6 @@ namespace HilosLibertad
             this.chk_Cordonera3.TabIndex = 9;
             this.chk_Cordonera3.Text = "Cordonera 3";
             this.chk_Cordonera3.UseVisualStyleBackColor = true;
-            this.chk_Cordonera3.CheckedChanged += new System.EventHandler(this.chk_Cordonera3_CheckedChanged);
             // 
             // grp_Terminacion
             // 
@@ -427,7 +411,6 @@ namespace HilosLibertad
             this.chk_Terminacion3.TabIndex = 19;
             this.chk_Terminacion3.Text = "Terminación 3";
             this.chk_Terminacion3.UseVisualStyleBackColor = true;
-            this.chk_Terminacion3.CheckedChanged += new System.EventHandler(this.chk_Terminacion3_CheckedChanged);
             // 
             // chk_Terminacion2
             // 
@@ -438,7 +421,6 @@ namespace HilosLibertad
             this.chk_Terminacion2.TabIndex = 10;
             this.chk_Terminacion2.Text = "Terminación 2";
             this.chk_Terminacion2.UseVisualStyleBackColor = true;
-            this.chk_Terminacion2.CheckedChanged += new System.EventHandler(this.chk_Terminacion2_CheckedChanged);
             // 
             // chk_Terminacion1
             // 
@@ -449,23 +431,22 @@ namespace HilosLibertad
             this.chk_Terminacion1.TabIndex = 7;
             this.chk_Terminacion1.Text = "Terminación 1";
             this.chk_Terminacion1.UseVisualStyleBackColor = true;
-            this.chk_Terminacion1.CheckedChanged += new System.EventHandler(this.chk_Terminacion1_CheckedChanged);
             // 
             // dgv_CantHorasPorSector
             // 
             this.dgv_CantHorasPorSector.AllowUserToAddRows = false;
             this.dgv_CantHorasPorSector.AllowUserToDeleteRows = false;
             this.dgv_CantHorasPorSector.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_CantHorasPorSector.Location = new System.Drawing.Point(453, 370);
+            this.dgv_CantHorasPorSector.Location = new System.Drawing.Point(446, 428);
             this.dgv_CantHorasPorSector.Name = "dgv_CantHorasPorSector";
             this.dgv_CantHorasPorSector.ReadOnly = true;
-            this.dgv_CantHorasPorSector.Size = new System.Drawing.Size(390, 85);
+            this.dgv_CantHorasPorSector.Size = new System.Drawing.Size(430, 116);
             this.dgv_CantHorasPorSector.TabIndex = 23;
             // 
             // btn_Mostrar
             // 
             this.btn_Mostrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Mostrar.Location = new System.Drawing.Point(18, 565);
+            this.btn_Mostrar.Location = new System.Drawing.Point(18, 619);
             this.btn_Mostrar.Name = "btn_Mostrar";
             this.btn_Mostrar.Size = new System.Drawing.Size(409, 40);
             this.btn_Mostrar.TabIndex = 24;
@@ -476,7 +457,7 @@ namespace HilosLibertad
             // lbl_CantidadHorasPorMaquina
             // 
             this.lbl_CantidadHorasPorMaquina.AutoSize = true;
-            this.lbl_CantidadHorasPorMaquina.Location = new System.Drawing.Point(456, 124);
+            this.lbl_CantidadHorasPorMaquina.Location = new System.Drawing.Point(449, 123);
             this.lbl_CantidadHorasPorMaquina.Name = "lbl_CantidadHorasPorMaquina";
             this.lbl_CantidadHorasPorMaquina.Size = new System.Drawing.Size(160, 13);
             this.lbl_CantidadHorasPorMaquina.TabIndex = 28;
@@ -485,7 +466,7 @@ namespace HilosLibertad
             // lbl_CantidadHorasPorSector
             // 
             this.lbl_CantidadHorasPorSector.AutoSize = true;
-            this.lbl_CantidadHorasPorSector.Location = new System.Drawing.Point(456, 354);
+            this.lbl_CantidadHorasPorSector.Location = new System.Drawing.Point(449, 412);
             this.lbl_CantidadHorasPorSector.Name = "lbl_CantidadHorasPorSector";
             this.lbl_CantidadHorasPorSector.Size = new System.Drawing.Size(150, 13);
             this.lbl_CantidadHorasPorSector.TabIndex = 29;
@@ -496,97 +477,95 @@ namespace HilosLibertad
             this.dgv_CantTotalHorasMaquina.AllowUserToAddRows = false;
             this.dgv_CantTotalHorasMaquina.AllowUserToDeleteRows = false;
             this.dgv_CantTotalHorasMaquina.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_CantTotalHorasMaquina.Location = new System.Drawing.Point(453, 518);
+            this.dgv_CantTotalHorasMaquina.Location = new System.Drawing.Point(446, 587);
             this.dgv_CantTotalHorasMaquina.Name = "dgv_CantTotalHorasMaquina";
             this.dgv_CantTotalHorasMaquina.ReadOnly = true;
-            this.dgv_CantTotalHorasMaquina.Size = new System.Drawing.Size(390, 37);
+            this.dgv_CantTotalHorasMaquina.Size = new System.Drawing.Size(430, 71);
             this.dgv_CantTotalHorasMaquina.TabIndex = 30;
             // 
             // lbl_CantidadTotalHorasMaquina
             // 
             this.lbl_CantidadTotalHorasMaquina.AutoSize = true;
-            this.lbl_CantidadTotalHorasMaquina.Location = new System.Drawing.Point(456, 468);
+            this.lbl_CantidadTotalHorasMaquina.Location = new System.Drawing.Point(449, 571);
             this.lbl_CantidadTotalHorasMaquina.Name = "lbl_CantidadTotalHorasMaquina";
-            this.lbl_CantidadTotalHorasMaquina.Size = new System.Drawing.Size(169, 13);
+            this.lbl_CantidadTotalHorasMaquina.Size = new System.Drawing.Size(211, 13);
             this.lbl_CantidadTotalHorasMaquina.TabIndex = 31;
-            this.lbl_CantidadTotalHorasMaquina.Text = "Cantidad Total de Horas Máquina:";
+            this.lbl_CantidadTotalHorasMaquina.Text = "Cantidad de Horas de Todas las Máquinas:";
             // 
-            // grp_FiltroFechaHora
+            // grp_FiltroFecha
             // 
-            this.grp_FiltroFechaHora.Controls.Add(this.lbl_Hasta);
-            this.grp_FiltroFechaHora.Controls.Add(this.lbl_Desde);
-            this.grp_FiltroFechaHora.Controls.Add(this.cmb_MinutoHasta);
-            this.grp_FiltroFechaHora.Controls.Add(this.cmb_MinutoDesde);
-            this.grp_FiltroFechaHora.Controls.Add(this.cmb_HoraHasta);
-            this.grp_FiltroFechaHora.Controls.Add(this.dtp_Hasta);
-            this.grp_FiltroFechaHora.Controls.Add(this.cmb_HoraDesde);
-            this.grp_FiltroFechaHora.Controls.Add(this.dtp_Desde);
-            this.grp_FiltroFechaHora.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grp_FiltroFechaHora.Location = new System.Drawing.Point(18, 18);
-            this.grp_FiltroFechaHora.Name = "grp_FiltroFechaHora";
-            this.grp_FiltroFechaHora.Size = new System.Drawing.Size(409, 128);
-            this.grp_FiltroFechaHora.TabIndex = 33;
-            this.grp_FiltroFechaHora.TabStop = false;
-            this.grp_FiltroFechaHora.Text = "Filtro por Fecha/Hora";
+            this.grp_FiltroFecha.Controls.Add(this.lbl_FechaFinal);
+            this.grp_FiltroFecha.Controls.Add(this.lbl_FechaInicial);
+            this.grp_FiltroFecha.Controls.Add(this.dtp_Hasta);
+            this.grp_FiltroFecha.Controls.Add(this.dtp_Desde);
+            this.grp_FiltroFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grp_FiltroFecha.Location = new System.Drawing.Point(18, 18);
+            this.grp_FiltroFecha.Name = "grp_FiltroFecha";
+            this.grp_FiltroFecha.Size = new System.Drawing.Size(409, 104);
+            this.grp_FiltroFecha.TabIndex = 33;
+            this.grp_FiltroFecha.TabStop = false;
+            this.grp_FiltroFecha.Text = "Filtro por Fecha";
             // 
-            // lbl_Hasta
+            // lbl_FechaFinal
             // 
-            this.lbl_Hasta.AutoSize = true;
-            this.lbl_Hasta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Hasta.Location = new System.Drawing.Point(21, 70);
-            this.lbl_Hasta.Name = "lbl_Hasta";
-            this.lbl_Hasta.Size = new System.Drawing.Size(42, 15);
-            this.lbl_Hasta.TabIndex = 39;
-            this.lbl_Hasta.Text = "Hasta:";
-            this.lbl_Hasta.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbl_FechaFinal.AutoSize = true;
+            this.lbl_FechaFinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_FechaFinal.Location = new System.Drawing.Point(30, 64);
+            this.lbl_FechaFinal.Name = "lbl_FechaFinal";
+            this.lbl_FechaFinal.Size = new System.Drawing.Size(81, 16);
+            this.lbl_FechaFinal.TabIndex = 39;
+            this.lbl_FechaFinal.Text = "Fecha Final:";
+            this.lbl_FechaFinal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // lbl_Desde
+            // lbl_FechaInicial
             // 
-            this.lbl_Desde.AutoSize = true;
-            this.lbl_Desde.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Desde.Location = new System.Drawing.Point(21, 23);
-            this.lbl_Desde.Name = "lbl_Desde";
-            this.lbl_Desde.Size = new System.Drawing.Size(46, 15);
-            this.lbl_Desde.TabIndex = 38;
-            this.lbl_Desde.Text = "Desde:";
-            this.lbl_Desde.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbl_FechaInicial.AutoSize = true;
+            this.lbl_FechaInicial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_FechaInicial.Location = new System.Drawing.Point(25, 33);
+            this.lbl_FechaInicial.Name = "lbl_FechaInicial";
+            this.lbl_FechaInicial.Size = new System.Drawing.Size(86, 16);
+            this.lbl_FechaInicial.TabIndex = 38;
+            this.lbl_FechaInicial.Text = "Fecha Inicial:";
+            this.lbl_FechaInicial.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // cmb_MinutoHasta
+            // cmb_MinutoFinal
             // 
-            this.cmb_MinutoHasta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_MinutoHasta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmb_MinutoHasta.FormattingEnabled = true;
-            this.cmb_MinutoHasta.Items.AddRange(new object[] {
+            this.cmb_MinutoFinal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_MinutoFinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmb_MinutoFinal.FormattingEnabled = true;
+            this.cmb_MinutoFinal.Items.AddRange(new object[] {
             "00",
             "15",
             "30",
             "45"});
-            this.cmb_MinutoHasta.Location = new System.Drawing.Point(343, 89);
-            this.cmb_MinutoHasta.Name = "cmb_MinutoHasta";
-            this.cmb_MinutoHasta.Size = new System.Drawing.Size(40, 23);
-            this.cmb_MinutoHasta.TabIndex = 11;
+            this.cmb_MinutoFinal.Location = new System.Drawing.Point(345, 29);
+            this.cmb_MinutoFinal.Name = "cmb_MinutoFinal";
+            this.cmb_MinutoFinal.Size = new System.Drawing.Size(40, 23);
+            this.cmb_MinutoFinal.TabIndex = 11;
+            this.cmb_MinutoFinal.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoHasta_SelectedIndexChanged);
             // 
-            // cmb_MinutoDesde
+            // cmb_MinutoInicial
             // 
-            this.cmb_MinutoDesde.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_MinutoDesde.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmb_MinutoDesde.FormattingEnabled = true;
-            this.cmb_MinutoDesde.Items.AddRange(new object[] {
+            this.cmb_MinutoInicial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_MinutoInicial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmb_MinutoInicial.FormattingEnabled = true;
+            this.cmb_MinutoInicial.Items.AddRange(new object[] {
             "00",
             "15",
             "30",
             "45"});
-            this.cmb_MinutoDesde.Location = new System.Drawing.Point(343, 42);
-            this.cmb_MinutoDesde.Name = "cmb_MinutoDesde";
-            this.cmb_MinutoDesde.Size = new System.Drawing.Size(40, 23);
-            this.cmb_MinutoDesde.TabIndex = 9;
+            this.cmb_MinutoInicial.Location = new System.Drawing.Point(152, 29);
+            this.cmb_MinutoInicial.Name = "cmb_MinutoInicial";
+            this.cmb_MinutoInicial.Size = new System.Drawing.Size(40, 23);
+            this.cmb_MinutoInicial.TabIndex = 9;
+            this.cmb_MinutoInicial.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoDesde_SelectedIndexChanged);
             // 
-            // cmb_HoraHasta
+            // cmb_HoraFinal
             // 
-            this.cmb_HoraHasta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_HoraHasta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmb_HoraHasta.FormattingEnabled = true;
-            this.cmb_HoraHasta.Items.AddRange(new object[] {
+            this.cmb_HoraFinal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_HoraFinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmb_HoraFinal.FormattingEnabled = true;
+            this.cmb_HoraFinal.Items.AddRange(new object[] {
             "0",
             "1",
             "2",
@@ -611,25 +590,27 @@ namespace HilosLibertad
             "21",
             "22",
             "23"});
-            this.cmb_HoraHasta.Location = new System.Drawing.Point(299, 89);
-            this.cmb_HoraHasta.Name = "cmb_HoraHasta";
-            this.cmb_HoraHasta.Size = new System.Drawing.Size(40, 23);
-            this.cmb_HoraHasta.TabIndex = 7;
+            this.cmb_HoraFinal.Location = new System.Drawing.Point(306, 29);
+            this.cmb_HoraFinal.Name = "cmb_HoraFinal";
+            this.cmb_HoraFinal.Size = new System.Drawing.Size(40, 23);
+            this.cmb_HoraFinal.TabIndex = 7;
+            this.cmb_HoraFinal.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraHasta_SelectedIndexChanged);
             // 
             // dtp_Hasta
             // 
             this.dtp_Hasta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtp_Hasta.Location = new System.Drawing.Point(24, 89);
+            this.dtp_Hasta.Location = new System.Drawing.Point(113, 61);
             this.dtp_Hasta.Name = "dtp_Hasta";
-            this.dtp_Hasta.Size = new System.Drawing.Size(269, 22);
+            this.dtp_Hasta.Size = new System.Drawing.Size(272, 22);
             this.dtp_Hasta.TabIndex = 5;
+            this.dtp_Hasta.ValueChanged += new System.EventHandler(this.dtp_Hasta_ValueChanged);
             // 
-            // cmb_HoraDesde
+            // cmb_HoraInicial
             // 
-            this.cmb_HoraDesde.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_HoraDesde.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmb_HoraDesde.FormattingEnabled = true;
-            this.cmb_HoraDesde.Items.AddRange(new object[] {
+            this.cmb_HoraInicial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_HoraInicial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmb_HoraInicial.FormattingEnabled = true;
+            this.cmb_HoraInicial.Items.AddRange(new object[] {
             "0",
             "1",
             "2",
@@ -654,52 +635,26 @@ namespace HilosLibertad
             "21",
             "22",
             "23"});
-            this.cmb_HoraDesde.Location = new System.Drawing.Point(299, 42);
-            this.cmb_HoraDesde.Name = "cmb_HoraDesde";
-            this.cmb_HoraDesde.Size = new System.Drawing.Size(40, 23);
-            this.cmb_HoraDesde.TabIndex = 3;
+            this.cmb_HoraInicial.Location = new System.Drawing.Point(113, 29);
+            this.cmb_HoraInicial.Name = "cmb_HoraInicial";
+            this.cmb_HoraInicial.Size = new System.Drawing.Size(40, 23);
+            this.cmb_HoraInicial.TabIndex = 3;
+            this.cmb_HoraInicial.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraDesde_SelectedIndexChanged);
             // 
-            // label1
+            // grp_FiltroMaquinasSectores
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(583, 220);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 39);
-            this.label1.TabIndex = 35;
-            this.label1.Text = "numeroMaquinaUSUARIO\r\nnombreMaquinaUSUARIO\r\nhorasEncendida";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(571, 401);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 26);
-            this.label2.TabIndex = 36;
-            this.label2.Text = "nombreSectorUSUARIO\r\nhorasEncendido";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(589, 530);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(104, 13);
-            this.label3.TabIndex = 37;
-            this.label3.Text = "hsTotalesEncendido";
-            // 
-            // grp_FiltroSectoresMaquinas
-            // 
-            this.grp_FiltroSectoresMaquinas.Controls.Add(this.btn_DeseleccionarTodo);
-            this.grp_FiltroSectoresMaquinas.Controls.Add(this.btn_SeleccionarTodo);
-            this.grp_FiltroSectoresMaquinas.Controls.Add(this.grp_Telares);
-            this.grp_FiltroSectoresMaquinas.Controls.Add(this.grp_Cordoneras);
-            this.grp_FiltroSectoresMaquinas.Controls.Add(this.grp_Terminacion);
-            this.grp_FiltroSectoresMaquinas.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grp_FiltroSectoresMaquinas.Location = new System.Drawing.Point(18, 165);
-            this.grp_FiltroSectoresMaquinas.Name = "grp_FiltroSectoresMaquinas";
-            this.grp_FiltroSectoresMaquinas.Size = new System.Drawing.Size(409, 390);
-            this.grp_FiltroSectoresMaquinas.TabIndex = 40;
-            this.grp_FiltroSectoresMaquinas.TabStop = false;
-            this.grp_FiltroSectoresMaquinas.Text = "Filtro por Sectores/Máquinas";
+            this.grp_FiltroMaquinasSectores.Controls.Add(this.btn_DeseleccionarTodo);
+            this.grp_FiltroMaquinasSectores.Controls.Add(this.btn_SeleccionarTodo);
+            this.grp_FiltroMaquinasSectores.Controls.Add(this.grp_Telares);
+            this.grp_FiltroMaquinasSectores.Controls.Add(this.grp_Cordoneras);
+            this.grp_FiltroMaquinasSectores.Controls.Add(this.grp_Terminacion);
+            this.grp_FiltroMaquinasSectores.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grp_FiltroMaquinasSectores.Location = new System.Drawing.Point(18, 215);
+            this.grp_FiltroMaquinasSectores.Name = "grp_FiltroMaquinasSectores";
+            this.grp_FiltroMaquinasSectores.Size = new System.Drawing.Size(409, 390);
+            this.grp_FiltroMaquinasSectores.TabIndex = 40;
+            this.grp_FiltroMaquinasSectores.TabStop = false;
+            this.grp_FiltroMaquinasSectores.Text = "Filtro por Máquinas y Sectores";
             // 
             // btn_DeseleccionarTodo
             // 
@@ -723,16 +678,66 @@ namespace HilosLibertad
             this.btn_SeleccionarTodo.UseVisualStyleBackColor = true;
             this.btn_SeleccionarTodo.Click += new System.EventHandler(this.btn_SeleccionarTodo_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label1.Location = new System.Drawing.Point(526, 83);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(350, 39);
+            this.label1.TabIndex = 41;
+            this.label1.Text = "En los tres casos, la columna correspondiente a los minutos está de más:\r\n- Solam" +
+    "ente se requieren las horas, no los minutos.\r\n- Los minutos se muestran únicamen" +
+    "te para comprobar tiempos.";
+            // 
+            // grp_FiltroFranjaHoraria
+            // 
+            this.grp_FiltroFranjaHoraria.Controls.Add(this.lbl_HorarioFinal);
+            this.grp_FiltroFranjaHoraria.Controls.Add(this.lbl_HorarioInicial);
+            this.grp_FiltroFranjaHoraria.Controls.Add(this.cmb_MinutoInicial);
+            this.grp_FiltroFranjaHoraria.Controls.Add(this.cmb_MinutoFinal);
+            this.grp_FiltroFranjaHoraria.Controls.Add(this.cmb_HoraInicial);
+            this.grp_FiltroFranjaHoraria.Controls.Add(this.cmb_HoraFinal);
+            this.grp_FiltroFranjaHoraria.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grp_FiltroFranjaHoraria.Location = new System.Drawing.Point(18, 132);
+            this.grp_FiltroFranjaHoraria.Name = "grp_FiltroFranjaHoraria";
+            this.grp_FiltroFranjaHoraria.Size = new System.Drawing.Size(409, 73);
+            this.grp_FiltroFranjaHoraria.TabIndex = 40;
+            this.grp_FiltroFranjaHoraria.TabStop = false;
+            this.grp_FiltroFranjaHoraria.Text = "Filtro por Franja Horaria";
+            // 
+            // lbl_HorarioFinal
+            // 
+            this.lbl_HorarioFinal.AutoSize = true;
+            this.lbl_HorarioFinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_HorarioFinal.Location = new System.Drawing.Point(211, 33);
+            this.lbl_HorarioFinal.Name = "lbl_HorarioFinal";
+            this.lbl_HorarioFinal.Size = new System.Drawing.Size(88, 16);
+            this.lbl_HorarioFinal.TabIndex = 39;
+            this.lbl_HorarioFinal.Text = "Horario Final:";
+            this.lbl_HorarioFinal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lbl_HorarioInicial
+            // 
+            this.lbl_HorarioInicial.AutoSize = true;
+            this.lbl_HorarioInicial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_HorarioInicial.Location = new System.Drawing.Point(13, 33);
+            this.lbl_HorarioInicial.Name = "lbl_HorarioInicial";
+            this.lbl_HorarioInicial.Size = new System.Drawing.Size(93, 16);
+            this.lbl_HorarioInicial.TabIndex = 38;
+            this.lbl_HorarioInicial.Text = "Horario Inicial:";
+            this.lbl_HorarioInicial.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // frm_Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(863, 624);
-            this.Controls.Add(this.grp_FiltroSectoresMaquinas);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(894, 677);
+            this.Controls.Add(this.grp_FiltroFranjaHoraria);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.grp_FiltroFechaHora);
+            this.Controls.Add(this.grp_FiltroMaquinasSectores);
+            this.Controls.Add(this.grp_FiltroFecha);
             this.Controls.Add(this.lbl_CantidadTotalHorasMaquina);
             this.Controls.Add(this.dgv_CantTotalHorasMaquina);
             this.Controls.Add(this.lbl_CantidadHorasPorSector);
@@ -757,9 +762,11 @@ namespace HilosLibertad
             this.grp_Terminacion.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_CantHorasPorSector)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_CantTotalHorasMaquina)).EndInit();
-            this.grp_FiltroFechaHora.ResumeLayout(false);
-            this.grp_FiltroFechaHora.PerformLayout();
-            this.grp_FiltroSectoresMaquinas.ResumeLayout(false);
+            this.grp_FiltroFecha.ResumeLayout(false);
+            this.grp_FiltroFecha.PerformLayout();
+            this.grp_FiltroMaquinasSectores.ResumeLayout(false);
+            this.grp_FiltroFranjaHoraria.ResumeLayout(false);
+            this.grp_FiltroFranjaHoraria.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -800,23 +807,24 @@ namespace HilosLibertad
         private System.Windows.Forms.Label lbl_CantidadHorasPorSector;
         private System.Windows.Forms.DataGridView dgv_CantTotalHorasMaquina;
         private System.Windows.Forms.Label lbl_CantidadTotalHorasMaquina;
-        private System.Windows.Forms.GroupBox grp_FiltroFechaHora;
-        private System.Windows.Forms.ComboBox cmb_HoraDesde;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cmb_HoraHasta;
+        private System.Windows.Forms.GroupBox grp_FiltroFecha;
+        private System.Windows.Forms.ComboBox cmb_HoraInicial;
+        private System.Windows.Forms.ComboBox cmb_HoraFinal;
         private System.Windows.Forms.DateTimePicker dtp_Hasta;
-        private System.Windows.Forms.ComboBox cmb_MinutoHasta;
-        private System.Windows.Forms.ComboBox cmb_MinutoDesde;
-        private System.Windows.Forms.Label lbl_Hasta;
-        private System.Windows.Forms.Label lbl_Desde;
-        private System.Windows.Forms.GroupBox grp_FiltroSectoresMaquinas;
+        private System.Windows.Forms.ComboBox cmb_MinutoFinal;
+        private System.Windows.Forms.ComboBox cmb_MinutoInicial;
+        private System.Windows.Forms.Label lbl_FechaFinal;
+        private System.Windows.Forms.Label lbl_FechaInicial;
+        private System.Windows.Forms.GroupBox grp_FiltroMaquinasSectores;
         private System.Windows.Forms.Button btn_SeleccionSectorTelares;
         private System.Windows.Forms.Button btn_SeleccionSectorCordoneras;
         private System.Windows.Forms.Button btn_SeleccionSectorTerminacion;
         private System.Windows.Forms.Button btn_SeleccionarTodo;
         private System.Windows.Forms.Button btn_DeseleccionarTodo;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox grp_FiltroFranjaHoraria;
+        private System.Windows.Forms.Label lbl_HorarioFinal;
+        private System.Windows.Forms.Label lbl_HorarioInicial;
     }
 }
 
