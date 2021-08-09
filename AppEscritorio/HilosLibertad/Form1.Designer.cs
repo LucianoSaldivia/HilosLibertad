@@ -711,7 +711,7 @@ namespace HilosLibertad
             // 
             this.lbl_HorarioFinal.AutoSize = true;
             this.lbl_HorarioFinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_HorarioFinal.Location = new System.Drawing.Point(211, 33);
+            this.lbl_HorarioFinal.Location = new System.Drawing.Point(216, 33);
             this.lbl_HorarioFinal.Name = "lbl_HorarioFinal";
             this.lbl_HorarioFinal.Size = new System.Drawing.Size(88, 16);
             this.lbl_HorarioFinal.TabIndex = 39;
@@ -722,7 +722,7 @@ namespace HilosLibertad
             // 
             this.lbl_HorarioInicial.AutoSize = true;
             this.lbl_HorarioInicial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_HorarioInicial.Location = new System.Drawing.Point(13, 33);
+            this.lbl_HorarioInicial.Location = new System.Drawing.Point(18, 33);
             this.lbl_HorarioInicial.Name = "lbl_HorarioInicial";
             this.lbl_HorarioInicial.Size = new System.Drawing.Size(93, 16);
             this.lbl_HorarioInicial.TabIndex = 38;
