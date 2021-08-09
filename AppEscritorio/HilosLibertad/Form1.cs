@@ -21,10 +21,10 @@ namespace HilosLibertad
             // Carga inicial de fechas: desde un mes antes de hoy a las 00:00 hasta hoy a las 0:00
             dtp_Desde.Value = DateTime.Today.AddMonths(-1);
             dtp_Hasta.Value = DateTime.Today;
-            cmb_HoraDesde.SelectedIndex = 0;
-            cmb_MinutoDesde.SelectedIndex = 0;
-            cmb_HoraHasta.SelectedIndex = 0;
-            cmb_MinutoHasta.SelectedIndex = 0;
+            cmb_HoraInicial.SelectedIndex = 0;
+            cmb_MinutoInicial.SelectedIndex = 0;
+            cmb_HoraFinal.SelectedIndex = 0;
+            cmb_MinutoFinal.SelectedIndex = 0;
             // Carga inicial de máquinas: todas las máquinas
             setCheckButtons("todos", true);
         }
@@ -223,17 +223,17 @@ namespace HilosLibertad
             string f_d = dtp_Desde.Value.ToString("yyyy-dd-MM");    // formato de fecha útil (YYYY-DD-MM) para las consultas a la DB
 
             string h_d; //
-            if (Convert.ToInt32(cmb_HoraDesde.SelectedItem) >= 0 && Convert.ToInt32(cmb_HoraDesde.SelectedItem) <= 9)
+            if (Convert.ToInt32(cmb_HoraInicial.SelectedItem) >= 0 && Convert.ToInt32(cmb_HoraInicial.SelectedItem) <= 9)
             {
-                h_d = "0" + cmb_HoraDesde.SelectedItem.ToString();
+                h_d = "0" + cmb_HoraInicial.SelectedItem.ToString();
             }
             else
             {
-                h_d = cmb_HoraDesde.SelectedItem.ToString();
+                h_d = cmb_HoraInicial.SelectedItem.ToString();
                 
             }
 
-            string m_d = cmb_MinutoDesde.SelectedItem.ToString();
+            string m_d = cmb_MinutoInicial.SelectedItem.ToString();
 
             string FHM_desde = "'" + f_d + " " + h_d + ":" + m_d + ":00'";
             
@@ -244,18 +244,18 @@ namespace HilosLibertad
         {
             string f_h = dtp_Hasta.Value.ToString("yyyy-dd-MM");    // formato de fecha útil (YYYY-DD-MM) para las consultas a la DB
 
-            string h_h = cmb_HoraHasta.Text;
-            if (Convert.ToInt32(cmb_HoraHasta.SelectedItem) >= 0 && Convert.ToInt32(cmb_HoraHasta.SelectedItem) <= 9)
+            string h_h = cmb_HoraFinal.Text;
+            if (Convert.ToInt32(cmb_HoraFinal.SelectedItem) >= 0 && Convert.ToInt32(cmb_HoraFinal.SelectedItem) <= 9)
             {
-                h_h = "0" + cmb_HoraHasta.SelectedItem.ToString();
+                h_h = "0" + cmb_HoraFinal.SelectedItem.ToString();
             }
             else
             {
-                h_h = cmb_HoraHasta.SelectedItem.ToString();
+                h_h = cmb_HoraFinal.SelectedItem.ToString();
             }
 
 
-            string m_h = cmb_MinutoHasta.SelectedItem.ToString();
+            string m_h = cmb_MinutoFinal.SelectedItem.ToString();
 
             string FHM_hasta = "'" + f_h + " " + h_h + ":" + m_h + ":00'";
 
@@ -273,18 +273,18 @@ namespace HilosLibertad
             }
             else if (dtp_Desde.Value == dtp_Hasta.Value) // Si FECHA_DESDE y FECHA_HASTA son la misma fecha, entonces...
             {
-                int h_desde_int = Convert.ToInt32(cmb_HoraDesde.SelectedItem);
-                int m_desde_int = Convert.ToInt32(cmb_MinutoDesde.SelectedItem);
+                int h_desde_int = Convert.ToInt32(cmb_HoraInicial.SelectedItem);
+                int m_desde_int = Convert.ToInt32(cmb_MinutoInicial.SelectedItem);
                 int hsmins_desde_int = h_desde_int * 100 + m_desde_int;
-                int h_hasta_int = Convert.ToInt32(cmb_HoraHasta.SelectedItem);
-                int m_hasta_int = Convert.ToInt32(cmb_MinutoHasta.SelectedItem);
+                int h_hasta_int = Convert.ToInt32(cmb_HoraFinal.SelectedItem);
+                int m_hasta_int = Convert.ToInt32(cmb_MinutoFinal.SelectedItem);
                 int hsmins_hasta_int = h_hasta_int * 100 + m_hasta_int;
 
                 if (hsmins_desde_int > hsmins_hasta_int)    // ... si el HORARIO_DESDE es posterior al HORARIO_HASTA, entonces el HORARIO_DESDE será igual al HORARIO_HASTA
                 {
                     MessageBox.Show("El horario final debe ser posterior al horario inicial.\nPara evitar inconsistencias, se actualiza el horario inicial.", "Inconsistencia de horarios", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    cmb_HoraDesde.SelectedItem = cmb_HoraHasta.SelectedItem;
-                    cmb_MinutoDesde.SelectedItem = cmb_MinutoHasta.SelectedItem;
+                    cmb_HoraInicial.SelectedItem = cmb_HoraFinal.SelectedItem;
+                    cmb_MinutoInicial.SelectedItem = cmb_MinutoFinal.SelectedItem;
                 }
             }
         }
@@ -299,18 +299,18 @@ namespace HilosLibertad
             }
             else if (dtp_Hasta.Value == dtp_Desde.Value) // Si FECHA_HASTA y FECHA_DESDE son la misma fecha, entonces...
             {
-                int h_desde_int = Convert.ToInt32(cmb_HoraDesde.SelectedItem);
-                int m_desde_int = Convert.ToInt32(cmb_MinutoDesde.SelectedItem);
+                int h_desde_int = Convert.ToInt32(cmb_HoraInicial.SelectedItem);
+                int m_desde_int = Convert.ToInt32(cmb_MinutoInicial.SelectedItem);
                 int hsmins_desde_int = h_desde_int * 100 + m_desde_int;
-                int h_hasta_int = Convert.ToInt32(cmb_HoraHasta.SelectedItem);
-                int m_hasta_int = Convert.ToInt32(cmb_MinutoHasta.SelectedItem);
+                int h_hasta_int = Convert.ToInt32(cmb_HoraFinal.SelectedItem);
+                int m_hasta_int = Convert.ToInt32(cmb_MinutoFinal.SelectedItem);
                 int hsmins_hasta_int = h_hasta_int * 100 + m_hasta_int;
 
                 if (hsmins_hasta_int < hsmins_desde_int)    // ... si el HORARIO_HASTA es anterior al HORARIO_DESDE, entonces el HORARIO_HASTA será igual al HORARIO_DESDE
                 {
                     MessageBox.Show("El horario inicial debe ser anterior al horario final.\nPara evitar inconsistencias, se actualiza el horario final.", "Inconsistencia de horarios", MessageBoxButtons.OK, MessageBoxIcon.Information); 
-                    cmb_HoraHasta.SelectedItem = cmb_HoraDesde.SelectedItem;
-                    cmb_MinutoHasta.SelectedItem = cmb_MinutoDesde.SelectedItem;
+                    cmb_HoraFinal.SelectedItem = cmb_HoraInicial.SelectedItem;
+                    cmb_MinutoFinal.SelectedItem = cmb_MinutoInicial.SelectedItem;
                 }
             }
         }
