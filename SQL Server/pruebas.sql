@@ -1,12 +1,18 @@
-USE prueba2
+USE prueba3
+GO
 
+
+/* VACIAR Y REINICIAR TABLA XYZ
+DELETE FROM HL.registros
+DBCC CHECKIDENT ('HL.registros', RESEED, 0)
+*/
 
 
 -- INSERCIÓN DE CASOS DE PRUEBA
 SELECT * FROM HL.registros
-EXEC HL.sp_insertarSesion 1, '2021-07-08 16:00' --'YY-DD-MM HH:MM:SS'
+EXEC HL.sp_insertarSesion 1, '2021-25-09 00:00' --'YY-DD-MM HH:MM:SS'
 SELECT * FROM HL.registros
-EXEC HL.sp_terminarSesion 1, '2021-07-08 17:25'
+EXEC HL.sp_terminarSesion 1, '2021-30-09 00:00' --'YY-DD-MM HH:MM:SS'
 SELECT * FROM HL.registros
 
 

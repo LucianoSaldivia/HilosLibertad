@@ -1,7 +1,7 @@
 -- CONFIGURACIONES INICIALES
 		--Se usa la base de datos de nombre "pruebaDB"
 		--USE DB_HilosLibertad
-		USE prueba2
+		USE prueba3
 		GO
 		--Se crea el esquema
 		CREATE SCHEMA HL
@@ -21,7 +21,7 @@
 				   r.fechaHoraEncendida AS 'INIT_DT',
 				   r.fechaHoraUltimoRegistroEncendida AS 'LAST_DT',
 				   r.fueApagadaPorOperarioOPorFallaParticular AS 'TRND_OFF',
-				   r.cantidadMinutosEncendida AS 'MINS_ON'
+				   DATEDIFF(MINUTE, r.fechaHoraEncendida, r.fechaHoraUltimoRegistroEncendida) AS 'MINS_ON'
 			FROM HL.registros r
 		)
 		GO
@@ -31,5 +31,8 @@
 		
 
 		SELECT * FROM HL.v_registrador
+
+
+
 
 

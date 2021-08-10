@@ -1,7 +1,7 @@
 -- CONFIGURACIONES INICIALES
 		--Se usa la base de datos de nombre "pruebaDB"
 		--USE DB_HilosLibertad
-		USE prueba2
+		USE prueba3
 		GO
 		--Se crea el esquema
 		CREATE SCHEMA HL
@@ -39,8 +39,7 @@
 			idMaquina NUMERIC(18,0) REFERENCES HL.maquinas,
 			fechaHoraEncendida SMALLDATETIME NOT NULL,
 			fechaHoraUltimoRegistroEncendida SMALLDATETIME NOT NULL,
-			fueApagadaPorOperarioOPorFallaParticular BIT,
-			cantidadMinutosEncendida INT
+			fueApagadaPorOperarioOPorFallaParticular BIT
 		)
 		GO
 
