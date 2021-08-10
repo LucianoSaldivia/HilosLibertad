@@ -409,13 +409,191 @@ def test4(conn):
         n=5
     )
 
+def test5(conn):
+    """Creo sesiones (como están en el NUEVO docs.sheet de drive) para testear
+    la función que obtiene minutos activos de las máquinas."""
+    
+    # M1 - Sesión 1
+    sessionStarted(
+        conn=conn,
+        id_maq=1,
+        timestamp=datetime(year=2021, month=9, day=25, hour=0, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=1,
+        timestamp=datetime(year=2021, month=9, day=25, hour=23, minute=59, second=0)
+    )
+    # M1 - Sesión 2
+    sessionStarted(
+        conn=conn,
+        id_maq=1,
+        timestamp=datetime(year=2021, month=9, day=26, hour=0, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=1,
+        timestamp=datetime(year=2021, month=9, day=26, hour=23, minute=59, second=0)
+    )
+    # M1 - Sesión 3
+    sessionStarted(
+        conn=conn,
+        id_maq=1,
+        timestamp=datetime(year=2021, month=9, day=27, hour=0, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=1,
+        timestamp=datetime(year=2021, month=9, day=27, hour=23, minute=59, second=0)
+    )
+    # M1 - Sesión 4
+    sessionStarted(
+        conn=conn,
+        id_maq=1,
+        timestamp=datetime(year=2021, month=9, day=28, hour=0, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=1,
+        timestamp=datetime(year=2021, month=9, day=28, hour=23, minute=59, second=0)
+    )
+    # M1 - Sesión 5
+    sessionStarted(
+        conn=conn,
+        id_maq=1,
+        timestamp=datetime(year=2021, month=9, day=29, hour=0, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=1,
+        timestamp=datetime(year=2021, month=9, day=29, hour=23, minute=59, second=0)
+    )
+    
+
+    # M7 - Sesión 1
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=25, hour=0, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=25, hour=12, minute=0, second=0)
+    )
+    # M7 - Sesión 2
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=25, hour=18, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=25, hour=23, minute=59, second=0)
+    )
+    # M7 - Sesión 3
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=26, hour=0, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=26, hour=12, minute=0, second=0)
+    )
+    # M7 - Sesión 4
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=26, hour=18, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=26, hour=23, minute=59, second=0)
+    )
+    # M7 - Sesión 5
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=27, hour=0, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=27, hour=12, minute=0, second=0)
+    )
+    # M7 - Sesión 6
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=27, hour=18, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=27, hour=23, minute=59, second=0)
+    )
+    # M7 - Sesión 7
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=28, hour=0, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=28, hour=12, minute=0, second=0)
+    )
+    # M7 - Sesión 8
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=28, hour=18, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=28, hour=23, minute=59, second=0)
+    )
+    # M7 - Sesión 9
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=29, hour=0, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=29, hour=12, minute=0, second=0)
+    )
+    # M7 - Sesión 10
+    sessionStarted(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=29, hour=18, minute=0, second=0)
+    )
+    sessionFinished(
+        conn=conn,
+        id_maq=7,
+        timestamp=datetime(year=2021, month=9, day=29, hour=23, minute=59, second=0)
+    )
+
+
+    # Muestro todo para chequear los registros y los horarios
+    selectAll(conn)
+
+
+
 if __name__ == "__main__":
 
     with connectToDatabase() as conn:
 
         clearTable(conn, table_name)
 
-        test4(conn)
+        test5(conn)
         
 
     print("Todo OK")
