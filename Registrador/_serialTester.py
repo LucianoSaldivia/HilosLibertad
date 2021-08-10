@@ -13,7 +13,7 @@ PUERTO = "COM3"
 
 # Tiempos de desconexión y limpieza de buffer de recepción
 CLEAR_RX_BUFFER_TIME = 14 * defines.TIMEOUT_TIME
-DISCONNECTION_TIME = 2 * defines.TIME_DESIRED_BETWEEN_READS
+DISCONNECTION_TIME = 2 * defines.TIME_BETWEEN_FRAMES
 
 
 # Funciones para chequear PDU
@@ -35,8 +35,7 @@ def showReceivedPDU(PDU_bytes: bytes) -> None:
     bits_string = str()
     ascii_string = str()
     # Convierto los datos [0:7] y el CRC [8] a string
-    for i in range(0, defines.BUFFER_SIZE_ONLY_DATA_MODE - 1):
-        bits_string += "{0:08b}".format( ord(PDU_bytes.decode()[i]) ) + " "
+    bits_string = bytes_to_bit_str(PDU_bytes, range(0, 9))
     # Si la trama es DATA + INFO, muestro el resto en ascii [9:17]
     if len(PDU_bytes) == defines.BUFFER_SIZE_DATA_INFO_MODE:
         ascii_string += chr(PDU_bytes[9]) + ":" \
@@ -53,14 +52,20 @@ def showReceivedPDU(PDU_bytes: bytes) -> None:
                         + " " # U:00       
     
     print( f"Received: " + bits_string + ascii_string )
+def bytes_to_bit_str(data: bytes, rango: range) -> str: 
+    bit_str = str()
+    for byte in rango:
+        for bit in reversed( range(0, 8)):
+            bit_str += str( ( data[byte] & (1 << bit) ) >> bit )
+        bit_str += " "
+    return bit_str
 
 # Calculo del promedio (de forma acumulativa)
 def average( new_number: float ):
     average.n += 1
     average.last_average = ( average.last_average * (average.n-1) + new_number ) / average.n
     return average.last_average
-average.last_average = timedelta()
-average.n = 0
+average.last_average = average.n = 0
 # Calculo de la desviación estándar (de forma acumulativa)
 def standardDeviation( new_number: float ):
     standardDeviation.sum  += new_number
@@ -71,8 +76,7 @@ def standardDeviation( new_number: float ):
 standardDeviation.n = standardDeviation.sum = standardDeviation.sum2 = 0
 # Resets de acumuladores estadísticos
 def resetAverage():
-    average.last_average = timedelta()
-    average.n = 0
+    average.last_average = average.n = 0
 def resetStandardDeviation():
     standardDeviation.n = standardDeviation.sum = standardDeviation.sum2 = 0
 
@@ -80,10 +84,12 @@ def resetStandardDeviation():
 # Muestro la trama y sus datos
 def showAllDataAck( trama: bytes, contador_tramas: int, contador_naks: int, curr_dt: datetime, last_dt: datetime ):
     # Muestro el número de trama y el TimeStamp
-    print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()}" )
-    # Muestro datos estadísticos (asumiendo distribución normal, mostrando promedio y desviación estándar)
-    if contador_tramas >= 3:
-        print( f"Promedio(deltaT): {average(curr_dt-last_dt)} - Desviación Estándar(deltaT): {standardDeviation((curr_dt-last_dt).total_seconds())}" )
+    if contador_tramas < 3:
+        print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()}" )
+    else:
+        print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()} - deltaT: {(curr_dt-last_dt)}" )
+        # Muestro datos estadísticos (asumiendo distribución normal, mostrando promedio y desviación estándar)
+        print( f"Promedio(deltaT): {average((curr_dt-last_dt).total_seconds())}s - Desviación Estándar(deltaT): {standardDeviation((curr_dt-last_dt).total_seconds())}s" )
     # Muestro la trama completa
     showReceivedPDU(trama)
     # Muestro la respuesta y los NAKs acumulados
@@ -92,28 +98,19 @@ def showAllDataAck( trama: bytes, contador_tramas: int, contador_naks: int, curr
     print()
 def showAllDataNak( trama: bytes, contador_tramas: int, contador_naks: int, curr_dt: datetime, last_dt: datetime ):
     # Muestro el número de trama y el TimeStamp
-    print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()}" )
-    # Muestro datos estadísticos (asumiendo distribución normal, mostrando promedio y desviación estándar)
-    if contador_tramas >= 3:
-        print( f"Promedio(deltaT): {average(curr_dt-last_dt)} - Desviación Estándar(deltaT): {standardDeviation((curr_dt-last_dt).total_seconds())}" )
+    if contador_tramas < 3:
+        print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()}" )
+    else:
+        print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()} - deltaT: {(curr_dt-last_dt)}" )
+        # Muestro datos estadísticos (asumiendo distribución normal, mostrando promedio y desviación estándar)
+        print( f"Promedio(deltaT): {average((curr_dt-last_dt).total_seconds())}s - Desviación Estándar(deltaT): {standardDeviation((curr_dt-last_dt).total_seconds())}s" )
     # Muestro la trama completa
     showReceivedPDU(trama)
     # Muestro la respuesta y los NAKs acumulados
     print(f"Response: NAK( {defines.NAK.decode()} ) - NAKs acumulados {contador_naks}")
     # Pongo un separador para la siguiente trama
     print()
-def showAllDataForcedAnswer( trama: bytes, contador_tramas: int, contador_naks: int, curr_dt: datetime, last_dt: datetime ):
-    # Muestro el número de trama y el TimeStamp
-    print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()}" )
-    # Muestro datos estadísticos (asumiendo distribución normal, mostrando promedio y desviación estándar)
-    if contador_tramas >= 3:
-        print( f"Promedio(deltaT): {average(curr_dt-last_dt)} - Desviación Estándar(deltaT): {standardDeviation((curr_dt-last_dt).total_seconds())}" )
-    # Muestro la trama completa
-    showReceivedPDU(trama)
-    # Muestro la respuesta y los NAKs acumulados
-    print(f"Response: ( {FORCED_ANS.decode()} ) - NAKs acumulados {contador_naks}")
-    # Pongo un separador para la siguiente trama
-    print()
+
 
 
 if __name__ == "__main__":

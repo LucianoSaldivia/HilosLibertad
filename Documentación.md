@@ -75,6 +75,9 @@ PB1  -> Output - Enable Tx UART3 (0 -> RxOnly, 1 -> TxOnly)
 
 	+ HilosLibertad_V0: Cada TIME_BETWEEN_READS_MS milisegundos hace una lectura. Ésta se compone de, escribir AB, esperar TIME_BETWEEN_WRITE_AND_READ milisegundos, leer 16 entradas, escribir AB, y así, hasta leer las 64 entradas. Luego se genera la trama y se envía por UART.
 	+ HilosLibertad_V1: Hace una lectura cada milisegundo debounceando constantemente todas las entradas. Lectura compuesta por escritura de AB, espera de 1 microsegundo, lectura de 16 entradas, y así hasta obtener las 64 entradas y luego se calcula el debounce. Cada TIME_BETWEEN_READS_MS milisegundos, se toma una lectura completa debounceada, se genera la trama y se envía por UART.
+	
+
++ pinConnections ahora detecta la definición de BOARD0, BOARD1, BOARD2 y BOARD3, generando las definiciones de ALL_4_BOARDS y AT_LEAST_ONE_BOARD. Luego el nuevo debouncer, a partir de estas definiciones, lee las entradas de la placa sólo si está definida, de lo contrario, pone un 0 en la placa correspondiente.
 
 
 --------	Registrador    --------

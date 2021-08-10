@@ -3,10 +3,13 @@
 
 # Tiempos del Embebido (pero en Segundos)
 TIMEOUT_TIME = 0.1
-TIME_DESIRED_BETWEEN_READS = 12
+TIME_BETWEEN_FRAMES = 60
+# TIME_BETWEEN_FRAMES = 12
+
 
 # Cantidad de máquinas
 CANT_MAQ = 64
+
 
 # Caracter de fin de trama
 CHAR_FINISH_PDU = b"#"

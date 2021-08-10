@@ -15,7 +15,7 @@ if __name__ == "__main__":
     for i in range(1, len(a)):
         print( a[i] )
 
-    print()
+    print(*range(0,9))
     print()
     print( vaciadorDeListas(a) )
 
