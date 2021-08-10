@@ -9,7 +9,7 @@ void initMuxReader( MuxReader *r, TIM_HandleTypeDef *htim ){
     // Inicializo el debouncer
     initDebouncer( &(r->debouncer), htim );
     // Inicializo el sample
-    r->newest_sample = r->debouncer.debounced_sample;
+    r->newest_sample = getDebouncedSample( &(r->debouncer) );
     // Apago el timer
     stopTimer( &(r->timer) );
 }
@@ -34,7 +34,7 @@ void FSM_MuxReader( MuxReader *r, Debouncer_TimerInterruptionFlag *TIM_flag ){
         		// Apago el timer
         		stopTimer( &(r->timer) );
         		// Tomo la nueva lectura debounceada
-                r->newest_sample = r->debouncer.debounced_sample;
+                r->newest_sample = getDebouncedSample( &(r->debouncer) );
                 // Aviso que está lista para ser leída
         		r->state = READY_TO_BE_READ;
         	}

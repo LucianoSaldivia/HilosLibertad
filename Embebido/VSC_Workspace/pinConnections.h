@@ -1,6 +1,19 @@
 #ifndef _PIN_CONNECTIONS_H_
 #define	_PIN_CONNECTIONS_H_
 
+    /* Placas conectadas */
+    #define BOARD0
+    #define BOARD1
+    #define BOARD2
+    #define BOARD3
+
+    #if defined(BOARD0) && defined(BOARD1) && defined(BOARD2) && defined(BOARD3)
+        #define ALL_4_BOARDS
+    #endif /* BOARD0 && BOARD1 && BOARD2 && BOARD3 */
+    #if defined(BOARD0) || defined(BOARD1) || defined(BOARD2) || defined(BOARD3)
+        #define AT_LEAST_ONE_BOARD
+    #endif /* BOARD0 || BOARD1 || BOARD2 || BOARD3 */
+
     /* GPIOS LIBRES */
     #ifndef _GROUP_FREE_
     #define _GROUP_FREE_

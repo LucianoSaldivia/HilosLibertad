@@ -11,8 +11,8 @@
             ----> el define de TIME_BETWEEN_READS_MS está en muxReader.h
 
     */
-    #define SAMPLES_TO_VALIDATE     30
-    #define INIT_STATE              ( (uint64_t) 0)
+    #define SAMPLES_TO_VALIDATE     5
+    #define INIT_STATES             ( (uint64_t) 0x0)
     #define TIME_TO_CAPTURE_MS      1
 
    
@@ -30,9 +30,8 @@
         DebouncerStates state;
         TIM_HandleTypeDef *htim;
 
-        sample last_reading;
-        sample changes_in_readings[ SAMPLES_TO_VALIDATE ];
-        sample debounced_sample;
+        sample raw[ SAMPLES_TO_VALIDATE ];
+        sample debounced;
         uint16_t i;
 
         uint32_t __last_systick;
@@ -48,7 +47,7 @@
     void FSM_Debouncer( debouncer *debouncer, Debouncer_TimerInterruptionFlag *flags );
 
     // Obtener las lecturas limpias
-    sample getDebouncedSamples( debouncer *debouncer );
+    sample getDebouncedSample( debouncer *debouncer );
 
     
     // Escribir A y B

@@ -10,19 +10,15 @@ void initDebouncer( debouncer *d, TIM_HandleTypeDef *htim ){
     // Inicializo el puntero al handler del TIMER
 	d->htim = htim;
 
-	// Recorro el vector, seteando las lecturas en
+	// Recorro las lecturas en crudo, seteando en INIT_STATE
     for( d->i = 0; d->i < SAMPLES_TO_VALIDATE; d->i ++ ){
-        // Inicializo las lecturas en crudo
-        d->changes_in_readings[ d->i ].sample = 0;
+        d->raw[ d->i ].sample = INIT_STATES;
     }
-
-    // Inicializo la última lectura como INIT_STATE
-    d->last_reading.sample = INIT_STATE;
-    // Inicializo la lectura debounceadas según last_reading
-    d->debounced_sample = d->last_reading;
-
     // Inicializo el índice
     d->i = 0;
+
+    // Inicializo la lectura debounceadas según last_reading
+    d->debounced.sample = INIT_STATES;
 
     // Seteo el estado inicial
     d->state = READING;
@@ -43,7 +39,7 @@ void FSM_Debouncer( debouncer *d, Debouncer_TimerInterruptionFlag *TIM_flag ){
             if( new_systick - d->__last_systick < TIME_TO_CAPTURE_MS ){
                 break;
             }
-            // Si pasó TIME_TO_CAPTURE_MS milisegundos (una vez por al menos 1 milisegundo)
+            // Si pasó TIME_TO_CAPTURE_MS milisegundos (1 vez cada TIME_TO_CAPTURE_MS milisegundos)
             else{
                 // Actualizo el último systick
                 d->__last_systick = new_systick;
@@ -76,8 +72,8 @@ void FSM_Debouncer( debouncer *d, Debouncer_TimerInterruptionFlag *TIM_flag ){
 }
 
 // Obtener las lecturas limpias
-sample getDebouncedSamples( debouncer *d ){
-    return d->debounced_sample;
+sample getDebouncedSample( debouncer *d ){
+    return d->debounced;
 }
 
 // Escribo A y B (en la salida tienen que estar negados)
@@ -88,169 +84,232 @@ void _writeAB( uint8_t a, uint8_t b ){
 
 // Leer de las entradas en crudo
 void _readRawInputs( debouncer *d, Debouncer_TimerInterruptionFlag *TIM_flag ){
-    // Guardo las nuevas lecturas temporalmente
-    sample new_reading;
+    // Corrimiento de lecturas
+    uint8_t offset;
+    
     // Inicializo las nuevas lecturas
-    new_reading.sample = 0;
+    d->raw[d->i].sample = 0;
 
-    // Leo con AB = 00
-    _writeAB(0, 0);
-    // Inicio el timer con el tiempo entre escritura y lectura
-    HAL_TIM_Base_Start_IT ( d->htim );
-    /* Espero hasta que la interrupción del timer levante el flag */
-    while( TIM_flag->timer_finished != 1 ){};
-	// Bajo el flag para uso futuro
-	TIM_flag->timer_finished = 0;
+    // Si alguna placa está definida, entro a la lectura
+    #ifdef AT_LEAST_ONE_BOARD
+        // Leo con AB = 00
+        _writeAB(0, 0);
+        offset = 0;
+        // Inicio el timer con el tiempo entre escritura y lectura
+        HAL_TIM_Base_Start_IT ( d->htim );
+        /* Espero hasta que la interrupción del timer levante el flag */
+        while( TIM_flag->timer_finished != 1 ){
 
-    /* AB = 00  => offset = 0 */
-    // Board 0
-    new_reading.nibbles.W0 |= HAL_GPIO_ReadPin( PORT_W0, PIN_W0 ) << 0;
-    new_reading.nibbles.X0 |= HAL_GPIO_ReadPin( PORT_X0, PIN_X0 ) << 0;
-    new_reading.nibbles.Y0 |= HAL_GPIO_ReadPin( PORT_Y0, PIN_Y0 ) << 0;
-    new_reading.nibbles.Z0 |= HAL_GPIO_ReadPin( PORT_Z0, PIN_Z0 ) << 0;
-    // Board 1
-    new_reading.nibbles.W1 |= HAL_GPIO_ReadPin( PORT_W1, PIN_W1 ) << 0;
-    new_reading.nibbles.X1 |= HAL_GPIO_ReadPin( PORT_X1, PIN_X1 ) << 0;
-    new_reading.nibbles.Y1 |= HAL_GPIO_ReadPin( PORT_Y1, PIN_Y1 ) << 0;
-    new_reading.nibbles.Z1 |= HAL_GPIO_ReadPin( PORT_Z1, PIN_Z1 ) << 0;
-    // Board 2
-    new_reading.nibbles.W2 |= HAL_GPIO_ReadPin( PORT_W2, PIN_W2 ) << 0;
-    new_reading.nibbles.X2 |= HAL_GPIO_ReadPin( PORT_X2, PIN_X2 ) << 0;
-    new_reading.nibbles.Y2 |= HAL_GPIO_ReadPin( PORT_Y2, PIN_Y2 ) << 0;
-    new_reading.nibbles.Z2 |= HAL_GPIO_ReadPin( PORT_Z2, PIN_Z2 ) << 0;
-    // Board 3
-    new_reading.nibbles.W3 |= HAL_GPIO_ReadPin( PORT_W3, PIN_W3 ) << 0;
-    new_reading.nibbles.X3 |= HAL_GPIO_ReadPin( PORT_X3, PIN_X3 ) << 0;
-    new_reading.nibbles.Y3 |= HAL_GPIO_ReadPin( PORT_Y3, PIN_Y3 ) << 0;
-    new_reading.nibbles.Z3 |= HAL_GPIO_ReadPin( PORT_Z3, PIN_Z3 ) << 0;
-    
-    
-    // Leo con AB = 01
-    _writeAB(0, 1);
-    // Inicio el timer con el tiempo entre escritura y lectura
-	HAL_TIM_Base_Start_IT ( d->htim );
-    /* Espero hasta que la interrupción del timer levante el flag nuevamente */
-	while( TIM_flag->timer_finished != 1 ){};
-	// Bajo el flag para uso futuro
-	TIM_flag->timer_finished = 0;
+        }
+        // Bajo el flag para uso futuro
+        TIM_flag->timer_finished = 0;
 
-    /* AB = 01  => offset = 1 */
-    // Board 0
-    new_reading.nibbles.W0 |= HAL_GPIO_ReadPin( PORT_W0, PIN_W0 ) << 1;
-    new_reading.nibbles.X0 |= HAL_GPIO_ReadPin( PORT_X0, PIN_X0 ) << 1;
-    new_reading.nibbles.Y0 |= HAL_GPIO_ReadPin( PORT_Y0, PIN_Y0 ) << 1;
-    new_reading.nibbles.Z0 |= HAL_GPIO_ReadPin( PORT_Z0, PIN_Z0 ) << 1;
-    // Board 1
-    new_reading.nibbles.W1 |= HAL_GPIO_ReadPin( PORT_W1, PIN_W1 ) << 1;
-    new_reading.nibbles.X1 |= HAL_GPIO_ReadPin( PORT_X1, PIN_X1 ) << 1;
-    new_reading.nibbles.Y1 |= HAL_GPIO_ReadPin( PORT_Y1, PIN_Y1 ) << 1;
-    new_reading.nibbles.Z1 |= HAL_GPIO_ReadPin( PORT_Z1, PIN_Z1 ) << 1;
-    // Board 2
-    new_reading.nibbles.W2 |= HAL_GPIO_ReadPin( PORT_W2, PIN_W2 ) << 1;
-    new_reading.nibbles.X2 |= HAL_GPIO_ReadPin( PORT_X2, PIN_X2 ) << 1;
-    new_reading.nibbles.Y2 |= HAL_GPIO_ReadPin( PORT_Y2, PIN_Y2 ) << 1;
-    new_reading.nibbles.Z2 |= HAL_GPIO_ReadPin( PORT_Z2, PIN_Z2 ) << 1;
-    // Board 3
-    new_reading.nibbles.W3 |= HAL_GPIO_ReadPin( PORT_W3, PIN_W3 ) << 1;
-    new_reading.nibbles.X3 |= HAL_GPIO_ReadPin( PORT_X3, PIN_X3 ) << 1;
-    new_reading.nibbles.Y3 |= HAL_GPIO_ReadPin( PORT_Y3, PIN_Y3 ) << 1;
-    new_reading.nibbles.Z3 |= HAL_GPIO_ReadPin( PORT_Z3, PIN_Z3 ) << 1;
-    
-    // Leo con AB = 10
-    _writeAB(1, 0);
-    // Inicio el timer con el tiempo entre escritura y lectura
-	HAL_TIM_Base_Start_IT ( d->htim );
-	/* Espero hasta que la interrupción del timer levante el flag nuevamente */
-    while( TIM_flag->timer_finished != 1 ){};
-	// Bajo el flag para uso futuro
-	TIM_flag->timer_finished = 0;
+        // Lecturas las placas definidas
+        #if defined(BOARD0)
+            d->raw[d->i].nibbles.W0 |= HAL_GPIO_ReadPin( PORT_W0, PIN_W0 ) << offset;
+            d->raw[d->i].nibbles.X0 |= HAL_GPIO_ReadPin( PORT_X0, PIN_X0 ) << offset;
+            d->raw[d->i].nibbles.Y0 |= HAL_GPIO_ReadPin( PORT_Y0, PIN_Y0 ) << offset;
+            d->raw[d->i].nibbles.Z0 |= HAL_GPIO_ReadPin( PORT_Z0, PIN_Z0 ) << offset;
+        #endif /* BOARD0 */
+        #if defined(BOARD1)
+            d->raw[d->i].nibbles.W1 |= HAL_GPIO_ReadPin( PORT_W1, PIN_W1 ) << offset;
+            d->raw[d->i].nibbles.X1 |= HAL_GPIO_ReadPin( PORT_X1, PIN_X1 ) << offset;
+            d->raw[d->i].nibbles.Y1 |= HAL_GPIO_ReadPin( PORT_Y1, PIN_Y1 ) << offset;
+            d->raw[d->i].nibbles.Z1 |= HAL_GPIO_ReadPin( PORT_Z1, PIN_Z1 ) << offset;
+        #endif /* BOARD1 */
+        #if defined(BOARD2)
+            d->raw[d->i].nibbles.W2 |= HAL_GPIO_ReadPin( PORT_W2, PIN_W2 ) << offset;
+            d->raw[d->i].nibbles.X2 |= HAL_GPIO_ReadPin( PORT_X2, PIN_X2 ) << offset;
+            d->raw[d->i].nibbles.Y2 |= HAL_GPIO_ReadPin( PORT_Y2, PIN_Y2 ) << offset;
+            d->raw[d->i].nibbles.Z2 |= HAL_GPIO_ReadPin( PORT_Z2, PIN_Z2 ) << offset;
+        #endif /* BOARD2 */
+        #if defined(BOARD3)
+            d->raw[d->i].nibbles.W3 |= HAL_GPIO_ReadPin( PORT_W3, PIN_W3 ) << offset;
+            d->raw[d->i].nibbles.X3 |= HAL_GPIO_ReadPin( PORT_X3, PIN_X3 ) << offset;
+            d->raw[d->i].nibbles.Y3 |= HAL_GPIO_ReadPin( PORT_Y3, PIN_Y3 ) << offset;
+            d->raw[d->i].nibbles.Z3 |= HAL_GPIO_ReadPin( PORT_Z3, PIN_Z3 ) << offset;
+        #endif /* BOARD3 */
+ 
 
-    /* AB = 10  => offset = 2 */
-    // Board 0
-    new_reading.nibbles.W0 |= HAL_GPIO_ReadPin( PORT_W0, PIN_W0 ) << 2;
-    new_reading.nibbles.X0 |= HAL_GPIO_ReadPin( PORT_X0, PIN_X0 ) << 2;
-    new_reading.nibbles.Y0 |= HAL_GPIO_ReadPin( PORT_Y0, PIN_Y0 ) << 2;
-    new_reading.nibbles.Z0 |= HAL_GPIO_ReadPin( PORT_Z0, PIN_Z0 ) << 2;
-    // Board 1
-    new_reading.nibbles.W1 |= HAL_GPIO_ReadPin( PORT_W1, PIN_W1 ) << 2;
-    new_reading.nibbles.X1 |= HAL_GPIO_ReadPin( PORT_X1, PIN_X1 ) << 2;
-    new_reading.nibbles.Y1 |= HAL_GPIO_ReadPin( PORT_Y1, PIN_Y1 ) << 2;
-    new_reading.nibbles.Z1 |= HAL_GPIO_ReadPin( PORT_Z1, PIN_Z1 ) << 2;
-    // Board 2
-    new_reading.nibbles.W2 |= HAL_GPIO_ReadPin( PORT_W2, PIN_W2 ) << 2;
-    new_reading.nibbles.X2 |= HAL_GPIO_ReadPin( PORT_X2, PIN_X2 ) << 2;
-    new_reading.nibbles.Y2 |= HAL_GPIO_ReadPin( PORT_Y2, PIN_Y2 ) << 2;
-    new_reading.nibbles.Z2 |= HAL_GPIO_ReadPin( PORT_Z2, PIN_Z2 ) << 2;
-    // Board 3
-    new_reading.nibbles.W3 |= HAL_GPIO_ReadPin( PORT_W3, PIN_W3 ) << 2;
-    new_reading.nibbles.X3 |= HAL_GPIO_ReadPin( PORT_X3, PIN_X3 ) << 2;
-    new_reading.nibbles.Y3 |= HAL_GPIO_ReadPin( PORT_Y3, PIN_Y3 ) << 2;
-    new_reading.nibbles.Z3 |= HAL_GPIO_ReadPin( PORT_Z3, PIN_Z3 ) << 2;
-    
-    // Leo con AB = 11
-    _writeAB(1, 1);
-    // Inicio el timer con el tiempo entre escritura y lectura
-	HAL_TIM_Base_Start_IT ( d->htim );
-	/* Espero hasta que la interrupción del timer levante el flag */
-	while( TIM_flag->timer_finished != 1 ){};
-    // Bajo el flag para uso futuro
-    TIM_flag->timer_finished = 0;
+        // Leo con AB = 01
+        _writeAB(0, 1);
+        offset = 1;
+        // Inicio el timer con el tiempo entre escritura y lectura
+        HAL_TIM_Base_Start_IT ( d->htim );
+        /* Espero hasta que la interrupción del timer levante el flag nuevamente */
+        while( TIM_flag->timer_finished != 1 ){
 
-    /* AB = 11  => offset = 3 */
-    // Board 0
-    new_reading.nibbles.W0 |= HAL_GPIO_ReadPin( PORT_W0, PIN_W0 ) << 3;
-    new_reading.nibbles.X0 |= HAL_GPIO_ReadPin( PORT_X0, PIN_X0 ) << 3;
-    new_reading.nibbles.Y0 |= HAL_GPIO_ReadPin( PORT_Y0, PIN_Y0 ) << 3;
-    new_reading.nibbles.Z0 |= HAL_GPIO_ReadPin( PORT_Z0, PIN_Z0 ) << 3;
-    // Board 1
-    new_reading.nibbles.W1 |= HAL_GPIO_ReadPin( PORT_W1, PIN_W1 ) << 3;
-    new_reading.nibbles.X1 |= HAL_GPIO_ReadPin( PORT_X1, PIN_X1 ) << 3;
-    new_reading.nibbles.Y1 |= HAL_GPIO_ReadPin( PORT_Y1, PIN_Y1 ) << 3;
-    new_reading.nibbles.Z1 |= HAL_GPIO_ReadPin( PORT_Z1, PIN_Z1 ) << 3;
-    // Board 2
-    new_reading.nibbles.W2 |= HAL_GPIO_ReadPin( PORT_W2, PIN_W2 ) << 3;
-    new_reading.nibbles.X2 |= HAL_GPIO_ReadPin( PORT_X2, PIN_X2 ) << 3;
-    new_reading.nibbles.Y2 |= HAL_GPIO_ReadPin( PORT_Y2, PIN_Y2 ) << 3;
-    new_reading.nibbles.Z2 |= HAL_GPIO_ReadPin( PORT_Z2, PIN_Z2 ) << 3;
-    // Board 3
-    new_reading.nibbles.W3 |= HAL_GPIO_ReadPin( PORT_W3, PIN_W3 ) << 3;
-    new_reading.nibbles.X3 |= HAL_GPIO_ReadPin( PORT_X3, PIN_X3 ) << 3;
-    new_reading.nibbles.Y3 |= HAL_GPIO_ReadPin( PORT_Y3, PIN_Y3 ) << 3;
-    new_reading.nibbles.Z3 |= HAL_GPIO_ReadPin( PORT_Z3, PIN_Z3 ) << 3;
+        }
+        // Bajo el flag para uso futuro
+        TIM_flag->timer_finished = 0;
 
-    // Guardo los cambios respecto a la última lectura
-    d->changes_in_readings[ d->i ].sample = d->last_reading.sample ^ new_reading.sample; 
+        // Lecturas las placas definidas
+        #if defined(BOARD0)
+            d->raw[d->i].nibbles.W0 |= HAL_GPIO_ReadPin( PORT_W0, PIN_W0 ) << offset;
+            d->raw[d->i].nibbles.X0 |= HAL_GPIO_ReadPin( PORT_X0, PIN_X0 ) << offset;
+            d->raw[d->i].nibbles.Y0 |= HAL_GPIO_ReadPin( PORT_Y0, PIN_Y0 ) << offset;
+            d->raw[d->i].nibbles.Z0 |= HAL_GPIO_ReadPin( PORT_Z0, PIN_Z0 ) << offset;
+        #endif /* BOARD0 */
+        #if defined(BOARD1)
+            d->raw[d->i].nibbles.W1 |= HAL_GPIO_ReadPin( PORT_W1, PIN_W1 ) << offset;
+            d->raw[d->i].nibbles.X1 |= HAL_GPIO_ReadPin( PORT_X1, PIN_X1 ) << offset;
+            d->raw[d->i].nibbles.Y1 |= HAL_GPIO_ReadPin( PORT_Y1, PIN_Y1 ) << offset;
+            d->raw[d->i].nibbles.Z1 |= HAL_GPIO_ReadPin( PORT_Z1, PIN_Z1 ) << offset;
+        #endif /* BOARD1 */
+        #if defined(BOARD2)
+            d->raw[d->i].nibbles.W2 |= HAL_GPIO_ReadPin( PORT_W2, PIN_W2 ) << offset;
+            d->raw[d->i].nibbles.X2 |= HAL_GPIO_ReadPin( PORT_X2, PIN_X2 ) << offset;
+            d->raw[d->i].nibbles.Y2 |= HAL_GPIO_ReadPin( PORT_Y2, PIN_Y2 ) << offset;
+            d->raw[d->i].nibbles.Z2 |= HAL_GPIO_ReadPin( PORT_Z2, PIN_Z2 ) << offset;
+        #endif /* BOARD2 */
+        #if defined(BOARD3)
+            d->raw[d->i].nibbles.W3 |= HAL_GPIO_ReadPin( PORT_W3, PIN_W3 ) << offset;
+            d->raw[d->i].nibbles.X3 |= HAL_GPIO_ReadPin( PORT_X3, PIN_X3 ) << offset;
+            d->raw[d->i].nibbles.Y3 |= HAL_GPIO_ReadPin( PORT_Y3, PIN_Y3 ) << offset;
+            d->raw[d->i].nibbles.Z3 |= HAL_GPIO_ReadPin( PORT_Z3, PIN_Z3 ) << offset;
+        #endif /* BOARD3 */
 
-    // Actualizo la última lectura
-    d->last_reading = new_reading;
+
+        // Leo con AB = 10
+        _writeAB(1, 0);
+        offset = 2;
+        // Inicio el timer con el tiempo entre escritura y lectura
+        HAL_TIM_Base_Start_IT ( d->htim );
+        /* Espero hasta que la interrupción del timer levante el flag nuevamente */
+        while( TIM_flag->timer_finished != 1 ){
+
+        }
+        // Bajo el flag para uso futuro
+        TIM_flag->timer_finished = 0;
+
+        // Lecturas las placas definidas
+        #if defined(BOARD0)
+            d->raw[d->i].nibbles.W0 |= HAL_GPIO_ReadPin( PORT_W0, PIN_W0 ) << offset;
+            d->raw[d->i].nibbles.X0 |= HAL_GPIO_ReadPin( PORT_X0, PIN_X0 ) << offset;
+            d->raw[d->i].nibbles.Y0 |= HAL_GPIO_ReadPin( PORT_Y0, PIN_Y0 ) << offset;
+            d->raw[d->i].nibbles.Z0 |= HAL_GPIO_ReadPin( PORT_Z0, PIN_Z0 ) << offset;
+        #endif /* BOARD0 */
+        #if defined(BOARD1)
+            d->raw[d->i].nibbles.W1 |= HAL_GPIO_ReadPin( PORT_W1, PIN_W1 ) << offset;
+            d->raw[d->i].nibbles.X1 |= HAL_GPIO_ReadPin( PORT_X1, PIN_X1 ) << offset;
+            d->raw[d->i].nibbles.Y1 |= HAL_GPIO_ReadPin( PORT_Y1, PIN_Y1 ) << offset;
+            d->raw[d->i].nibbles.Z1 |= HAL_GPIO_ReadPin( PORT_Z1, PIN_Z1 ) << offset;
+        #endif /* BOARD1 */
+        #if defined(BOARD2)
+            d->raw[d->i].nibbles.W2 |= HAL_GPIO_ReadPin( PORT_W2, PIN_W2 ) << offset;
+            d->raw[d->i].nibbles.X2 |= HAL_GPIO_ReadPin( PORT_X2, PIN_X2 ) << offset;
+            d->raw[d->i].nibbles.Y2 |= HAL_GPIO_ReadPin( PORT_Y2, PIN_Y2 ) << offset;
+            d->raw[d->i].nibbles.Z2 |= HAL_GPIO_ReadPin( PORT_Z2, PIN_Z2 ) << offset;
+        #endif /* BOARD2 */
+        #if defined(BOARD3)
+            d->raw[d->i].nibbles.W3 |= HAL_GPIO_ReadPin( PORT_W3, PIN_W3 ) << offset;
+            d->raw[d->i].nibbles.X3 |= HAL_GPIO_ReadPin( PORT_X3, PIN_X3 ) << offset;
+            d->raw[d->i].nibbles.Y3 |= HAL_GPIO_ReadPin( PORT_Y3, PIN_Y3 ) << offset;
+            d->raw[d->i].nibbles.Z3 |= HAL_GPIO_ReadPin( PORT_Z3, PIN_Z3 ) << offset;
+        #endif /* BOARD3 */
+
+
+        // Leo con AB = 11
+        _writeAB(1, 1);
+        offset = 3;
+        // Inicio el timer con el tiempo entre escritura y lectura
+        HAL_TIM_Base_Start_IT ( d->htim );
+        /* Espero hasta que la interrupción del timer levante el flag */
+        while( TIM_flag->timer_finished != 1 ){
+
+        }
+        // Bajo el flag para uso futuro
+        TIM_flag->timer_finished = 0;
+
+        // Lecturas las placas definidas
+        #if defined(BOARD0)
+            d->raw[d->i].nibbles.W0 |= HAL_GPIO_ReadPin( PORT_W0, PIN_W0 ) << offset;
+            d->raw[d->i].nibbles.X0 |= HAL_GPIO_ReadPin( PORT_X0, PIN_X0 ) << offset;
+            d->raw[d->i].nibbles.Y0 |= HAL_GPIO_ReadPin( PORT_Y0, PIN_Y0 ) << offset;
+            d->raw[d->i].nibbles.Z0 |= HAL_GPIO_ReadPin( PORT_Z0, PIN_Z0 ) << offset;
+        #endif /* BOARD0 */
+        #if defined(BOARD1)
+            d->raw[d->i].nibbles.W1 |= HAL_GPIO_ReadPin( PORT_W1, PIN_W1 ) << offset;
+            d->raw[d->i].nibbles.X1 |= HAL_GPIO_ReadPin( PORT_X1, PIN_X1 ) << offset;
+            d->raw[d->i].nibbles.Y1 |= HAL_GPIO_ReadPin( PORT_Y1, PIN_Y1 ) << offset;
+            d->raw[d->i].nibbles.Z1 |= HAL_GPIO_ReadPin( PORT_Z1, PIN_Z1 ) << offset;
+        #endif /* BOARD1 */
+        #if defined(BOARD2)
+            d->raw[d->i].nibbles.W2 |= HAL_GPIO_ReadPin( PORT_W2, PIN_W2 ) << offset;
+            d->raw[d->i].nibbles.X2 |= HAL_GPIO_ReadPin( PORT_X2, PIN_X2 ) << offset;
+            d->raw[d->i].nibbles.Y2 |= HAL_GPIO_ReadPin( PORT_Y2, PIN_Y2 ) << offset;
+            d->raw[d->i].nibbles.Z2 |= HAL_GPIO_ReadPin( PORT_Z2, PIN_Z2 ) << offset;
+        #endif /* BOARD2 */
+        #if defined(BOARD3)
+            d->raw[d->i].nibbles.W3 |= HAL_GPIO_ReadPin( PORT_W3, PIN_W3 ) << offset;
+            d->raw[d->i].nibbles.X3 |= HAL_GPIO_ReadPin( PORT_X3, PIN_X3 ) << offset;
+            d->raw[d->i].nibbles.Y3 |= HAL_GPIO_ReadPin( PORT_Y3, PIN_Y3 ) << offset;
+            d->raw[d->i].nibbles.Z3 |= HAL_GPIO_ReadPin( PORT_Z3, PIN_Z3 ) << offset;
+        #endif /* BOARD3 */
+    #endif /* AT_LEAST_ONE_BOARD */
+
+    // Si no están TODAS las placas definidas, pongo en 0 a la que no lo esté
+    #ifndef ALL_4_BOARDS 
+        #ifndef BOARD0
+            d->raw[d->i].boards.board0.board = 0;
+        #endif /* BOARD0 */
+        #ifndef BOARD1
+            d->raw[d->i].boards.board1.board = 0;
+        #endif /* BOARD1 */    
+        #ifndef BOARD2
+            d->raw[d->i].boards.board2.board = 0;
+        #endif /* BOARD2 */    
+        #ifndef BOARD3
+            d->raw[d->i].boards.board3.board = 0;
+        #endif /* BOARD3 */
+    #endif /* ALL_4_BOARDS */
+
+    // Muevo el índice
+    d->i += 1;
+    d->i %= SAMPLES_TO_VALIDATE;
+
 }
 // Hacer el antirrebote
 void _debounce( debouncer *d ){
-    sample or_result;
-    uint16_t i_offset;
-    /* Si el vector de cambios queda en: 1 0 0 0 0 0 0 0
-    => hubo un cambio, y luego se mantuvo estable. Esto para cada bit del sample.
-    Entonces validaríamos un cambio, sólo cuando: 
-        cambios[0] & ~( cambios[1] | cambios[2] | cambios[3] | cambios[4] ... )
-    o lo que es lo mismo:
-        cambios[0] & ~( or_result ),
-    siendo or_result, el resultado de hacer la OR entre los demás cambios.
+    /* Lógica de debounce:
+
+    Con las lecturas en crudo guardadas cíclicamente.
+        1. Si la última lectura es igual a la debounceada, no hago nada
+        2. Recorro las lecturas, obteniendo acumulativamente la OR y la AND de todas las lecturas.
+            Así, detecto los ceros validados (cada bit en 0 de acc_or) y unos validados (cada bit en 1 de acc_and)
+        3. Asigno las nuevas detecciones
+
+	* Aclaraciones
+	1. 	Así, sólo hago el for completo, sólo cuando hay algo nuevo
+
+	2. 	acc_or debe inicializarse con todos los bits en 0
+		acc_and debe inicializarse con todos los bits en 1
+
+	3.	La asignación debe darse de la siguiente forma
+    		Como cada bit en 0 de acc_or es un 0 que tengo que asignar, hago una AND:
+				debounced = debounced & acc_or.
+			Como cada bit en 1 de acc_and es un 1 que tengo que asignar, hago una OR:
+				debounced = debounced | acc_and.
+
     */
 
-    // Muevo el índice hacia adelante (vector circular de SAMPLES_TO_VALIDATE posiciones)
-    d->i = (d->i + 1) % SAMPLES_TO_VALIDATE;
-    // Ahora el índice indica el cambio más viejo
-
-    // Inicializo la or acumulada
-    or_result.sample = 0;
-    // Hago la OR acumulada entre todos los cambios (menos el más viejo)
-    for( i_offset = 1; i_offset < SAMPLES_TO_VALIDATE; i_offset ++ ){
-        // Desde el SEGUDNO índice más viejo, hasta el más nuevo
-        or_result.sample |= d->changes_in_readings[ (d->i + i_offset) % SAMPLES_TO_VALIDATE ].sample;
+    // 1. Si la última lectura es igual a la deboucneada, no hago nada
+    if( d->debounced.sample == d->raw[ d->i ].sample ){
+        return;
     }
+
+    uint64_t acc_or = 0, acc_and = -1;
+    // 2. Recorro las lecturas, obteniendo acumulativamente la OR y la AND de todas las lecturas.
+    for( uint16_t offset = 0; offset < SAMPLES_TO_VALIDATE; offset ++ ){
+        // Obtengo los ceros validados y unos validados
+        acc_or  |= d->raw[ (d->i + offset) % SAMPLES_TO_VALIDATE ].sample;
+        acc_and &= d->raw[ (d->i + offset) % SAMPLES_TO_VALIDATE ].sample;
+    }
+
+    // 3. Asigno las nuevas detecciones
+    d->debounced.sample &= acc_or;
+    d->debounced.sample |= acc_and;
     
-    // Entonces calculo el debounced_sample, sabiendo que cambio cuando OLDEST_CHAGE and (not OR_RESULT)
-    d->debounced_sample.sample ^= d->changes_in_readings[ d->i ].sample & ( ~or_result.sample );
 }
 
 
