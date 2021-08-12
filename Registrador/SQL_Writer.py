@@ -13,7 +13,7 @@ import Registrador
     # https://www.youtube.com/watch?v=aF552bMEcO4
 
 device_name = "LUCIANO-PC"
-db_name = "prueba2"
+db_name = "prueba3"
 table_name = "HL.registros"
 
 
