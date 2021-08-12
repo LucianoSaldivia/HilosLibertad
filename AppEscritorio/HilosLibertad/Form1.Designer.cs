@@ -29,7 +29,7 @@ namespace HilosLibertad
         /// </summary>
         private void InitializeComponent()
         {
-            this.dtp_Desde = new System.Windows.Forms.DateTimePicker();
+            this.dtp_FechaInicial = new System.Windows.Forms.DateTimePicker();
             this.pic_logoEmpresa = new System.Windows.Forms.PictureBox();
             this.grp_Telares = new System.Windows.Forms.GroupBox();
             this.btn_SeleccionSectorTelares = new System.Windows.Forms.Button();
@@ -69,10 +69,10 @@ namespace HilosLibertad
             this.grp_FiltroFecha = new System.Windows.Forms.GroupBox();
             this.lbl_FechaFinal = new System.Windows.Forms.Label();
             this.lbl_FechaInicial = new System.Windows.Forms.Label();
+            this.dtp_FechaFinal = new System.Windows.Forms.DateTimePicker();
             this.cmb_MinutoFinal = new System.Windows.Forms.ComboBox();
             this.cmb_MinutoInicial = new System.Windows.Forms.ComboBox();
             this.cmb_HoraFinal = new System.Windows.Forms.ComboBox();
-            this.dtp_Hasta = new System.Windows.Forms.DateTimePicker();
             this.cmb_HoraInicial = new System.Windows.Forms.ComboBox();
             this.grp_FiltroMaquinasSectores = new System.Windows.Forms.GroupBox();
             this.btn_DeseleccionarTodo = new System.Windows.Forms.Button();
@@ -93,14 +93,14 @@ namespace HilosLibertad
             this.grp_FiltroFranjaHoraria.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dtp_Desde
+            // dtp_FechaInicial
             // 
-            this.dtp_Desde.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtp_Desde.Location = new System.Drawing.Point(113, 30);
-            this.dtp_Desde.Name = "dtp_Desde";
-            this.dtp_Desde.Size = new System.Drawing.Size(272, 22);
-            this.dtp_Desde.TabIndex = 1;
-            this.dtp_Desde.ValueChanged += new System.EventHandler(this.dtp_Desde_ValueChanged);
+            this.dtp_FechaInicial.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtp_FechaInicial.Location = new System.Drawing.Point(113, 30);
+            this.dtp_FechaInicial.Name = "dtp_FechaInicial";
+            this.dtp_FechaInicial.Size = new System.Drawing.Size(272, 22);
+            this.dtp_FechaInicial.TabIndex = 1;
+            this.dtp_FechaInicial.ValueChanged += new System.EventHandler(this.dtp_FechaInicial_ValueChanged);
             // 
             // pic_logoEmpresa
             // 
@@ -496,8 +496,8 @@ namespace HilosLibertad
             // 
             this.grp_FiltroFecha.Controls.Add(this.lbl_FechaFinal);
             this.grp_FiltroFecha.Controls.Add(this.lbl_FechaInicial);
-            this.grp_FiltroFecha.Controls.Add(this.dtp_Hasta);
-            this.grp_FiltroFecha.Controls.Add(this.dtp_Desde);
+            this.grp_FiltroFecha.Controls.Add(this.dtp_FechaFinal);
+            this.grp_FiltroFecha.Controls.Add(this.dtp_FechaInicial);
             this.grp_FiltroFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grp_FiltroFecha.Location = new System.Drawing.Point(18, 18);
             this.grp_FiltroFecha.Name = "grp_FiltroFecha";
@@ -510,6 +510,7 @@ namespace HilosLibertad
             // 
             this.lbl_FechaFinal.AutoSize = true;
             this.lbl_FechaFinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_FechaFinal.ForeColor = System.Drawing.Color.Black;
             this.lbl_FechaFinal.Location = new System.Drawing.Point(30, 64);
             this.lbl_FechaFinal.Name = "lbl_FechaFinal";
             this.lbl_FechaFinal.Size = new System.Drawing.Size(81, 16);
@@ -528,6 +529,15 @@ namespace HilosLibertad
             this.lbl_FechaInicial.Text = "Fecha Inicial:";
             this.lbl_FechaInicial.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // dtp_FechaFinal
+            // 
+            this.dtp_FechaFinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtp_FechaFinal.Location = new System.Drawing.Point(113, 61);
+            this.dtp_FechaFinal.Name = "dtp_FechaFinal";
+            this.dtp_FechaFinal.Size = new System.Drawing.Size(272, 22);
+            this.dtp_FechaFinal.TabIndex = 5;
+            this.dtp_FechaFinal.ValueChanged += new System.EventHandler(this.dtp_FechaFinal_ValueChanged);
+            // 
             // cmb_MinutoFinal
             // 
             this.cmb_MinutoFinal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -542,7 +552,7 @@ namespace HilosLibertad
             this.cmb_MinutoFinal.Name = "cmb_MinutoFinal";
             this.cmb_MinutoFinal.Size = new System.Drawing.Size(40, 23);
             this.cmb_MinutoFinal.TabIndex = 11;
-            this.cmb_MinutoFinal.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoHasta_SelectedIndexChanged);
+            this.cmb_MinutoFinal.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoFinal_SelectedIndexChanged);
             // 
             // cmb_MinutoInicial
             // 
@@ -558,7 +568,7 @@ namespace HilosLibertad
             this.cmb_MinutoInicial.Name = "cmb_MinutoInicial";
             this.cmb_MinutoInicial.Size = new System.Drawing.Size(40, 23);
             this.cmb_MinutoInicial.TabIndex = 9;
-            this.cmb_MinutoInicial.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoDesde_SelectedIndexChanged);
+            this.cmb_MinutoInicial.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoInicial_SelectedIndexChanged);
             // 
             // cmb_HoraFinal
             // 
@@ -594,16 +604,7 @@ namespace HilosLibertad
             this.cmb_HoraFinal.Name = "cmb_HoraFinal";
             this.cmb_HoraFinal.Size = new System.Drawing.Size(40, 23);
             this.cmb_HoraFinal.TabIndex = 7;
-            this.cmb_HoraFinal.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraHasta_SelectedIndexChanged);
-            // 
-            // dtp_Hasta
-            // 
-            this.dtp_Hasta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtp_Hasta.Location = new System.Drawing.Point(113, 61);
-            this.dtp_Hasta.Name = "dtp_Hasta";
-            this.dtp_Hasta.Size = new System.Drawing.Size(272, 22);
-            this.dtp_Hasta.TabIndex = 5;
-            this.dtp_Hasta.ValueChanged += new System.EventHandler(this.dtp_Hasta_ValueChanged);
+            this.cmb_HoraFinal.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraFinal_SelectedIndexChanged);
             // 
             // cmb_HoraInicial
             // 
@@ -639,7 +640,7 @@ namespace HilosLibertad
             this.cmb_HoraInicial.Name = "cmb_HoraInicial";
             this.cmb_HoraInicial.Size = new System.Drawing.Size(40, 23);
             this.cmb_HoraInicial.TabIndex = 3;
-            this.cmb_HoraInicial.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraDesde_SelectedIndexChanged);
+            this.cmb_HoraInicial.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraInicial_SelectedIndexChanged);
             // 
             // grp_FiltroMaquinasSectores
             // 
@@ -773,7 +774,7 @@ namespace HilosLibertad
         }
 
         #endregion
-        private System.Windows.Forms.DateTimePicker dtp_Desde;
+        private System.Windows.Forms.DateTimePicker dtp_FechaInicial;
         private System.Windows.Forms.PictureBox pic_logoEmpresa;
         private System.Windows.Forms.GroupBox grp_Telares;
         private System.Windows.Forms.DataGridView dgv_CantHorasPorMaquina;
@@ -810,7 +811,7 @@ namespace HilosLibertad
         private System.Windows.Forms.GroupBox grp_FiltroFecha;
         private System.Windows.Forms.ComboBox cmb_HoraInicial;
         private System.Windows.Forms.ComboBox cmb_HoraFinal;
-        private System.Windows.Forms.DateTimePicker dtp_Hasta;
+        private System.Windows.Forms.DateTimePicker dtp_FechaFinal;
         private System.Windows.Forms.ComboBox cmb_MinutoFinal;
         private System.Windows.Forms.ComboBox cmb_MinutoInicial;
         private System.Windows.Forms.Label lbl_FechaFinal;
