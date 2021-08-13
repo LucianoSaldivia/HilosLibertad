@@ -201,18 +201,23 @@
 			SET @acu = 0
 			SET @F_CURRENT = @F_Sini
 
-			IF (NOT (@H_Sini < CAST('00:00' AS TIME) AND (CAST('00:00' AS TIME) < @H_Sfin))) BEGIN	--CASO FRANJA HORARIA DÍA PARCIAL
-				WHILE (@F_CURRENT <= @F_Sfin) BEGIN
+			-- NUEVA PROPUESTA
+			IF (@H_Sfin < @H_Sini) BEGIN 
+				-- Incluye/Toca medianoche
+				-- PROBABLEMENTE CORREGIDO
+				WHILE (@F_CURRENT < @F_Sfin) BEGIN
 					SET @DTi = CAST(@F_CURRENT AS SMALLDATETIME) + CAST(@H_Sini AS SMALLDATETIME)
-					SET @DTf = CAST(@F_CURRENT AS SMALLDATETIME) + CAST(@H_Sfin AS SMALLDATETIME)
+					SET @DTf = CAST(DATEADD(DAY, 1, CAST(@F_CURRENT AS SMALLDATETIME)) AS SMALLDATETIME) + CAST(@H_Sfin AS SMALLDATETIME) --corregir esto, no es tan sencillo ese "+ 1"
 					SET @acu = @acu + HL.f_getMinsON_formatoFecha(@FH_Rini, @FH_Rfin, @DTi, @DTf)
 					SET @F_CURRENT = DATEADD(DAY, 1, CAST(@F_CURRENT AS SMALLDATETIME))
 				END
 			END
-			ELSE BEGIN																				--CASO FRANJA HORARIA TRASNOCHE
+			ELSE BEGIN
+				-- Día parcial = no incluye ni toca medianoche
+				-- PROBABLEMENTE CORREGIDO
 				WHILE (@F_CURRENT <= @F_Sfin) BEGIN
 					SET @DTi = CAST(@F_CURRENT AS SMALLDATETIME) + CAST(@H_Sini AS SMALLDATETIME)
-					SET @DTf = CAST(DATEADD(DAY, 1, CAST(@F_CURRENT AS SMALLDATETIME)) AS SMALLDATETIME) + CAST(@H_Sfin AS SMALLDATETIME) --corregir esto, no es tan sencillo ese "+ 1"
+					SET @DTf = CAST(@F_CURRENT AS SMALLDATETIME) + CAST(@H_Sfin AS SMALLDATETIME)
 					SET @acu = @acu + HL.f_getMinsON_formatoFecha(@FH_Rini, @FH_Rfin, @DTi, @DTf)
 					SET @F_CURRENT = DATEADD(DAY, 1, CAST(@F_CURRENT AS SMALLDATETIME))
 				END
@@ -221,6 +226,7 @@
 		END
 		GO
 			 
+
 
 
 						-- prueba de esta función, para AZUL
