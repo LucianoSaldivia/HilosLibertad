@@ -185,6 +185,198 @@
 
 
 
+		CREATE OR ALTER FUNCTION HL.f_getMinsON_formatoFecha_Nintervalos
+			(@F_Sini DATE,
+			 @F_Sfin DATE,
+			 @H_Sini TIME,
+			 @H_Sfin TIME,
+			 @FH_Rini SMALLDATETIME,
+			 @FH_Rfin SMALLDATETIME)
+		RETURNS INT
+		AS BEGIN
+			DECLARE @acu INT			--acumulador de minutos
+			DECLARE @F_CURRENT DATE		--fecha que va a ir aumentándose de a un día hasta alcanzar la fecha final
+			DECLARE @DTi SMALLDATETIME	--DateTimeInicial registrado
+			DECLARE @DTf SMALLDATETIME	--DateTimeFinal registrado
+			SET @acu = 0
+			SET @F_CURRENT = @F_Sini
+
+			IF (NOT (@H_Sini < CAST('00:00' AS TIME) AND (CAST('00:00' AS TIME) < @H_Sfin))) BEGIN	--CASO FRANJA HORARIA DÍA PARCIAL
+				WHILE (@F_CURRENT <= @F_Sfin) BEGIN
+					SET @DTi = CAST(@F_CURRENT AS SMALLDATETIME) + CAST(@H_Sini AS SMALLDATETIME)
+					SET @DTf = CAST(@F_CURRENT AS SMALLDATETIME) + CAST(@H_Sfin AS SMALLDATETIME)
+					SET @acu = @acu + HL.f_getMinsON_formatoFecha(@FH_Rini, @FH_Rfin, @DTi, @DTf)
+					SET @F_CURRENT = DATEADD(DAY, 1, CAST(@F_CURRENT AS SMALLDATETIME))
+				END
+			END
+			ELSE BEGIN																				--CASO FRANJA HORARIA TRASNOCHE
+				WHILE (@F_CURRENT <= @F_Sfin) BEGIN
+					SET @DTi = CAST(@F_CURRENT AS SMALLDATETIME) + CAST(@H_Sini AS SMALLDATETIME)
+					SET @DTf = CAST(DATEADD(DAY, 1, CAST(@F_CURRENT AS SMALLDATETIME)) AS SMALLDATETIME) + CAST(@H_Sfin AS SMALLDATETIME) --corregir esto, no es tan sencillo ese "+ 1"
+					SET @acu = @acu + HL.f_getMinsON_formatoFecha(@FH_Rini, @FH_Rfin, @DTi, @DTf)
+					SET @F_CURRENT = DATEADD(DAY, 1, CAST(@F_CURRENT AS SMALLDATETIME))
+				END
+			END
+			RETURN @acu
+		END
+		GO
+			 
+
+
+						-- prueba de esta función, para AZUL
+						-- ANDA, CARAJO
+						SELECT f0.MAQ_ID,
+							   f0.MAQ_NUM,
+							   f0.MAQ_NOM,
+							   f0.MAQ_SEC,
+							   SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-25', '2021-08-26', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) AS 'MINS_ON',
+							   SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-25', '2021-08-26', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) / 60.0 AS 'HRS_ON'
+                        FROM (
+							  SELECT r.idMaquina AS 'MAQ_ID',
+									 m.numeroMaquinaUSUARIO AS 'MAQ_NUM',
+									 m.nombreMaquinaUSUARIO AS 'MAQ_NOM',
+									 s.nombreSectorUSUARIO AS 'MAQ_SEC',
+									 r.fechaHoraEncendida AS 'FH_ENC',
+									 r.fechaHoraUltimoRegistroEncendida AS 'FH_URE'
+							  FROM HL.sectores s
+							  JOIN HL.maquinas m ON (s.idSector = m.idSector)
+							  JOIN HL.registros r ON (m.idMaquina = r.idMaquina) 
+							  ) AS f0
+						GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC
+						HAVING SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-25', '2021-08-29', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) > 0
+						ORDER BY f0.MAQ_SEC, f0.MAQ_NUM
+						
+						-- otra prueba de esta función, para AZUL
+						-- ANDA, CARAJO
+						SELECT f0.MAQ_ID,
+							   f0.MAQ_NUM,
+							   f0.MAQ_NOM,
+							   f0.MAQ_SEC,
+							   SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-27', '2021-08-28', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) AS 'MINS_ON',
+							   SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-27', '2021-08-28', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) / 60.0 AS 'HRS_ON'
+                        FROM (
+							  SELECT r.idMaquina AS 'MAQ_ID',
+									 m.numeroMaquinaUSUARIO AS 'MAQ_NUM',
+									 m.nombreMaquinaUSUARIO AS 'MAQ_NOM',
+									 s.nombreSectorUSUARIO AS 'MAQ_SEC',
+									 r.fechaHoraEncendida AS 'FH_ENC',
+									 r.fechaHoraUltimoRegistroEncendida AS 'FH_URE'
+							  FROM HL.sectores s
+							  JOIN HL.maquinas m ON (s.idSector = m.idSector)
+							  JOIN HL.registros r ON (m.idMaquina = r.idMaquina) 
+							  ) AS f0
+						GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC
+						HAVING SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-27', '2021-08-28', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) > 0
+						ORDER BY f0.MAQ_SEC, f0.MAQ_NUM
+						
+
+
+
+						SELECT f0.MAQ_ID,
+							   f0.MAQ_NUM,
+							   f0.MAQ_NOM,
+							   f0.MAQ_SEC,
+							   SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-25', '2021-08-29', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) AS 'MINS_ON',
+							   SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-25', '2021-08-29', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) / 60.0 AS 'HRS_ON'
+						FROM (
+							  SELECT r.idMaquina AS 'MAQ_ID',
+									 m.numeroMaquinaUSUARIO AS 'MAQ_NUM', 
+									 m.nombreMaquinaUSUARIO AS 'MAQ_NOM', 
+									 s.nombreSectorUSUARIO AS 'MAQ_SEC', 
+									 r.fechaHoraEncendida AS 'FH_ENC', 
+									 r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' 
+							  FROM HL.sectores s 
+							  JOIN HL.maquinas m ON (s.idSector = m.idSector) 
+							  JOIN HL.registros r ON (m.idMaquina = r.idMaquina) 
+							  WHERE (r.idMaquina IN (1, 18, 20))
+							  ) AS f0 
+						GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC 
+						HAVING SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-25', '2021-08-29', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) > 0 
+						ORDER BY f0.MAQ_SEC, f0.MAQ_NUM
+						----------------
+						--para llevar...
+						SELECT f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC, SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-25', '2021-08-29', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) AS 'MINS_ON', SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-25', '2021-08-29', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) / 60.0 AS 'HRS_ON' FROM (SELECT r.idMaquina AS 'MAQ_ID', m.numeroMaquinaUSUARIO AS 'MAQ_NUM', m.nombreMaquinaUSUARIO AS 'MAQ_NOM', s.nombreSectorUSUARIO AS 'MAQ_SEC', r.fechaHoraEncendida AS 'FH_ENC', r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' FROM HL.sectores s JOIN HL.maquinas m ON (s.idSector = m.idSector) JOIN HL.registros r ON (m.idMaquina = r.idMaquina) WHERE (r.idMaquina IN (1, 18, 20))) AS f0 GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC HAVING SUM(HL.f_getMinsON_formatoFecha_Nintervalos('2021-08-25', '2021-08-29', '09:00', '21:00', f0.FH_ENC, f0.FH_URE)) > 0 ORDER BY f0.MAQ_SEC, f0.MAQ_NUM
+						----------------
+						
+						
+						
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						
+						-- casoUnicoIntervalo_mostrarCantidadDeHorasPorMaquina
+						-- ANDA
+						SELECT f0.MAQ_ID,
+							   f0.MAQ_NUM,
+							   f0.MAQ_NOM,
+							   f0.MAQ_SEC,
+							   SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, '2021-25-08 09:00', '2021-26-08 21:00')) AS 'MINS_ON',
+							   SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, '2021-25-08 09:00', '2021-26-08 21:00')) / 60.0 AS 'HRS_ON'
+                        FROM (
+							  SELECT r.idMaquina AS 'MAQ_ID',
+									 m.numeroMaquinaUSUARIO AS 'MAQ_NUM',
+									 m.nombreMaquinaUSUARIO AS 'MAQ_NOM',
+									 s.nombreSectorUSUARIO AS 'MAQ_SEC',
+									 r.fechaHoraEncendida AS 'FH_ENC',
+									 r.fechaHoraUltimoRegistroEncendida AS 'FH_URE'
+							  FROM HL.sectores s
+							  JOIN HL.maquinas m ON (s.idSector = m.idSector)
+							  JOIN HL.registros r ON (m.idMaquina = r.idMaquina) 
+							  ) AS f0
+						GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC
+						HAVING SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, '2021-2-08 09:00', '2021-26-08 21:00')) > 0
+						ORDER BY f0.MAQ_SEC, f0.MAQ_NUM
+
+
+
+
+
+
+
+
+
+
+
+
+			 select DATEADD(DAY, 10, CAST('2021-23-08' AS SMALLDATETIME))
+
+
+
+					IF (CAST('23:45' AS TIME) < CAST('00:00' AS TIME))
+					BEGIN
+						SELECT CAST('23:45' AS TIME)
+					END
+					ELSE
+					BEGIN
+						SELECT CAST('00:00' AS TIME)
+					END
+
+					IF (CAST('23:45' AS TIME) < '00:00')
+					BEGIN
+						SELECT CAST('23:45' AS TIME)
+					END
+					ELSE
+					BEGIN
+						SELECT '00:00'
+					END
+
+
+
 
 
 		/*

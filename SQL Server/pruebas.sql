@@ -91,7 +91,7 @@ SELECT CONVERT(DATE, getdate()),
 	   GETDATE()
 
 SELECT CONVERT(DATE, '2021-05-10 22:15'),
-	   CONVERT(time, '2021-05-10 22:15'),
+	   CONVERT(TIME, '2021-05-10 22:15'),
 	   '2021-05-10 22:15'
 
 SELECT DATEPART(DAY, '2021-05-10 22:15')
@@ -248,10 +248,7 @@ GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC
 
 
 --CONSULTA 2 - CASO: día completo, franja horaria de 24hs
-SELECT f0.MAQ_ID,
-		f0.MAQ_NUM,
-		f0.MAQ_NOM,
-		f0.MAQ_SEC,
+SELECT f0.MAQ_SEC,
 		SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, '2021-25-09 00:00:00', '2021-27-09 00:00:00')) AS 'MINS_ON',
 		SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, '2021-25-09 00:00:00', '2021-27-09 00:00:00')) / 60.0 AS 'HRS_ON'
 FROM (
@@ -294,6 +291,66 @@ SELECT f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC, SUM(HL.f_getMinsON_formato
 
 select datepart(YEAR, '2021-08-08 00:00:00')
 select '2021-09-08 00:00:00'
+
+
+
+select * from HL.registros
+
+
+
+
+USE prueba3
+
+
+CREATE OR ALTER FUNCTION HL.f_getMinsON_franjaHorariaDiaParcial
+	(
+	)
+RETURNS INT
+AS BEGIN
+	
+END
+GO
+
+
+--Función factorial: recibe un número entero positivo y devuelve su factorial
+CREATE OR ALTER FUNCTION HL.f_factorial (@valor INT)
+RETURNS INT
+AS BEGIN
+	DECLARE @factorial INT
+	DECLARE @cont INT
+	SET @factorial = 1
+	SET @cont = 1
+	WHILE (@cont <= @valor) BEGIN
+		SET @factorial = @factorial * @cont
+		SET @cont = @cont + 1
+	END
+	RETURN @factorial
+END
+GO
+
+SELECT 10 AS 'n', HL.f_factorial(10) AS 'n!'
+
+
+
+SELECT * FROM HL.registros
+	EXEC HL.sp_insertarSesion 1, '2021-25-08 07:00' --'YY-DD-MM HH:MM:SS'
+	EXEC HL.sp_terminarSesion 1, '2021-25-08 19:00' --'YY-DD-MM HH:MM:SS'
+	EXEC HL.sp_insertarSesion 1, '2021-26-08 07:00' --'YY-DD-MM HH:MM:SS'
+	EXEC HL.sp_terminarSesion 1, '2021-26-08 11:00' --'YY-DD-MM HH:MM:SS'
+	EXEC HL.sp_insertarSesion 1, '2021-27-08 11:00' --'YY-DD-MM HH:MM:SS'
+	EXEC HL.sp_terminarSesion 1, '2021-27-08 19:00' --'YY-DD-MM HH:MM:SS'
+	EXEC HL.sp_insertarSesion 1, '2021-28-08 11:00' --'YY-DD-MM HH:MM:SS'
+	EXEC HL.sp_terminarSesion 1, '2021-28-08 23:00' --'YY-DD-MM HH:MM:SS'
+	EXEC HL.sp_insertarSesion 1, '2021-29-08 09:00' --'YY-DD-MM HH:MM:SS'
+	EXEC HL.sp_terminarSesion 1, '2021-29-08 21:00' --'YY-DD-MM HH:MM:SS'
+SELECT * FROM HL.registros
+/*
+DELETE FROM HL.registros
+DBCC CHECKIDENT ('HL.registros', RESEED, 0)
+*/
+
+
+
 
 
 
@@ -610,12 +667,6 @@ select '2021-09-08 00:00:00'
 
 
 
-		/*
-		*/
-
-
-
-
 
 
 -- CONSULTA 1
@@ -631,53 +682,3 @@ GROUP BY m.numeroMaquinaUSUARIO, m.nombreMaquinaUSUARIO
 
 
 
-
-
-
-
-
-/* 
-	ID_MÁQUINA = 7
-dateTimes para pruebas de la función obtenerMinutos
-Antes de iniciar:
-	'2021-07-08 07:43'
-
-Inicio sesión 1:
-	'2021-07-08 08:22'
-Mitad de sesión 1:
-	'2021-07-08 09:15'
-Fin de sesión 1:
-	'2021-07-08 10:58'
-
-Entre sesiones 1 y 2:
-	'2021-07-08 12:05'
-
-Inicio sesión 2:
-	'2021-07-08 13:12'
-Mitad de sesión 2:
-	'2021-07-08 15:49'
-Fin de sesión 2:
-	'2021-07-08 17:33'
-
-Entre sesiones 2 y 3:
-	'2021-07-08 18:17'
-
-Inicio sesión 3:
-	'2021-07-08 20:38'
-Mitad de sesión 3:
-	'2021-07-08 21:22'
-Fin de sesión 3:
-	'2021-07-08 21:43'
-
-Luego de finalizar:
-	'2021-07-08 23:18'
-
-*/
-
-
-
--- CONSULTA 2
-
-
--- CONSULTA 3
- 

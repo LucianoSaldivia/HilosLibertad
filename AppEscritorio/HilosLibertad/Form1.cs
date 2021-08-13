@@ -142,12 +142,21 @@ namespace HilosLibertad
             int HHMM_ini_S = getHHMMentero_from2Cmb(cmb_HoraInicial, cmb_MinutoInicial);
             int HHMM_fin_S = getHHMMentero_from2Cmb(cmb_HoraFinal, cmb_MinutoFinal);
             
+
             // Días de diferencia entre las dos fechas
             int N = YYYYMMDD_fin_S - YYYYMMDD_ini_S;
 
             Consultas con = new Consultas();
             //dgv_CantHorasPorMaquina.DataSource = con.mostrarFiltroPorMaquinas(obtenerStringFiltroMaquinas());
 
+            string STRING_LISTA_idMaquina = getStringFiltroMaquinas();
+            string STRING_FECHAyHORARIO_INICIAL = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaInicial, cmb_HoraInicial, cmb_MinutoInicial) + "'";
+            string STRING_FECHAyHORARIO_FINAL = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaFinal, cmb_HoraFinal, cmb_MinutoFinal) + "'";
+
+            string STRING_FECHA_INICIAL = getStringFromDTPconFormato(dtp_FechaInicial, "yyyy-MM-dd");
+            string STRING_FECHA_FINAL = getStringFromDTPconFormato(dtp_FechaFinal, "yyyy-MM-dd");
+            string STRING_HORARIO_INICIAL = getStringFrom2CMB(cmb_HoraInicial, cmb_MinutoInicial);
+            string STRING_HORARIO_FINAL = getStringFrom2CMB(cmb_HoraFinal, cmb_MinutoFinal);
 
             if (YYYYMMDD_ini_S == YYYYMMDD_fin_S)       // Fila 2
             {
@@ -159,14 +168,9 @@ namespace HilosLibertad
                 else                                    // Columna 1
                 {
                     // CASO VERDE --> UN ÚNICO INTERVALO (la franja horaria es entre 15min y 23h45min)
-                    
-                    string STRING_LISTA_idMaquina = obtenerStringFiltroMaquinas();
-                    string STRING_FECHA_INICIAL = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaInicial, cmb_HoraInicial, cmb_MinutoInicial) + "'";
-                    string STRING_FECHA_FINAL = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaFinal, cmb_HoraFinal, cmb_MinutoFinal) + "'";
-
-                    dgv_CantHorasPorMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorMaquina(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_LISTA_idMaquina);
-                    dgv_CantHorasPorSector.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorSector(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_LISTA_idMaquina);
-                    dgv_CantTotalHorasMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasDeTodasLasMaquinas(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_LISTA_idMaquina);
+                    dgv_CantHorasPorMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorMaquina(STRING_FECHAyHORARIO_INICIAL, STRING_FECHAyHORARIO_FINAL, STRING_LISTA_idMaquina);
+                    dgv_CantHorasPorSector.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorSector(STRING_FECHAyHORARIO_INICIAL, STRING_FECHAyHORARIO_FINAL, STRING_LISTA_idMaquina);
+                    dgv_CantTotalHorasMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasDeTodasLasMaquinas(STRING_FECHAyHORARIO_INICIAL, STRING_FECHAyHORARIO_FINAL, STRING_LISTA_idMaquina);
                 }
             }
             else
@@ -176,38 +180,38 @@ namespace HilosLibertad
                     if (HHMM_fin_S == HHMM_ini_S)       // Columna 2
                     {
                         // CASO VERDE --> UN ÚNICO INTERVALO (la franja horaria es múltiplo de 24 horas)
-
-                        string STRING_LISTA_idMaquina = obtenerStringFiltroMaquinas();
-                        string STRING_FECHA_INICIAL = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaInicial, cmb_HoraInicial, cmb_MinutoInicial) + "'";
-                        string STRING_FECHA_FINAL = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaFinal, cmb_HoraFinal, cmb_MinutoFinal) + "'";
-
-                        dgv_CantHorasPorMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorMaquina(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_LISTA_idMaquina);
-                        dgv_CantHorasPorSector.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorSector(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_LISTA_idMaquina);
-                        dgv_CantTotalHorasMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasDeTodasLasMaquinas(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_LISTA_idMaquina);
+                        dgv_CantHorasPorMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorMaquina(STRING_FECHAyHORARIO_INICIAL, STRING_FECHAyHORARIO_FINAL, STRING_LISTA_idMaquina);
+                        dgv_CantHorasPorSector.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorSector(STRING_FECHAyHORARIO_INICIAL, STRING_FECHAyHORARIO_FINAL, STRING_LISTA_idMaquina);
+                        dgv_CantTotalHorasMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasDeTodasLasMaquinas(STRING_FECHAyHORARIO_INICIAL, STRING_FECHAyHORARIO_FINAL, STRING_LISTA_idMaquina);
                     }
                     else
                     {
                         if (HHMM_fin_S > HHMM_ini_S)    // Columna 1
                         {
                             // CASO AZUL --> N INTERVALOS (franja horaria días parciales: es entre 15min y 23h45min)
+                            dgv_CantHorasPorMaquina.DataSource = con.casoNintervalos_mostrarCantidadDeHorasPorMaquina(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_HORARIO_INICIAL, STRING_HORARIO_FINAL, STRING_LISTA_idMaquina);
+                            dgv_CantHorasPorSector.DataSource = con.casoNintervalos_mostrarCantidadDeHorasPorSector(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_HORARIO_INICIAL, STRING_HORARIO_FINAL, STRING_LISTA_idMaquina);
+                            dgv_CantTotalHorasMaquina.DataSource = con.casoNintervalos_mostrarCantidadDeHorasDeTodasLasMaquinas(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_HORARIO_INICIAL, STRING_HORARIO_FINAL, STRING_LISTA_idMaquina);
+
+                            Console.WriteLine("00000000000000000000000000000000");
                         }
                         else
                         {
                             if (N == 1)                 // Columna 3
                             {
                                 // CASO VERDE --> UN ÚNICO INTERVALO (la franja horaria entre 15min y 23h45min)
-
-                                string STRING_LISTA_idMaquina = obtenerStringFiltroMaquinas();
-                                string STRING_FECHA_INICIAL = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaInicial, cmb_HoraInicial, cmb_MinutoInicial) + "'";
-                                string STRING_FECHA_FINAL = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaFinal, cmb_HoraFinal, cmb_MinutoFinal) + "'";
-
-                                dgv_CantHorasPorMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorMaquina(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_LISTA_idMaquina);
-                                dgv_CantHorasPorSector.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorSector(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_LISTA_idMaquina);
-                                dgv_CantTotalHorasMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasDeTodasLasMaquinas(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_LISTA_idMaquina);
+                                dgv_CantHorasPorMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorMaquina(STRING_FECHAyHORARIO_INICIAL, STRING_FECHAyHORARIO_FINAL, STRING_LISTA_idMaquina);
+                                dgv_CantHorasPorSector.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorSector(STRING_FECHAyHORARIO_INICIAL, STRING_FECHAyHORARIO_FINAL, STRING_LISTA_idMaquina);
+                                dgv_CantTotalHorasMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasDeTodasLasMaquinas(STRING_FECHAyHORARIO_INICIAL, STRING_FECHAyHORARIO_FINAL, STRING_LISTA_idMaquina);
                             }
                             else                        // Columna 4
                             {
                                 // CASO AZUL --> N INTERVALOS (franja horaria trasnoches: es entre 15min y 23h45min)
+                                dgv_CantHorasPorMaquina.DataSource = con.casoNintervalos_mostrarCantidadDeHorasPorMaquina(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_HORARIO_INICIAL, STRING_HORARIO_FINAL, STRING_LISTA_idMaquina);
+                                dgv_CantHorasPorSector.DataSource = con.casoNintervalos_mostrarCantidadDeHorasPorSector(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_HORARIO_INICIAL, STRING_HORARIO_FINAL, STRING_LISTA_idMaquina);
+                                dgv_CantTotalHorasMaquina.DataSource = con.casoNintervalos_mostrarCantidadDeHorasDeTodasLasMaquinas(STRING_FECHA_INICIAL, STRING_FECHA_FINAL, STRING_HORARIO_INICIAL, STRING_HORARIO_FINAL, STRING_LISTA_idMaquina);
+                                
+                                Console.WriteLine("0000                        0000");
                             }
                         }
 
@@ -218,7 +222,6 @@ namespace HilosLibertad
                     // CASO INVÁLIDO [IMPOSIBLE], ROJO --> INCONSISTENCIA DE FECHAS
                     MessageBox.Show("La fecha final debe ser posterior a la fecha inicial.\n", "Inconsistencia de fechas: fecha final anterior a fecha inicial", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
 
         }
@@ -230,7 +233,7 @@ namespace HilosLibertad
 
 
 
-        public string obtenerStringFiltroMaquinas()
+        public string getStringFiltroMaquinas()
         {
             string retorno;
             string filtroLatente = "";
@@ -265,7 +268,33 @@ namespace HilosLibertad
             return retorno;
         }
 
-        public string obtenerStringFiltroFechaInicial()
+
+        
+        public string getStringFromDTPconFormato(DateTimePicker dtp, string formato)
+        {
+            // La variable formato puede ser, por ejemplo, "yyyy-dd-MM" o "yyyy-MM-dd"
+            return "'" + dtp.Value.ToString(formato) + "'";
+        }
+
+        public string getStringFrom2CMB(ComboBox cmb_h, ComboBox cmb_m)
+        {
+            string HH;
+            if (Convert.ToInt32(cmb_h.SelectedItem) >= 0 && Convert.ToInt32(cmb_h.SelectedItem) <= 9)
+            {
+                HH = "0" + cmb_h.SelectedItem.ToString();
+            }
+            else
+            {
+                HH = cmb_h.SelectedItem.ToString();
+            }
+            
+            string MM = cmb_m.SelectedItem.ToString();
+            return "'" + HH + ":" + MM + "'";
+        }
+        
+
+
+        public string getStringFiltroFechaHoraInicial()
         {
             string f_d = dtp_FechaInicial.Value.ToString("yyyy-dd-MM");    // formato de fecha útil (YYYY-DD-MM) para las consultas a la DB
 
@@ -287,7 +316,7 @@ namespace HilosLibertad
             return FHM_desde;
         }
 
-        public string obtenerStringFiltroFechaFinal()
+        public string getStringFiltroFechaHoraFinal()
         {
             string f_h = dtp_FechaFinal.Value.ToString("yyyy-dd-MM");    // formato de fecha útil (YYYY-DD-MM) para las consultas a la DB
 
@@ -308,10 +337,6 @@ namespace HilosLibertad
 
             return FHM_hasta;
         }
-
-
-
-
 
 
 
@@ -400,7 +425,6 @@ namespace HilosLibertad
                     break;
             }
         }
-
 
 
 
@@ -510,27 +534,14 @@ namespace HilosLibertad
             }
         }
 
-        
-        
-        
-        private void cmb_HoraFinal_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //
-        }
 
-        private void cmb_MinutoFinal_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //
-        }
 
-        private void cmb_HoraInicial_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //
-        }
 
-        private void cmb_MinutoInicial_SelectedIndexChanged(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            //
+            Console.WriteLine("Fecha inicial:\t" + getStringFromDTPconFormato(dtp_FechaInicial, "yyyy-MM-dd"));
+            //Console.WriteLine("Fecha inicial:\t" + getStringFromDTPconFormato(dtp_FechaInicial, "yyyy-dd-MM"));
+            Console.WriteLine("Horario inicial:\t" + getStringFrom2CMB(cmb_HoraInicial, cmb_MinutoInicial));
         }
     }
 }

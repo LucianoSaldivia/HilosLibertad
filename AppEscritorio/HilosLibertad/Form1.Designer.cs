@@ -81,6 +81,7 @@ namespace HilosLibertad
             this.grp_FiltroFranjaHoraria = new System.Windows.Forms.GroupBox();
             this.lbl_HorarioFinal = new System.Windows.Forms.Label();
             this.lbl_HorarioInicial = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pic_logoEmpresa)).BeginInit();
             this.grp_Telares.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_CantHorasPorMaquina)).BeginInit();
@@ -552,7 +553,6 @@ namespace HilosLibertad
             this.cmb_MinutoFinal.Name = "cmb_MinutoFinal";
             this.cmb_MinutoFinal.Size = new System.Drawing.Size(40, 23);
             this.cmb_MinutoFinal.TabIndex = 11;
-            this.cmb_MinutoFinal.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoFinal_SelectedIndexChanged);
             // 
             // cmb_MinutoInicial
             // 
@@ -568,7 +568,6 @@ namespace HilosLibertad
             this.cmb_MinutoInicial.Name = "cmb_MinutoInicial";
             this.cmb_MinutoInicial.Size = new System.Drawing.Size(40, 23);
             this.cmb_MinutoInicial.TabIndex = 9;
-            this.cmb_MinutoInicial.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoInicial_SelectedIndexChanged);
             // 
             // cmb_HoraFinal
             // 
@@ -604,7 +603,6 @@ namespace HilosLibertad
             this.cmb_HoraFinal.Name = "cmb_HoraFinal";
             this.cmb_HoraFinal.Size = new System.Drawing.Size(40, 23);
             this.cmb_HoraFinal.TabIndex = 7;
-            this.cmb_HoraFinal.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraFinal_SelectedIndexChanged);
             // 
             // cmb_HoraInicial
             // 
@@ -640,7 +638,6 @@ namespace HilosLibertad
             this.cmb_HoraInicial.Name = "cmb_HoraInicial";
             this.cmb_HoraInicial.Size = new System.Drawing.Size(40, 23);
             this.cmb_HoraInicial.TabIndex = 3;
-            this.cmb_HoraInicial.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraInicial_SelectedIndexChanged);
             // 
             // grp_FiltroMaquinasSectores
             // 
@@ -730,11 +727,22 @@ namespace HilosLibertad
             this.lbl_HorarioInicial.Text = "Horario Inicial:";
             this.lbl_HorarioInicial.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(433, 84);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 42;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frm_Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(894, 677);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.grp_FiltroFranjaHoraria);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.grp_FiltroMaquinasSectores);
@@ -826,6 +834,7 @@ namespace HilosLibertad
         private System.Windows.Forms.GroupBox grp_FiltroFranjaHoraria;
         private System.Windows.Forms.Label lbl_HorarioFinal;
         private System.Windows.Forms.Label lbl_HorarioInicial;
+        private System.Windows.Forms.Button button1;
     }
 }
 
