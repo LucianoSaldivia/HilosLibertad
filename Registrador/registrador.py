@@ -571,8 +571,8 @@ def SerialTester() -> None:
         serial_port.close()
 def SerialTester_ForceAnswer( forced_answer: bytes ) -> None:
     """Este programa simula ser un "Registrador con problemas de comunicación" para el Embebido, 
-    respondiendo siempre FORCED_ANS, pudiendo ser NAK, UNEX_ANS o incluso ACK. Así, se pueden probar las alarmas
-    Además, sigue mostrando en pantalla los datos recibidos, y si hay desconexiones."""
+    respondiendo siempre FORCED_ANS, pudiendo ser NAK, UNEX_ANS, o incluso ACK o FORCE_TIMEOUT. 
+    Así, se pueden probar las distintas alarmas, mientas se siguen mostrando en pantalla los datos recibidos, y si hay desconexiones."""
 
     # Abro el puerto serie
     with serial.Serial( port = config_serial.PUERTO_SERIE_COM,
@@ -678,17 +678,14 @@ def SerialTester_ForceAnswer( forced_answer: bytes ) -> None:
 if __name__ == "__main__":
 
     # Registrador - Funcionamiento normal
-    Registrador()
+    # Registrador()
     
     
     # Tester - Imprime en pantalla todo lo que recibe, y responde ACK o NAK según corresponda
-    # SerialTester()
+    SerialTester()
 
 
-    # Tester - Fuerza una respuesta UNEX_ANS o NAK según se pase por argumento
+    # Tester - Fuerza una respuesta UNEX_ANS, NAK, o TIMEOUT según se pase por argumento
     # SerialTester_ForceAnswer( config_embedded.UNEX_ANS )
     # SerialTester_ForceAnswer( config_embedded.NAK )
-
-
-
-            
+    # SerialTester_ForceAnswer( config_embedded.FORCE_TIMEOUT )

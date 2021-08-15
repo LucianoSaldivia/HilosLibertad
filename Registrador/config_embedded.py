@@ -12,6 +12,7 @@ CHAR_FINISH_PDU = b"#"
 ACK = b"%"
 NAK = b"?"
 UNEX_ANS = b"$"
+FORCE_TIMEOUT = bytes()
 
 # Tamaños de las tramas según el modo
 BUFFER_SIZE_ONLY_DATA_MODE = 10
