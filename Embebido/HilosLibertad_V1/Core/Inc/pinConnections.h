@@ -45,9 +45,9 @@
         #define PORT_Z0     GPIOB
         #define PIN_Z0      GPIO_PIN_8     
         // Inputs 1 (W1, X1, Y1, Z1)
-            // W1 originalmente era A12, quemado y cambiado por A1
+            // W1 cambiado por A1, originalmente era A12 (GPIO quemada)
         #define PORT_W1     PORT_FREE_1/* GPIOA */
-        #define PIN_W1      PIN_FREE_1/* GPIO_PIN_12 */
+        #define PIN_W1      PIN_FREE_1/* GPIO_PIN_1 */
         #define PORT_X1     GPIOA
         #define PIN_X1      GPIO_PIN_15
         #define PORT_Y1     GPIOB
