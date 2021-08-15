@@ -36,7 +36,7 @@ void FSM_Debouncer( debouncer *d, Debouncer_TimerInterruptionFlag *TIM_flag ){
         case WAITING_NEXT_SYSTICK:
 
             // Si no pasó TIME_TO_CAPTURE_MS milisegundos, me voy (casi siempre)
-            if( new_systick - d->__last_systick < TIME_TO_CAPTURE_MS ){
+            if( new_systick - d->__last_systick < TIME_TO_CAPTURE ){
                 break;
             }
             // Si pasó TIME_TO_CAPTURE_MS milisegundos (1 vez cada TIME_TO_CAPTURE_MS milisegundos)

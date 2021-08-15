@@ -4,6 +4,7 @@ import pyodbc
 from datetime import date, datetime, timedelta
 import Registrador
 
+
 # Tutoriales y fuentes:
     #
     # Tutorial: Instalar SQL Server
@@ -11,6 +12,7 @@ import Registrador
     #
     # Tutorial: Enviar Queries de python a SQL Server
     # https://www.youtube.com/watch?v=aF552bMEcO4
+
 
 device_name = "LUCIANO-PC"
 db_name = "prueba3"
@@ -25,20 +27,20 @@ PROC_SESSION_FINISHED   = "HL.sp_terminarSesion"
 #   Select Functions
 def selectLast(conn: any, n: int):
     """Hago un SELECT de los últimos n registros, según la vista VIEW_NAME:
-    SELECT TOP n * FROM v_registrador ORDER BY LAST_DT DEST
+    SELECT TOP n * FROM HL.v_registrador ORDER BY LAST_DT DEST
     """
     print(f"Select last {n} from table")
     cursor = conn.cursor()
-    cursor.execute(f"SELECT TOP {n} * FROM {VIEW_NAME} ORDER BY LAST_DT DESC")
+    cursor.execute(f"SELECT TOP {n} * FROM {VIEW_NAME} ORDER BY LAST_DT DESC, idMaq ASC")
     
     _showSelectedRows(cursor)
 def selectAll(conn: any):
     """Hago un SELECT de toda la tabla, según la vista VIEW_NAME:
-    SELECT * FROM v_registrador ORDER BY LAST_DT DESC
+    SELECT * FROM HL.v_registrador ORDER BY LAST_DT DESC
     """
     print("Select complete table")
     cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM {VIEW_NAME} ORDER BY LAST_DT DESC")
+    cursor.execute(f"SELECT * FROM {VIEW_NAME} ORDER BY LAST_DT DESC, idMaq ASC")
     _showSelectedRows(cursor)
 
 
@@ -152,11 +154,13 @@ def connectToDatabase():
 
 #   Private Functions
 def _showSelectedRows(c: any):
-    print("" + 
-        "IDM" + " " +
-        "INIT_DT" + "              " +
-        "LAST_DT" + "            " + 
-        "TRND_OFF" + " " + "Mins_ON")
+    print(  "IdReg" + "  " +
+            "IdMaq" + "  " +
+            "INIT_DT" + "              " +
+            "LAST_DT" + "              " + 
+            "TRND_OFF" + "  " + 
+            "Mins_DIFF"
+        )
     for row in c:
         # Mostrar en crudo
         # print(f"row = {row}")
@@ -167,26 +171,29 @@ def _showRow(ini: str, row: any):
     out = ini
     sep = " "
     
-    # 4 caracteres para ID_MAQ
-    out += "{:<3}".format(str(row[0])) + sep         
+    # 6 caracteres para IdReg
+    out += "{:<6}".format(str(row[0])) + sep
+
+    # 6 caracteres para IdMaq
+    out += "{:<6}".format(str(row[1])) + sep         
     
     # 20 caracteres para INIT_DT
-    out += "{:<20}".format(row[1].strftime("%Y-%m-%d %H:%M:%S")) + sep        
+    out += "{:<20}".format(row[2].strftime("%Y-%m-%d %H:%M:%S")) + sep        
     
     # 20 caracteres para LAST_DT (incluso si es NULL)
-    if row[2] is None:
+    if row[3] is None:
         out += "{:<20}".format("NULL") + sep       
     else: 
-        out += "{:<20}".format(row[2].strftime("%Y-%m-%d %H:%M:%S")) + sep
+        out += "{:<20}".format(row[3].strftime("%Y-%m-%d %H:%M:%S")) + sep
 
-    # 6 caracteres para TRND_OFF
-    out += "{:<6}".format(str(row[3])) + sep         
+    # 9 caracteres para TRND_OFF
+    out += "{:<9}".format(str(row[4])) + sep         
     
-    # 6 caracteres para MINS_ON (incluso si es NULL)
-    if row[4] is None:
-        out += "{:<6}".format("NULL") + sep
+    # 9 caracteres para MINS_ON (incluso si es NULL)
+    if row[5] is None:
+        out += "{:<9}".format("NULL") + sep
     else:
-        out += "{:<6}".format(str(row[4])) + sep
+        out += "{:<9}".format(str(row[5])) + sep
 
     print(out)
 def _getDriverName() -> str:
@@ -591,9 +598,13 @@ if __name__ == "__main__":
 
     with connectToDatabase() as conn:
 
-        clearTable(conn, table_name)
+        # selectAll(conn)
 
-        test5(conn)
-        
+        # test5(conn)
+        # selectAll(conn)
+
+        clearTable(conn, table_name)
+        selectAll(conn)
 
     print("Todo OK")
+    

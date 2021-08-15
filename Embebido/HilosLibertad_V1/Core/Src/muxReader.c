@@ -41,13 +41,13 @@ void FSM_MuxReader( MuxReader *r, Debouncer_TimerInterruptionFlag *TIM_flag ){
             // Si está esperando (primera vez)
         	else if( timerIsWaiting( &(r->timer) ) ){
         		// Disparo el timer para la siguiente lectura
-        		startTimer( &(r->timer), TIME_BETWEEN_READS_MS );
+        		startTimer( &(r->timer), TIME_BETWEEN_FRAMES );
         	}
             break;
 
         case READY_TO_BE_READ:
             // Disparo el timer
-            startTimer( &(r->timer), TIME_BETWEEN_READS_MS );
+            startTimer( &(r->timer), TIME_BETWEEN_FRAMES );
             // Vuelvo a esperar el timer
             r->state = WAITING_FOR_TIMER;
             break;

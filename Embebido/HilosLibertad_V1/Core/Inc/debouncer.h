@@ -11,9 +11,9 @@
             ----> el define de TIME_BETWEEN_READS_MS está en muxReader.h
 
     */
-    #define SAMPLES_TO_VALIDATE     5
-    #define INIT_STATES             ( (uint64_t) 0x0)
-    #define TIME_TO_CAPTURE_MS      1
+    #define SAMPLES_TO_VALIDATE     ((uint16_t) 5)
+    #define TIME_TO_CAPTURE      	((uint32_t) 1 * MILISEG)
+    #define INIT_STATES             ((uint64_t) 0)
 
    
     typedef struct Debouncer_TimerInterruptionFlag{

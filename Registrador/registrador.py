@@ -2,37 +2,27 @@
 
 import serial
 import crc8
+import defines
 from datetime import datetime
 import enum
-import defines
 import time
-
-# import Sesiones
 import SQL_Writer
+from math import sqrt
 
-# Tutoriales y fuentes:
-    #
-    # Tutorial: Instalar SQL Server
-    # https://www.youtube.com/watch?v=YOaC_TyOrdk&ab_channel=C%C3%B3digosdeProgramaci%C3%B3n-MarcoRobles
-    #
-    # Tutorial: Enviar Queries de python a SQL Server
-    # https://www.youtube.com/watch?v=aF552bMEcO4
 
-# Conexión
-PUERTO = "COM3"
 # Configuración para escritura en Base
 MAX_FRAMES_TO_WRITE = 5
 
 # Tiempos de desconexión y limpieza de buffer de recepción
-CLEAR_RX_BUFFER_TIME = 14 * defines.TIMEOUT_TIME
-DISCONNECTION_TIME = 2 * defines.TIME_BETWEEN_FRAMES
+CLEAR_RX_BUFFER_TIME = 14 * defines.SENDER_TIMEOUT_TIME
+DISCONNECTION_TIME = 5 * defines.SENDER_TIME_BETWEEN_FRAMES
 
 
 
 # Posibles estados de cada máquina
 class State(enum.IntEnum):
-    STOPPED = 0
-    WORKING = 1
+    STOPPED = 0                 # Máquina apagada
+    WORKING = 1                 # Máquina trabajando
 # Posibles eventos de sesión para cada máquina
 class Event(enum.IntEnum):
     NO_SESSION          = 0     # no hay sesión
@@ -41,6 +31,8 @@ class Event(enum.IntEnum):
     SESSION_FINISHED    = 3     # Sesión Activa -> termina
 
 
+
+#       Funciones para tramas
 # Chequear el PDU recibido
 def checkReceivedPDU(PDU_bytes: bytes ) -> bool:
     crc8_obj = crc8.crc8()
@@ -60,8 +52,10 @@ def checkReceivedPDU(PDU_bytes: bytes ) -> bool:
 def showReceivedPDU(PDU_bytes: bytes) -> None:
     bits_string = str()
     ascii_string = str()
+    
     # Convierto los datos [0:7] y el CRC [8] a string
     bits_string = bytes_to_bit_str(PDU_bytes, range(0, 9))
+    
     # Si la trama es DATA + INFO, muestro el resto en ascii [9:17]
     if len(PDU_bytes) == defines.BUFFER_SIZE_DATA_INFO_MODE:
         ascii_string += chr(PDU_bytes[9]) + ":" \
@@ -76,7 +70,6 @@ def showReceivedPDU(PDU_bytes: bytes) -> None:
                         + chr(PDU_bytes[16]) \
                         + chr(PDU_bytes[17]) \
                         + " " # U:00       
-    
     print( f"Received: " + bits_string + ascii_string )
 def bytes_to_bit_str(data: bytes, rango: range) -> str: 
     bit_str = str()
@@ -86,41 +79,53 @@ def bytes_to_bit_str(data: bytes, rango: range) -> str:
         bit_str += " "
     return bit_str
 
+
+#       Funciones para Registrador()
 # Inicializar Samples en 0
 def initSample() -> list:
-    out = list()
+    """Inicializa una lista Samples del tipo:
+    0 ->    timestamp (datetime)
+    1 ->    State.STOPPED
+    2 ->    State.STOPPED
+    3 ->    State.STOPPED
+    ...
+    """
+
+    sample = list()
     
     # Primera posición - Timestamp
-    out.append( datetime.now() )
+    sample.append( datetime.now() )
 
     # Estados de 64 máquinas en 0
     for i in range(1, defines.CANT_MAQ+1):
-        out.append( State.STOPPED )  
-    return out
+        sample.append( State.STOPPED )  
+    
+    # Retorno el sample inicializado
+    return sample
 # Obtener Samples a partir de Trama
-def getSamplesFromFrame(frame: bytes, dt: datetime) -> list:
+def getSamplesFromFrame(frame: bytes, timestamp: datetime) -> list:
     """Forma una lista Samples del tipo:
-    0 ->    datetime
+    0 ->    timestamp (datetime)
     1 ->    state_MAQ1
     2 ->    state_MAQ2
     3 ->    state_MAQ3
     ...
     """
-    
-    out = list()
-    out.append( dt )
+
+    sample = list()
+    sample.append( timestamp )
 
     # Desde el byte menos significativo al más significativo
     for byte_in_frame in range(7, -1, -1):
         # Desde el LSB hasta el MSB
         for bit_in_byte in range(0, 8):
             # Agrego el valor correspondiente (0 -> STOPPED; 1 -> WORKING)
-            out.append( State.WORKING 
+            sample.append( State.WORKING 
                     if ( frame[byte_in_frame] & (0x01 << bit_in_byte) ) 
                     else State.STOPPED )
 
     # Retorno la lista Sample completa
-    return out
+    return sample
 # Obtener Lista de Reportes a partir de Samples
 def getReportsFromSample(curr_sample: list, last_sample: list, last_reports: list = None) -> list:
     """Compara los cambios de estados, para detectar eventos de la sesión de cada máquina.
@@ -139,9 +144,11 @@ def getReportsFromSample(curr_sample: list, last_sample: list, last_reports: lis
     """
     # Si las listas tienen igual tamaño, comparo
     if len(last_sample) == len(curr_sample):
+        
         # Primera lista de reportes (luego de escritura a base de datos)
         if last_reports is None or len(last_reports) == 0:
             new_reports = list()
+            
             # Para cada máquina
             for id in range(1, len(curr_sample)):
                 # Si sigue parada, no hay reporte, me voy. Sino analizo
@@ -158,10 +165,13 @@ def getReportsFromSample(curr_sample: list, last_sample: list, last_reports: lis
                     # Máquina de STOPPED a WORKING -> SESSION_STARTED
                     elif   last_sample[id] == State.STOPPED and curr_sample[id] == State.WORKING: 
                         new_reports.append( [id, Event.SESSION_STARTED, curr_sample[0]] )
+            
+            # Retorno los reportes nuevos
             return new_reports
         
         # Ya hubo una lista de reportes, tengo que agregar/actualizar
         else:
+            
             # Para cada máquina
             for id in range(1, len(curr_sample)):
                 # Si sigue parada, no hay reporte, me voy. Sino analizo
@@ -171,6 +181,7 @@ def getReportsFromSample(curr_sample: list, last_sample: list, last_reports: lis
                     if last_sample[id] == State.WORKING and curr_sample[id] == State.WORKING:
                         # Creo un flag para marcar si lo encontré y actualicé
                         flag_found_and_updated = False
+                        
                         # Recorro last_reports
                         for j in range(len(last_reports)):
                             # Encuentro el último reporte "SESSION_CONTINUES" de ésta máquina
@@ -180,6 +191,7 @@ def getReportsFromSample(curr_sample: list, last_sample: list, last_reports: lis
                                 # Levanto el flag
                                 flag_found_and_updated = True
                                 break
+                        
                         # Si no se encontró ningún "SESSION_CONTINUES", es porque es el primero
                         if flag_found_and_updated == False:
                             # Agrego el reporte de SESSION_CONTINUES
@@ -194,6 +206,8 @@ def getReportsFromSample(curr_sample: list, last_sample: list, last_reports: lis
                     elif   last_sample[id] == State.STOPPED and curr_sample[id] == State.WORKING: 
                         # Agrego el reporte de SESSION_STARTED
                         last_reports.append( [id, Event.SESSION_STARTED, curr_sample[0]] )
+            
+            # Retorno la lista de reportes actualizada
             return last_reports   
     
     # Sino, no se pueden comparar
@@ -213,21 +227,93 @@ def writeDatabaseFromReports(report_list: list, db_con: any):
     
     # Recorro todos los reportes
     for reporte in report_list:
+        # Reporte de continuación de sesión
         if   reporte[1] == Event.SESSION_CONTINUES:
             SQL_Writer.sessionContinues( db_con, reporte[0], reporte[2] )
         
-        elif reporte[1] == Event.SESSION_FINISHED:
-            SQL_Writer.sessionFinished( db_con, reporte[0], reporte[2] )
-        
+        # Reporte de inicio de sesión
         elif reporte[1] == Event.SESSION_STARTED:
             SQL_Writer.sessionStarted( db_con, reporte[0], reporte[2] )
+        
+        # Reporte de final de sesión
+        elif reporte[1] == Event.SESSION_FINISHED:
+            SQL_Writer.sessionFinished( db_con, reporte[0], reporte[2] )
 
     # Limpio la lista de reportes
     report_list.clear()
-    
 
 
-if __name__ == "__main__":
+#       Funciones estadísticas para _serial_tester() y _serial_tester_force_answer()
+# Calculo del promedio (de forma acumulativa)
+def average( new_number: float ):
+    average.n += 1
+    average.last_average = ( average.last_average * (average.n-1) + new_number ) / average.n
+    return average.last_average
+average.last_average = average.n = 0
+def resetAverage():
+    average.last_average = average.n = 0
+# Calculo de la desviación estándar (de forma acumulativa)
+def standardDeviation( new_number: float ):
+    standardDeviation.sum  += new_number
+    standardDeviation.sum2 += new_number*new_number
+    standardDeviation.n    += 1.0
+    sum, sum2, n = standardDeviation.sum, standardDeviation.sum2, standardDeviation.n
+    return sqrt(sum2/n - sum*sum/n/n)
+standardDeviation.n = standardDeviation.sum = standardDeviation.sum2 = 0
+def resetStandardDeviation():
+    standardDeviation.n = standardDeviation.sum = standardDeviation.sum2 = 0
+
+
+#       Funciones para mostrar la trama completa, según el caso
+# Muestro el PDU recibido y los nuevos datos estadísticos
+def showAllDataAck( trama: bytes, contador_tramas: int, contador_naks: int, curr_dt: datetime, last_dt: datetime ):
+    # Muestro el número de trama y el TimeStamp
+    if contador_tramas < 3:
+        print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()}" )
+    else:
+        print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()} - deltaT: {(curr_dt-last_dt)}" )
+        # Muestro datos estadísticos (asumiendo distribución normal, mostrando promedio y desviación estándar)
+        print( f"Promedio(deltaT): {average((curr_dt-last_dt).total_seconds())}s - Desviación Estándar(deltaT): {standardDeviation((curr_dt-last_dt).total_seconds())}s" )
+    # Muestro la trama completa
+    showReceivedPDU(trama)
+    # Muestro la respuesta y los NAKs acumulados
+    print(f"Response: ACK( {defines.ACK.decode()} ) - NAKs acumulados {contador_naks}")
+    # Pongo un separador para la siguiente trama
+    print()
+def showAllDataNak( trama: bytes, contador_tramas: int, contador_naks: int, curr_dt: datetime, last_dt: datetime ):
+    # Muestro el número de trama y el TimeStamp
+    if contador_tramas < 3:
+        print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()}" )
+    else:
+        print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()} - deltaT: {(curr_dt-last_dt)}" )
+        # Muestro datos estadísticos (asumiendo distribución normal, mostrando promedio y desviación estándar)
+        print( f"Promedio(deltaT): {average((curr_dt-last_dt).total_seconds())}s - Desviación Estándar(deltaT): {standardDeviation((curr_dt-last_dt).total_seconds())}s" )
+    # Muestro la trama completa
+    showReceivedPDU(trama)
+    # Muestro la respuesta y los NAKs acumulados
+    print(f"Response: NAK( {defines.NAK.decode()} ) - NAKs acumulados {contador_naks}")
+    # Pongo un separador para la siguiente trama
+    print()
+def showAllDataForcedAnswer( trama: bytes, contador_tramas: int, contador_naks: int, curr_dt: datetime, last_dt: datetime, forced_ans: bytes ):
+    # Muestro el número de trama y el TimeStamp
+    if contador_tramas < 3:
+        print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()}" )
+    else:
+        print( f"Trama {contador_tramas} - TimeStamp: {curr_dt.time()} - deltaT: {(curr_dt-last_dt)}" )
+        # Muestro datos estadísticos (asumiendo distribución normal, mostrando promedio y desviación estándar)
+        print( f"Promedio(deltaT): {average((curr_dt-last_dt).total_seconds())} - Desviación Estándar(deltaT): {standardDeviation((curr_dt-last_dt).total_seconds())}" )
+    # Muestro la trama completa
+    showReceivedPDU(trama)
+    # Muestro la respuesta y los NAKs acumulados
+    print(f"Response: ( {forced_ans.decode()} ) - NAKs acumulados {contador_naks}")
+    # Pongo un separador para la siguiente trama
+    print()
+
+
+# Funciones del receptor
+def Registrador() -> None:
+    """Este programa es el Registrador para el Embebido.
+    Recibe las tramas, las procesa, y escribe en la base de datos todo lo útil."""
 
     # Inicio los Samples
     prev_sample = initSample()
@@ -240,7 +326,7 @@ if __name__ == "__main__":
     db_con = SQL_Writer.connectToDatabase()
 
     # Abro el puerto serie
-    with serial.Serial( port = PUERTO,
+    with serial.Serial( port = defines.PUERTO_SERIE_COM,
                         baudrate = 115200,
                         parity = serial.PARITY_NONE,
                         stopbits = serial.STOPBITS_ONE,
@@ -366,5 +452,231 @@ if __name__ == "__main__":
                 # Reseteo los reportes, por la misma razón
                 curr_report_list = list()
                 prev_report_list = list()
+
+    if serial_port.is_open:
+        serial_port.close()
+def SerialTester() -> None:
+    """Este programa simula ser el Registrador para el Embebido.
+    Muestra además en pantalla, los datos recibidos y si hay desconexiones."""
+
+    with serial.Serial( port = defines.PUERTO_SERIE_COM,
+                        baudrate = 115200,
+                        parity = serial.PARITY_NONE,
+                        stopbits = serial.STOPBITS_ONE,
+                        bytesize = serial.EIGHTBITS,
+                        timeout = DISCONNECTION_TIME
+                        ) as serial_port:
+
+        # Limpio cualquier basura previa en el puerto
+        serial_port.flush()
+        serial_port.reset_input_buffer()
+
+        # Inicializo los contadores
+        contador_naks = 0
+        contador_tramas = 1
+
+        # Loop principal
+        trama = bytes()
+        hubo_desconexion = False
+        last_dt = datetime.now()
+        while 1:
+            
+            # Si todo anda bien
+            if not hubo_desconexion:
+                # Recibo hasta CHAR_FINISH_PDU, con DISCONNECTION_TIME segundos como límite
+                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+            # Si hubo desconexion
+            else:
+                # Saco el timeout
+                serial_port.timeout = None
+                # Recibo hasta CHAR_FINISH_PDU, sin límite de tiempo
+                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+            
+            # Si se recibió una trama completa
+            if len(trama) >= defines.BUFFER_SIZE_ONLY_DATA_MODE:
+            
+                # Obtengo un timestamp
+                curr_dt = datetime.now()
+
+                # Chequeo el PDU
+                check = checkReceivedPDU(trama)
+            
+                # ACK
+                if check == True:
+                    # Respondo ACK
+                    serial_port.write(defines.ACK)
+
+                    # Si se recompuso la conexion
+                    if hubo_desconexion:
+                        # Aviso de la reconexión
+                        print( "Se logro una nueva conexión. Empiezo a contar tramas de nuevo." )
+                        # Reseteo el contador de tramas
+                        contador_tramas = 1 
+                        # Reseteo acumuladores estadísticos
+                        resetAverage()
+                        resetStandardDeviation()
+                        # Reseteo el flag de desconexion
+                        hubo_desconexion = False
+                        # Pongo el timeout nuevamente
+                        serial_port.timeout = DISCONNECTION_TIME
+                    
+                    # Muestro los datos de la trama
+                    showAllDataAck( trama, contador_tramas, contador_naks, curr_dt, last_dt )
+                    
+                    # Guardo el timestamp como el último
+                    last_dt = curr_dt
+
+                    # Espero para limpiar el buffer de recepción, 
+                    time.sleep(CLEAR_RX_BUFFER_TIME)
+                    # Limpio el buffer de recepción por posible unex_ans recibida en el embebido
+                    serial_port.reset_input_buffer()
+                    # Limpio la trama para recibir una nueva
+                    trama = bytes()
+                
+                # NAK
+                else:
+                    # Respondo NAK
+                    serial_port.write(defines.NAK)
+
+                    # Cuento el NAK
+                    contador_naks += 1
+
+                    # Muestro los datos de la trama
+                    showAllDataNak( trama, contador_tramas, contador_naks, curr_dt, last_dt )
+
+                    # Limpio la trama para recibir una nueva
+                    trama = bytes()
+
+                # Cuento la trama llegada (sin importar ACK o NAK)
+                contador_tramas += 1
+                    
+            # Sino se recibió una trama, hubo una DESCONEXIÓN
+            else:
+                # Seteo el flag de desconexion
+                hubo_desconexion = True
+
+                # Aviso de la desconexión
+                print( "DESCONEXIÓN: Al menos una trama se perdió!" )  
+
+    if serial_port.is_open:
+        serial_port.close()
+def SerialTester_ForceAnswer( forced_answer: bytes ) -> None:
+    """Este programa simula ser un "Registrador con problemas de comunicación" para el Embebido, 
+    respondiendo siempre FORCED_ANS, pudiendo ser NAK, UNEX_ANS o incluso ACK. Así, se pueden probar las alarmas
+    Además, sigue mostrando en pantalla los datos recibidos, y si hay desconexiones."""
+
+    with serial.Serial( port = defines.PUERTO_SERIE_COM,
+                        baudrate = 115200,
+                        parity = serial.PARITY_NONE,
+                        stopbits = serial.STOPBITS_ONE,
+                        bytesize = serial.EIGHTBITS,
+                        timeout = DISCONNECTION_TIME
+                        ) as serial_port:
+
+        # Limpio cualquier basura previa en el puerto
+        serial_port.flush()
+        serial_port.reset_input_buffer()
+
+        # Inicializo los contadores
+        contador_naks = 0
+        contador_tramas = 1
+
+        # Loop principal
+        trama = bytes()
+        hubo_desconexion = False
+        last_dt = datetime.now()
+        while 1:
+            
+            # Si todo anda bien
+            if not hubo_desconexion:
+                # Recibo hasta CHAR_FINISH_PDU, con DISCONNECTION_TIME segundos como límite
+                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+            # Si hubo desconexion
+            else:
+                # Saco el timeout
+                serial_port.timeout = None
+                # Recibo hasta CHAR_FINISH_PDU, sin límite de tiempo
+                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+            
+            # Si se recibió una trama completa
+            if len(trama) >= defines.BUFFER_SIZE_ONLY_DATA_MODE:
+            
+                # Obtengo un timestamp
+                curr_dt = datetime.now()
+
+                # Chequeo el PDU
+                check = checkReceivedPDU(trama)
+            
+                # ACK
+                if check == True:
+                    # Respondo FORCED_ANS
+                    serial_port.write(forced_answer)
+
+                    # Si se recompuso la conexion
+                    if hubo_desconexion:
+                        # Aviso de la reconexión
+                        print( "Se logro una nueva conexión. Empiezo a contar tramas de nuevo." )
+                        # Reseteo el contador de tramas
+                        contador_tramas = 1 
+                        # Reseteo acumuladores estadísticos
+                        resetAverage()
+                        resetStandardDeviation()
+                        # Reseteo el flag de desconexion
+                        hubo_desconexion = False
+                        # Pongo el timeout nuevamente
+                        serial_port.timeout = DISCONNECTION_TIME
+                    
+                    # Muestro los datos de la trama
+                    showAllDataForcedAnswer( trama, contador_tramas, contador_naks, curr_dt, last_dt, forced_answer )
+                    
+                    # Guardo el timestamp como el último
+                    last_dt = curr_dt
+
+                    # No duerme ni limpia el buffer de recepción, para contar sólamente las respuestas forzadas, y no timeouts
+                    trama = bytes()
+                
+                # NAK
+                else:
+                    # Respondo NAK
+                    serial_port.write(forced_answer)
+
+                    # Cuento el NAK
+                    contador_naks += 1
+
+                    # Muestro los datos de la trama
+                    showAllDataForcedAnswer( trama, contador_tramas, contador_naks, curr_dt, last_dt, forced_answer )
+
+                    # Limpio la trama para recibir una nueva
+                    trama = bytes()
+
+                # Cuento la trama llegada (sin importar ACK o NAK)
+                contador_tramas += 1
+                    
+            # Sino se recibió una trama, hubo una DESCONEXIÓN
+            else:
+                # Seteo el flag de desconexion
+                hubo_desconexion = True
+
+                # Aviso de la desconexión
+                print( "DESCONEXIÓN: Al menos una trama se perdió!" )  
+
+    if serial_port.is_open:
+        serial_port.close()
+
+
+
+if __name__ == "__main__":
+
+    # Registrador - Funcionamiento normal
+    Registrador()
+    
+    
+    # Tester - Imprime en pantalla todo lo que recibe, y responde ACK o NAK según corresponda
+    # SerialTester()
+
+
+    # Tester - Fuerza una respuesta NAK o UNEX_ANS según se pase por argumento
+    # SerialTester_ForceAnswer( defines.NAK )
+    # SerialTester_ForceAnswer( defines.UNEX_ANS )
 
             

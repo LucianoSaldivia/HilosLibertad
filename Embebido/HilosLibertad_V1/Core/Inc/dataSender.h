@@ -7,24 +7,37 @@
     #include "timers.h"
 
 
+	/* TIEMPOS --- LEER
+
+    TIMEOUT_TIME: Tiempo máximo de espera de respuesta desde que se envía la trama.
+    	Si se vence éste tiempo, se cuenta un timeout y se envía la trama nuevamente,
+    así hasta contar MAX_TIMEOUTS, donde se cuenta una pérdida de datos por timeouts, y se
+    considera a esa trama como perdida, por lo que no se vuelve a enviar.
+    Si se cuentan MAX_DATA_LOSS_TIMEOUTS pérdidas de datos por timeouts, suena alarma por timeout.
+
+    Ésta misma lógica funciona para NAKs y para Respuestas Inesperadas (UnexAns).
+    Al recibir 1 ACK, todos los contadores vuelven a cero, y se apaga la alarma.
+
+    */
     // Tiempo de Timeout
     #define TIMEOUT_TIME            ((uint32_t) (100 * MILISEG))	/* (200 * MILISEG) */
-    // Timeouts                 (+ probable)
-    #define MAX_TIMEOUTS            (uint8_t) 5
-    #define MAX_DATA_LOSS_TIMEOUT   (uint8_t) 5
-    #define TIMEOUT_ALARM_TYPE      (AlarmType) QUADRUPLE_BEEP
+
+	// Timeouts                 (+ probable)
+    #define MAX_TIMEOUTS            ((uint8_t) 5)
+    #define MAX_DATA_LOSS_TIMEOUT   ((uint8_t) 5)
+    #define TIMEOUT_ALARM_TYPE      ((AlarmType) QUADRUPLE_BEEP)
     // NAKs                     (- probable)
-    #define MAX_NAKS                (uint8_t) 5
-    #define MAX_DATA_LOSS_NAK       (uint8_t) 5
-    #define NAK_ALARM_TYPE          (AlarmType) TRIPLE_BEEP
+    #define MAX_NAKS                ((uint8_t) 5)
+    #define MAX_DATA_LOSS_NAK       ((uint8_t) 5)
+    #define NAK_ALARM_TYPE          ((AlarmType) TRIPLE_BEEP)
     // Respuestas Inesperadas   (casi imposible)
-    #define MAX_UNEX_ANS            (uint8_t) 5
-    #define MAX_DATA_LOSS_UNEX_ANS  (uint8_t) 5
-    #define UNEX_ANS_ALARM_TYPE     (AlarmType) DOUBLE_BEEP
+    #define MAX_UNEX_ANS            ((uint8_t) 5)
+    #define MAX_DATA_LOSS_UNEX_ANS  ((uint8_t) 5)
+    #define UNEX_ANS_ALARM_TYPE     ((AlarmType) DOUBLE_BEEP)
 
     // Caracteres ACK y NAK
-    #define ACK_CHAR                (uint8_t) '%'
-    #define NAK_CHAR                (uint8_t) '?'
+    #define ACK_CHAR                ((uint8_t) '%')
+    #define NAK_CHAR                ((uint8_t) '?')
     // Tramas y tamaños
     /*  Trama completa Modo: ONLY DATA, byte a byte:
         01: W0X0 
@@ -59,11 +72,11 @@
         18: (uint8_t) data_loss_unex_ans_ctr + '0' 
         19: CHAR_FINISH_PDU
     */
-    #define CHAR_FINISH_PDU             '#'
-    #define DATA_SIZE                   8
-    #define INFO_SIZE                   9
-    #define BUFFER_SIZE_ONLY_DATA_MODE  (uint16_t) 10
-    #define BUFFER_SIZE_DATA_INFO_MODE  (uint16_t) 19
+    #define CHAR_FINISH_PDU             ((uint8_t) '#')
+    #define DATA_SIZE                   ((uint8_t) 8)
+    #define INFO_SIZE                   ((uint8_t) 9)
+    #define BUFFER_SIZE_ONLY_DATA_MODE  ((uint16_t) 10)
+    #define BUFFER_SIZE_DATA_INFO_MODE  ((uint16_t) 19)
     #define MAX_BUFFER_SIZE             BUFFER_SIZE_DATA_INFO_MODE
 
 

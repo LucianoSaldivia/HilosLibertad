@@ -6,12 +6,12 @@
     #include <stddef.h>
 
 
-	#define MILISEG                         1
-    #define SEG                             1000*MILISEG
-    #define MIN                             60*SEG
+	#define MILISEG                         ((int) 1)
+    #define SEG                             ((int) 1000 * MILISEG)
+    #define MIN                             ((int) 60 * SEG)
 
 
-    // struct byte (bits, nibbles)
+    // struct byte (como bits o nibbles)
     typedef struct byte_bits{
         uint8_t bit0 : 1;
         uint8_t bit1 : 1;
@@ -33,7 +33,7 @@
         byte_bits bits;
     } byte;
 
-    // struct board (bits, nibbles, bytes)
+    // struct board (como bits, nibbles o bytes)
     typedef struct board_bits{
         uint8_t bit00 : 1;
         uint8_t bit01 : 1;
@@ -70,7 +70,7 @@
         board_bits bits;
     } board;
     
-    // struct sample (bits, nibbles, bytes, boards)
+    // struct sample (como bits, nibbles, bytes o boards)
     typedef struct sample_bits{
         uint8_t bit00 : 1;
         uint8_t bit01 : 1;

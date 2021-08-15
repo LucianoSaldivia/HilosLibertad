@@ -17,7 +17,7 @@
         uint32_t init_time;
         uint32_t time_left;        
     } Timer;
-    /* 
+    /* Timer states
         state = 
             WAITING     ->  Esperando a ser disparado
             WORKING     ->  Funcionando

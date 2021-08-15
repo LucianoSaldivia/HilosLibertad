@@ -17,11 +17,12 @@
 		--VISTA vista_registrador
 		--Usada para pruebas en el Registrador
 		CREATE OR ALTER VIEW HL.v_registrador AS (
-			SELECT r.idMaquina AS 'idMaq',
+			SELECT r.idRegistro AS 'idReg',
+				   r.idMaquina AS 'idMaq',
 				   r.fechaHoraEncendida AS 'INIT_DT',
 				   r.fechaHoraUltimoRegistroEncendida AS 'LAST_DT',
 				   r.fueApagadaPorOperarioOPorFallaParticular AS 'TRND_OFF',
-				   DATEDIFF(MINUTE, r.fechaHoraEncendida, r.fechaHoraUltimoRegistroEncendida) AS 'MINS_ON'
+				   DATEDIFF(MINUTE, r.fechaHoraEncendida, r.fechaHoraUltimoRegistroEncendida) AS 'MINS_DIFF'
 			FROM HL.registros r
 		)
 		GO

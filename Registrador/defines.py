@@ -2,9 +2,13 @@
 
 
 # Tiempos del Embebido (pero en Segundos)
-TIMEOUT_TIME = 0.1
-TIME_BETWEEN_FRAMES = 60
-# TIME_BETWEEN_FRAMES = 12
+SENDER_TIMEOUT_TIME = 0.1
+# SENDER_TIME_BETWEEN_FRAMES = 60
+SENDER_TIME_BETWEEN_FRAMES = 5
+
+# Puerto COM
+PUERTO_SERIE_COM = "COM3"
+
 
 
 # Cantidad de máquinas

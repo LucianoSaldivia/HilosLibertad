@@ -8,15 +8,15 @@
 	#define _USE_LED_ALSO_
 
     // Tiempos por default para beeps y espacios
-    #define DEFAULT_BEEP_TIME       (uint32_t) 60
-    #define DEFAULT_BEEP_SPACE_TIME (uint32_t) 140
-    #define DEFAULT_LONG_BEEP_TIME  (uint32_t) 450
+    #define DEFAULT_BEEP_TIME       ((uint32_t) (60 * MILISEG))
+    #define DEFAULT_BEEP_SPACE_TIME ((uint32_t) (140 * MILISEG))
+    #define DEFAULT_LONG_BEEP_TIME  ((uint32_t) (450 * MILISEG))
     // Tiempos en LOW para cada tipo
-    #define TL_SINGLE_BEEP          (uint32_t) 800
-    #define TL_DOUBLE_BEEP          (uint32_t) 1000
-    #define TL_TRIPLE_BEEP          (uint32_t) 1200
-    #define TL_QUADRUPLE_BEEP       (uint32_t) 1400
-    #define TL_LONG_SINGLE_BEEP     (uint32_t) 1000
+    #define TL_SINGLE_BEEP          ((uint32_t) (800 * MILISEG))
+    #define TL_DOUBLE_BEEP          ((uint32_t) (1000 * MILISEG))
+    #define TL_TRIPLE_BEEP          ((uint32_t) (1200 * MILISEG))
+    #define TL_QUADRUPLE_BEEP       ((uint32_t) (1400 * MILISEG))
+    #define TL_LONG_SINGLE_BEEP     ((uint32_t) (1000 * MILISEG))
 
     // Secuencias
     #ifndef _SEQUENCES_
