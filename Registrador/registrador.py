@@ -2,7 +2,9 @@
 
 import serial
 import crc8
-import defines
+import config_boards
+import config_serial
+import config_embedded
 from datetime import datetime
 import enum
 import time
@@ -14,8 +16,8 @@ from math import sqrt
 MAX_FRAMES_TO_WRITE = 5
 
 # Tiempos de desconexión y limpieza de buffer de recepción
-CLEAR_RX_BUFFER_TIME = 14 * defines.SENDER_TIMEOUT_TIME
-DISCONNECTION_TIME = 5 * defines.SENDER_TIME_BETWEEN_FRAMES
+CLEAR_RX_BUFFER_TIME = 14 * config_embedded.TIMEOUT_TIME
+DISCONNECTION_TIME = 5 * config_embedded.TIME_BETWEEN_FRAMES
 
 
 
@@ -57,7 +59,7 @@ def showReceivedPDU(PDU_bytes: bytes) -> None:
     bits_string = bytes_to_bit_str(PDU_bytes, range(0, 9))
     
     # Si la trama es DATA + INFO, muestro el resto en ascii [9:17]
-    if len(PDU_bytes) == defines.BUFFER_SIZE_DATA_INFO_MODE:
+    if len(PDU_bytes) == config_embedded.BUFFER_SIZE_DATA_INFO_MODE:
         ascii_string += chr(PDU_bytes[9]) + ":" \
                         + chr(PDU_bytes[10]) \
                         + chr(PDU_bytes[11]) \
@@ -96,9 +98,9 @@ def initSample() -> list:
     # Primera posición - Timestamp
     sample.append( datetime.now() )
 
-    # Estados de 64 máquinas en 0
-    for i in range(1, defines.CANT_MAQ+1):
-        sample.append( State.STOPPED )  
+    # Las 64 máquinas inician paradas
+    for i in range(1, config_boards.MAX_MAQS + 1):
+        sample.append( State.STOPPED )
     
     # Retorno el sample inicializado
     return sample
@@ -219,25 +221,31 @@ def getReportsFromSample(curr_sample: list, last_sample: list, last_reports: lis
 def writeDatabaseFromReports(report_list: list, db_con: any):
     """A partir de los reportes, genero el conjunto de datos útiles,
     y los mando a la base de datos:
-    NO_SESSION          -> ~ (Sesión no activa)
+    NO_SESSION          -> ~ (Sesión no activa, no se escribe nada)
     SESSION_STARTED     -> SQL_Writer.sessionStarted(conn, id_maq, timestamp)
     SESSION_CONTINUES   -> SQL_Writer.sessionContinues(conn, id_maq, timestamp)
     SESSION_FINISHED    -> SQL_Writer.sessionFinished(conn, id_maq, timestamp)
+
+    Sólo se toman en cuenta las máquinas conectadas, según la lista CONNECTED_MAQS del archivo boards.py.
     """
     
     # Recorro todos los reportes
     for reporte in report_list:
-        # Reporte de continuación de sesión
-        if   reporte[1] == Event.SESSION_CONTINUES:
-            SQL_Writer.sessionContinues( db_con, reporte[0], reporte[2] )
         
-        # Reporte de inicio de sesión
-        elif reporte[1] == Event.SESSION_STARTED:
-            SQL_Writer.sessionStarted( db_con, reporte[0], reporte[2] )
-        
-        # Reporte de final de sesión
-        elif reporte[1] == Event.SESSION_FINISHED:
-            SQL_Writer.sessionFinished( db_con, reporte[0], reporte[2] )
+        # Si la máquina es una de las conectadas, escribo en la base
+        if reporte[0] in config_boards.CONNECTED_MAQS:
+
+            # Reporte de continuación de sesión
+            if   reporte[1] == Event.SESSION_CONTINUES:
+                SQL_Writer.sessionContinues( db_con, reporte[0], reporte[2] )
+            
+            # Reporte de inicio de sesión
+            elif reporte[1] == Event.SESSION_STARTED:
+                SQL_Writer.sessionStarted( db_con, reporte[0], reporte[2] )
+            
+            # Reporte de final de sesión
+            elif reporte[1] == Event.SESSION_FINISHED:
+                SQL_Writer.sessionFinished( db_con, reporte[0], reporte[2] )
 
     # Limpio la lista de reportes
     report_list.clear()
@@ -277,7 +285,7 @@ def showAllDataAck( trama: bytes, contador_tramas: int, contador_naks: int, curr
     # Muestro la trama completa
     showReceivedPDU(trama)
     # Muestro la respuesta y los NAKs acumulados
-    print(f"Response: ACK( {defines.ACK.decode()} ) - NAKs acumulados {contador_naks}")
+    print(f"Response: ACK( {config_embedded.ACK.decode()} ) - NAKs acumulados {contador_naks}")
     # Pongo un separador para la siguiente trama
     print()
 def showAllDataNak( trama: bytes, contador_tramas: int, contador_naks: int, curr_dt: datetime, last_dt: datetime ):
@@ -291,7 +299,7 @@ def showAllDataNak( trama: bytes, contador_tramas: int, contador_naks: int, curr
     # Muestro la trama completa
     showReceivedPDU(trama)
     # Muestro la respuesta y los NAKs acumulados
-    print(f"Response: NAK( {defines.NAK.decode()} ) - NAKs acumulados {contador_naks}")
+    print(f"Response: NAK( {config_embedded.NAK.decode()} ) - NAKs acumulados {contador_naks}")
     # Pongo un separador para la siguiente trama
     print()
 def showAllDataForcedAnswer( trama: bytes, contador_tramas: int, contador_naks: int, curr_dt: datetime, last_dt: datetime, forced_ans: bytes ):
@@ -326,11 +334,11 @@ def Registrador() -> None:
     db_con = SQL_Writer.connectToDatabase()
 
     # Abro el puerto serie
-    with serial.Serial( port = defines.PUERTO_SERIE_COM,
-                        baudrate = 115200,
-                        parity = serial.PARITY_NONE,
-                        stopbits = serial.STOPBITS_ONE,
-                        bytesize = serial.EIGHTBITS,
+    with serial.Serial( port = config_serial.PUERTO_SERIE_COM,
+                        baudrate = config_serial.SELECTED_BAUDRATE,
+                        parity = config_serial.SELECTED_PARITY,
+                        stopbits = config_serial.SELECTED_STOPBITS,
+                        bytesize = config_serial.SELECTED_BYTE_SIZE,
                         timeout = DISCONNECTION_TIME 
                         ) as serial_port:
 
@@ -347,17 +355,17 @@ def Registrador() -> None:
             # Si todo anda bien
             if not hubo_desconexion:
                 # Recibo hasta CHAR_FINISH_PDU, con DISCONNECTION_TIME segundos como límite
-                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
             # Si hubo desconexion
             else:
                 # Saco el timeout
                 serial_port.timeout = None
                 # Recibo hasta CHAR_FINISH_PDU, sin límite de tiempo
-                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
 
             
             # Si se recibió una trama completa
-            if len(trama) >= defines.BUFFER_SIZE_ONLY_DATA_MODE:
+            if len(trama) >= config_embedded.BUFFER_SIZE_ONLY_DATA_MODE:
             
                 # Chequeo el PDU
                 check = checkReceivedPDU(trama)
@@ -365,7 +373,7 @@ def Registrador() -> None:
                 # ACK
                 if check == True:
                     # Respondo ACK
-                    serial_port.write(defines.ACK)
+                    serial_port.write(config_embedded.ACK)
 
                     # Si se recompuso la conexion
                     if hubo_desconexion:
@@ -416,7 +424,7 @@ def Registrador() -> None:
                 # NAK
                 else:
                     # Respondo NAK
-                    serial_port.write(defines.NAK)
+                    serial_port.write(config_embedded.NAK)
 
                     # Muestro la trama
                     showReceivedPDU(trama)
@@ -459,11 +467,12 @@ def SerialTester() -> None:
     """Este programa simula ser el Registrador para el Embebido.
     Muestra además en pantalla, los datos recibidos y si hay desconexiones."""
 
-    with serial.Serial( port = defines.PUERTO_SERIE_COM,
-                        baudrate = 115200,
-                        parity = serial.PARITY_NONE,
-                        stopbits = serial.STOPBITS_ONE,
-                        bytesize = serial.EIGHTBITS,
+    # Abro el puerto serie
+    with serial.Serial( port = config_serial.PUERTO_SERIE_COM,
+                        baudrate = config_serial.SELECTED_BAUDRATE,
+                        parity = config_serial.SELECTED_PARITY,
+                        stopbits = config_serial.SELECTED_STOPBITS,
+                        bytesize = config_serial.SELECTED_BYTE_SIZE,
                         timeout = DISCONNECTION_TIME
                         ) as serial_port:
 
@@ -484,16 +493,16 @@ def SerialTester() -> None:
             # Si todo anda bien
             if not hubo_desconexion:
                 # Recibo hasta CHAR_FINISH_PDU, con DISCONNECTION_TIME segundos como límite
-                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
             # Si hubo desconexion
             else:
                 # Saco el timeout
                 serial_port.timeout = None
                 # Recibo hasta CHAR_FINISH_PDU, sin límite de tiempo
-                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
             
             # Si se recibió una trama completa
-            if len(trama) >= defines.BUFFER_SIZE_ONLY_DATA_MODE:
+            if len(trama) >= config_embedded.BUFFER_SIZE_ONLY_DATA_MODE:
             
                 # Obtengo un timestamp
                 curr_dt = datetime.now()
@@ -504,7 +513,7 @@ def SerialTester() -> None:
                 # ACK
                 if check == True:
                     # Respondo ACK
-                    serial_port.write(defines.ACK)
+                    serial_port.write(config_embedded.ACK)
 
                     # Si se recompuso la conexion
                     if hubo_desconexion:
@@ -536,7 +545,7 @@ def SerialTester() -> None:
                 # NAK
                 else:
                     # Respondo NAK
-                    serial_port.write(defines.NAK)
+                    serial_port.write(config_embedded.NAK)
 
                     # Cuento el NAK
                     contador_naks += 1
@@ -565,11 +574,12 @@ def SerialTester_ForceAnswer( forced_answer: bytes ) -> None:
     respondiendo siempre FORCED_ANS, pudiendo ser NAK, UNEX_ANS o incluso ACK. Así, se pueden probar las alarmas
     Además, sigue mostrando en pantalla los datos recibidos, y si hay desconexiones."""
 
-    with serial.Serial( port = defines.PUERTO_SERIE_COM,
-                        baudrate = 115200,
-                        parity = serial.PARITY_NONE,
-                        stopbits = serial.STOPBITS_ONE,
-                        bytesize = serial.EIGHTBITS,
+    # Abro el puerto serie
+    with serial.Serial( port = config_serial.PUERTO_SERIE_COM,
+                        baudrate = config_serial.SELECTED_BAUDRATE,
+                        parity = config_serial.SELECTED_PARITY,
+                        stopbits = config_serial.SELECTED_STOPBITS,
+                        bytesize = config_serial.SELECTED_BYTE_SIZE,
                         timeout = DISCONNECTION_TIME
                         ) as serial_port:
 
@@ -590,16 +600,16 @@ def SerialTester_ForceAnswer( forced_answer: bytes ) -> None:
             # Si todo anda bien
             if not hubo_desconexion:
                 # Recibo hasta CHAR_FINISH_PDU, con DISCONNECTION_TIME segundos como límite
-                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
             # Si hubo desconexion
             else:
                 # Saco el timeout
                 serial_port.timeout = None
                 # Recibo hasta CHAR_FINISH_PDU, sin límite de tiempo
-                trama += serial_port.read_until( defines.CHAR_FINISH_PDU )
+                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
             
             # Si se recibió una trama completa
-            if len(trama) >= defines.BUFFER_SIZE_ONLY_DATA_MODE:
+            if len(trama) >= config_embedded.BUFFER_SIZE_ONLY_DATA_MODE:
             
                 # Obtengo un timestamp
                 curr_dt = datetime.now()
@@ -675,8 +685,10 @@ if __name__ == "__main__":
     # SerialTester()
 
 
-    # Tester - Fuerza una respuesta NAK o UNEX_ANS según se pase por argumento
-    # SerialTester_ForceAnswer( defines.NAK )
-    # SerialTester_ForceAnswer( defines.UNEX_ANS )
+    # Tester - Fuerza una respuesta UNEX_ANS o NAK según se pase por argumento
+    # SerialTester_ForceAnswer( config_embedded.UNEX_ANS )
+    # SerialTester_ForceAnswer( config_embedded.NAK )
+
+
 
             

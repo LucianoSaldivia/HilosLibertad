@@ -53,7 +53,7 @@ def sessionStarted(conn, id_maq: int, timestamp: datetime):
 		timestamp como 'YYYY-DD-MM HH:MM:SS'
     """
 
-    print("sessionStarted")
+    print(f"Maq {id_maq}, sessionStarted")
     cursor = conn.cursor()
 
     formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
@@ -67,7 +67,7 @@ def sessionContinues(conn, id_maq: int, timestamp: datetime):
         id_maq
 		timestamp como 'YYYY-DD-MM HH:MM:SS'
     """
-    print("sessionContinues")
+    print(f"Maq {id_maq}, sessionContinues")
     cursor = conn.cursor()
 
     formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
@@ -81,7 +81,7 @@ def sessionFinished(conn, id_maq: int, timestamp: datetime):
         id_maq
 		timestamp como 'YYYY-DD-MM HH:MM:SS'
     """
-    print("sessionFinishes")
+    print(f"Maq {id_maq}, sessionFinishes")
     cursor = conn.cursor()
 
     formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
@@ -160,7 +160,7 @@ def _showSelectedRows(c: any):
             "LAST_DT" + "              " + 
             "TRND_OFF" + "  " + 
             "Mins_DIFF"
-        )
+            )
     for row in c:
         # Mostrar en crudo
         # print(f"row = {row}")
