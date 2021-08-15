@@ -1,6 +1,7 @@
 # SQL_Writer.py
 
 import pyodbc
+import config_SQL_Database
 from datetime import date, datetime, timedelta
 import Registrador
 
@@ -14,15 +15,6 @@ import Registrador
     # https://www.youtube.com/watch?v=aF552bMEcO4
 
 
-device_name = "LUCIANO-PC"
-db_name = "prueba3"
-table_name = "HL.registros"
-
-
-VIEW_NAME = "HL.v_registrador"
-PROC_SESSION_STARTED    = "HL.sp_insertarSesion"
-PROC_SESSION_CONTINUES  = "HL.sp_actualizarSesion"
-PROC_SESSION_FINISHED   = "HL.sp_terminarSesion"
 
 #   Select Functions
 def selectLast(conn: any, n: int):
@@ -31,7 +23,7 @@ def selectLast(conn: any, n: int):
     """
     print(f"Select last {n} from table")
     cursor = conn.cursor()
-    cursor.execute(f"SELECT TOP {n} * FROM {VIEW_NAME} ORDER BY LAST_DT DESC, idMaq ASC")
+    cursor.execute(f"SELECT TOP {n} * FROM {config_SQL_Database.VIEW_NAME} ORDER BY LAST_DT DESC, idMaq ASC")
     
     _showSelectedRows(cursor)
 def selectAll(conn: any):
@@ -40,7 +32,7 @@ def selectAll(conn: any):
     """
     print("Select complete table")
     cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM {VIEW_NAME} ORDER BY LAST_DT DESC, idMaq ASC")
+    cursor.execute(f"SELECT * FROM {config_SQL_Database.VIEW_NAME} ORDER BY LAST_DT DESC, idMaq ASC")
     _showSelectedRows(cursor)
 
 
@@ -58,7 +50,7 @@ def sessionStarted(conn, id_maq: int, timestamp: datetime):
 
     formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
     # Ejecuto el procedimiento
-    cursor.execute( f"EXEC {PROC_SESSION_STARTED} {id_maq}, '{formatted_timestamp}'" )
+    cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_STARTED} {id_maq}, '{formatted_timestamp}'" )
     conn.commit()
 def sessionContinues(conn, id_maq: int, timestamp: datetime):
     """Llamo al procedimiento PROC_SESSION_CONTINUES como en el siguiente ejemplo:
@@ -72,7 +64,7 @@ def sessionContinues(conn, id_maq: int, timestamp: datetime):
 
     formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
     # Ejecuto el procedimiento  
-    cursor.execute( f"EXEC {PROC_SESSION_CONTINUES} {id_maq}, '{formatted_timestamp}'" )
+    cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_CONTINUES} {id_maq}, '{formatted_timestamp}'" )
     conn.commit()
 def sessionFinished(conn, id_maq: int, timestamp: datetime):
     """Llamo al procedimiento PROC_SESSION_FINISHED como en el siguiente ejemplo:
@@ -86,7 +78,7 @@ def sessionFinished(conn, id_maq: int, timestamp: datetime):
 
     formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
     # Ejecuto el procedimiento
-    cursor.execute( f"EXEC {PROC_SESSION_FINISHED} {id_maq}, '{formatted_timestamp}'" )
+    cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_FINISHED} {id_maq}, '{formatted_timestamp}'" )
     conn.commit()
 
 
@@ -109,8 +101,8 @@ def connectToDatabase():
 
     ### FORMATEO LOS STRINGS
     driver_line = "Driver={" + driver_str + "};"
-    server_line = "Server=" + device_name + ";"
-    db_line = "Database=" + db_name + ";"
+    server_line = "Server=" + config_SQL_Database.device_name + ";"
+    db_line = "Database=" + config_SQL_Database.db_name + ";"
     trusted_conn_line = "Trusted_Connection=yes;"
     connection_str = driver_line + server_line + db_line + trusted_conn_line
 
@@ -121,36 +113,6 @@ def connectToDatabase():
         print("Hubo un problema en la conexión a la base de datos...")
 
 
-#   OLD Procedures Queries Functions
-    # def sessionStarts(conn, data: dict):
-    #     """Llamo al procedimiento PROC_SESSION_STARTED como en el siguiente ejemplo:
-    #     EXEC HL.sp_insertarSesion 1, '2018-30-09 16:00:00'
-    #     donde le paso:
-    #         ID_MAQ
-    # 		INIT_DT como 'YYYY-DD-MM HH:MM:SS'
-    #     """
-    #     print("sessionStarts")
-    #     cursor = conn.cursor()
-
-    #     init_dt_str = data[INIT_DT].strftime("%Y-%d-%m %H:%M:%S")
-    #     # Ejecuto el procedimiento
-    #     cursor.execute( f"EXEC {PROC_SESSION_STARTED} {data[ID_MAQ]}, '{init_dt_str}'" )
-    #     conn.commit()
-    # def sessionContinues(conn, data: dict):
-    #     """Llamo al procedimiento PROC_SESSION_CONTINUES como en el siguiente ejemplo:
-    #     EXEC HL.sp_actualizarSesion 1, '2018-30-09 16:05:00'
-    #     donde le paso:
-    #         ID_MAQ
-    # 		LAST_DT como 'YYYY-DD-MM HH:MM:SS'
-    #     """
-    #     print("sessionContinues")
-    #     cursor = conn.cursor()
-
-    #     last_dt_str = data[LAST_DT].strftime("%Y-%d-%m %H:%M:%S")
-    #     # Ejecuto el procedimiento  
-    #     cursor.execute( f"EXEC {PROC_SESSION_CONTINUES} {data[ID_MAQ]}, '{last_dt_str}'" )
-    #     conn.commit()
-    # def sessionFinishes(conn, data: dict):
 
 #   Private Functions
 def _showSelectedRows(c: any):
@@ -210,6 +172,8 @@ def _getDriverName() -> str:
     else:
         return '(No suitable driver found. Cannot connect.)'
 
+
+
 def test1(conn):
     """Prueba simple de inicio, continuación y terminación de sesión
     """
@@ -242,7 +206,7 @@ def test1(conn):
     selectLast(conn, 30)
     print()
 
-    clearTable(conn, table_name)
+    clearTable(conn, config_SQL_Database.table_name)
     print("Table cleared OK")
 
 def test2(conn):
@@ -600,10 +564,12 @@ if __name__ == "__main__":
 
         # selectAll(conn)
 
+        # selectAll(conn)
         # test5(conn)
         # selectAll(conn)
 
-        clearTable(conn, table_name)
+        selectAll(conn)
+        clearTable(conn, config_SQL_Database.table_name)
         selectAll(conn)
 
     print("Todo OK")
