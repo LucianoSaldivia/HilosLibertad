@@ -69,7 +69,7 @@ void FSM_DataSender( DataSender *sender, DS_UartInterruptionFlags *flags ){
 			break;
 
 		case DS_WAITING_ANSWER:
-			// Si hubo Timeout
+			// Si hubo Timeout y no hubo recepción
 			if( timerJustFinished( &(sender->timer) ) && !flags->RxComplete ){
 				// Apago el timer
 				stopTimer( &(sender->timer) );
@@ -85,8 +85,8 @@ void FSM_DataSender( DataSender *sender, DS_UartInterruptionFlags *flags ){
 					sender->data_loss_timeouts_ctr ++;
 					// Si llegué a la cantidad máxima de datos perdidos por Timeouts consecutivos
 					if( sender->data_loss_timeouts_ctr >= MAX_DATA_LOSS_TIMEOUT ){
-						// Disparo la alarma sino estaba funcionando
-						if( alarmIsOff( &(sender->alarma) ) ){
+						// Disparo la alarma si estaba apagada o si había otra (ahí la pisa)
+						if( alarmIsOff(&(sender->alarma)) || getAlarmType(&(sender->alarma)) != TIMEOUT_ALARM_TYPE ){
 							fireAlarm( &(sender->alarma), TIMEOUT_ALARM_TYPE );
 						}
 						// Dejo MAX_DATA_LOSS_TIMEOUT como techo del contador (satura en ese número)
@@ -142,10 +142,10 @@ void FSM_DataSender( DataSender *sender, DS_UartInterruptionFlags *flags ){
 							sender->data_loss_naks_ctr ++;
 							// Si llegué a la cantidad máxima de datos perdidos por NAKs consecutivos
 							if( sender->data_loss_naks_ctr >= MAX_DATA_LOSS_NAK ){
-								// Disparo la alarma sino estaba funcionando
-								if( alarmIsOff( &(sender->alarma) ) ){
-									fireAlarm( &(sender->alarma), NAK_ALARM_TYPE );
-								}
+							// Disparo la alarma si estaba apagada o si había otra (ahí la pisa)
+							if( alarmIsOff(&(sender->alarma)) || getAlarmType(&(sender->alarma)) != NAK_ALARM_TYPE ){
+								fireAlarm( &(sender->alarma), NAK_ALARM_TYPE );
+							}
 								// Dejo MAX_DATA_LOSS_NAK como techo del contador (satura en ese número)
 								sender->data_loss_naks_ctr = MAX_DATA_LOSS_NAK;
 							}
@@ -173,10 +173,10 @@ void FSM_DataSender( DataSender *sender, DS_UartInterruptionFlags *flags ){
 							sender->data_loss_unex_ans_ctr ++;
 							// Si llegué a la cantidad máxima de datos perdidos por Respuestas Inesperadas consecutivos
 							if( sender->data_loss_unex_ans_ctr >= MAX_DATA_LOSS_UNEX_ANS ){
-								// Disparo la alarma sino estaba funcionando
-								if( alarmIsOff( &(sender->alarma) ) ){
-									fireAlarm( &(sender->alarma), UNEX_ANS_ALARM_TYPE );
-								}
+							// Disparo la alarma si estaba apagada o si había otra (ahí la pisa)
+							if( alarmIsOff(&(sender->alarma)) || getAlarmType(&(sender->alarma)) != UNEX_ANS_ALARM_TYPE ){
+								fireAlarm( &(sender->alarma), UNEX_ANS_ALARM_TYPE );
+							}
 								// Dejo MAX_DATA_LOSS_UNEX_ANS como techo del contador (satura en ese número)
 								sender->data_loss_unex_ans_ctr = MAX_DATA_LOSS_UNEX_ANS;
 							}

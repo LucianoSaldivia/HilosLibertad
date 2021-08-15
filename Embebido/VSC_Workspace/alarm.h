@@ -107,6 +107,7 @@
     // Chequear estado de la alarma
     uint8_t alarmIsOn( Alarm *alarma );
     uint8_t alarmIsOff( Alarm *alarma );
+    AlarmType getAlarmType( Alarm *alarma );
 
     // Encender el Beeper
     void __turnOnBeeper( void );

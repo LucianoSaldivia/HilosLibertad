@@ -150,6 +150,10 @@ uint8_t alarmIsOn( Alarm *alarma ){
 uint8_t alarmIsOff( Alarm *alarma ){
 	return (alarma->seq == NULL) ? 1 : 0;
 }
+AlarmType getAlarmType( Alarm *alarma ){
+    return alarma->type;
+}
+
 
 // Encender el Beeper
 void __turnOnBeeper( void ){

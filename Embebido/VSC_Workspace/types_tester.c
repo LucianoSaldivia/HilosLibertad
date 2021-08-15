@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "types.h"
 
-// Assumes little endian
+// Asume little endian
 void printBits( void const * const ptr, size_t const size ){
     unsigned char *b = (unsigned char*) ptr;
     unsigned char byte;
