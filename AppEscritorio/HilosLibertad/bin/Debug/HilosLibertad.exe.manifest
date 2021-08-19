@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HilosLibertad.exe" size="61368">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="HilosLibertad.exe" size="80824">
       <assemblyIdentity name="HilosLibertad" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>cK9ann3cUeS29tsov8KLpK+6Ge+tMK48YHrbX872fFM=</dsig:DigestValue>
+        <dsig:DigestValue>YQRbVtsX+qEUlEbmZu00lzxWi8QQ74kgLkrpNSa/xOs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

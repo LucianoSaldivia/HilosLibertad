@@ -135,5 +135,14 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logoEmpresaNUEVO.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logoNUEVO_edit4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logoNUEVO_edit5.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
