@@ -1,10 +1,19 @@
 # config_serial.py
 
 import serial
+import serial.tools.list_ports
+
+# CH340 Port finder
+def get_CH340_Port() -> serial.tools.list_ports_common.ListPortInfo:
+    ports = serial.tools.list_ports.comports(include_links=False)
+    for port in ports:
+        if str(port.description).find("USB-Serial CH340"):
+            print( "USB-Serial CH340 encontrado en el puerto " + str(port.name) )
+            return port
 
 # Puerto COM
-PUERTO_SERIE_COM = "COM3"
-
+PUERTO_SERIE_COM = str(get_CH340_Port().name)
+#PUERTO_SERIE_COM = "COM6"
 
 
 # Configuración
