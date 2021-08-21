@@ -310,7 +310,7 @@ SELECT * FROM HL.registros
 		EXEC HL.sp_terminarSesion 9, '2021-02-09 13:00' --'YY-DD-MM HH:MM:SS'
 	--19
 		EXEC HL.sp_insertarSesion 9, '2021-02-09 18:00' --'YY-DD-MM HH:MM:SS' 
-		EXEC HL.sp_terminarSesion 9, '2021-02-09 21:30' --'YY-DD-MM HH:MM:SS'
+		EXEC HL.sp_terminarSesion 9, '2021-02-09 21:00' --'YY-DD-MM HH:MM:SS'
 	--20
 		EXEC HL.sp_insertarSesion 9, '2021-03-09 00:15' --'YY-DD-MM HH:MM:SS' 
 		EXEC HL.sp_terminarSesion 9, '2021-03-09 01:15' --'YY-DD-MM HH:MM:SS'
