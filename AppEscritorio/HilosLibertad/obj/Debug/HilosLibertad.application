@@ -7,14 +7,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="HilosLibertad.exe.manifest" size="4695">
+    <dependentAssembly dependencyType="install" codebase="HilosLibertad.exe.manifest" size="4696">
       <assemblyIdentity name="HilosLibertad.exe" version="1.0.0.2" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>osVP5qm0/unEsxfzH2VcwSsiZSX2ke5eVBQQ3dJ+aZY=</dsig:DigestValue>
+        <dsig:DigestValue>tjj8aMLxNSjUs1z7Et5LWoYVuqbHbwmj/OhH7KKGruQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
