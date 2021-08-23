@@ -99,7 +99,7 @@ namespace HilosLibertad
             this.dtp_FechaInicial.Name = "dtp_FechaInicial";
             this.dtp_FechaInicial.Size = new System.Drawing.Size(265, 22);
             this.dtp_FechaInicial.TabIndex = 1;
-            this.dtp_FechaInicial.ValueChanged += new System.EventHandler(this.dtp_FechaInicial_ValueChanged);
+            //this.dtp_FechaInicial.ValueChanged += new System.EventHandler(this.dtp_FechaInicial_ValueChanged);
             // 
             // grp_Telares
             // 
@@ -525,7 +525,7 @@ namespace HilosLibertad
             this.dtp_FechaFinal.Name = "dtp_FechaFinal";
             this.dtp_FechaFinal.Size = new System.Drawing.Size(265, 22);
             this.dtp_FechaFinal.TabIndex = 2;
-            this.dtp_FechaFinal.ValueChanged += new System.EventHandler(this.dtp_FechaFinal_ValueChanged);
+            //this.dtp_FechaFinal.ValueChanged += new System.EventHandler(this.dtp_FechaFinal_ValueChanged);
             // 
             // cmb_MinutoFinal
             // 
