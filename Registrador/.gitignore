@@ -5,6 +5,7 @@
 # Excepto los tipos
 !*.gitignore
 !*.py
+!*.bat
 !*.code-workspace
 
 # Incluso si están en un subdirectorio (afecta a los anteriores tipos)
