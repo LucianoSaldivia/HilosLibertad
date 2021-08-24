@@ -5,6 +5,7 @@ using System.Data.SqlClient;    // Necesario para el SqlDataAdapter
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace HilosLibertad
 {
@@ -192,6 +193,44 @@ namespace HilosLibertad
             DataTable dt_c3_casoNintervalos = new DataTable();
             da_c3_casoNintervalos.Fill(dt_c3_casoNintervalos);
             return (dt_c3_casoNintervalos);
+        }
+
+
+        // Llena el DataGridView con los Sectores (solamente el nombre)
+        public DataTable llenarDataGridView_Sectores() {
+            string consulta = "SELECT s.nombreSectorUSUARIO AS 'SECTOR' " +
+                              "FROM HL.sectores s " +
+                              "ORDER BY s.idSector";
+            SqlDataAdapter da = new SqlDataAdapter(consulta, cn.LeerCadena());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
+
+        // Llena el ComboBox de los Sectores para su selección y posterior modificación
+        public DataTable llenarComboBox_Sectores()
+        {
+            string consulta = "SELECT s.idSector, s.nombreSectorUSUARIO FROM HL.sectores s ORDER BY s.idSector";
+            SqlDataAdapter da = new SqlDataAdapter(consulta, cn.LeerCadena());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
+
+
+        public void llenarTextBox_Sectores(ComboBox cmb, TextBox txt_id, TextBox txt_nombre)
+        {
+            string consulta = "SELECT idSector, nombreSectorUSUARIO FROM HL.sectores WHERE nombreSectorUSUARIO = '" + cmb.SelectedItem.ToString() + "'";
+            SqlDataAdapter da = new SqlDataAdapter(consulta, cn.LeerCadena());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                txt_id.Text = dr["idSector"].ToString();
+                txt_nombre.Text = dr["nombreSectorUSUARIO"].ToString();
+            }
+
         }
 
     }
