@@ -383,8 +383,10 @@ def Registrador() -> None:
                         # Pongo el timeout nuevamente
                         serial_port.timeout = DISCONNECTION_TIME
 
-                    # Aviso que llegó algo
+                    # Aviso que se recibió la trama
                     print( "Trama recibida" )
+                    # Muestro la trama recibida
+                    showReceivedPDU( trama )
 
                     # Genero el Sample a partir de la trama recibida
                     curr_sample = getSamplesFromFrame(trama, datetime.now())
@@ -426,7 +428,7 @@ def Registrador() -> None:
                     # Respondo NAK
                     serial_port.write(config_embedded.NAK)
 
-                    # Muestro la trama
+                    # Muestro la trama recibida
                     showReceivedPDU(trama)
 
                     # Limpio la trama para recibir una nueva
@@ -678,11 +680,11 @@ def SerialTester_ForceAnswer( forced_answer: bytes ) -> None:
 if __name__ == "__main__":
 
     # Registrador - Funcionamiento normal
-    # Registrador()
+    Registrador()
     
     
     # Tester - Imprime en pantalla todo lo que recibe, y responde ACK o NAK según corresponda
-    SerialTester()
+    # SerialTester()
 
 
     # Tester - Fuerza una respuesta UNEX_ANS, NAK, o TIMEOUT según se pase por argumento
