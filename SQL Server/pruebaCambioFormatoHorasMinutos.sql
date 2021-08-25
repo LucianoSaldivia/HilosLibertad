@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 SELECT s.nombreSectorUSUARIO
 FROM HL.sectores s
 

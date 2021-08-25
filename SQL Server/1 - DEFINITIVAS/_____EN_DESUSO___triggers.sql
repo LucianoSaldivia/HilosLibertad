@@ -1,20 +1,9 @@
--- CONFIGURACIONES INICIALES
-		--Se usa la base de datos de nombre "pruebaDB"
-		--USE DB_HilosLibertad
-		USE prueba3
-		GO
-		--Se crea el esquema
-		CREATE SCHEMA HL
-		GO
-		--Se establece el formato de fecha (para que sea YYYY-MM-DD HH:MM:SS)
-		SET DATEFORMAT YMD
-		GO
-
-
-
--- TRIGGERs
-		
-		/* AL NO ESTAR EL CAMPO cantidadMinutosEncendida EN LA TABLA registros, DEJA DE SER ÚTIL
+-- TRIGGER
+-- En su momento, la tabla registros tenía un campo "cantidadMinutosEncendida".
+-- Al actualizarse cualquier fecha de un registro, se disparaba el trigger que actualizaba la cantidad de minutos encendida de ese registro.
+-- Como el cálculo entre fechas y franjas horarias no iba a ser siempre una resta entre los campos "fechaHoraUltimoRegistroEncendida" y "fechaHoraEncendida", se descartó el campo "cantidadMinutosEncendida".
+-- Descartado el campo "cantidadMinutosEncendida", el trigger tampoco tendría razón de ser.
+-- Por eso, el trigger se descartó completamente.
 
 		--TRIGGER actualizarCantidadMinutosEncendida
 		--Al actualizarse la TABLA registros, se actualiza (automáticamente) la cantidad de minutos que estuvo la máquina encendida.
@@ -50,7 +39,4 @@
 		END
 		--Para eliminar el TRIGGER: DROP TRIGGER HL.t_actualizarCantidadMinutosEncendida
 
-		*/
 		
-
-

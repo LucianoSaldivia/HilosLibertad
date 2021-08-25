@@ -35,7 +35,7 @@ namespace HilosLibertad
 
         private void cmb_Sector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SqlDataReader
+            //SqlDataReader
             
             
             
