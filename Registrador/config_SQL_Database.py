@@ -1,4 +1,4 @@
-# config_serial.py
+# config_SQL_Database.py
 
 device_name = "LUCIANO-PC"
 db_name = "prueba3"
