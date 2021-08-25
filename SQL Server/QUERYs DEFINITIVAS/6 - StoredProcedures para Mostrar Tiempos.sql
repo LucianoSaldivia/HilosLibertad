@@ -16,7 +16,7 @@ EXEC HL.sp_1
 CREATE OR ALTER PROCEDURE HL.sp_mostrarTiemposPorMaquina_1intervalo
 	@STR_FyH_INI DATETIME,			-- string de FECHAyHORARIO inicial en formato 'YYYY-DD-MM HH:MM:00'
 	@STR_FyH_FIN DATETIME,			-- string de FECHAyHORARIO final en formato 'YYYY-DD-MM HH:MM:00'
-	@STR_LISTAidMaq NVARCHAR		-- string con la lista de idMaq - ejemplo: '0, 1, 2, 3'
+	@STR_LISTAidMaq VARCHAR(MAX)	-- string con la lista de idMaq - ejemplo: '0, 1, 2, 3'
 AS BEGIN
 	SELECT f0.MAQ_ID, 
 		   f0.MAQ_NUM, 
@@ -33,16 +33,23 @@ AS BEGIN
 				 r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' 
 		  FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) 
 							 FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) 
-		  --WHERE (m.idMaquina IN (STRING_LISTA_idMaquina))	--ACÁ ESTÁ EL PROBLEMA PARA LOS STORED PROCEDURES
-		  WHERE CAST(NVARCHAR, m.idMaquina) IN @STR_LISTAidMaq
+		  --WHERE (m.idMaquina IN (@STR_LISTAidMaq))	--ACÁ ESTÁ EL PROBLEMA PARA LOS STORED PROCEDURES
+		  --WHERE CAST(m.idMaquina AS VARCHAR(100))) IN (@STR_LISTAidMaq)
+		  --WHERE m.idMaquina LIKE @STR_LISTAidMaq
+		  --WHERE @STR_LISTAidMaq LIKE m.idMaquina
+		  --WHERE @STR_LISTAidMaq LIKE CONCAT('%m', m.idMaquina, 'q%') --EXEC HL.sp_mostrarTiemposPorMaquina_1intervalo '2021-29-08 00:00:00', '2021-04-09 00:00:00', 'm12q,   m13q'
+		  WHERE @STR_LISTAidMaq LIKE CONCAT('% ', m.idMaquina, ',%')
 		  ) AS f0
 	GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC
-	HAVING SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, @STR_FyH_INI, @STR_FyH_FIN)) > 0
 	ORDER BY f0.MAQ_SEC, f0.MAQ_NUM
 END
 GO
 
-EXEC HL.sp_mostrarTiemposPorMaquina_1intervalo '2021-29-08 00:00:00', '2021-04-09 00:00:00'
+EXEC HL.sp_mostrarTiemposPorMaquina_1intervalo '2021-29-08 00:00:00', '2021-04-09 00:00:00', ' 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 0' --Agregar un espacio " " en el string (generado en la App) y pasarlo por parámetro así, que así anda
+EXEC HL.sp_mostrarTiemposPorMaquina_1intervalo '2021-29-08 00:00:00', '2021-04-09 00:00:00', 'm12q,   m13q, 0'
+EXEC HL.sp_mostrarTiemposPorMaquina_1intervalo '2021-29-08 00:00:00', '2021-04-09 00:00:00', '12, 13, 0'
+
+SELECT LEN('1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 0')
 
 
 select *
@@ -52,11 +59,23 @@ from (EXEC HL.sp_mostrarTiemposPorMaquina_1intervalo '2021-29-08 00:00:00', '202
 
 --Intento de solución del WHERE con el r.idMaquina ---> CAST(NVARCHAR, r.idMaquina)
 SELECT 45 + 11
+SELECT CAST(45 AS NVARCHAR(50))
 
-SELECT CAST(NVARCHAR, 45) + 11
+SELECT CAST(45 AS NVARCHAR) + 11
 
+IF (1 LIKE '1, 12') BEGIN 
+	SELECT 'SÍ'
+END
+ELSE BEGIN 
+	SELECT 'NO'
+END
 
-
+IF (CONVERT(NVARCHAR(100), 1) LIKE '1, 12') BEGIN 
+	SELECT 1
+END
+ELSE BEGIN 
+	SELECT 0 
+END
 
 
 
