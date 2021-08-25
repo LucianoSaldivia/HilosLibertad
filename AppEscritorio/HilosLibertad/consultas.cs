@@ -25,30 +25,26 @@ namespace HilosLibertad
         // 
         public DataTable casoUnicoIntervalo_mostrarCantidadDeHorasPorMaquina(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
         {
+
             string c1_casoUnicoIntervalo = "SELECT f0.MAQ_ID, " +
                                                   "f0.MAQ_NUM, " +
                                                   "f0.MAQ_NOM, " +
                                                   "f0.MAQ_SEC, " +
-                                                  "SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) AS 'MINS_ON', " +
-                                                  "SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) / 60.0 AS 'HRS_ON' " +
-                                           "FROM " +
-                                                "(" +
-                                                 "SELECT r.idMaquina AS 'MAQ_ID', " +
+                                                  "SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) AS 'MINS_ON', " +
+                                                  "SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) / 60.0 AS 'HRS_ON' " +
+                                           "FROM ( " +
+                                                 "SELECT m.idMaquina AS 'MAQ_ID', " +
                                                         "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
                                                         "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
                                                         "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
                                                         "r.fechaHoraEncendida AS 'FH_ENC', " +
                                                         "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                                 "FROM HL.sectores s " +
-                                                 "JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                                 "JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                                 "WHERE (r.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
-                                               ") " +
-                                                 "AS f0 " +
-                                           "GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC " +
-                                           "HAVING SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) > 0 " +
-                                           "ORDER BY f0.MAQ_SEC, f0.MAQ_NUM";
-
+                                                 "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
+                                                                    "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
+                                                 "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + ")) " +
+                                                ") AS f0 " +
+                                           "GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC";
+            
             SqlDataAdapter da_c1_casoUnicoIntervalo = new SqlDataAdapter(c1_casoUnicoIntervalo, cn.LeerCadena());
             DataTable dt_c1_casoUnicoIntervalo = new DataTable();
             da_c1_casoUnicoIntervalo.Fill(dt_c1_casoUnicoIntervalo);
@@ -59,25 +55,22 @@ namespace HilosLibertad
         public DataTable casoUnicoIntervalo_mostrarCantidadDeHorasPorSector(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
         {
             string c2_casoUnicoIntervalo = "SELECT f0.MAQ_SEC, " +
-                                                  "SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) AS 'MINS_ON', " +
-                                                  "SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) / 60.0 AS 'HRS_ON' " +
+                                                  "SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) AS 'MINS_ON', " +
+                                                  "SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) / 60.0 AS 'HRS_ON' " +
                                            "FROM " +
                                                 "(" +
-                                                 "SELECT r.idMaquina AS 'MAQ_ID', " +
+                                                 "SELECT m.idMaquina AS 'MAQ_ID', " +
                                                         "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
                                                         "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
                                                         "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
                                                         "r.fechaHoraEncendida AS 'FH_ENC', " +
                                                         "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                                 "FROM HL.sectores s " +
-                                                 "JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                                 "JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                                 "WHERE (r.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
+                                                 "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
+                                                                    "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
+                                                 "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
                                                 ") " +
                                                   "AS f0 " +
-                                           "GROUP BY f0.MAQ_SEC " +
-                                           "HAVING SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) > 0" +
-                                           "ORDER BY f0.MAQ_SEC";
+                                           "GROUP BY f0.MAQ_SEC ";
 
             SqlDataAdapter da_c2_casoUnicoIntervalo = new SqlDataAdapter(c2_casoUnicoIntervalo, cn.LeerCadena());
             DataTable dt_c2_casoUnicoIntervalo = new DataTable();
@@ -88,20 +81,19 @@ namespace HilosLibertad
         // 
         public DataTable casoUnicoIntervalo_mostrarCantidadDeHorasDeTodasLasMaquinas(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
         {
-            string c3_casoUnicoIntervalo = "SELECT SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) AS 'MINS_ON', " +
-                                                  "SUM(HL.f_getMinsON_formatoFecha(f0.FH_ENC, f0.FH_URE, " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) / 60.0 AS 'HRS_ON' " +
+            string c3_casoUnicoIntervalo = "SELECT SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) AS 'MINS_ON', " +
+                                                  "SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) / 60.0 AS 'HRS_ON' " +
                                            "FROM " +
                                                 "(" +
-                                                 "SELECT r.idMaquina AS 'MAQ_ID', " +
+                                                 "SELECT m.idMaquina AS 'MAQ_ID', " +
                                                         "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
                                                         "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
                                                         "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
                                                         "r.fechaHoraEncendida AS 'FH_ENC', " +
                                                         "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                                 "FROM HL.sectores s " +
-                                                 "JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                                 "JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                                 "WHERE (r.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
+                                                 "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
+                                                                    "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
+                                                 "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
                                                 ") " +
                                                   "AS f0 ";
 
@@ -119,22 +111,20 @@ namespace HilosLibertad
                                                "f0.MAQ_NUM, " +
                                                "f0.MAQ_NOM, " +
                                                "f0.MAQ_SEC, " +
-                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", f0.FH_ENC, f0.FH_URE)) AS 'MINS_ON', " +
-                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", f0.FH_ENC, f0.FH_URE)) / 60.0 AS 'HRS_ON' " +
+                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) AS 'MINS_ON', " +
+                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) / 60.0 AS 'HRS_ON' " +
                                         "FROM (" +
-                                              "SELECT r.idMaquina AS 'MAQ_ID', " +
+                                              "SELECT m.idMaquina AS 'MAQ_ID', " +
                                                      "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
                                                      "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
                                                      "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
                                                      "r.fechaHoraEncendida AS 'FH_ENC', " +
                                                      "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                              "FROM HL.sectores s " +
-                                              "JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                              "JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                              "WHERE (r.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
+                                              "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
+                                                                 "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
+                                              "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
                                               ") AS f0 " +
                                         "GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC " +
-                                        "HAVING SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", f0.FH_ENC, f0.FH_URE)) > 0 " +
                                         "ORDER BY f0.MAQ_SEC, f0.MAQ_NUM";
 
             SqlDataAdapter da_c1_casoNintervalos = new SqlDataAdapter(c1_casoNintervalos, cn.LeerCadena());
@@ -147,22 +137,20 @@ namespace HilosLibertad
         public DataTable casoNintervalos_mostrarCantidadDeHorasPorSector(string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_LISTA_idMaquina)
         {
             string c2_casoNintervalos = "SELECT f0.MAQ_SEC, " +
-                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", f0.FH_ENC, f0.FH_URE)) AS 'MINS_ON', " +
-                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", f0.FH_ENC, f0.FH_URE)) / 60.0 AS 'HRS_ON' " +
+                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) AS 'MINS_ON', " +
+                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) / 60.0 AS 'HRS_ON' " +
                                         "FROM (" +
-                                              "SELECT r.idMaquina AS 'MAQ_ID', " +
+                                              "SELECT m.idMaquina AS 'MAQ_ID', " +
                                                      "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
                                                      "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
                                                      "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
                                                      "r.fechaHoraEncendida AS 'FH_ENC', " +
                                                      "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                              "FROM HL.sectores s " +
-                                              "JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                              "JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                              "WHERE (r.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
+                                              "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
+                                                                 "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
+                                              "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
                                               ") AS f0 " +
                                         "GROUP BY f0.MAQ_SEC " +
-                                        "HAVING SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", f0.FH_ENC, f0.FH_URE)) > 0 " +
                                         "ORDER BY f0.MAQ_SEC";
 
             SqlDataAdapter da_c2_casoNintervalos = new SqlDataAdapter(c2_casoNintervalos, cn.LeerCadena());
@@ -174,19 +162,18 @@ namespace HilosLibertad
         // 
         public DataTable casoNintervalos_mostrarCantidadDeHorasDeTodasLasMaquinas(string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_LISTA_idMaquina)
         {
-            string c3_casoNintervalos = "SELECT SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", f0.FH_ENC, f0.FH_URE)) AS 'MINS_ON', " +
-                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", f0.FH_ENC, f0.FH_URE)) / 60.0 AS 'HRS_ON' " +
+            string c3_casoNintervalos = "SELECT SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) AS 'MINS_ON', " +
+                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) / 60.0 AS 'HRS_ON' " +
                                         "FROM (" +
-                                              "SELECT r.idMaquina AS 'MAQ_ID', " +
+                                              "SELECT m.idMaquina AS 'MAQ_ID', " +
                                                      "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
                                                      "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
                                                      "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
                                                      "r.fechaHoraEncendida AS 'FH_ENC', " +
                                                      "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                              "FROM HL.sectores s " +
-                                              "JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                              "JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                              "WHERE (r.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
+                                              "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
+                                                                 "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
+                                              "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
                                               ") AS f0";
 
             SqlDataAdapter da_c3_casoNintervalos = new SqlDataAdapter(c3_casoNintervalos, cn.LeerCadena());
