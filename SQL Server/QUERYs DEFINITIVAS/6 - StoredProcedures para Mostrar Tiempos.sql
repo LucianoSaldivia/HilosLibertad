@@ -16,14 +16,22 @@ EXEC HL.sp_1
 		CREATE OR ALTER PROCEDURE HL.sp_mostrarTiemposPorMaquina_1intervalo
 			@STR_FyH_INI DATETIME,			-- string de FECHAyHORARIO inicial en formato 'YYYY-DD-MM HH:MM:00'
 			@STR_FyH_FIN DATETIME,			-- string de FECHAyHORARIO final en formato 'YYYY-DD-MM HH:MM:00'
-			@STR_LISTAidMaq VARCHAR(MAX)	-- string con la lista de idMaq - ejemplo: ' 1, 2, 3, 0'
+			@STR_LISTAidMaq VARCHAR(MAX)		-- string con la lista de idMaq - ejemplo: ' 1, 2, 3, 0'
 		AS BEGIN
-			SELECT f0.MAQ_ID, 
-				   f0.MAQ_NUM, 
+			SELECT f0.MAQ_NUM, 
 				   f0.MAQ_NOM, 
 				   f0.MAQ_SEC, 
-				   SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), @STR_FyH_INI, @STR_FyH_FIN)) AS 'MINS_ON', 
-				   SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), @STR_FyH_INI, @STR_FyH_FIN)) / 60.0 AS 'HRS_ON'
+				   CONCAT(SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), @STR_FyH_INI, @STR_FyH_FIN)) / 60,	-- horas (COCIENTE)
+						  ' h  ',
+						  SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), @STR_FyH_INI, @STR_FyH_FIN)) % 60,	-- minutos (RESTO)
+						  ' min') AS 'TIME_ON',
+				   CONCAT(HL.f_getMinsBetween_formatoFecha_1intervalo(@STR_FyH_INI, @STR_FyH_FIN) / 60, 
+						  ' h  ',
+						  HL.f_getMinsBetween_formatoFecha_1intervalo(@STR_FyH_INI, @STR_FyH_FIN) % 60, 
+						  ' min') AS 'TIME_TOTAL'
+
+				   --SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), @STR_FyH_INI, @STR_FyH_FIN)) AS 'MINS_ON', 
+				   --SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), @STR_FyH_INI, @STR_FyH_FIN)) / 60.0 AS 'HRS_ON'
 			FROM (
 				  SELECT m.idMaquina AS 'MAQ_ID',
 						 m.numeroMaquinaUSUARIO AS 'MAQ_NUM',
@@ -37,7 +45,7 @@ EXEC HL.sp_1
 				  WHERE @STR_LISTAidMaq LIKE CONCAT('% ', m.idMaquina, ',%')
 				  ) AS f0
 			GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC
-			ORDER BY f0.MAQ_SEC, f0.MAQ_NUM
+			ORDER BY f0.MAQ_NUM
 		END
 		GO
 
@@ -120,12 +128,19 @@ EXEC HL.sp_1
 			@STR_H_FIN TIME,			-- string de HORARIO final en formato 'HH:MM:00'
 			@STR_LISTAidMaq VARCHAR(MAX)	-- string con la lista de idMaq - ejemplo: ' 1, 2, 3, 0'
 		AS BEGIN
-			SELECT f0.MAQ_ID, 
-				   f0.MAQ_NUM, 
+			SELECT f0.MAQ_NUM, 
 				   f0.MAQ_NOM, 
 				   f0.MAQ_SEC, 
-				   SUM(HL.f_getMinsON_formatoFecha_Nintervalos(@STR_F_INI, @STR_F_FIN, @STR_H_INI, @STR_H_FIN, COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) AS 'MINS_ON', 
-				   SUM(HL.f_getMinsON_formatoFecha_Nintervalos(@STR_F_INI, @STR_F_FIN, @STR_H_INI, @STR_H_FIN, COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) / 60.0 AS 'HRS_ON'
+				   CONCAT(SUM(HL.f_getMinsON_formatoFecha_Nintervalos(@STR_F_INI, @STR_F_FIN, @STR_H_INI, @STR_H_FIN, COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) / 60,	-- horas (COCIENTE)
+						  ' h  ',
+						  SUM(HL.f_getMinsON_formatoFecha_Nintervalos(@STR_F_INI, @STR_F_FIN, @STR_H_INI, @STR_H_FIN, COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) % 60,	-- minutos (RESTO)
+						  ' min') AS 'TIME_ON',
+				   CONCAT(HL.f_getMinsBetween_formatoFecha_Nintervalos(@STR_F_INI, @STR_F_FIN, @STR_H_INI, @STR_H_FIN) / 60, 
+						  ' h  ',
+						  HL.f_getMinsBetween_formatoFecha_Nintervalos(@STR_F_INI, @STR_F_FIN, @STR_H_INI, @STR_H_FIN) % 60, 
+						  ' min') AS 'TIME_TOTAL'
+				   --SUM(HL.f_getMinsON_formatoFecha_Nintervalos(@STR_F_INI, @STR_F_FIN, @STR_H_INI, @STR_H_FIN, COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) AS 'MINS_ON', 
+				   --SUM(HL.f_getMinsON_formatoFecha_Nintervalos(@STR_F_INI, @STR_F_FIN, @STR_H_INI, @STR_H_FIN, COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) / 60.0 AS 'HRS_ON'
 			FROM (
 				  SELECT m.idMaquina AS 'MAQ_ID',
 						 m.numeroMaquinaUSUARIO AS 'MAQ_NUM',
@@ -139,7 +154,7 @@ EXEC HL.sp_1
 				  WHERE @STR_LISTAidMaq LIKE CONCAT('% ', m.idMaquina, ',%')
 				  ) AS f0
 			GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC
-			ORDER BY f0.MAQ_SEC, f0.MAQ_NUM
+			ORDER BY f0.MAQ_NUM
 		END
 		GO
 		/* Ejemplos de uso:
