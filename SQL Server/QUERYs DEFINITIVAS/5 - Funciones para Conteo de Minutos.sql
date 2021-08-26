@@ -73,3 +73,55 @@
 
 
 			
+		--FUNCIÓN HL.f_getMinsBetween_formatoFecha_1intervalo
+		--Retorna la cantidad de minutos entre una FECHAyHORARIO y otra FECHAyHORARIO (un único intervalo horario) 
+		CREATE OR ALTER FUNCTION HL.f_getMinsBetween_formatoFecha_1intervalo
+			(@FH_S_ini SMALLDATETIME,		-- DATETIME inicial seleccionado por el usuario en la aplicación, en formato 'YYYY-DD-MM HH:MM:00'
+			 @FH_S_fin SMALLDATETIME)		-- DATETIME final seleccionado por el usuario en la aplicación, en formato 'YYYY-DD-MM HH:MM:00'
+		RETURNS INT
+		AS BEGIN
+			DECLARE @retorno INT			
+			SET @retorno = DATEDIFF(MINUTE, @FH_S_ini, @FH_S_fin)		--El DATEDIFF cambia las fechas de formato automáticamente
+			RETURN @retorno
+		END
+		GO
+		
+					/* EL TEMA DE LOS FORMATOS:
+					SELECT DATEDIFF(MINUTE, '2021-08-28 21:00:00', '2021-08-29 06:00:00')								-- anda: formato correcto para DATEDIFF
+					SELECT DATEDIFF(MINUTE, '2021-28-08 21:00:00', '2021-29-08 06:00:00')
+		
+					SELECT HL.f_getMinsBetween_formatoFecha_1intervalo ('2021-08-28 21:00:00', '2021-08-29 06:00:00')
+					SELECT HL.f_getMinsBetween_formatoFecha_1intervalo ('2021-28-08 21:00:00', '2021-29-08 06:00:00')	-- anda: formato correcto para la función
+					*/
+														   
+		--FUNCIÓN HL.f_getMinsBetween_formatoFecha_Nintervalos
+		--Retorna la cantidad de minutos entre una FECHA y otra FECHA, dentro de las franjas horarias correspondientes (un único intervalo horario) 
+		CREATE OR ALTER FUNCTION HL.f_getMinsBetween_formatoFecha_Nintervalos
+			(@F_S_ini DATE,					-- DATE inicial seleccionado por el usuario en la aplicación 
+			 @F_S_fin DATE,					-- DATE final seleccionado por el usuario en la aplicación
+			 @H_S_ini TIME,					-- TIME inicial seleccionado por el usuario en la aplicación
+			 @H_S_fin TIME)					-- TIME final seleccionado por el usuario en la aplicación
+		RETURNS INT
+		AS BEGIN
+			DECLARE @mins_por_intervalo INT
+			DECLARE @cant_intervalos INT
+			DECLARE @minutos_totales INT
+			IF (@H_S_fin < @H_S_ini) BEGIN		-- Incluye/Toca medianoche
+				SET @mins_por_intervalo = (60 * 24) - ABS(DATEDIFF(MINUTE, '06:00:00', '21:00:00'))
+				SET @cant_intervalos = DATEDIFF(DAY, @F_S_ini, @F_S_fin)
+			END
+			ELSE BEGIN							-- Día parcial = no incluye medianoche
+				SET @mins_por_intervalo = DATEDIFF(MINUTE, @H_S_ini, @H_S_fin)
+				SET @cant_intervalos = DATEDIFF(DAY, @F_S_ini, @F_S_fin) + 1
+			END
+			SET @minutos_totales = @mins_por_intervalo * @cant_intervalos
+			RETURN @minutos_totales
+		END
+		GO
+
+
+		SELECT HL.f_getMinsBetween_formatoFecha_Nintervalos ('2021-08-29', '2021-09-03', '06:00:00', '15:00:00')
+		SELECT HL.f_getMinsBetween_formatoFecha_Nintervalos ('2021-08-29', '2021-09-03', '12:00:00', '21:00:00')
+		SELECT HL.f_getMinsBetween_formatoFecha_Nintervalos ('2021-08-28', '2021-09-04', '21:00:00', '06:00:00') --
+		SELECT HL.f_getMinsBetween_formatoFecha_Nintervalos ('2021-08-28', '2021-08-29', '21:00:00', '06:00:00')
+
