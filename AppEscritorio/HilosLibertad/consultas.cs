@@ -22,165 +22,93 @@ namespace HilosLibertad
             return dt;
         }
 
-        // 
-        public DataTable casoUnicoIntervalo_mostrarCantidadDeHorasPorMaquina(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
-        {
 
-            string c1_casoUnicoIntervalo = "SELECT f0.MAQ_ID, " +
-                                                  "f0.MAQ_NUM, " +
-                                                  "f0.MAQ_NOM, " +
-                                                  "f0.MAQ_SEC, " +
-                                                  "SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) AS 'MINS_ON', " +
-                                                  "SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) / 60.0 AS 'HRS_ON' " +
-                                           "FROM ( " +
-                                                 "SELECT m.idMaquina AS 'MAQ_ID', " +
-                                                        "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
-                                                        "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
-                                                        "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
-                                                        "r.fechaHoraEncendida AS 'FH_ENC', " +
-                                                        "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                                 "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                                                    "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                                 "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + ")) " +
-                                                ") AS f0 " +
-                                           "GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC";
-            
-            SqlDataAdapter da_c1_casoUnicoIntervalo = new SqlDataAdapter(c1_casoUnicoIntervalo, cn.LeerCadena());
-            DataTable dt_c1_casoUnicoIntervalo = new DataTable();
-            da_c1_casoUnicoIntervalo.Fill(dt_c1_casoUnicoIntervalo);
-            return (dt_c1_casoUnicoIntervalo);
+        // UN ÚNICO INTERVALO · TIEMPOS POR MÁQUINA
+        public DataTable llenarTabla_UnUnicoIntervalo_TiemposPorMaquina(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
+        {
+            string c1_casoUnicoIntervalo = "EXECUTE HL.sp_mostrarTiemposPorMaquina_1intervalo " + 
+                                                            STRING_FECHAyHORARIO_INICIAL + ", " + 
+                                                            STRING_FECHAyHORARIO_FINAL + ", '" +
+                                                            STRING_LISTA_idMaquina + "' ";
+            SqlDataAdapter da = new SqlDataAdapter(c1_casoUnicoIntervalo, cn.LeerCadena());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
         }
 
-        // 
-        public DataTable casoUnicoIntervalo_mostrarCantidadDeHorasPorSector(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
+        // UN ÚNICO INTERVALO · TIEMPOS POR SECTOR
+        public DataTable llenarTabla_UnUnicoIntervalo_TiemposPorSector(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
         {
-            string c2_casoUnicoIntervalo = "SELECT f0.MAQ_SEC, " +
-                                                  "SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) AS 'MINS_ON', " +
-                                                  "SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) / 60.0 AS 'HRS_ON' " +
-                                           "FROM " +
-                                                "(" +
-                                                 "SELECT m.idMaquina AS 'MAQ_ID', " +
-                                                        "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
-                                                        "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
-                                                        "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
-                                                        "r.fechaHoraEncendida AS 'FH_ENC', " +
-                                                        "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                                 "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                                                    "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                                 "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
-                                                ") " +
-                                                  "AS f0 " +
-                                           "GROUP BY f0.MAQ_SEC ";
+            string c2_casoUnicoIntervalo = "EXECUTE HL.sp_mostrarTiemposPorSector_1intervalo " +
+                                                            STRING_FECHAyHORARIO_INICIAL + ", " +
+                                                            STRING_FECHAyHORARIO_FINAL + ", '" +
+                                                            STRING_LISTA_idMaquina + "' ";
 
-            SqlDataAdapter da_c2_casoUnicoIntervalo = new SqlDataAdapter(c2_casoUnicoIntervalo, cn.LeerCadena());
-            DataTable dt_c2_casoUnicoIntervalo = new DataTable();
-            da_c2_casoUnicoIntervalo.Fill(dt_c2_casoUnicoIntervalo);
-            return (dt_c2_casoUnicoIntervalo);
+            SqlDataAdapter da = new SqlDataAdapter(c2_casoUnicoIntervalo, cn.LeerCadena());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
         }
 
-        // 
-        public DataTable casoUnicoIntervalo_mostrarCantidadDeHorasDeTodasLasMaquinas(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
+        // UN ÚNICO INTERVALO · TIEMPOS TOTALES
+        public DataTable llenarTabla_UnUnicoIntervalo_TiemposTotales(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
         {
-            string c3_casoUnicoIntervalo = "SELECT SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) AS 'MINS_ON', " +
-                                                  "SUM(HL.f_getMinsON_formatoFecha(COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'), " + STRING_FECHAyHORARIO_INICIAL + ", " + STRING_FECHAyHORARIO_FINAL + ")) / 60.0 AS 'HRS_ON' " +
-                                           "FROM " +
-                                                "(" +
-                                                 "SELECT m.idMaquina AS 'MAQ_ID', " +
-                                                        "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
-                                                        "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
-                                                        "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
-                                                        "r.fechaHoraEncendida AS 'FH_ENC', " +
-                                                        "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                                 "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                                                    "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                                 "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
-                                                ") " +
-                                                  "AS f0 ";
+            string c3_casoUnicoIntervalo = "EXECUTE HL.sp_mostrarTiemposTotales_1intervalo " +
+                                                            STRING_FECHAyHORARIO_INICIAL + ", " +
+                                                            STRING_FECHAyHORARIO_FINAL + ", '" +
+                                                            STRING_LISTA_idMaquina + "' ";
 
-            SqlDataAdapter da_c3_casoUnicoIntervalo = new SqlDataAdapter(c3_casoUnicoIntervalo, cn.LeerCadena());
-            DataTable dt_c3_casoUnicoIntervalo = new DataTable();
-            da_c3_casoUnicoIntervalo.Fill(dt_c3_casoUnicoIntervalo);
-            return (dt_c3_casoUnicoIntervalo);
+            SqlDataAdapter da = new SqlDataAdapter(c3_casoUnicoIntervalo, cn.LeerCadena());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
         }
 
-        // 
-        public DataTable casoNintervalos_mostrarCantidadDeHorasPorMaquina (string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_LISTA_idMaquina)
+        // N INTERVALOS · TIEMPOS POR MÁQUINA
+        public DataTable llenarTabla_Nintervalos_TiemposPorMaquina (string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_LISTA_idMaquina)
         {
-
-            string c1_casoNintervalos = "SELECT f0.MAQ_ID, " +
-                                               "f0.MAQ_NUM, " +
-                                               "f0.MAQ_NOM, " +
-                                               "f0.MAQ_SEC, " +
-                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) AS 'MINS_ON', " +
-                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) / 60.0 AS 'HRS_ON' " +
-                                        "FROM (" +
-                                              "SELECT m.idMaquina AS 'MAQ_ID', " +
-                                                     "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
-                                                     "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
-                                                     "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
-                                                     "r.fechaHoraEncendida AS 'FH_ENC', " +
-                                                     "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                              "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                                                 "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                              "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
-                                              ") AS f0 " +
-                                        "GROUP BY f0.MAQ_ID, f0.MAQ_NUM, f0.MAQ_NOM, f0.MAQ_SEC " +
-                                        "ORDER BY f0.MAQ_SEC, f0.MAQ_NUM";
-
-            SqlDataAdapter da_c1_casoNintervalos = new SqlDataAdapter(c1_casoNintervalos, cn.LeerCadena());
-            DataTable dt_c1_casoNintervalos = new DataTable();
-            da_c1_casoNintervalos.Fill(dt_c1_casoNintervalos);
-            return (dt_c1_casoNintervalos);
+            string c1_casoNintervalos = "EXECUTE HL.sp_mostrarTiemposPorMaquina_Nintervalos " +
+                                                            STRING_FECHA_INICIAL + ", " +
+                                                            STRING_FECHA_FINAL + ", " +
+                                                            STRING_HORARIO_INICIAL + ", " +
+                                                            STRING_HORARIO_FINAL + ", '" +
+                                                            STRING_LISTA_idMaquina + "' ";
+            SqlDataAdapter da = new SqlDataAdapter(c1_casoNintervalos, cn.LeerCadena());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
         }
 
-        // 
-        public DataTable casoNintervalos_mostrarCantidadDeHorasPorSector(string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_LISTA_idMaquina)
+        // N INTERVALOS · TIEMPOS POR SECTOR
+        public DataTable llenarTabla_Nintervalos_TiemposPorSector(string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_LISTA_idMaquina)
         {
-            string c2_casoNintervalos = "SELECT f0.MAQ_SEC, " +
-                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) AS 'MINS_ON', " +
-                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) / 60.0 AS 'HRS_ON' " +
-                                        "FROM (" +
-                                              "SELECT m.idMaquina AS 'MAQ_ID', " +
-                                                     "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
-                                                     "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
-                                                     "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
-                                                     "r.fechaHoraEncendida AS 'FH_ENC', " +
-                                                     "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                              "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                                                 "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                              "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
-                                              ") AS f0 " +
-                                        "GROUP BY f0.MAQ_SEC " +
-                                        "ORDER BY f0.MAQ_SEC";
-
-            SqlDataAdapter da_c2_casoNintervalos = new SqlDataAdapter(c2_casoNintervalos, cn.LeerCadena());
-            DataTable dt_c2_casoNintervalos = new DataTable();
-            da_c2_casoNintervalos.Fill(dt_c2_casoNintervalos);
-            return (dt_c2_casoNintervalos);
+            string c2_casoNintervalos = "EXECUTE HL.sp_mostrarTiemposPorSector_Nintervalos " +
+                                                            STRING_FECHA_INICIAL + ", " +
+                                                            STRING_FECHA_FINAL + ", " +
+                                                            STRING_HORARIO_INICIAL + ", " +
+                                                            STRING_HORARIO_FINAL + ", '" +
+                                                            STRING_LISTA_idMaquina + "' ";
+            SqlDataAdapter da = new SqlDataAdapter(c2_casoNintervalos, cn.LeerCadena());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
         }
 
-        // 
-        public DataTable casoNintervalos_mostrarCantidadDeHorasDeTodasLasMaquinas(string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_LISTA_idMaquina)
+        // N INTERVALOS · TIEMPOS TOTALES
+        public DataTable llenarTabla_Nintervalos_TiemposTotales(string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_LISTA_idMaquina)
         {
-            string c3_casoNintervalos = "SELECT SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) AS 'MINS_ON', " +
-                                               "SUM(HL.f_getMinsON_formatoFecha_Nintervalos(" + STRING_FECHA_INICIAL + ", " + STRING_FECHA_FINAL + ", " + STRING_HORARIO_INICIAL + ", " + STRING_HORARIO_FINAL + ", COALESCE(f0.FH_ENC, '2000-01-01 00:00:00'), COALESCE(f0.FH_URE, '2000-01-01 00:00:00'))) / 60.0 AS 'HRS_ON' " +
-                                        "FROM (" +
-                                              "SELECT m.idMaquina AS 'MAQ_ID', " +
-                                                     "m.numeroMaquinaUSUARIO AS 'MAQ_NUM', " +
-                                                     "m.nombreMaquinaUSUARIO AS 'MAQ_NOM', " +
-                                                     "s.nombreSectorUSUARIO AS 'MAQ_SEC', " +
-                                                     "r.fechaHoraEncendida AS 'FH_ENC', " +
-                                                     "r.fechaHoraUltimoRegistroEncendida AS 'FH_URE' " +
-                                              "FROM HL.sectores s FULL JOIN HL.maquinas m ON (s.idSector = m.idSector) " +
-                                                                 "FULL JOIN HL.registros r ON (m.idMaquina = r.idMaquina) " +
-                                              "WHERE (m.idMaquina IN (" + STRING_LISTA_idMaquina + "))" +
-                                              ") AS f0";
-
-            SqlDataAdapter da_c3_casoNintervalos = new SqlDataAdapter(c3_casoNintervalos, cn.LeerCadena());
-            DataTable dt_c3_casoNintervalos = new DataTable();
-            da_c3_casoNintervalos.Fill(dt_c3_casoNintervalos);
-            return (dt_c3_casoNintervalos);
+            string c3_casoNintervalos = "EXECUTE HL.sp_mostrarTiemposTotales_Nintervalos " +
+                                                            STRING_FECHA_INICIAL + ", " +
+                                                            STRING_FECHA_FINAL + ", " +
+                                                            STRING_HORARIO_INICIAL + ", " +
+                                                            STRING_HORARIO_FINAL + ", '" +
+                                                            STRING_LISTA_idMaquina + "' ";
+            SqlDataAdapter da = new SqlDataAdapter(c3_casoNintervalos, cn.LeerCadena());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
         }
+
 
 
         // Llena el DataGridView con los Sectores (solamente el nombre)
@@ -193,6 +121,7 @@ namespace HilosLibertad
             da.Fill(dt);
             return dt;
         }
+
 
         // Llena el ComboBox de los Sectores para su selección y posterior modificación
         public DataTable llenarComboBox_Sectores()

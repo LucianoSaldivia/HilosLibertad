@@ -89,18 +89,18 @@ namespace HilosLibertad
         public void llenarTablas_casoVERDE(string S_FyH_INI, string S_FyH_FIN, string S_LISTA_IDMAQ)
         {
             Consultas con = new Consultas();
-            dgv_CantHorasPorMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorMaquina(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
-            dgv_CantHorasPorSector.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasPorSector(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
-            dgv_CantTotalHorasMaquina.DataSource = con.casoUnicoIntervalo_mostrarCantidadDeHorasDeTodasLasMaquinas(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
+            dgv_CantHorasPorMaquina.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposPorMaquina(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
+            dgv_CantHorasPorSector.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposPorSector(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
+            dgv_CantTotalHorasMaquina.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposTotales(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
         }
 
         // Se llenan los tres DataGridView de acuerdo al caso AZUL (ver cuadro)
         public void llenarTablas_casoAZUL(string S_F_INI, string S_F_FIN, string S_H_INI, string S_H_FIN, string S_LISTA_IDMAQ)
         {
             Consultas con = new Consultas();
-            dgv_CantHorasPorMaquina.DataSource = con.casoNintervalos_mostrarCantidadDeHorasPorMaquina(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
-            dgv_CantHorasPorSector.DataSource = con.casoNintervalos_mostrarCantidadDeHorasPorSector(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
-            dgv_CantTotalHorasMaquina.DataSource = con.casoNintervalos_mostrarCantidadDeHorasDeTodasLasMaquinas(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
+            dgv_CantHorasPorMaquina.DataSource = con.llenarTabla_Nintervalos_TiemposPorMaquina(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
+            dgv_CantHorasPorSector.DataSource = con.llenarTabla_Nintervalos_TiemposPorSector(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
+            dgv_CantTotalHorasMaquina.DataSource = con.llenarTabla_Nintervalos_TiemposTotales(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
         }
 
         // Se deja de mostrar el contenido de las tablas
@@ -183,7 +183,7 @@ namespace HilosLibertad
         public string getStringFiltroMaquinas()
         {
             string retorno;
-            string filtroLatente = "";
+            string filtroLatente = " ";
 
             if (chk_Telar1.Checked) filtroLatente = filtroLatente + "1, ";
             if (chk_Telar2.Checked) filtroLatente = filtroLatente + "2, ";
