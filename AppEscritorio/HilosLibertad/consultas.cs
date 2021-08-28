@@ -120,9 +120,17 @@ namespace HilosLibertad
 
         // Llena el DataGridView con los Sectores (solamente el nombre)
         public DataTable llenarDataGridView_Sectores() {
-            string consulta = "SELECT s.nombreSectorUSUARIO AS 'SECTOR' " +
-                              "FROM HL.sectores s " +
-                              "ORDER BY s.idSector";
+            string consulta = "EXECUTE HL.sp_llenarDGVsectores";
+            SqlDataAdapter da = new SqlDataAdapter(consulta, cn.LeerCadena());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
+
+        // Llena el DataGridView con las Máquinas (número, nombre y descripción)
+        public DataTable llenarDataGridView_Maquinas()
+        {
+            string consulta = "EXECUTE HL.sp_llenarDGVmaquinas";
             SqlDataAdapter da = new SqlDataAdapter(consulta, cn.LeerCadena());
             DataTable dt = new DataTable();
             da.Fill(dt);
@@ -133,12 +141,24 @@ namespace HilosLibertad
         // Llena el ComboBox de los Sectores para su selección y posterior modificación
         public DataTable llenarComboBox_Sectores()
         {
-            string consulta = "SELECT s.idSector, s.nombreSectorUSUARIO FROM HL.sectores s ORDER BY s.idSector";
+            string consulta = "EXECUTE HL.sp_llenarCMBsectores";
+            //string consulta = "SELECT s.idSector, s.nombreSectorUSUARIO FROM HL.sectores s ORDER BY s.idSector";
             SqlDataAdapter da = new SqlDataAdapter(consulta, cn.LeerCadena());
             DataTable dt = new DataTable();
             da.Fill(dt);
             return dt;
         }
+
+        public DataTable llenarComboBox_Maquinas()
+        {
+            string consulta = "EXECUTE HL.sp_llenarCMBmaquinas";
+            SqlDataAdapter da = new SqlDataAdapter(consulta, cn.LeerCadena());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
+
+
 
 
         public void llenarTextBox_Sectores(ComboBox cmb, TextBox txt_id, TextBox txt_nombre)

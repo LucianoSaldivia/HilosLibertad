@@ -414,20 +414,6 @@ namespace HilosLibertad
 
 
 
-        Form2 frm_EditarSectores = new Form2();
-        //Form3 frm_EditarMaquinas = new Form3();
-
-        private void editarSectoresToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frm_EditarSectores.Show();
-        }
-
-        private void editarMáquinasToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //frm_EditarMaquinas.Show();
-        }
-
-
         // Funciones para copiar al portapapeles todo el contenido de cada tabla, incluyendo encabezados
         private void btn_CopiarAlPortapapeles_TiemposPorMaquina_Click(object sender, EventArgs e)
         {
@@ -459,5 +445,18 @@ namespace HilosLibertad
                 Clipboard.SetDataObject(dataObj);
         }
 
+
+
+        private void editarSectoresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frm_EdicionDeSectores frm_eS = new frm_EdicionDeSectores();
+            frm_eS.Show();
+        }
+
+        private void editarMáquinasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frm_EdicionDeMaquinas frm_eM = new frm_EdicionDeMaquinas();
+            frm_eM.Show();
+        }
     }
 }

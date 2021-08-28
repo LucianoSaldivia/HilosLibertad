@@ -28,4 +28,5 @@ D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.TrustInfo.x
 D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.exe.manifest
 D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.application
 D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.frm_Home.resources
-D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.Form2.resources
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.frm_EdicionDeSectores.resources
+D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.frm_EdicionDeMaquinas.resources
