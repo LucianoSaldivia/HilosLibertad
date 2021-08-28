@@ -21,7 +21,14 @@ namespace HilosLibertad
         private void frm_EdicionDeMaquinas_Load(object sender, EventArgs e)
         {
             dgv_Maquinas.DataSource = con.llenarDataGridView_Maquinas();
+            dgv_Maquinas.Columns["#"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_Maquinas.Columns["NÚMERO"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_Maquinas.AutoResizeColumns();
             dgv_Maquinas.ClearSelection();
+
+            cmb_Maquina.DataSource = con.llenarComboBox_Maquinas();
+            cmb_Maquina.DisplayMember = "nombreMaquinaUSUARIO";
+            cmb_Maquina.ValueMember = "idMaquina";
         }
     }
 }

@@ -186,7 +186,7 @@ namespace HilosLibertad
             this.dgv_Maquinas.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_Maquinas.RowHeadersVisible = false;
             this.dgv_Maquinas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgv_Maquinas.Size = new System.Drawing.Size(406, 293);
+            this.dgv_Maquinas.Size = new System.Drawing.Size(369, 540);
             this.dgv_Maquinas.TabIndex = 10;
             // 
             // textBox1
@@ -229,7 +229,7 @@ namespace HilosLibertad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1009, 563);
+            this.ClientSize = new System.Drawing.Size(772, 615);
             this.Controls.Add(this.cmb_Maquina);
             this.Controls.Add(this.lbl_ElegirMaquinaAEditar);
             this.Controls.Add(this.grp_EdicionDeLaMaquina);
