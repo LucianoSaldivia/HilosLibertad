@@ -3,9 +3,9 @@
 -- LAS FECHAS QUE SE PASEN POR PARÁMETRO DEBEN TENER EL SIGUIENTE FORMATO: 'YY-DD-MM HH:MM:SS'.
 
 		
-		--FUNCIÓN HL.f_getMinsON_formatoFecha
+		--FUNCIÓN HL.f_getMinsON_formatoFecha_1intervalo
 		--Retorna la cantidad de minutos (un único intervalo horario) que una máquina está encendida
-		CREATE OR ALTER FUNCTION HL.f_getMinsON_formatoFecha
+		CREATE OR ALTER FUNCTION HL.f_getMinsON_formatoFecha_1intervalo
 			(@FH_Rini SMALLDATETIME,		-- DATETIME inicial registrado en la DB
 			 @FH_Rfin SMALLDATETIME,		-- DATETIME final registrado en la DB
 			 @FH_Sini SMALLDATETIME,		-- DATETIME inicial seleccionado por el usuario en la aplicación
@@ -29,7 +29,7 @@
 		END
 		GO
 
-
+		
 		--FUNCIÓN HL.f_getMinsON_formatoFecha_Nintervalos
 		--Retorna la cantidad de minutos (para 2 o más intervalos horarios) que una máquina está encendida
 		CREATE OR ALTER FUNCTION HL.f_getMinsON_formatoFecha_Nintervalos
@@ -53,7 +53,7 @@
 				WHILE (@F_CURRENT < @F_Sfin) BEGIN
 					SET @DTi = CAST(@F_CURRENT AS SMALLDATETIME) + CAST(@H_Sini AS SMALLDATETIME)
 					SET @DTf = CAST(DATEADD(DAY, 1, CAST(@F_CURRENT AS SMALLDATETIME)) AS SMALLDATETIME) + CAST(@H_Sfin AS SMALLDATETIME) --corregir esto, no es tan sencillo ese "+ 1"
-					SET @acu = @acu + HL.f_getMinsON_formatoFecha(@FH_Rini, @FH_Rfin, @DTi, @DTf)
+					SET @acu = @acu + HL.f_getMinsON_formatoFecha_1intervalo(@FH_Rini, @FH_Rfin, @DTi, @DTf)
 					SET @F_CURRENT = DATEADD(DAY, 1, CAST(@F_CURRENT AS SMALLDATETIME))
 				END
 			END
@@ -62,7 +62,7 @@
 				WHILE (@F_CURRENT <= @F_Sfin) BEGIN
 					SET @DTi = CAST(@F_CURRENT AS SMALLDATETIME) + CAST(@H_Sini AS SMALLDATETIME)
 					SET @DTf = CAST(@F_CURRENT AS SMALLDATETIME) + CAST(@H_Sfin AS SMALLDATETIME)
-					SET @acu = @acu + HL.f_getMinsON_formatoFecha(@FH_Rini, @FH_Rfin, @DTi, @DTf)
+					SET @acu = @acu + HL.f_getMinsON_formatoFecha_1intervalo(@FH_Rini, @FH_Rfin, @DTi, @DTf)
 					SET @F_CURRENT = DATEADD(DAY, 1, CAST(@F_CURRENT AS SMALLDATETIME))
 				END
 			END
