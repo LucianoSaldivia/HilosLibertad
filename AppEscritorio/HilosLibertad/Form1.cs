@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace HilosLibertad
@@ -23,6 +24,10 @@ namespace HilosLibertad
 
             // Carga inicial de máquinas: todas las máquinas
             setCheckButtons("todos", true);
+
+            dgv_TiemposPorMaquina.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+            dgv_TiemposPorSector.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithAutoHeaderText;
+            dgv_TiemposTotales.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
 
         }
 
@@ -55,24 +60,29 @@ namespace HilosLibertad
                 }
                 else {
                     llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_LISTA_IDMAQUINAS);
+                    acomodarFormatoDGVs();
                 }
             }
             else {
                 if (LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL) {
                     if (LOS_HORARIOS_SON_IGUALES) {
                         llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_LISTA_IDMAQUINAS);
+                        acomodarFormatoDGVs();
                     }
                     else
                     {
                         if (EL_HORARIO_FINAL_ES_POSTERIOR_AL_HORARIO_INICIAL) {
                             llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_LISTA_IDMAQUINAS);
+                            acomodarFormatoDGVs();
                         }
                         else {
                             if (ENTRE_LAS_FECHAS_HAY_UN_UNICO_DIA_DE_DIFERENCIA) {
                                 llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_LISTA_IDMAQUINAS);
+                                acomodarFormatoDGVs();
                             }
                             else {
                                 llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_LISTA_IDMAQUINAS);
+                                acomodarFormatoDGVs();
                             }
                         }
                     }
@@ -81,35 +91,51 @@ namespace HilosLibertad
                     MessageBox.Show("La fecha final debe ser posterior a la fecha inicial.\n", "Inconsistencia de fechas", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     limpiarTablas();
                 }
-            }
-
+            }    
         }
+
+        public void acomodarFormatoDGVs() {
+            dgv_TiemposPorMaquina.Columns["#"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposPorMaquina.Columns["TIEMPO ENCENDIDA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposPorMaquina.Columns["% APAGADA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposPorMaquina.AutoResizeColumns();
+            dgv_TiemposPorMaquina.ClearSelection();
+
+            dgv_TiemposPorSector.Columns["TIEMPO ENCENDIDO"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposPorSector.AutoResizeColumns();
+            dgv_TiemposPorSector.ClearSelection();
+
+            dgv_TiemposTotales.Columns["TIEMPO ENCENDIDAS"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposTotales.AutoResizeColumns();
+            dgv_TiemposTotales.ClearSelection();
+        }
+
 
         // Se llenan los tres DataGridView de acuerdo al caso VERDE (ver cuadro)
         public void llenarTablas_casoVERDE(string S_FyH_INI, string S_FyH_FIN, string S_LISTA_IDMAQ)
         {
             Consultas con = new Consultas();
-            dgv_CantHorasPorMaquina.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposPorMaquina(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
-            dgv_CantHorasPorSector.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposPorSector(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
-            dgv_CantTotalHorasMaquina.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposTotales(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
+            dgv_TiemposPorMaquina.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposPorMaquina(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
+            dgv_TiemposPorSector.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposPorSector(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
+            dgv_TiemposTotales.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposTotales(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
         }
 
         // Se llenan los tres DataGridView de acuerdo al caso AZUL (ver cuadro)
         public void llenarTablas_casoAZUL(string S_F_INI, string S_F_FIN, string S_H_INI, string S_H_FIN, string S_LISTA_IDMAQ)
         {
             Consultas con = new Consultas();
-            dgv_CantHorasPorMaquina.DataSource = con.llenarTabla_Nintervalos_TiemposPorMaquina(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
-            dgv_CantHorasPorSector.DataSource = con.llenarTabla_Nintervalos_TiemposPorSector(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
-            dgv_CantTotalHorasMaquina.DataSource = con.llenarTabla_Nintervalos_TiemposTotales(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
+            dgv_TiemposPorMaquina.DataSource = con.llenarTabla_Nintervalos_TiemposPorMaquina(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
+            dgv_TiemposPorSector.DataSource = con.llenarTabla_Nintervalos_TiemposPorSector(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
+            dgv_TiemposTotales.DataSource = con.llenarTabla_Nintervalos_TiemposTotales(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
         }
 
         // Se deja de mostrar el contenido de las tablas
         public void limpiarTablas()
         {
             Consultas con = new Consultas();
-            dgv_CantHorasPorMaquina.DataSource = con.limpiarTabla();
-            dgv_CantHorasPorSector.DataSource = con.limpiarTabla();
-            dgv_CantTotalHorasMaquina.DataSource = con.limpiarTabla();
+            dgv_TiemposPorMaquina.DataSource = con.limpiarTabla();
+            dgv_TiemposPorSector.DataSource = con.limpiarTabla();
+            dgv_TiemposTotales.DataSource = con.limpiarTabla();
         }
 
 
@@ -126,6 +152,16 @@ namespace HilosLibertad
         {
             int HHMM = Convert.ToInt32(cmb_h.Text) * 100 + Convert.ToInt32(cmb_m.Text);
             return HHMM;
+        }
+
+        // Dados un DateTimePicker y dos ComboBox, devuelve la FECHAyHORARIO YYYYMMDDHHMM en formato int
+        public int getYYYYMMDDHHMM_from1dtp2cmb(DateTimePicker dtp, ComboBox cmb_h, ComboBox cmb_m)
+        {
+            int YYYYMMDD = getYYYYMMDDentero_fromDtp(dtp);
+            int HHMM = getHHMMentero_from2Cmb(cmb_h, cmb_m);
+            int YYYYMMDDHHMM = YYYYMMDD * 10000 + HHMM;
+            return YYYYMMDDHHMM;
+
         }
 
         // Dados un DateTimePicker y dos ComboBox, devuelve el string de la fecha y el horario "YYYY-DD-MM HH:MM:00"
@@ -390,5 +426,38 @@ namespace HilosLibertad
         {
             //frm_EditarMaquinas.Show();
         }
+
+
+        // Funciones para copiar al portapapeles todo el contenido de cada tabla, incluyendo encabezados
+        private void btn_CopiarAlPortapapeles_TiemposPorMaquina_Click(object sender, EventArgs e)
+        {
+            dgv_TiemposPorMaquina.SelectAll();
+            copiarAlPortapapeles(dgv_TiemposPorMaquina);
+            dgv_TiemposPorMaquina.ClearSelection();
+        }
+        
+        private void btn_CopiarAlPortapapeles_TiemposPorSector_Click(object sender, EventArgs e)
+        {
+            dgv_TiemposPorSector.SelectAll();
+            copiarAlPortapapeles(dgv_TiemposPorSector);
+            dgv_TiemposPorSector.ClearSelection();
+        }
+
+        private void btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas_Click(object sender, EventArgs e)
+        {
+            dgv_TiemposTotales.SelectAll();
+            copiarAlPortapapeles(dgv_TiemposTotales);
+            dgv_TiemposTotales.ClearSelection();
+        }
+
+        // Función para copiar al portapapeles todo el contenido de un DataGridView
+        private void copiarAlPortapapeles(DataGridView dgv)
+        {
+            dgv.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+            DataObject dataObj = dgv.GetClipboardContent();
+            if (dataObj != null)
+                Clipboard.SetDataObject(dataObj);
+        }
+
     }
 }

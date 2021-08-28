@@ -106,8 +106,15 @@ namespace HilosLibertad
             SqlDataAdapter da = new SqlDataAdapter(c3_casoNintervalos, cn.LeerCadena());
             DataTable dt = new DataTable();
             da.Fill(dt);
+            //
             return dt;
         }
+
+
+        // Llena el label con el tiempo total seleccionado
+        // CREAR QUERY PARA CARGAR EL TIEMPO TOTAL SELECCIONADO
+        // string consulta = "SELECT HL.";
+
 
 
 

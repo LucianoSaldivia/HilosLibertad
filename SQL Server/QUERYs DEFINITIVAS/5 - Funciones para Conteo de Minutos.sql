@@ -72,6 +72,8 @@
 			 
 
 
+
+
 			
 		--FUNCIÓN HL.f_getMinsBetween_formatoFecha_1intervalo
 		--Retorna la cantidad de minutos entre una FECHAyHORARIO y otra FECHAyHORARIO (un único intervalo horario) 
@@ -85,6 +87,7 @@
 			RETURN @retorno
 		END
 		GO
+
 		
 					/* EL TEMA DE LOS FORMATOS:
 					SELECT DATEDIFF(MINUTE, '2021-08-28 21:00:00', '2021-08-29 06:00:00')								-- anda: formato correcto para DATEDIFF
@@ -93,6 +96,7 @@
 					SELECT HL.f_getMinsBetween_formatoFecha_1intervalo ('2021-08-28 21:00:00', '2021-08-29 06:00:00')
 					SELECT HL.f_getMinsBetween_formatoFecha_1intervalo ('2021-28-08 21:00:00', '2021-29-08 06:00:00')	-- anda: formato correcto para la función
 					*/
+
 														   
 		--FUNCIÓN HL.f_getMinsBetween_formatoFecha_Nintervalos
 		--Retorna la cantidad de minutos entre una FECHA y otra FECHA, dentro de las franjas horarias correspondientes (un único intervalo horario) 
