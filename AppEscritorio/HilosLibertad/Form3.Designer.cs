@@ -126,10 +126,11 @@ namespace HilosLibertad
             // txt_Numero
             // 
             this.txt_Numero.Location = new System.Drawing.Point(96, 63);
-            this.txt_Numero.MaxLength = 255;
+            this.txt_Numero.MaxLength = 5;
             this.txt_Numero.Name = "txt_Numero";
             this.txt_Numero.Size = new System.Drawing.Size(170, 25);
             this.txt_Numero.TabIndex = 7;
+            this.txt_Numero.TextChanged += new System.EventHandler(this.txt_Numero_TextChanged);
             // 
             // lbl_Numero
             // 

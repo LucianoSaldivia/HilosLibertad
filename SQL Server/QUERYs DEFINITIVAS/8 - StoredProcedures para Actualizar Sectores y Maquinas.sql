@@ -9,7 +9,7 @@
 			SET nombreSectorUSUARIO = @NOMBRE_SECTOR
 			WHERE idSector = @ID_SECTOR
 	END
-
+	GO
 
 -- USADO PARA ACTUALIZAR NÚMERO-NOMBRE-DESCRIPCIÓN DE UNA MÁQUINA
 	CREATE OR ALTER PROCEDURE HL.sp_actualizarMaquina
@@ -24,6 +24,6 @@
 				descripcionMaquinaUSUARIO = @DESCRIPCION_MAQUINA
 			WHERE idMaquina = @ID_MAQUINA
 	END
-
+	GO
 
 	

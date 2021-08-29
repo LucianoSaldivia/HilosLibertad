@@ -69,5 +69,16 @@ namespace HilosLibertad
 
             cmb_Maquina.DataSource = con.llenarComboBox_Maquinas();
         }
+
+        private void txt_Numero_TextChanged(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void txt_Numero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //
+            e.Handled = !char.IsNumber(e.KeyChar) && e.KeyChar != Convert.ToChar(Keys.Back);
+        }
     }
 }
