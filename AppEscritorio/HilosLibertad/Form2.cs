@@ -40,7 +40,7 @@ namespace HilosLibertad
         private void cmb_Sector_SelectedIndexChanged(object sender, EventArgs e)
         {
             ID_SECTOR_SELECCIONADO = cmb_Sector.SelectedIndex + 1;      // El índice del ComboBox empieza el 0, pero el idSector empieza en 1: por eso se agrega el 1.
-            string consulta = "SELECT s.idSector, s.nombreSectorUSUARIO FROM HL.sectores s WHERE s.idSector = " + ID_SECTOR_SELECCIONADO + "";
+            string consulta = "EXECUTE HL.sp_cargarTXTsectores " + ID_SECTOR_SELECCIONADO + "";
             SqlCommand c = new SqlCommand(consulta, cn.LeerCadena());
             SqlDataReader dr = c.ExecuteReader();
             if (dr.Read()) {

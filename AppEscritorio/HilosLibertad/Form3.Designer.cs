@@ -58,7 +58,7 @@ namespace HilosLibertad
             this.lbl_EdicionDeMaquinas.Location = new System.Drawing.Point(42, 24);
             this.lbl_EdicionDeMaquinas.Name = "lbl_EdicionDeMaquinas";
             this.lbl_EdicionDeMaquinas.Size = new System.Drawing.Size(210, 30);
-            this.lbl_EdicionDeMaquinas.TabIndex = 9;
+            this.lbl_EdicionDeMaquinas.TabIndex = 0;
             this.lbl_EdicionDeMaquinas.Text = "Edición de Máquinas";
             // 
             // cmb_Maquina
@@ -69,7 +69,7 @@ namespace HilosLibertad
             this.cmb_Maquina.Location = new System.Drawing.Point(195, 78);
             this.cmb_Maquina.Name = "cmb_Maquina";
             this.cmb_Maquina.Size = new System.Drawing.Size(137, 25);
-            this.cmb_Maquina.TabIndex = 12;
+            this.cmb_Maquina.TabIndex = 2;
             this.cmb_Maquina.SelectedIndexChanged += new System.EventHandler(this.cmb_Maquina_SelectedIndexChanged);
             // 
             // lbl_ElegirMaquinaAEditar
@@ -79,7 +79,7 @@ namespace HilosLibertad
             this.lbl_ElegirMaquinaAEditar.Location = new System.Drawing.Point(42, 81);
             this.lbl_ElegirMaquinaAEditar.Name = "lbl_ElegirMaquinaAEditar";
             this.lbl_ElegirMaquinaAEditar.Size = new System.Drawing.Size(151, 17);
-            this.lbl_ElegirMaquinaAEditar.TabIndex = 13;
+            this.lbl_ElegirMaquinaAEditar.TabIndex = 1;
             this.lbl_ElegirMaquinaAEditar.Text = "Elija la máquina a editar:";
             // 
             // grp_EdicionDeLaMaquina
@@ -97,7 +97,7 @@ namespace HilosLibertad
             this.grp_EdicionDeLaMaquina.Location = new System.Drawing.Point(45, 119);
             this.grp_EdicionDeLaMaquina.Name = "grp_EdicionDeLaMaquina";
             this.grp_EdicionDeLaMaquina.Size = new System.Drawing.Size(287, 218);
-            this.grp_EdicionDeLaMaquina.TabIndex = 14;
+            this.grp_EdicionDeLaMaquina.TabIndex = 3;
             this.grp_EdicionDeLaMaquina.TabStop = false;
             this.grp_EdicionDeLaMaquina.Text = "Edición de la Máquina";
             // 
@@ -110,7 +110,7 @@ namespace HilosLibertad
             this.txt_ID.Name = "txt_ID";
             this.txt_ID.ReadOnly = true;
             this.txt_ID.Size = new System.Drawing.Size(170, 25);
-            this.txt_ID.TabIndex = 8;
+            this.txt_ID.TabIndex = 5;
             // 
             // lbl_ID
             // 
@@ -120,7 +120,7 @@ namespace HilosLibertad
             this.lbl_ID.Location = new System.Drawing.Point(71, 33);
             this.lbl_ID.Name = "lbl_ID";
             this.lbl_ID.Size = new System.Drawing.Size(23, 17);
-            this.lbl_ID.TabIndex = 7;
+            this.lbl_ID.TabIndex = 4;
             this.lbl_ID.Text = "ID:";
             // 
             // txt_Numero
@@ -129,7 +129,7 @@ namespace HilosLibertad
             this.txt_Numero.MaxLength = 255;
             this.txt_Numero.Name = "txt_Numero";
             this.txt_Numero.Size = new System.Drawing.Size(170, 25);
-            this.txt_Numero.TabIndex = 6;
+            this.txt_Numero.TabIndex = 7;
             // 
             // lbl_Numero
             // 
@@ -138,7 +138,7 @@ namespace HilosLibertad
             this.lbl_Numero.Location = new System.Drawing.Point(35, 66);
             this.lbl_Numero.Name = "lbl_Numero";
             this.lbl_Numero.Size = new System.Drawing.Size(59, 17);
-            this.lbl_Numero.TabIndex = 5;
+            this.lbl_Numero.TabIndex = 6;
             this.lbl_Numero.Text = "Número:";
             // 
             // btn_GuardarCambios
@@ -147,7 +147,7 @@ namespace HilosLibertad
             this.btn_GuardarCambios.Location = new System.Drawing.Point(133, 167);
             this.btn_GuardarCambios.Name = "btn_GuardarCambios";
             this.btn_GuardarCambios.Size = new System.Drawing.Size(133, 34);
-            this.btn_GuardarCambios.TabIndex = 2;
+            this.btn_GuardarCambios.TabIndex = 12;
             this.btn_GuardarCambios.Text = "Guardar cambios";
             this.btn_GuardarCambios.UseVisualStyleBackColor = true;
             // 
@@ -158,7 +158,7 @@ namespace HilosLibertad
             this.lbl_MaquinasAhoraGuardadas.Location = new System.Drawing.Point(365, 24);
             this.lbl_MaquinasAhoraGuardadas.Name = "lbl_MaquinasAhoraGuardadas";
             this.lbl_MaquinasAhoraGuardadas.Size = new System.Drawing.Size(173, 17);
-            this.lbl_MaquinasAhoraGuardadas.TabIndex = 11;
+            this.lbl_MaquinasAhoraGuardadas.TabIndex = 13;
             this.lbl_MaquinasAhoraGuardadas.Text = "Máquinas ahora guardadas:";
             // 
             // dgv_Maquinas
@@ -188,7 +188,7 @@ namespace HilosLibertad
             this.dgv_Maquinas.RowHeadersVisible = false;
             this.dgv_Maquinas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgv_Maquinas.Size = new System.Drawing.Size(369, 540);
-            this.dgv_Maquinas.TabIndex = 10;
+            this.dgv_Maquinas.TabIndex = 14;
             // 
             // txt_Nombre
             // 
@@ -196,7 +196,7 @@ namespace HilosLibertad
             this.txt_Nombre.MaxLength = 255;
             this.txt_Nombre.Name = "txt_Nombre";
             this.txt_Nombre.Size = new System.Drawing.Size(170, 25);
-            this.txt_Nombre.TabIndex = 10;
+            this.txt_Nombre.TabIndex = 9;
             // 
             // lbl_Nombre
             // 
@@ -205,7 +205,7 @@ namespace HilosLibertad
             this.lbl_Nombre.Location = new System.Drawing.Point(34, 99);
             this.lbl_Nombre.Name = "lbl_Nombre";
             this.lbl_Nombre.Size = new System.Drawing.Size(60, 17);
-            this.lbl_Nombre.TabIndex = 9;
+            this.lbl_Nombre.TabIndex = 8;
             this.lbl_Nombre.Text = "Nombre:";
             // 
             // txt_Descripcion
@@ -214,7 +214,7 @@ namespace HilosLibertad
             this.txt_Descripcion.MaxLength = 255;
             this.txt_Descripcion.Name = "txt_Descripcion";
             this.txt_Descripcion.Size = new System.Drawing.Size(170, 25);
-            this.txt_Descripcion.TabIndex = 12;
+            this.txt_Descripcion.TabIndex = 11;
             // 
             // lbl_Descripcion
             // 
@@ -223,7 +223,7 @@ namespace HilosLibertad
             this.lbl_Descripcion.Location = new System.Drawing.Point(15, 132);
             this.lbl_Descripcion.Name = "lbl_Descripcion";
             this.lbl_Descripcion.Size = new System.Drawing.Size(79, 17);
-            this.lbl_Descripcion.TabIndex = 11;
+            this.lbl_Descripcion.TabIndex = 10;
             this.lbl_Descripcion.Text = "Descripción:";
             // 
             // frm_EdicionDeMaquinas
