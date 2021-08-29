@@ -1,5 +1,6 @@
 # Registrador.py
 
+import sys
 import serial
 import crc8
 import config_boards
@@ -676,18 +677,39 @@ def SerialTester_ForceAnswer( forced_answer: bytes ) -> None:
         serial_port.close()
 
 
-
 if __name__ == "__main__":
+    """
+    Este programa puede tomar 1 argumento por línea de comandos:
 
+    1.
+    -registrador
+
+    2.
+    -monitor
+
+    3.
+    -respuesta_forzada <respuesta>
+    Las opciones para <respuesta> están en el diccionario config_embedded.FORCED_ANSWERS
+    """
+    # Carga estandar de argumentos por línea de comandos a una lista
+    args = sys.argv[1:]
+    
     # Registrador - Funcionamiento normal
-    Registrador()
-    
-    
-    # Tester - Imprime en pantalla todo lo que recibe, y responde ACK o NAK según corresponda
-    # SerialTester()
+    if (len(args) == 1 and args[0] == '-registrador') or (len(args) == 0):
+        Registrador()
 
+    # Monitor - Imprime en pantalla todo lo que recibe, y responde ACK o NAK según corresponda
+    elif len(args) == 1 and args[0] == '-monitor':
+        SerialTester()
 
     # Tester - Fuerza una respuesta UNEX_ANS, NAK, o TIMEOUT según se pase por argumento
-    # SerialTester_ForceAnswer( config_embedded.UNEX_ANS )
-    # SerialTester_ForceAnswer( config_embedded.NAK )
-    # SerialTester_ForceAnswer( config_embedded.FORCE_TIMEOUT )
+    elif len(args) == 2 and args[0] == '-respuesta_forzada' and args[1] in config_embedded.FORCED_ANSWERS.keys():
+        SerialTester_ForceAnswer( config_embedded.FORCED_ANSWERS.get(args[1]) )
+   
+    
+    
+    
+    
+    
+
+

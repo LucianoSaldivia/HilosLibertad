@@ -13,6 +13,16 @@ ACK = b"%"
 NAK = b"?"
 UNEX_ANS = b"$"
 FORCE_TIMEOUT = bytes()
+FORCED_ANSWERS = {
+    "ACK": ACK,
+    "ack": ACK,
+    "NAK": NAK,
+    "nak": NAK,
+    "UNEX_ANS": UNEX_ANS,
+    "unex_ans": UNEX_ANS,
+    "TIMEOUT": FORCE_TIMEOUT,
+    "timeout": FORCE_TIMEOUT
+}
 
 # Tamaños de las tramas según el modo
 BUFFER_SIZE_ONLY_DATA_MODE = 10
