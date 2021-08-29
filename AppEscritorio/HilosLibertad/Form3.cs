@@ -51,5 +51,23 @@ namespace HilosLibertad
                 txt_Descripcion.Text = dr["descripcionMaquinaUSUARIO"].ToString();
             }
         }
+
+        private void btn_GuardarCambios_Click(object sender, EventArgs e)
+        {
+            ID_MAQUINA_SELECCIONADA = cmb_Maquina.SelectedIndex + 1;      // El índice del ComboBox empieza el 0, pero el idSector empieza en 1: por eso se agrega el 1.
+            string NUMERO_MAQUINA = txt_Numero.Text;
+            string NOMBRE_MAQUINA = txt_Nombre.Text;
+            string DESCRIPCION_MAQUINA = txt_Descripcion.Text;
+
+            //string consulta = "EXECUTE HL.sp_actualizarMaquina " + ID_MAQUINA_SELECCIONADA + ", " + NUMERO_MAQUINA + ", " + NOMBRE_MAQUINA + ", " + DESCRIPCION_MAQUINA;
+            string consulta = "EXECUTE HL.sp_actualizarMaquina " + ID_MAQUINA_SELECCIONADA + ", '" + NUMERO_MAQUINA + "', '" + NOMBRE_MAQUINA + "', '" + DESCRIPCION_MAQUINA + "'";
+            SqlCommand c = new SqlCommand(consulta, cn.LeerCadena());
+            SqlDataReader dr = c.ExecuteReader();
+
+            dgv_Maquinas.DataSource = con.llenarDataGridView_Maquinas();
+            dgv_Maquinas.ClearSelection();
+
+            cmb_Maquina.DataSource = con.llenarComboBox_Maquinas();
+        }
     }
 }

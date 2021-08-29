@@ -150,6 +150,7 @@ namespace HilosLibertad
             this.btn_GuardarCambios.TabIndex = 12;
             this.btn_GuardarCambios.Text = "Guardar cambios";
             this.btn_GuardarCambios.UseVisualStyleBackColor = true;
+            this.btn_GuardarCambios.Click += new System.EventHandler(this.btn_GuardarCambios_Click);
             // 
             // lbl_MaquinasAhoraGuardadas
             // 
