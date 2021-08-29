@@ -70,6 +70,7 @@ namespace HilosLibertad
             this.cmb_Maquina.Name = "cmb_Maquina";
             this.cmb_Maquina.Size = new System.Drawing.Size(137, 25);
             this.cmb_Maquina.TabIndex = 12;
+            this.cmb_Maquina.SelectedIndexChanged += new System.EventHandler(this.cmb_Maquina_SelectedIndexChanged);
             // 
             // lbl_ElegirMaquinaAEditar
             // 
