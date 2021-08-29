@@ -38,14 +38,14 @@ namespace HilosLibertad
             this.grp_EdicionDeLaMaquina = new System.Windows.Forms.GroupBox();
             this.txt_ID = new System.Windows.Forms.TextBox();
             this.lbl_ID = new System.Windows.Forms.Label();
-            this.txt_Nombre = new System.Windows.Forms.TextBox();
-            this.lab_Numero = new System.Windows.Forms.Label();
+            this.txt_Numero = new System.Windows.Forms.TextBox();
+            this.lbl_Numero = new System.Windows.Forms.Label();
             this.btn_GuardarCambios = new System.Windows.Forms.Button();
             this.lbl_MaquinasAhoraGuardadas = new System.Windows.Forms.Label();
             this.dgv_Maquinas = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txt_Nombre = new System.Windows.Forms.TextBox();
+            this.lbl_Nombre = new System.Windows.Forms.Label();
+            this.txt_Descripcion = new System.Windows.Forms.TextBox();
             this.lbl_Descripcion = new System.Windows.Forms.Label();
             this.grp_EdicionDeLaMaquina.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Maquinas)).BeginInit();
@@ -84,14 +84,14 @@ namespace HilosLibertad
             // 
             // grp_EdicionDeLaMaquina
             // 
-            this.grp_EdicionDeLaMaquina.Controls.Add(this.textBox2);
+            this.grp_EdicionDeLaMaquina.Controls.Add(this.txt_Descripcion);
             this.grp_EdicionDeLaMaquina.Controls.Add(this.lbl_Descripcion);
-            this.grp_EdicionDeLaMaquina.Controls.Add(this.textBox1);
-            this.grp_EdicionDeLaMaquina.Controls.Add(this.label1);
+            this.grp_EdicionDeLaMaquina.Controls.Add(this.txt_Nombre);
+            this.grp_EdicionDeLaMaquina.Controls.Add(this.lbl_Nombre);
             this.grp_EdicionDeLaMaquina.Controls.Add(this.txt_ID);
             this.grp_EdicionDeLaMaquina.Controls.Add(this.lbl_ID);
-            this.grp_EdicionDeLaMaquina.Controls.Add(this.txt_Nombre);
-            this.grp_EdicionDeLaMaquina.Controls.Add(this.lab_Numero);
+            this.grp_EdicionDeLaMaquina.Controls.Add(this.txt_Numero);
+            this.grp_EdicionDeLaMaquina.Controls.Add(this.lbl_Numero);
             this.grp_EdicionDeLaMaquina.Controls.Add(this.btn_GuardarCambios);
             this.grp_EdicionDeLaMaquina.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grp_EdicionDeLaMaquina.Location = new System.Drawing.Point(45, 119);
@@ -123,23 +123,23 @@ namespace HilosLibertad
             this.lbl_ID.TabIndex = 7;
             this.lbl_ID.Text = "ID:";
             // 
-            // txt_Nombre
+            // txt_Numero
             // 
-            this.txt_Nombre.Location = new System.Drawing.Point(96, 63);
-            this.txt_Nombre.MaxLength = 255;
-            this.txt_Nombre.Name = "txt_Nombre";
-            this.txt_Nombre.Size = new System.Drawing.Size(170, 25);
-            this.txt_Nombre.TabIndex = 6;
+            this.txt_Numero.Location = new System.Drawing.Point(96, 63);
+            this.txt_Numero.MaxLength = 255;
+            this.txt_Numero.Name = "txt_Numero";
+            this.txt_Numero.Size = new System.Drawing.Size(170, 25);
+            this.txt_Numero.TabIndex = 6;
             // 
-            // lab_Numero
+            // lbl_Numero
             // 
-            this.lab_Numero.AutoSize = true;
-            this.lab_Numero.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lab_Numero.Location = new System.Drawing.Point(35, 66);
-            this.lab_Numero.Name = "lab_Numero";
-            this.lab_Numero.Size = new System.Drawing.Size(59, 17);
-            this.lab_Numero.TabIndex = 5;
-            this.lab_Numero.Text = "Número:";
+            this.lbl_Numero.AutoSize = true;
+            this.lbl_Numero.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Numero.Location = new System.Drawing.Point(35, 66);
+            this.lbl_Numero.Name = "lbl_Numero";
+            this.lbl_Numero.Size = new System.Drawing.Size(59, 17);
+            this.lbl_Numero.TabIndex = 5;
+            this.lbl_Numero.Text = "Número:";
             // 
             // btn_GuardarCambios
             // 
@@ -190,31 +190,31 @@ namespace HilosLibertad
             this.dgv_Maquinas.Size = new System.Drawing.Size(369, 540);
             this.dgv_Maquinas.TabIndex = 10;
             // 
-            // textBox1
+            // txt_Nombre
             // 
-            this.textBox1.Location = new System.Drawing.Point(96, 96);
-            this.textBox1.MaxLength = 255;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(170, 25);
-            this.textBox1.TabIndex = 10;
+            this.txt_Nombre.Location = new System.Drawing.Point(96, 96);
+            this.txt_Nombre.MaxLength = 255;
+            this.txt_Nombre.Name = "txt_Nombre";
+            this.txt_Nombre.Size = new System.Drawing.Size(170, 25);
+            this.txt_Nombre.TabIndex = 10;
             // 
-            // label1
+            // lbl_Nombre
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(34, 99);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 17);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Nombre:";
+            this.lbl_Nombre.AutoSize = true;
+            this.lbl_Nombre.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Nombre.Location = new System.Drawing.Point(34, 99);
+            this.lbl_Nombre.Name = "lbl_Nombre";
+            this.lbl_Nombre.Size = new System.Drawing.Size(60, 17);
+            this.lbl_Nombre.TabIndex = 9;
+            this.lbl_Nombre.Text = "Nombre:";
             // 
-            // textBox2
+            // txt_Descripcion
             // 
-            this.textBox2.Location = new System.Drawing.Point(96, 129);
-            this.textBox2.MaxLength = 255;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(170, 25);
-            this.textBox2.TabIndex = 12;
+            this.txt_Descripcion.Location = new System.Drawing.Point(96, 129);
+            this.txt_Descripcion.MaxLength = 255;
+            this.txt_Descripcion.Name = "txt_Descripcion";
+            this.txt_Descripcion.Size = new System.Drawing.Size(170, 25);
+            this.txt_Descripcion.TabIndex = 12;
             // 
             // lbl_Descripcion
             // 
@@ -259,14 +259,14 @@ namespace HilosLibertad
         private System.Windows.Forms.GroupBox grp_EdicionDeLaMaquina;
         private System.Windows.Forms.TextBox txt_ID;
         private System.Windows.Forms.Label lbl_ID;
-        private System.Windows.Forms.TextBox txt_Nombre;
-        private System.Windows.Forms.Label lab_Numero;
+        private System.Windows.Forms.TextBox txt_Numero;
+        private System.Windows.Forms.Label lbl_Numero;
         private System.Windows.Forms.Button btn_GuardarCambios;
         private System.Windows.Forms.Label lbl_MaquinasAhoraGuardadas;
         private System.Windows.Forms.DataGridView dgv_Maquinas;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txt_Descripcion;
         private System.Windows.Forms.Label lbl_Descripcion;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txt_Nombre;
+        private System.Windows.Forms.Label lbl_Nombre;
     }
 }

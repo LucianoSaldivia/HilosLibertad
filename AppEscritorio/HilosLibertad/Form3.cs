@@ -36,9 +36,20 @@ namespace HilosLibertad
             cmb_Maquina.ValueMember = "idMaquina";
         }
 
+        public int ID_MAQUINA_SELECCIONADA;
         private void cmb_Maquina_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            ID_MAQUINA_SELECCIONADA = cmb_Maquina.SelectedIndex + 1;      // El índice del ComboBox empieza el 0, pero el idSector empieza en 1: por eso se agrega el 1.
+            string consulta = "SELECT m.idMaquina, m.numeroMaquinaUSUARIO, m.nombreMaquinaUSUARIO, m.descripcionMaquinaUSUARIO FROM HL.maquinas m WHERE m.idMaquina = " + ID_MAQUINA_SELECCIONADA + "";
+            SqlCommand c = new SqlCommand(consulta, cn.LeerCadena());
+            SqlDataReader dr = c.ExecuteReader();
+            if (dr.Read())
+            {
+                txt_ID.Text = dr["idMaquina"].ToString();
+                txt_Numero.Text = dr["numeroMaquinaUSUARIO"].ToString();
+                txt_Nombre.Text = dr["nombreMaquinaUSUARIO"].ToString();
+                txt_Descripcion.Text = dr["descripcionMaquinaUSUARIO"].ToString();
+            }
         }
     }
 }
