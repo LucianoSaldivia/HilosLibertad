@@ -59,7 +59,6 @@ namespace HilosLibertad
             string NOMBRE_MAQUINA = txt_Nombre.Text;
             string DESCRIPCION_MAQUINA = txt_Descripcion.Text;
 
-            //string consulta = "EXECUTE HL.sp_actualizarMaquina " + ID_MAQUINA_SELECCIONADA + ", " + NUMERO_MAQUINA + ", " + NOMBRE_MAQUINA + ", " + DESCRIPCION_MAQUINA;
             string consulta = "EXECUTE HL.sp_actualizarMaquina " + ID_MAQUINA_SELECCIONADA + ", '" + NUMERO_MAQUINA + "', '" + NOMBRE_MAQUINA + "', '" + DESCRIPCION_MAQUINA + "'";
             SqlCommand c = new SqlCommand(consulta, cn.LeerCadena());
             SqlDataReader dr = c.ExecuteReader();
@@ -70,15 +69,17 @@ namespace HilosLibertad
             cmb_Maquina.DataSource = con.llenarComboBox_Maquinas();
         }
 
-        private void txt_Numero_TextChanged(object sender, EventArgs e)
-        {
-            //
-        }
-
+        // Se permite únicamente el ingreso de números, junto con el backspace y el delete.
         private void txt_Numero_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //
-            e.Handled = !char.IsNumber(e.KeyChar) && e.KeyChar != Convert.ToChar(Keys.Back);
+            bool ES_UN_NUMERO = e.KeyChar >= 48 && e.KeyChar <= 57;     // Código ASCII de los NÚMEROS 0 a 9: desde 48 hasta 57
+            bool ES_UN_BACKSPACE = e.KeyChar == 8;                      // Código ASCII del BACKSPACE o RETROCESO: 8
+            bool ES_UN_DELETE = e.KeyChar == 127;                       // Código ASCII del DELETE o SUPRIMIR: 127
+            if (!ES_UN_NUMERO && !ES_UN_BACKSPACE && !ES_UN_DELETE) {
+                MessageBox.Show("Este campo solamente acepta números, de hasta 4 cifras inclusive.", "Solamente números", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+                return;
+            }
         }
     }
 }
