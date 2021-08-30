@@ -14,7 +14,7 @@
 @REM "%~dp0" resuelve el path completo hasta el directorio donde reside este archivo .bat
 
 @REM Sin consola
-@REM start D:/Programas/Python/pythonw.exe "%~dp0/Registrador.py" "-monitor"
+@REM start D:/Programas/Python/pythonw.exe "%~dp0/../Registrador.py" "-respuesta_forzada" "timeout"
 
 @REM Con consola (para monitorear)
-start D:/Programas/Python/python.exe "%~dp0/Registrador.py" "-monitor"
+start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-respuesta_forzada" "timeout"
