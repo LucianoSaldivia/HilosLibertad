@@ -16,7 +16,7 @@
 		
 		--TABLA sectores
 		CREATE TABLE HL.sectores(
-			idSector NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY,
+			idSector NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY, 
 			nombreSectorUSUARIO NVARCHAR(255) NOT NULL
 		)
 		GO
@@ -24,7 +24,7 @@
 
 		--TABLA maquinas
 		CREATE TABLE HL.maquinas(
-			idMaquina NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY,
+			idMaquina NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY, 		-- NO DEBE SER AUTOINCREMENTAL ---> HAY QUE ELIMINAR EL IDENTITY(1,1) 
 			idSector NUMERIC(18,0) REFERENCES HL.sectores,
 			numeroMaquinaUSUARIO SMALLINT,
 			nombreMaquinaUSUARIO NVARCHAR(255),
