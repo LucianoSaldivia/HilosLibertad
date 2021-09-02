@@ -168,6 +168,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logoNUEVO 2-sin_slogan.ico" />
+    <None Include="Resources\logoNUEVO 7-blanco_por_fuera RECORTE_MÁS.png" />
+    <None Include="Resources\logoNUEVO 6-blanco_por_fuera RECORTE.png" />
+    <None Include="Resources\logoNUEVO 8-blanco_por_fuera_PETISO_MÁS.png" />
+    <None Include="Resources\logoNUEVO 7-blanco_por_fuera_PETISO.png" />
+    <None Include="Resources\logoNUEVO 6-blanco_por_fuera_ANGOSTO.png" />
+    <None Include="Resources\logoNUEVO 4-cortado_más.png" />
+    <None Include="Resources\logoNUEVO 5-blanco_por_fuera.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

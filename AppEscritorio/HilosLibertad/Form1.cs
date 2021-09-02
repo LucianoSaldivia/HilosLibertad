@@ -11,7 +11,9 @@ namespace HilosLibertad
             InitializeComponent();
         }
 
-        
+
+        public bool yaSeSetearonInicialmenteLasFechasYFranjasHorarias = false;
+
         private void FormularioPrincipal_Load(object sender, EventArgs e)
         {
             // Carga inicial de fechas: desde hoy a las 00:00 hasta mañana a las 00:00 (24 horas de duración)
@@ -21,77 +23,19 @@ namespace HilosLibertad
             cmb_MinutoInicial.SelectedIndex = 0;
             cmb_HoraFinal.SelectedIndex = 00;
             cmb_MinutoFinal.SelectedIndex = 0;
-
-            // Carga inicial de máquinas: todas las máquinas
-            setCheckButtons("todos", true);
+            yaSeSetearonInicialmenteLasFechasYFranjasHorarias = true;
 
             dgv_TiemposPorMaquina.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             dgv_TiemposPorSector.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithAutoHeaderText;
             dgv_TiemposTotales.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
 
+            actualizarTablas();
         }
 
 
         private void btn_Mostrar_Click(object sender, EventArgs e) 
         {
-            int int_YYYYMMDD_INI = getYYYYMMDDentero_fromDtp(dtp_FechaInicial);
-            int int_YYYYMMDD_FIN = getYYYYMMDDentero_fromDtp(dtp_FechaFinal);
-            int int_HHMM_INI = getHHMMentero_from2Cmb(cmb_HoraInicial, cmb_MinutoInicial);
-            int int_HHMM_FIN = getHHMMentero_from2Cmb(cmb_HoraFinal, cmb_MinutoFinal);
-            string str_LISTA_IDMAQUINAS = getStringFiltroMaquinas();
-            string str_FyH_INI = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaInicial, cmb_HoraInicial, cmb_MinutoInicial) + "'";
-            string str_FyH_FIN = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaFinal, cmb_HoraFinal, cmb_MinutoFinal) + "'";
-            string str_F_INI = getStringFromDTPconFormato(dtp_FechaInicial, "yyyy-MM-dd");
-            string str_F_FIN = getStringFromDTPconFormato(dtp_FechaFinal, "yyyy-MM-dd");
-            string str_H_INI = getStringFrom2CMB(cmb_HoraInicial, cmb_MinutoInicial);
-            string str_H_FIN = getStringFrom2CMB(cmb_HoraFinal, cmb_MinutoFinal);
-                        
-            bool LAS_FECHAS_SON_IGUALES = int_YYYYMMDD_INI == int_YYYYMMDD_FIN;
-            bool ENTRE_LAS_FECHAS_HAY_UN_UNICO_DIA_DE_DIFERENCIA = (int_YYYYMMDD_FIN - int_YYYYMMDD_INI == 1);
-            bool LOS_HORARIOS_SON_IGUALES = int_HHMM_FIN == int_HHMM_INI;
-            bool EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL = int_HHMM_FIN < int_HHMM_INI;
-            bool EL_HORARIO_FINAL_ES_POSTERIOR_AL_HORARIO_INICIAL = int_HHMM_FIN > int_HHMM_INI;
-            bool LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL = int_YYYYMMDD_FIN > int_YYYYMMDD_INI;
-
-            if (LAS_FECHAS_SON_IGUALES) {
-                if (LOS_HORARIOS_SON_IGUALES || EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL) {
-                    MessageBox.Show("Cuando las fechas inicial y final son iguales, el horario final debe ser posterior al horario inicial.\n", "Inconsistencia en la franja horaria", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    limpiarTablas();
-                }
-                else {
-                    llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_LISTA_IDMAQUINAS);
-                    acomodarFormatoDGVs();
-                }
-            }
-            else {
-                if (LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL) {
-                    if (LOS_HORARIOS_SON_IGUALES) {
-                        llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_LISTA_IDMAQUINAS);
-                        acomodarFormatoDGVs();
-                    }
-                    else
-                    {
-                        if (EL_HORARIO_FINAL_ES_POSTERIOR_AL_HORARIO_INICIAL) {
-                            llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_LISTA_IDMAQUINAS);
-                            acomodarFormatoDGVs();
-                        }
-                        else {
-                            if (ENTRE_LAS_FECHAS_HAY_UN_UNICO_DIA_DE_DIFERENCIA) {
-                                llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_LISTA_IDMAQUINAS);
-                                acomodarFormatoDGVs();
-                            }
-                            else {
-                                llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_LISTA_IDMAQUINAS);
-                                acomodarFormatoDGVs();
-                            }
-                        }
-                    }
-                }
-                else {
-                    MessageBox.Show("La fecha final debe ser posterior a la fecha inicial.\n", "Inconsistencia de fechas", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    limpiarTablas();
-                }
-            }    
+            actualizarTablas();
         }
 
         public void acomodarFormatoDGVs() {
@@ -112,21 +56,21 @@ namespace HilosLibertad
 
 
         // Se llenan los tres DataGridView de acuerdo al caso VERDE (ver cuadro)
-        public void llenarTablas_casoVERDE(string S_FyH_INI, string S_FyH_FIN, string S_LISTA_IDMAQ)
+        public void llenarTablas_casoVERDE(string S_FyH_INI, string S_FyH_FIN, string S_MAQ_NUMERO, string S_MAQ_NOMBRE, string S_SEC_NOMBRE)
         {
             Consultas con = new Consultas();
-            dgv_TiemposPorMaquina.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposPorMaquina(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
-            dgv_TiemposPorSector.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposPorSector(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
-            dgv_TiemposTotales.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposTotales(S_FyH_INI, S_FyH_FIN, S_LISTA_IDMAQ);
+            dgv_TiemposPorMaquina.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposPorMaquina(S_FyH_INI, S_FyH_FIN, S_MAQ_NUMERO, S_MAQ_NOMBRE, S_SEC_NOMBRE);
+            dgv_TiemposPorSector.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposPorSector(S_FyH_INI, S_FyH_FIN, S_MAQ_NUMERO, S_MAQ_NOMBRE, S_SEC_NOMBRE);
+            dgv_TiemposTotales.DataSource = con.llenarTabla_UnUnicoIntervalo_TiemposTotales(S_FyH_INI, S_FyH_FIN, S_MAQ_NUMERO, S_MAQ_NOMBRE, S_SEC_NOMBRE);
         }
 
         // Se llenan los tres DataGridView de acuerdo al caso AZUL (ver cuadro)
-        public void llenarTablas_casoAZUL(string S_F_INI, string S_F_FIN, string S_H_INI, string S_H_FIN, string S_LISTA_IDMAQ)
+        public void llenarTablas_casoAZUL(string S_F_INI, string S_F_FIN, string S_H_INI, string S_H_FIN, string S_MAQ_NUMERO, string S_MAQ_NOMBRE, string S_SEC_NOMBRE)
         {
             Consultas con = new Consultas();
-            dgv_TiemposPorMaquina.DataSource = con.llenarTabla_Nintervalos_TiemposPorMaquina(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
-            dgv_TiemposPorSector.DataSource = con.llenarTabla_Nintervalos_TiemposPorSector(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
-            dgv_TiemposTotales.DataSource = con.llenarTabla_Nintervalos_TiemposTotales(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_LISTA_IDMAQ);
+            dgv_TiemposPorMaquina.DataSource = con.llenarTabla_Nintervalos_TiemposPorMaquina(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_MAQ_NUMERO, S_MAQ_NOMBRE, S_SEC_NOMBRE);
+            dgv_TiemposPorSector.DataSource = con.llenarTabla_Nintervalos_TiemposPorSector(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_MAQ_NUMERO, S_MAQ_NOMBRE, S_SEC_NOMBRE);
+            dgv_TiemposTotales.DataSource = con.llenarTabla_Nintervalos_TiemposTotales(S_F_INI, S_F_FIN, S_H_INI, S_H_FIN, S_MAQ_NUMERO, S_MAQ_NOMBRE, S_SEC_NOMBRE);
         }
 
         // Se deja de mostrar el contenido de las tablas
@@ -215,44 +159,6 @@ namespace HilosLibertad
 
 
 
-        // Devuelve el string utilizado para el filtro del WHERE de las consultas SELECT
-        public string getStringFiltroMaquinas()
-        {
-            string retorno;
-            string filtroLatente = " ";
-
-            if (chk_Telar1.Checked) filtroLatente = filtroLatente + "1, ";
-            if (chk_Telar2.Checked) filtroLatente = filtroLatente + "2, ";
-            if (chk_Telar3.Checked) filtroLatente = filtroLatente + "3, ";
-            if (chk_Telar4.Checked) filtroLatente = filtroLatente + "4, ";
-            if (chk_Telar5.Checked) filtroLatente = filtroLatente + "5, ";
-            if (chk_Telar6.Checked) filtroLatente = filtroLatente + "6, ";
-            if (chk_Telar7.Checked) filtroLatente = filtroLatente + "7, ";
-            if (chk_Telar8.Checked) filtroLatente = filtroLatente + "8, ";
-            if (chk_Telar9.Checked) filtroLatente = filtroLatente + "9, ";
-            if (chk_Urdidora.Checked) filtroLatente = filtroLatente + "10, ";
-
-            if (chk_Cordonera1.Checked) filtroLatente = filtroLatente + "11, ";
-            if (chk_Cordonera2.Checked) filtroLatente = filtroLatente + "12, ";
-            if (chk_Cordonera3.Checked) filtroLatente = filtroLatente + "13, ";
-            if (chk_Cordonera4.Checked) filtroLatente = filtroLatente + "14, ";
-            if (chk_Cordonera5.Checked) filtroLatente = filtroLatente + "15, ";
-            if (chk_Cordonera6.Checked) filtroLatente = filtroLatente + "16, ";
-            if (chk_Cordonera7.Checked) filtroLatente = filtroLatente + "17, ";
-            if (chk_Cordonera8.Checked) filtroLatente = filtroLatente + "18, ";
-            if (chk_Cordonera9.Checked) filtroLatente = filtroLatente + "19, ";
-
-            if (chk_Terminacion1.Checked) filtroLatente = filtroLatente + "20, ";
-            if (chk_Terminacion2.Checked) filtroLatente = filtroLatente + "21, ";
-            if (chk_Terminacion3.Checked) filtroLatente = filtroLatente + "22, ";
-
-            retorno = filtroLatente + "0";
-
-            return retorno;
-        }
-
-
-
         // Dado un DateTimePicker y un formato en particular (string), devuelve la fecha del DateTimePicker de acuerdo al formato recibido (el cual puede ser, por ejemplo, "yyyy-dd-MM" o "yyyy-MM-dd")
         public string getStringFromDTPconFormato(DateTimePicker dtp, string formato)
         {
@@ -275,143 +181,14 @@ namespace HilosLibertad
         }
 
 
-
         
-        private void btn_SeleccionSectorTelares_Click(object sender, EventArgs e)
-        {
-            accionarSeleccionSectores("telares");
-        }
-
-        private void btn_SeleccionSectorCordoneras_Click(object sender, EventArgs e)
-        {
-            accionarSeleccionSectores("cordoneras");
-        }
-
-        private void btn_SeleccionSectorTerminacion_Click(object sender, EventArgs e)
-        {
-            accionarSeleccionSectores("terminación");
-        }
-
         // Contadores usados para alternar estados de selección/deselección de filtros
         public int contBtnTelares = 1;
         public int contBtnCordoneras = 1;
         public int contBtnTerminacion = 1;
         public int contBtnGeneral = 1;
 
-        // Función usada para alternar selección de los tres sectores
-        private void accionarSeleccionSectores(string sector)
-        {
-            switch (sector)
-            {
-                case "telares":
-                    if (contBtnTelares % 2 == 0)
-                    {
-                        btn_SeleccionSectorTelares.Text = "Deseleccionar\ntodo el sector";
-                        setCheckButtons("telares", true);
-                    }
-                    else
-                    {
-                        btn_SeleccionSectorTelares.Text = "Seleccionar\ntodo el sector";
-                        setCheckButtons("telares", false);
-                    }
-                    contBtnTelares++;
-                    break;
-
-                case "cordoneras":
-                    if (contBtnCordoneras % 2 == 0)
-                    {
-                        btn_SeleccionSectorCordoneras.Text = "Deseleccionar\ntodo el sector";
-                        setCheckButtons("cordoneras", true);
-                    }
-                    else
-                    {
-                        btn_SeleccionSectorCordoneras.Text = "Seleccionar\ntodo el sector";
-                        setCheckButtons("cordoneras", false);
-                    }
-                    contBtnCordoneras++;
-                    break;
-
-                case "terminación":
-                    if (contBtnTerminacion % 2 == 0)
-                    {
-                        btn_SeleccionSectorTerminacion.Text = "Deseleccionar\ntodo el sector";
-                        setCheckButtons("terminación", true);
-                    }
-                    else
-                    {
-                        btn_SeleccionSectorTerminacion.Text = "Seleccionar\ntodo el sector";
-                        setCheckButtons("terminación", false);
-                    }
-                    contBtnTerminacion++;
-                    break;
-            }
-        }
-
-        // Se setean TODOS los CheckBox en TRUE
-        private void btn_SeleccionarTodo_Click(object sender, EventArgs e)
-        {
-            setCheckButtons("todos", true);
-            contBtnTelares = 0;
-            accionarSeleccionSectores("telares");
-            contBtnCordoneras = 0;
-            accionarSeleccionSectores("cordoneras");
-            contBtnTerminacion = 0;
-            accionarSeleccionSectores("terminación");
-        }
-
-        // Se setean TODOS los CheckBox en FALSE
-        private void btn_ResetearTodo_Click(object sender, EventArgs e)
-        {
-            setCheckButtons("todos", false);
-            contBtnTelares = 1;
-            accionarSeleccionSectores("telares");
-            contBtnCordoneras = 1;
-            accionarSeleccionSectores("cordoneras");
-            contBtnTerminacion = 1;
-            accionarSeleccionSectores("terminación");
-        }
-
-        // Dado un string correspondiente al sector y un valor booleano, setea el valor booleano a todos los CheckBox de ese sector
-        private void setCheckButtons(string sector, bool valor)
-        {
-            switch (sector)
-            {
-                case "telares":
-                    chk_Telar1.Checked = valor;
-                    chk_Telar2.Checked = valor;
-                    chk_Telar3.Checked = valor;
-                    chk_Telar4.Checked = valor;
-                    chk_Telar5.Checked = valor;
-                    chk_Telar6.Checked = valor;
-                    chk_Telar7.Checked = valor;
-                    chk_Telar8.Checked = valor;
-                    chk_Telar9.Checked = valor;
-                    chk_Urdidora.Checked = valor;
-                    break;
-                case "cordoneras":
-                    chk_Cordonera1.Checked = valor;
-                    chk_Cordonera2.Checked = valor;
-                    chk_Cordonera3.Checked = valor;
-                    chk_Cordonera4.Checked = valor;
-                    chk_Cordonera5.Checked = valor;
-                    chk_Cordonera6.Checked = valor;
-                    chk_Cordonera7.Checked = valor;
-                    chk_Cordonera8.Checked = valor;
-                    chk_Cordonera9.Checked = valor;
-                    break;
-                case "terminación":
-                    chk_Terminacion1.Checked = valor;
-                    chk_Terminacion2.Checked = valor;
-                    chk_Terminacion3.Checked = valor;
-                    break;
-                case "todos":
-                    setCheckButtons("telares", valor);
-                    setCheckButtons("cordoneras", valor);
-                    setCheckButtons("terminación", valor);
-                    break;
-            }
-        }
-
+        
 
 
         // Funciones para copiar al portapapeles todo el contenido de cada tabla, incluyendo encabezados
@@ -458,5 +235,215 @@ namespace HilosLibertad
             frm_EdicionDeMaquinas frm_eM = new frm_EdicionDeMaquinas();
             frm_eM.Show();
         }
+
+
+
+        private void txt_NumeroDeLaMaquina_TextChanged(object sender, EventArgs e)
+        {
+            actualizarTablas();
+        }
+
+        private void txt_NombreDeLaMaquina_TextChanged(object sender, EventArgs e)
+        {
+            actualizarTablas();
+        }
+
+        private void txt_NombreDelSector_TextChanged(object sender, EventArgs e)
+        {
+            actualizarTablas();
+        }
+
+
+
+
+        private void actualizarTablas()
+        {
+            int int_YYYYMMDD_INI = getYYYYMMDDentero_fromDtp(dtp_FechaInicial);
+            int int_YYYYMMDD_FIN = getYYYYMMDDentero_fromDtp(dtp_FechaFinal);
+            int int_HHMM_INI = getHHMMentero_from2Cmb(cmb_HoraInicial, cmb_MinutoInicial);
+            int int_HHMM_FIN = getHHMMentero_from2Cmb(cmb_HoraFinal, cmb_MinutoFinal);
+            string str_FyH_INI = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaInicial, cmb_HoraInicial, cmb_MinutoInicial) + "'";
+            string str_FyH_FIN = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaFinal, cmb_HoraFinal, cmb_MinutoFinal) + "'";
+            string str_F_INI = getStringFromDTPconFormato(dtp_FechaInicial, "yyyy-MM-dd");
+            string str_F_FIN = getStringFromDTPconFormato(dtp_FechaFinal, "yyyy-MM-dd");
+            string str_H_INI = getStringFrom2CMB(cmb_HoraInicial, cmb_MinutoInicial);
+            string str_H_FIN = getStringFrom2CMB(cmb_HoraFinal, cmb_MinutoFinal);
+
+            string str_FILTRO_NOMBRE_MAQUINA = txt_NombreDeLaMaquina.Text;
+            string str_FILTRO_NUMERO_MAQUINA = txt_NumeroDeLaMaquina.Text;
+            string str_FILTRO_NOMBRE_SECTOR = txt_NombreDelSector.Text;
+
+            bool LAS_FECHAS_SON_IGUALES = int_YYYYMMDD_INI == int_YYYYMMDD_FIN;
+            bool ENTRE_LAS_FECHAS_HAY_UN_UNICO_DIA_DE_DIFERENCIA = (int_YYYYMMDD_FIN - int_YYYYMMDD_INI == 1);
+            bool LOS_HORARIOS_SON_IGUALES = int_HHMM_FIN == int_HHMM_INI;
+            bool EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL = int_HHMM_FIN < int_HHMM_INI;
+            bool EL_HORARIO_FINAL_ES_POSTERIOR_AL_HORARIO_INICIAL = int_HHMM_FIN > int_HHMM_INI;
+            bool LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL = int_YYYYMMDD_FIN > int_YYYYMMDD_INI;
+
+            if (LAS_FECHAS_SON_IGUALES)
+            {
+                if (LOS_HORARIOS_SON_IGUALES || EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL)
+                {
+                    MessageBox.Show("Cuando las fechas inicial y final son iguales, el horario final debe ser posterior al horario inicial.\n", "Inconsistencia en la franja horaria", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    limpiarTablas();
+                }
+                else
+                {
+                    llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                    acomodarFormatoDGVs();
+                }
+            }
+            else
+            {
+                if (LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL)
+                {
+                    if (LOS_HORARIOS_SON_IGUALES)
+                    {
+                        llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                        acomodarFormatoDGVs();
+                    }
+                    else
+                    {
+                        if (EL_HORARIO_FINAL_ES_POSTERIOR_AL_HORARIO_INICIAL)
+                        {
+                            llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                            acomodarFormatoDGVs();
+                        }
+                        else
+                        {
+                            if (ENTRE_LAS_FECHAS_HAY_UN_UNICO_DIA_DE_DIFERENCIA)
+                            {
+                                llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                                acomodarFormatoDGVs();
+                            }
+                            else
+                            {
+                                llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                                acomodarFormatoDGVs();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("La fecha final debe ser posterior a la fecha inicial.\n", "Inconsistencia de fechas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    limpiarTablas();
+                }
+            }
+        }
+
+        private void dtp_FechaInicial_ValueChanged(object sender, EventArgs e)
+        {
+            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
+            {
+                cambiarColoresAElementosSiEsNecesario();
+            }
+        }
+
+        private void dtp_FechaFinal_ValueChanged(object sender, EventArgs e)
+        {
+            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
+            {
+                cambiarColoresAElementosSiEsNecesario();
+            }
+        }
+
+        private void cmb_HoraInicial_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
+            {
+                cambiarColoresAElementosSiEsNecesario();
+            }
+        }
+
+        private void cmb_MinutoInicial_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
+            {
+                cambiarColoresAElementosSiEsNecesario();
+            }
+        }
+
+        private void cmb_HoraFinal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
+            {
+                cambiarColoresAElementosSiEsNecesario();
+            }
+        }
+
+        private void cmb_MinutoFinal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
+            {
+                cambiarColoresAElementosSiEsNecesario();
+            }
+        }
+
+
+
+        private void cambiarColoresAElementosSiEsNecesario()
+        {
+            if (hayInconsistenciaEntreFechasYFranjasHorarias())
+            {
+                pintarElementosDeColor(Color.Crimson);
+            }
+            else
+            {
+                pintarElementosDeColor(Color.Black);
+            }
+        }
+
+        public bool hayInconsistenciaEntreFechasYFranjasHorarias()
+        {
+            int int_YYYYMMDD_INI = getYYYYMMDDentero_fromDtp(dtp_FechaInicial);
+            int int_YYYYMMDD_FIN = getYYYYMMDDentero_fromDtp(dtp_FechaFinal);
+            bool LAS_FECHAS_SON_IGUALES = int_YYYYMMDD_INI == int_YYYYMMDD_FIN;
+
+            int int_HHMM_INI = getHHMMentero_from2Cmb(cmb_HoraInicial, cmb_MinutoInicial);
+            int int_HHMM_FIN = getHHMMentero_from2Cmb(cmb_HoraFinal, cmb_MinutoFinal);
+            bool LOS_HORARIOS_SON_IGUALES = int_HHMM_FIN == int_HHMM_INI;
+            bool EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL = int_HHMM_FIN < int_HHMM_INI;
+
+            bool LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL = int_YYYYMMDD_FIN > int_YYYYMMDD_INI;
+
+            if (LAS_FECHAS_SON_IGUALES)
+            {
+                if (LOS_HORARIOS_SON_IGUALES || EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (!LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+
+        private void pintarElementosDeColor(Color c)    //Red o ControlText, por ejemplo
+        {
+            grp_FiltroFecha.ForeColor = c;
+            lbl_FechaInicial.ForeColor = c; 
+            lbl_FechaFinal.ForeColor = c;
+            
+            grp_FiltroFranjaHoraria.ForeColor = c;
+            lbl_HorarioInicial.ForeColor = c;
+            lbl_HorarioFinal.ForeColor = c;
+        }
+
+        
+
     }
 }

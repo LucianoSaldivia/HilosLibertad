@@ -12,13 +12,12 @@ DATO PARA NUESTROS STORED PROCEDURES: las fechas que se pasen por parémetro debe
 		--STORED PROCEDURE insertarSesion --> "SESSION STARTS"
 		--Sirve para insertar el idMaquina y su fecha/hora de encendido.
 		CREATE OR ALTER PROCEDURE HL.sp_insertarSesion
-			@idMaq NUMERIC(18,0),
-			@fHEnc SMALLDATETIME
+			@ID_MAQ NUMERIC(5,0),
+			@FH_ENC SMALLDATETIME
 		AS BEGIN
 			SET DATEFORMAT YMD
-			INSERT INTO HL.registros
-					   (idMaquina, fechaHoraEncendida, fechaHoraUltimoRegistroEncendida, fueApagadaPorOperarioOPorFallaParticular)
-				VALUES (@idMaq,	   @fHEnc,			   @fHEnc,							 0)
+			INSERT INTO HL.registros (idMaquina,	fechaHoraEncendida,	fechaHoraUltimoRegistroEncendida,	fueApagadaPorOperarioOPorFallaParticular)
+							  VALUES (@ID_MAQ,		@FH_ENC,			@FH_ENC,							0)
 		END
 		GO
 		--Para eliminar el STORED PROCEDURE: DROP PROCEDURE HL.sp_insertarSesion
@@ -27,15 +26,15 @@ DATO PARA NUESTROS STORED PROCEDURES: las fechas que se pasen por parémetro debe
 		--STORED PROCEDURE actualizarSesion --> "SESSION CONTINUES"
 		--Sirve para actualizar la fecha/hora del último registro de encendido de cierta máquina (cuyo ID se pasa por parámetro).
 		CREATE OR ALTER PROCEDURE HL.sp_actualizarSesion
-			@idMaq NUMERIC(18, 0),
-			@fHUltRegEnc SMALLDATETIME
+			@ID_MAQ NUMERIC(5, 0),
+			@FH_URE SMALLDATETIME
 		AS BEGIN
 			SET DATEFORMAT YMD
 			UPDATE HL.registros
-				SET fechaHoraUltimoRegistroEncendida = @fHUltRegEnc
+				SET fechaHoraUltimoRegistroEncendida = @FH_URE
 				WHERE idRegistro = (SELECT TOP 1 idRegistro
 									FROM HL.registros
-									WHERE idMaquina = @idMaq
+									WHERE idMaquina = @ID_MAQ
 									ORDER BY fechaHoraUltimoRegistroEncendida DESC, idRegistro DESC)
 		END
 		GO
@@ -45,16 +44,16 @@ DATO PARA NUESTROS STORED PROCEDURES: las fechas que se pasen por parémetro debe
 		--STORED PROCEDURE terminarSesion --> "SESSION FINISHES"
 		--Sirve para actualizar la fecha/hora del último registro de encendido de cierta máquina (cuyo ID se pasa por parámetro), indicando que fue apagada por un operario o por una falla particular.
 		CREATE OR ALTER PROCEDURE HL.sp_terminarSesion
-			@idMaq NUMERIC(18, 0),
-			@fHUltRegEnc SMALLDATETIME
+			@ID_MAQ NUMERIC(5, 0),
+			@FH_URE SMALLDATETIME
 		AS BEGIN
 			SET DATEFORMAT YMD
 			UPDATE HL.registros
-				SET fechaHoraUltimoRegistroEncendida = @fHUltRegEnc,
+				SET fechaHoraUltimoRegistroEncendida = @FH_URE,
 					fueApagadaPorOperarioOPorFallaParticular = 1
 				WHERE idRegistro = (SELECT TOP 1 idRegistro
 									FROM HL.registros
-									WHERE idMaquina = @idMaq
+									WHERE idMaquina = @ID_MAQ
 									ORDER BY fechaHoraUltimoRegistroEncendida DESC, idRegistro DESC)
 		END
 		GO

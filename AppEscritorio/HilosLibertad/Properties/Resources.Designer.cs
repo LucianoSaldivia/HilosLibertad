@@ -59,5 +59,35 @@ namespace HilosLibertad.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap logoNUEVO_4_cortado_más {
+            get {
+                object obj = ResourceManager.GetObject("logoNUEVO 4-cortado_más", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap logoNUEVO_6_blanco_por_fuera_RECORTE {
+            get {
+                object obj = ResourceManager.GetObject("logoNUEVO 6-blanco_por_fuera RECORTE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap logoNUEVO_7_blanco_por_fuera_RECORTE_MÁS {
+            get {
+                object obj = ResourceManager.GetObject("logoNUEVO 7-blanco_por_fuera RECORTE_MÁS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

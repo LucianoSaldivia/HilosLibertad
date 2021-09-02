@@ -24,12 +24,14 @@ namespace HilosLibertad
 
 
         // UN ÚNICO INTERVALO · TIEMPOS POR MÁQUINA
-        public DataTable llenarTabla_UnUnicoIntervalo_TiemposPorMaquina(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
+        public DataTable llenarTabla_UnUnicoIntervalo_TiemposPorMaquina(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_MAQUINA_NUMERO, string STRING_MAQUINA_NOMBRE, string STRING_SECTOR_NOMBRE)
         {
             string c1_casoUnicoIntervalo = "EXECUTE HL.sp_mostrarTiemposPorMaquina_1intervalo " + 
                                                             STRING_FECHAyHORARIO_INICIAL + ", " + 
-                                                            STRING_FECHAyHORARIO_FINAL + ", '" +
-                                                            STRING_LISTA_idMaquina + "' ";
+                                                            STRING_FECHAyHORARIO_FINAL + ", " +
+                                                            "'" + STRING_MAQUINA_NUMERO + "' , " +
+                                                            "'" + STRING_MAQUINA_NOMBRE + "' , " +
+                                                            "'" + STRING_SECTOR_NOMBRE + "'";
             SqlDataAdapter da = new SqlDataAdapter(c1_casoUnicoIntervalo, cn.LeerCadena());
             DataTable dt = new DataTable();
             da.Fill(dt);
@@ -37,12 +39,14 @@ namespace HilosLibertad
         }
 
         // UN ÚNICO INTERVALO · TIEMPOS POR SECTOR
-        public DataTable llenarTabla_UnUnicoIntervalo_TiemposPorSector(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
+        public DataTable llenarTabla_UnUnicoIntervalo_TiemposPorSector(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_MAQUINA_NUMERO, string STRING_MAQUINA_NOMBRE, string STRING_SECTOR_NOMBRE)
         {
             string c2_casoUnicoIntervalo = "EXECUTE HL.sp_mostrarTiemposPorSector_1intervalo " +
                                                             STRING_FECHAyHORARIO_INICIAL + ", " +
-                                                            STRING_FECHAyHORARIO_FINAL + ", '" +
-                                                            STRING_LISTA_idMaquina + "' ";
+                                                            STRING_FECHAyHORARIO_FINAL + ", " +
+                                                            "'" + STRING_MAQUINA_NUMERO + "' , " +
+                                                            "'" + STRING_MAQUINA_NOMBRE + "' , " +
+                                                            "'" + STRING_SECTOR_NOMBRE + "'";
 
             SqlDataAdapter da = new SqlDataAdapter(c2_casoUnicoIntervalo, cn.LeerCadena());
             DataTable dt = new DataTable();
@@ -51,12 +55,14 @@ namespace HilosLibertad
         }
 
         // UN ÚNICO INTERVALO · TIEMPOS TOTALES
-        public DataTable llenarTabla_UnUnicoIntervalo_TiemposTotales(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_LISTA_idMaquina)
+        public DataTable llenarTabla_UnUnicoIntervalo_TiemposTotales(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_MAQUINA_NUMERO, string STRING_MAQUINA_NOMBRE, string STRING_SECTOR_NOMBRE)
         {
             string c3_casoUnicoIntervalo = "EXECUTE HL.sp_mostrarTiemposTotales_1intervalo " +
                                                             STRING_FECHAyHORARIO_INICIAL + ", " +
-                                                            STRING_FECHAyHORARIO_FINAL + ", '" +
-                                                            STRING_LISTA_idMaquina + "' ";
+                                                            STRING_FECHAyHORARIO_FINAL + ", " +
+                                                            "'" + STRING_MAQUINA_NUMERO + "' , " +
+                                                            "'" + STRING_MAQUINA_NOMBRE + "' , " +
+                                                            "'" + STRING_SECTOR_NOMBRE + "'";
 
             SqlDataAdapter da = new SqlDataAdapter(c3_casoUnicoIntervalo, cn.LeerCadena());
             DataTable dt = new DataTable();
@@ -65,14 +71,16 @@ namespace HilosLibertad
         }
 
         // N INTERVALOS · TIEMPOS POR MÁQUINA
-        public DataTable llenarTabla_Nintervalos_TiemposPorMaquina (string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_LISTA_idMaquina)
+        public DataTable llenarTabla_Nintervalos_TiemposPorMaquina (string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_MAQUINA_NUMERO, string STRING_MAQUINA_NOMBRE, string STRING_SECTOR_NOMBRE)
         {
             string c1_casoNintervalos = "EXECUTE HL.sp_mostrarTiemposPorMaquina_Nintervalos " +
                                                             STRING_FECHA_INICIAL + ", " +
                                                             STRING_FECHA_FINAL + ", " +
                                                             STRING_HORARIO_INICIAL + ", " +
-                                                            STRING_HORARIO_FINAL + ", '" +
-                                                            STRING_LISTA_idMaquina + "' ";
+                                                            STRING_HORARIO_FINAL + ", " +
+                                                            "'" + STRING_MAQUINA_NUMERO + "' , " +
+                                                            "'" + STRING_MAQUINA_NOMBRE + "' , " +
+                                                            "'" + STRING_SECTOR_NOMBRE + "'";
             SqlDataAdapter da = new SqlDataAdapter(c1_casoNintervalos, cn.LeerCadena());
             DataTable dt = new DataTable();
             da.Fill(dt);
@@ -80,14 +88,16 @@ namespace HilosLibertad
         }
 
         // N INTERVALOS · TIEMPOS POR SECTOR
-        public DataTable llenarTabla_Nintervalos_TiemposPorSector(string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_LISTA_idMaquina)
+        public DataTable llenarTabla_Nintervalos_TiemposPorSector(string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_MAQUINA_NUMERO, string STRING_MAQUINA_NOMBRE, string STRING_SECTOR_NOMBRE)
         {
             string c2_casoNintervalos = "EXECUTE HL.sp_mostrarTiemposPorSector_Nintervalos " +
                                                             STRING_FECHA_INICIAL + ", " +
                                                             STRING_FECHA_FINAL + ", " +
                                                             STRING_HORARIO_INICIAL + ", " +
-                                                            STRING_HORARIO_FINAL + ", '" +
-                                                            STRING_LISTA_idMaquina + "' ";
+                                                            STRING_HORARIO_FINAL + ", " +
+                                                            "'" + STRING_MAQUINA_NUMERO + "' , " +
+                                                            "'" + STRING_MAQUINA_NOMBRE + "' , " +
+                                                            "'" + STRING_SECTOR_NOMBRE + "'";
             SqlDataAdapter da = new SqlDataAdapter(c2_casoNintervalos, cn.LeerCadena());
             DataTable dt = new DataTable();
             da.Fill(dt);
@@ -95,14 +105,16 @@ namespace HilosLibertad
         }
 
         // N INTERVALOS · TIEMPOS TOTALES
-        public DataTable llenarTabla_Nintervalos_TiemposTotales(string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_LISTA_idMaquina)
+        public DataTable llenarTabla_Nintervalos_TiemposTotales(string STRING_FECHA_INICIAL, string STRING_FECHA_FINAL, string STRING_HORARIO_INICIAL, string STRING_HORARIO_FINAL, string STRING_MAQUINA_NUMERO, string STRING_MAQUINA_NOMBRE, string STRING_SECTOR_NOMBRE)
         {
             string c3_casoNintervalos = "EXECUTE HL.sp_mostrarTiemposTotales_Nintervalos " +
                                                             STRING_FECHA_INICIAL + ", " +
                                                             STRING_FECHA_FINAL + ", " +
                                                             STRING_HORARIO_INICIAL + ", " +
-                                                            STRING_HORARIO_FINAL + ", '" +
-                                                            STRING_LISTA_idMaquina + "' ";
+                                                            STRING_HORARIO_FINAL + ", " +
+                                                            "'" + STRING_MAQUINA_NUMERO + "' , " +
+                                                            "'" + STRING_MAQUINA_NOMBRE + "' , " +
+                                                            "'" + STRING_SECTOR_NOMBRE + "'";
             SqlDataAdapter da = new SqlDataAdapter(c3_casoNintervalos, cn.LeerCadena());
             DataTable dt = new DataTable();
             da.Fill(dt);
