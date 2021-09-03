@@ -33,11 +33,204 @@ namespace HilosLibertad
         }
 
 
-        private void btn_Mostrar_Click(object sender, EventArgs e) 
+
+        // Ante un cambio en cualquier fecha (cualquiera de los 2 DateTimePicker), se da orden de "ejecutar"
+        private void dtp_FechaInicial_ValueChanged(object sender, EventArgs e)
         {
-            actualizarTablas();
+            ejecutar();
         }
 
+        private void dtp_FechaFinal_ValueChanged(object sender, EventArgs e)
+        {
+            ejecutar();
+        }
+
+
+        // Ante un cambio en cualquier horario o franja horaria (cualquiera de los 4 ComboBox), se da orden de "ejecutar"
+        private void cmb_HoraInicial_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ejecutar();
+        }
+
+        private void cmb_MinutoInicial_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ejecutar();
+        }
+
+        private void cmb_HoraFinal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ejecutar();
+        }
+
+        private void cmb_MinutoFinal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ejecutar();
+        }
+
+
+        // Ante un cambio en cualquier filtro por máquina y/o sector (cualquiera de los 3 TextBox), se da orden de "ejecutar"
+        private void txt_NumeroDeLaMaquina_TextChanged(object sender, EventArgs e)
+        {
+            ejecutar();
+        }
+
+        private void txt_NombreDeLaMaquina_TextChanged(object sender, EventArgs e)
+        {
+            ejecutar();
+        }
+
+        private void txt_NombreDelSector_TextChanged(object sender, EventArgs e)
+        {
+            ejecutar();
+        }
+
+
+        /*/ Lo que hace "Ejecutar" depende de si ya fueron seteadas inicialmente las fechas y franjas horarias:
+         *      - si ya fueron setearon, se da orden de actualizar las tablas.
+         *      - si aún no fueron seteadas, no se hace nada.
+         */
+        private void ejecutar()
+        {
+            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
+            {
+                //cambiarColoresAElementosSiEsNecesario();
+                actualizarTablas();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void actualizarTablas()
+        {
+            int int_YYYYMMDD_INI = getYYYYMMDDentero_fromDtp(dtp_FechaInicial);
+            int int_YYYYMMDD_FIN = getYYYYMMDDentero_fromDtp(dtp_FechaFinal);
+            int int_HHMM_INI = getHHMMentero_from2Cmb(cmb_HoraInicial, cmb_MinutoInicial);
+            int int_HHMM_FIN = getHHMMentero_from2Cmb(cmb_HoraFinal, cmb_MinutoFinal);
+            string str_FyH_INI = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaInicial, cmb_HoraInicial, cmb_MinutoInicial) + "'";
+            string str_FyH_FIN = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaFinal, cmb_HoraFinal, cmb_MinutoFinal) + "'";
+            string str_F_INI = getStringFromDTPconFormato(dtp_FechaInicial, "yyyy-MM-dd");
+            string str_F_FIN = getStringFromDTPconFormato(dtp_FechaFinal, "yyyy-MM-dd");
+            string str_H_INI = getStringFrom2CMB(cmb_HoraInicial, cmb_MinutoInicial);
+            string str_H_FIN = getStringFrom2CMB(cmb_HoraFinal, cmb_MinutoFinal);
+
+            string str_FILTRO_NOMBRE_MAQUINA = txt_NombreDeLaMaquina.Text;
+            string str_FILTRO_NUMERO_MAQUINA = txt_NumeroDeLaMaquina.Text;
+            string str_FILTRO_NOMBRE_SECTOR = txt_NombreDelSector.Text;
+
+            bool LAS_FECHAS_SON_IGUALES = int_YYYYMMDD_INI == int_YYYYMMDD_FIN;
+            bool ENTRE_LAS_FECHAS_HAY_UN_UNICO_DIA_DE_DIFERENCIA = (int_YYYYMMDD_FIN - int_YYYYMMDD_INI == 1);
+            bool LOS_HORARIOS_SON_IGUALES = int_HHMM_FIN == int_HHMM_INI;
+            bool EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL = int_HHMM_FIN < int_HHMM_INI;
+            bool EL_HORARIO_FINAL_ES_POSTERIOR_AL_HORARIO_INICIAL = int_HHMM_FIN > int_HHMM_INI;
+            bool LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL = int_YYYYMMDD_FIN > int_YYYYMMDD_INI;
+
+            
+
+            if (LAS_FECHAS_SON_IGUALES)
+            {
+                if (LOS_HORARIOS_SON_IGUALES || EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL)
+                {
+                    // FRANJA HORARIA NO VÁLIDA: CUANDO LAS FECHAS INICIAL Y FINAL SON IGUALES, EL HORARIO FINAL DEBE SER POSTERIOR AL HORARIO INICIAL
+                    pintarObjetosDeHorariosDeColor(Color.Crimson);
+                    pintarObjetosDeFechasDeColor(Color.Black);
+                    limpiarTablas();
+                }
+                else
+                {
+                    pintarTodosLosObjetosDeColor(Color.Black);
+                    llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                    acomodarFormatoDGVs();
+                }
+            }
+            else
+            {
+                if (LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL)
+                {
+                    if (LOS_HORARIOS_SON_IGUALES)
+                    {
+                        pintarTodosLosObjetosDeColor(Color.Black); 
+                        llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                        acomodarFormatoDGVs();
+                    }
+                    else
+                    {
+                        if (EL_HORARIO_FINAL_ES_POSTERIOR_AL_HORARIO_INICIAL)
+                        {
+                            pintarTodosLosObjetosDeColor(Color.Black);
+                            llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                            acomodarFormatoDGVs();
+                        }
+                        else
+                        {
+                            if (ENTRE_LAS_FECHAS_HAY_UN_UNICO_DIA_DE_DIFERENCIA)
+                            {
+                                pintarTodosLosObjetosDeColor(Color.Black);
+                                llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                                acomodarFormatoDGVs();
+                            }
+                            else
+                            {
+                                pintarTodosLosObjetosDeColor(Color.Black);
+                                llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                                acomodarFormatoDGVs();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // FECHAS NO VÁLIDAS: LA FECHA FINAL DEBE SER POSTERIOR A LA FECHA INICIAL
+                    pintarObjetosDeFechasDeColor(Color.Crimson);
+                    pintarObjetosDeHorariosDeColor(Color.Black);
+                    limpiarTablas();
+                }
+            }
+        }
+
+
+        private void pintarObjetosDeFechasDeColor(Color c)      // Red o ControlText, por ejemplo
+        {
+            grp_FiltroFecha.ForeColor = c;
+            lbl_FechaInicial.ForeColor = c;
+            lbl_FechaFinal.ForeColor = c;
+        }
+        private void pintarObjetosDeHorariosDeColor(Color c)      // Red o ControlText, por ejemplo
+        {
+            grp_FiltroFranjaHoraria.ForeColor = c;
+            lbl_HorarioInicial.ForeColor = c;
+            lbl_HorarioFinal.ForeColor = c;
+        }
+
+        private void pintarTodosLosObjetosDeColor(Color c)    //Red o ControlText, por ejemplo
+        {
+            pintarObjetosDeFechasDeColor(c);
+            pintarObjetosDeHorariosDeColor(c);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        // Se acomoda el formato de los DataGridView para su correcta disposición
         public void acomodarFormatoDGVs() {
             dgv_TiemposPorMaquina.Columns["#"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgv_TiemposPorMaquina.Columns["TIEMPO ENCENDIDA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
@@ -53,6 +246,8 @@ namespace HilosLibertad
             dgv_TiemposTotales.AutoResizeColumns();
             dgv_TiemposTotales.ClearSelection();
         }
+
+
 
 
         // Se llenan los tres DataGridView de acuerdo al caso VERDE (ver cuadro)
@@ -83,7 +278,6 @@ namespace HilosLibertad
         }
 
 
-
         // Dado un DateTimePicker, devuelve la fecha YYYYMMDD en formato int
         public int getYYYYMMDDentero_fromDtp(DateTimePicker dtp)
         {
@@ -98,24 +292,12 @@ namespace HilosLibertad
             return HHMM;
         }
 
-        // Dados un DateTimePicker y dos ComboBox, devuelve la FECHAyHORARIO YYYYMMDDHHMM en formato int
-        public int getYYYYMMDDHHMM_from1dtp2cmb(DateTimePicker dtp, ComboBox cmb_h, ComboBox cmb_m)
-        {
-            int YYYYMMDD = getYYYYMMDDentero_fromDtp(dtp);
-            int HHMM = getHHMMentero_from2Cmb(cmb_h, cmb_m);
-            int YYYYMMDDHHMM = YYYYMMDD * 10000 + HHMM;
-            return YYYYMMDDHHMM;
-
-        }
-
         // Dados un DateTimePicker y dos ComboBox, devuelve el string de la fecha y el horario "YYYY-DD-MM HH:MM:00"
         public string getStringYYYYMMDDHHMMfromdtp2cmb(DateTimePicker dtp, ComboBox cmb_h , ComboBox cmb_m)   
         {
             string YYYYDDMM = getStringYYYYDDMMfromdtp(dtp);
             string HHMM00 = getStringHHMMfrom2cmb(cmb_h, cmb_m);
-            
             string YYYYMMDD_HHMM00 = YYYYDDMM + " " + HHMM00;
-
             return YYYYMMDD_HHMM00;
         }
                 
@@ -152,13 +334,7 @@ namespace HilosLibertad
 
             return HHMM00;
         }
-
         
-
-        
-
-
-
         // Dado un DateTimePicker y un formato en particular (string), devuelve la fecha del DateTimePicker de acuerdo al formato recibido (el cual puede ser, por ejemplo, "yyyy-dd-MM" o "yyyy-MM-dd")
         public string getStringFromDTPconFormato(DateTimePicker dtp, string formato)
         {
@@ -179,16 +355,6 @@ namespace HilosLibertad
             string MM = cmb_m.SelectedItem.ToString();
             return "'" + HH + ":" + MM + "'";
         }
-
-
-        
-        // Contadores usados para alternar estados de selección/deselección de filtros
-        public int contBtnTelares = 1;
-        public int contBtnCordoneras = 1;
-        public int contBtnTerminacion = 1;
-        public int contBtnGeneral = 1;
-
-        
 
 
         // Funciones para copiar al portapapeles todo el contenido de cada tabla, incluyendo encabezados
@@ -223,7 +389,7 @@ namespace HilosLibertad
         }
 
 
-
+        // Mostrar otros formularios
         private void editarSectoresToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frm_EdicionDeSectores frm_eS = new frm_EdicionDeSectores();
@@ -235,215 +401,6 @@ namespace HilosLibertad
             frm_EdicionDeMaquinas frm_eM = new frm_EdicionDeMaquinas();
             frm_eM.Show();
         }
-
-
-
-        private void txt_NumeroDeLaMaquina_TextChanged(object sender, EventArgs e)
-        {
-            actualizarTablas();
-        }
-
-        private void txt_NombreDeLaMaquina_TextChanged(object sender, EventArgs e)
-        {
-            actualizarTablas();
-        }
-
-        private void txt_NombreDelSector_TextChanged(object sender, EventArgs e)
-        {
-            actualizarTablas();
-        }
-
-
-
-
-        private void actualizarTablas()
-        {
-            int int_YYYYMMDD_INI = getYYYYMMDDentero_fromDtp(dtp_FechaInicial);
-            int int_YYYYMMDD_FIN = getYYYYMMDDentero_fromDtp(dtp_FechaFinal);
-            int int_HHMM_INI = getHHMMentero_from2Cmb(cmb_HoraInicial, cmb_MinutoInicial);
-            int int_HHMM_FIN = getHHMMentero_from2Cmb(cmb_HoraFinal, cmb_MinutoFinal);
-            string str_FyH_INI = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaInicial, cmb_HoraInicial, cmb_MinutoInicial) + "'";
-            string str_FyH_FIN = "'" + getStringYYYYMMDDHHMMfromdtp2cmb(dtp_FechaFinal, cmb_HoraFinal, cmb_MinutoFinal) + "'";
-            string str_F_INI = getStringFromDTPconFormato(dtp_FechaInicial, "yyyy-MM-dd");
-            string str_F_FIN = getStringFromDTPconFormato(dtp_FechaFinal, "yyyy-MM-dd");
-            string str_H_INI = getStringFrom2CMB(cmb_HoraInicial, cmb_MinutoInicial);
-            string str_H_FIN = getStringFrom2CMB(cmb_HoraFinal, cmb_MinutoFinal);
-
-            string str_FILTRO_NOMBRE_MAQUINA = txt_NombreDeLaMaquina.Text;
-            string str_FILTRO_NUMERO_MAQUINA = txt_NumeroDeLaMaquina.Text;
-            string str_FILTRO_NOMBRE_SECTOR = txt_NombreDelSector.Text;
-
-            bool LAS_FECHAS_SON_IGUALES = int_YYYYMMDD_INI == int_YYYYMMDD_FIN;
-            bool ENTRE_LAS_FECHAS_HAY_UN_UNICO_DIA_DE_DIFERENCIA = (int_YYYYMMDD_FIN - int_YYYYMMDD_INI == 1);
-            bool LOS_HORARIOS_SON_IGUALES = int_HHMM_FIN == int_HHMM_INI;
-            bool EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL = int_HHMM_FIN < int_HHMM_INI;
-            bool EL_HORARIO_FINAL_ES_POSTERIOR_AL_HORARIO_INICIAL = int_HHMM_FIN > int_HHMM_INI;
-            bool LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL = int_YYYYMMDD_FIN > int_YYYYMMDD_INI;
-
-            if (LAS_FECHAS_SON_IGUALES)
-            {
-                if (LOS_HORARIOS_SON_IGUALES || EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL)
-                {
-                    MessageBox.Show("Cuando las fechas inicial y final son iguales, el horario final debe ser posterior al horario inicial.\n", "Inconsistencia en la franja horaria", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    limpiarTablas();
-                }
-                else
-                {
-                    llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
-                    acomodarFormatoDGVs();
-                }
-            }
-            else
-            {
-                if (LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL)
-                {
-                    if (LOS_HORARIOS_SON_IGUALES)
-                    {
-                        llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
-                        acomodarFormatoDGVs();
-                    }
-                    else
-                    {
-                        if (EL_HORARIO_FINAL_ES_POSTERIOR_AL_HORARIO_INICIAL)
-                        {
-                            llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
-                            acomodarFormatoDGVs();
-                        }
-                        else
-                        {
-                            if (ENTRE_LAS_FECHAS_HAY_UN_UNICO_DIA_DE_DIFERENCIA)
-                            {
-                                llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
-                                acomodarFormatoDGVs();
-                            }
-                            else
-                            {
-                                llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
-                                acomodarFormatoDGVs();
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("La fecha final debe ser posterior a la fecha inicial.\n", "Inconsistencia de fechas", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    limpiarTablas();
-                }
-            }
-        }
-
-        private void dtp_FechaInicial_ValueChanged(object sender, EventArgs e)
-        {
-            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
-            {
-                cambiarColoresAElementosSiEsNecesario();
-            }
-        }
-
-        private void dtp_FechaFinal_ValueChanged(object sender, EventArgs e)
-        {
-            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
-            {
-                cambiarColoresAElementosSiEsNecesario();
-            }
-        }
-
-        private void cmb_HoraInicial_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
-            {
-                cambiarColoresAElementosSiEsNecesario();
-            }
-        }
-
-        private void cmb_MinutoInicial_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
-            {
-                cambiarColoresAElementosSiEsNecesario();
-            }
-        }
-
-        private void cmb_HoraFinal_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
-            {
-                cambiarColoresAElementosSiEsNecesario();
-            }
-        }
-
-        private void cmb_MinutoFinal_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (yaSeSetearonInicialmenteLasFechasYFranjasHorarias)
-            {
-                cambiarColoresAElementosSiEsNecesario();
-            }
-        }
-
-
-
-        private void cambiarColoresAElementosSiEsNecesario()
-        {
-            if (hayInconsistenciaEntreFechasYFranjasHorarias())
-            {
-                pintarElementosDeColor(Color.Crimson);
-            }
-            else
-            {
-                pintarElementosDeColor(Color.Black);
-            }
-        }
-
-        public bool hayInconsistenciaEntreFechasYFranjasHorarias()
-        {
-            int int_YYYYMMDD_INI = getYYYYMMDDentero_fromDtp(dtp_FechaInicial);
-            int int_YYYYMMDD_FIN = getYYYYMMDDentero_fromDtp(dtp_FechaFinal);
-            bool LAS_FECHAS_SON_IGUALES = int_YYYYMMDD_INI == int_YYYYMMDD_FIN;
-
-            int int_HHMM_INI = getHHMMentero_from2Cmb(cmb_HoraInicial, cmb_MinutoInicial);
-            int int_HHMM_FIN = getHHMMentero_from2Cmb(cmb_HoraFinal, cmb_MinutoFinal);
-            bool LOS_HORARIOS_SON_IGUALES = int_HHMM_FIN == int_HHMM_INI;
-            bool EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL = int_HHMM_FIN < int_HHMM_INI;
-
-            bool LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL = int_YYYYMMDD_FIN > int_YYYYMMDD_INI;
-
-            if (LAS_FECHAS_SON_IGUALES)
-            {
-                if (LOS_HORARIOS_SON_IGUALES || EL_HORARIO_FINAL_ES_ANTERIOR_AL_HORARIO_INICIAL)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                if (!LA_FECHA_FINAL_ES_POSTERIOR_A_LA_FECHA_INICIAL)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-
-        private void pintarElementosDeColor(Color c)    //Red o ControlText, por ejemplo
-        {
-            grp_FiltroFecha.ForeColor = c;
-            lbl_FechaInicial.ForeColor = c; 
-            lbl_FechaFinal.ForeColor = c;
-            
-            grp_FiltroFranjaHoraria.ForeColor = c;
-            lbl_HorarioInicial.ForeColor = c;
-            lbl_HorarioFinal.ForeColor = c;
-        }
-
-        
 
     }
 }
