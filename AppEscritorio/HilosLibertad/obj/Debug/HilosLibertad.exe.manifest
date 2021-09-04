@@ -54,13 +54,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="HilosLibertad.exe.config" size="657">
+  <file name="HilosLibertad.exe.config" size="671">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>F6C+eM6qgKPQD93Aol2rHkyAfY3eDw+JwvJfNJQPA8I=</dsig:DigestValue>
+      <dsig:DigestValue>CzW+23CYIxQBpZpmefg2RocCCz3cUcakRCIRZXkWktE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="logoNUEVO 2-sin_slogan.ico" size="13967">
