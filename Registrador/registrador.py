@@ -457,7 +457,7 @@ def Registrador() -> None:
                     print( "DESCONEXION: Al menos una trama se perdió! Nada para escribir en la base" )
                 
                 # Reseteo los samples
-                # Asumo que ninguna máquina continúa, sino que se perdió registro, y las próximas son todas SESSION_STARTED
+                # Se perdió registro, entonces las próximas son todas SESSION_STARTED
                 curr_sample = initSample()
                 prev_sample = initSample()
                 # Reseteo los reportes, por la misma razón
