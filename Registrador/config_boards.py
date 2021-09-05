@@ -2,7 +2,7 @@
 
 # Placas conectadas (sólo sesiones de éstas se escribirán en la base)
 BOARD0 = True
-BOARD1 = False
+BOARD1 = True
 BOARD2 = False
 BOARD3 = False
 

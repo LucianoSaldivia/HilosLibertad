@@ -1,12 +1,12 @@
-@REM Ejecutado así, el registrador muestra las tramas recibidas, y fuerza siempre un timeout (no responde por puerto serie)
+@REM Ejecutado así, el registrador escribe en la base, muestra las tramas recibidas y los últimos cambios de la base
 
 @REM "%~dp0" resuelve el path completo hasta el directorio donde reside este archivo .bat
 
 @REM Sin consola
-@REM start D:/Programas/Python/pythonw.exe "%~dp0/../Registrador.py" "-respuesta_forzada" "timeout"
+@REM start D:/Programas/Python/pythonw.exe "%~dp0/../Registrador.py" "-registrador"
 
 @REM Con consola (para monitorear)
-start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-respuesta_forzada" "timeout"
+start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-registrador"
 
 
 

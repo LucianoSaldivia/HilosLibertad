@@ -6,6 +6,7 @@ import crc8
 import config_boards
 import config_serial
 import config_embedded
+import config_SQL_Database
 from datetime import datetime
 import enum
 import time
@@ -410,7 +411,7 @@ def Registrador() -> None:
                         # Reseteo el contador de tramas a escribir
                         tramas_a_escribir = 0
                         # Muestro la tabla actualizada
-                        SQL_Writer.selectLast(db_con, 50)
+                        SQL_Writer.selectLast(db_con, config_SQL_Database.LAST_N_TO_SELECT)
 
                     # Actualizo el Sample previo
                     prev_sample = curr_sample
@@ -694,7 +695,7 @@ if __name__ == "__main__":
     # Carga estandar de argumentos por línea de comandos a una lista
     args = sys.argv[1:]
     
-    # Registrador - Funcionamiento normal
+    # Registrador - Escribe en base
     if (len(args) == 1 and args[0] == '-registrador') or (len(args) == 0):
         Registrador()
 
