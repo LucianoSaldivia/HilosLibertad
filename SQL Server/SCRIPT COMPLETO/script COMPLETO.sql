@@ -91,29 +91,6 @@
 
 
 
--- Se crea la VISTA
-	CREATE OR ALTER VIEW HL.v_registrador AS (
-		SELECT r.idRegistro AS 'idReg',
-				r.idMaquina AS 'idMaq',
-				r.fechaHoraEncendida AS 'INIT_DT',
-				r.fechaHoraUltimoRegistroEncendida AS 'LAST_DT',
-				r.fueApagadaPorOperarioOPorFallaParticular AS 'TRND_OFF',
-				DATEDIFF(MINUTE, r.fechaHoraEncendida, r.fechaHoraUltimoRegistroEncendida) AS 'MINS_DIFF'
-		FROM HL.registros r
-	)
-	GO
-
-						SELECT * FROM HL.v_registrador
-						/*
-						AL ELIMINAR LA VISTA, TAMBIÉN SE ELIMINAN LOS DATOS ASOCIADOS A LA TABLA HL.registros --> DELETE HL.v_registrador 
-						PARA BORRAR LA VISTA:
-						DROP VIEW HL.v_registrador
-						*/
-
-
-
-
-
 -- Se crean los STORED PROCEDURES para permitir insertar/actualizar/terminar sesiones
 	CREATE OR ALTER PROCEDURE HL.sp_insertarSesion
 		@ID_MAQ NUMERIC(5,0),
@@ -572,3 +549,25 @@
 	END
 	GO
 
+
+
+
+
+	-- Se crea la VISTA
+	CREATE OR ALTER VIEW HL.v_registrador AS (
+		SELECT r.idRegistro AS 'idReg',
+				r.idMaquina AS 'idMaq',
+				r.fechaHoraEncendida AS 'INIT_DT',
+				r.fechaHoraUltimoRegistroEncendida AS 'LAST_DT',
+				r.fueApagadaPorOperarioOPorFallaParticular AS 'TRND_OFF',
+				DATEDIFF(MINUTE, r.fechaHoraEncendida, r.fechaHoraUltimoRegistroEncendida) AS 'MINS_DIFF'
+		FROM HL.registros r
+	)
+	GO
+
+						SELECT * FROM HL.v_registrador
+						/*
+						AL ELIMINAR LA VISTA, TAMBIÉN SE ELIMINAN LOS DATOS ASOCIADOS A LA TABLA HL.registros --> DELETE HL.v_registrador 
+						PARA BORRAR LA VISTA:
+						DROP VIEW HL.v_registrador
+						*/
