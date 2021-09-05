@@ -321,7 +321,7 @@ def showAllDataForcedAnswer( trama: bytes, contador_tramas: int, contador_naks: 
 
 
 # Funciones del receptor
-def Registrador() -> None:
+def Registrador( print_info: bool = True ) -> None:
     """Este programa es el Registrador para el Embebido.
     Recibe las tramas, las procesa, y escribe en la base de datos todo lo útil."""
 
@@ -379,16 +379,18 @@ def Registrador() -> None:
 
                     # Si se recompuso la conexion
                     if hubo_desconexion:
-                        print( "Se logro una nueva conexión" )
+                        if print_info:
+                            print( "Se logro una nueva conexión" )
                         # Reseteo el flag de desconexion
                         hubo_desconexion = False
                         # Pongo el timeout nuevamente
                         serial_port.timeout = DISCONNECTION_TIME
 
-                    # Aviso que se recibió la trama
-                    print( "Trama recibida" )
-                    # Muestro la trama recibida
-                    showReceivedPDU( trama )
+                    if print_info:
+                        # Aviso que se recibió la trama
+                        print( "Trama recibida" )
+                        # Muestro la trama recibida
+                        showReceivedPDU( trama )
 
                     # Genero el Sample a partir de la trama recibida
                     curr_sample = getSamplesFromFrame(trama, datetime.now())
@@ -410,8 +412,9 @@ def Registrador() -> None:
                         writeDatabaseFromReports( curr_report_list, db_con )                                 
                         # Reseteo el contador de tramas a escribir
                         tramas_a_escribir = 0
-                        # Muestro la tabla actualizada
-                        SQL_Writer.selectLast(db_con, config_SQL_Database.LAST_N_TO_SELECT)
+                        if print_info:
+                            # Muestro la tabla actualizada
+                            SQL_Writer.selectLast(db_con, config_SQL_Database.LAST_N_TO_SELECT)
 
                     # Actualizo el Sample previo
                     prev_sample = curr_sample
@@ -430,8 +433,9 @@ def Registrador() -> None:
                     # Respondo NAK
                     serial_port.write(config_embedded.NAK)
 
-                    # Muestro la trama recibida
-                    showReceivedPDU(trama)
+                    if print_info:
+                        # Muestro la trama recibida
+                        showReceivedPDU(trama)
 
                     # Limpio la trama para recibir una nueva
                     trama = bytes()
@@ -443,19 +447,23 @@ def Registrador() -> None:
 
                 # Si hay tramas a escribir en la base
                 if tramas_a_escribir != 0:
-                    # Aviso que se perdió al menos una trama
-                    print( "DESCONEXION: Al menos una trama se perdió! Guardo en la base lo que tengo" )
+                    if print_info:
+                        # Aviso que se perdió al menos una trama
+                        print( "DESCONEXION: Al menos una trama se perdió! Guardo en la base lo que tengo" )
 
                     # Escribo en la base todos los reportes
                     writeDatabaseFromReports( curr_report_list, db_con )                                 
                     # Reseteo el contador de tramas a escribir
                     tramas_a_escribir = 0
-                    # Muestro la tabla actualizada
-                    SQL_Writer.selectLast(db_con, 50)
+                    
+                    if print_info:
+                        # Muestro la tabla actualizada
+                        SQL_Writer.selectLast(db_con, 50)
                 # No hay tramas a escribir en la base
                 else:
-                    # Aviso que se perdió al menos una trama
-                    print( "DESCONEXION: Al menos una trama se perdió! Nada para escribir en la base" )
+                    if print_info:
+                        # Aviso que se perdió al menos una trama
+                        print( "DESCONEXION: Al menos una trama se perdió! Nada para escribir en la base" )
                 
                 # Reseteo los samples
                 # Se perdió registro, entonces las próximas son todas SESSION_STARTED
@@ -680,10 +688,11 @@ def SerialTester_ForceAnswer( forced_answer: bytes ) -> None:
 
 if __name__ == "__main__":
     """
-    Este programa puede tomar 1 argumento por línea de comandos:
+    Este programa puede tomar hasta 2 argumentos por línea de comandos:
 
     1.
-    -registrador
+    -registrador <print_info>
+    Las opciones para <print_info> son: "-print_all" o "-print_nothing"
 
     2.
     -monitor
@@ -696,15 +705,21 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     
     # Registrador - Escribe en base
-    if (len(args) == 1 and args[0] == '-registrador') or (len(args) == 0):
-        Registrador()
+    if len(args) == 0 or args[0] == "-registrador":
+        if len(args) == 0 or len(args) == 1:
+            Registrador(print_info=True)
+        if len(args) == 2 and args[1] == "-print_all":
+            Registrador(print_info=True)
+        if len(args) == 2 and args[1] == "-print_nothing":
+            Registrador(print_info=False)
+        
 
     # Monitor - Imprime en pantalla todo lo que recibe, y responde ACK o NAK según corresponda
-    elif len(args) == 1 and args[0] == '-monitor':
+    elif len(args) == 1 and args[0] == "-monitor":
         SerialTester()
 
     # Tester - Fuerza una respuesta UNEX_ANS, NAK, o TIMEOUT según se pase por argumento
-    elif len(args) == 2 and args[0] == '-respuesta_forzada' and args[1] in config_embedded.FORCED_ANSWERS.keys():
+    elif len(args) == 2 and args[0] == "-respuesta_forzada" and args[1] in config_embedded.FORCED_ANSWERS.keys():
         SerialTester_ForceAnswer( config_embedded.FORCED_ANSWERS.get(args[1]) )
    
     

@@ -1,12 +1,12 @@
-@REM Ejecutado así, el registrador escribe en la base, todo en el background
+@REM Ejecutado así, el registrador escribe en la base según las tramas que recibe, sin imprimir nada. Todo se ejecuta en el background
 
 @REM "%~dp0" resuelve el path completo hasta el directorio donde reside este archivo .bat
 
 @REM Sin consola
-start D:/Programas/Python/pythonw.exe "%~dp0/../Registrador.py" "-registrador"
+start D:/Programas/Python/pythonw.exe "%~dp0/../Registrador.py" "-registrador" "-print_nothing"
 
 @REM Con consola (para monitorear)
-@REM start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-registrador"
+@REM start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-registrador" "-print_nothing"
 
 
 
