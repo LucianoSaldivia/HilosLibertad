@@ -26,7 +26,7 @@ namespace HilosLibertad.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-Q40QD62;Initial Catalog=prueba2;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(local);Initial Catalog=DB_EJEMPLO;Integrated Security=True")]
         public string unica {
             get {
                 return ((string)(this["unica"]));
