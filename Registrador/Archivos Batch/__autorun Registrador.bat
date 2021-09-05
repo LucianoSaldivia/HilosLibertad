@@ -2,16 +2,25 @@
 
 @REM "%~dp0" resuelve el path completo hasta el directorio donde reside este archivo .bat
 
-@REM Sin consola
-start D:/Programas/Python/pythonw.exe "%~dp0/../Registrador.py" "-registrador" "-print_nothing"
 
-@REM Con consola (para monitorear)
+@echo off
+
+@REM Con consola (para ver todo mientras funciona)
+@REM Busco el path de python.exe
+@REM FOR /f %%p in ('where python') do SET python_path=%%p
+@REM start "%python_path%" "%~dp0/../Registrador.py" "-registrador" "-print_nothing"
+
+@REM start D:/Programas/Python/pythonw.exe "%~dp0/../Registrador.py" "-registrador" "-print_nothing"
+
+
+@REM Sin consola
+@REM Busco el path de pythonw.exe
+FOR /f %%p in ('where pythonw') do SET pythonw_path=%%p
+start "%pythonw_path%" "%~dp0/../Registrador.py" "-registrador" "-print_nothing"
+
 @REM start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-registrador" "-print_nothing"
 
-
-
-
-
+pause
 
 
 

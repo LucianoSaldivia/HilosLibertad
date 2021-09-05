@@ -1,17 +1,26 @@
-@REM Ejecutado así, el registrador muestra las tramas recibidas, y fuerza siempre un timeout (no responde por puerto serie)
+@REM Ejecutado así, el registrador muestra las tramas recibidas, y siempre fuerza un TIMEOUT (no responde)
 
 @REM "%~dp0" resuelve el path completo hasta el directorio donde reside este archivo .bat
 
-@REM Sin consola
+
+@echo off
+
+@REM Con consola (para ver todo mientras funciona)
+@REM Busco el path de python.exe
+FOR /f %%p in ('where python') do SET python_path=%%p
+start "%python_path%" "%~dp0/../Registrador.py" "-respuesta_forzada" "timeout"
+
 @REM start D:/Programas/Python/pythonw.exe "%~dp0/../Registrador.py" "-respuesta_forzada" "timeout"
 
-@REM Con consola (para monitorear)
-start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-respuesta_forzada" "timeout"
 
+@REM Sin consola
+@REM Busco el path de pythonw.exe
+@REM FOR /f %%p in ('where pythonw') do SET pythonw_path=%%p
+@REM start "%pythonw_path%" "%~dp0/../Registrador.py" "-respuesta_forzada" "timeout"
 
+@REM start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-respuesta_forzada" "timeout"
 
-
-
+pause
 
 
 
