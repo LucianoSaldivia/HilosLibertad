@@ -1,0 +1,21 @@
+Si al instalar tira el error de (hashValidation o algo así como "has a different computed hash than specified in manifest"), hay que regenerar el manifesto de la aplicación.
+
+Se hace así:
+
+1. En el Visual Studio, ir a: Menú Herramientas > Línea de Comandos > Símbolo del Sistema para Desarrolladores
+
+2. Poner los siguientes comandos:
+	cd publish
+	cd "Application Files"
+	cd HilosLibertad_1_0_0_13
+	mage -sign HilosLibertad.exe.manifest -CertFile ..\..\..\HilosLibertad\HilosLibertad_1_TemporaryKey.pfx -Password hash123
+
+Comentarios del último comando:
+ - el "HilosLibertad.exe.manifest" es el nombre del archivo de manifiesto más la extensión.
+ - el "..\..\..\HilosLibertad\HilosLibertad_1_TemporaryKey.pfx" es la ruta de acceso relativa o completa del archivo de certificado.
+ - el "hash123" es la contraseña del certificado (generado en su momento al publicarlo, si no me equivoco: Propiedades del Proyecto > Firma > Firmar el ensamblado [ESTÁ DESACTIVADO AHORA] > archivo correspondiente y contraseña como "hash123").
+
+
+Referencias:
+ - https://www.reddit.com/r/MTGO/comments/8z0ys2/cannot_install/
+ - https://docs.microsoft.com/es-es/visualstudio/deployment/how-to-re-sign-application-and-deployment-manifests?view=vs-2019&redirectedfrom=MSDN&viewFallbackFrom=vs-2015
