@@ -1,11 +1,19 @@
 @echo off
 
-FOR /f %%p in ('where python') do SET python_path=%%p
-echo Python esta en %python_path%
-start "%python_path%" "%~dp0/../Registrador.py" "-respuesta_forzada" "ack"
+@REM FOR /f %%p in ('where python') do SET python_path=%%p
+@REM echo Python esta en %python_path%
+@REM starts "%python_path%" "%~dp0/../Registrador.py" "-respuesta_forzada" "ack"
 @REM start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-respuesta_forzada" "ack"
 
-pause
+@REM FOR /f %%p in ('where pythonw') do SET pythonw_path=%%p
+@REM echo PythonW esta en %pythonw_path%
+@REM start "%python_path%" "%~dp0/../Registrador.py" "-respuesta_forzada" "ack"
+@REM start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-respuesta_forzada" "ack"
+
+
+start "C:\Users\PabloDell\AppData\Local\Programs\Python\Python39\pythonw.exe" "%~dp0\..\Registrador.pyw"
+
+@REM pause
 
 
 
