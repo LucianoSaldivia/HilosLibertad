@@ -14,8 +14,8 @@
             ----> el define de TIMEOUT_TIME está en dataSender.h
 
     */
-	#define TIME_BETWEEN_FRAMES		((uint16_t) (5 * SEG))
-	//#define TIME_BETWEEN_FRAMES	((uint16_t) (1 * MIN + 5 * MILISEG))
+	//#define TIME_BETWEEN_FRAMES		((uint16_t) (5 * SEG))
+	#define TIME_BETWEEN_FRAMES		((uint16_t) (1 * MIN + 5 * MILISEG))
 
 
     typedef enum MuxReaderStates{
