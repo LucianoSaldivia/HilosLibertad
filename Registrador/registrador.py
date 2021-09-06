@@ -7,6 +7,7 @@ import config_boards
 import config_serial
 import config_embedded
 import config_SQL_Database
+import console_window_control
 from datetime import datetime
 import enum
 import time
@@ -686,46 +687,49 @@ def SerialTester_ForceAnswer( forced_answer: bytes ) -> None:
         serial_port.close()
 
 
-if __name__ == "__main__":
+# Función Principal
+def main():
     """
     Este programa puede tomar hasta 2 argumentos por línea de comandos:
 
-    1.
-    -registrador <print_info>
-    Las opciones para <print_info> son: "-print_all" o "-print_nothing"
+    1. -registrador <window?>
+    Para escribir en la base de datos.
+        Las opciones para <window?> son: 
+            "-background" o "-windowless"   -> Para ejecutar en segundo plano
+            "-foreground" o "-windowed"     -> Para mostrar consola con todos los mensajes
 
-    2.
-    -monitor
+    2. -show_received
+    Para mostrar los datos recibidos. No escribe en la base de datos.
 
-    3.
-    -respuesta_forzada <respuesta>
-    Las opciones para <respuesta> están en el diccionario config_embedded.FORCED_ANSWERS
+    3. -respuesta_forzada <respuesta>
+    Para mostrar los datos recibidos, respondiendo <respuesta> siempre. No escribe en la base de datos.
+        Las opciones de <respuesta> están en el diccionario config_embedded.FORCED_ANSWERS
     """
     # Carga estandar de argumentos por línea de comandos a una lista
     args = sys.argv[1:]
-    
-    # Registrador - Escribe en base
-    if len(args) == 0 or args[0] == "-registrador":
-        if len(args) == 0 or len(args) == 1:
-            Registrador(print_info=True)
-        if len(args) == 2 and args[1] == "-print_all":
-            Registrador(print_info=True)
-        if len(args) == 2 and args[1] == "-print_nothing":
-            Registrador(print_info=False)
-        
 
-    # Monitor - Imprime en pantalla todo lo que recibe, y responde ACK o NAK según corresponda
-    elif len(args) == 1 and args[0] == "-monitor":
+    # Default (para debuggear)
+    if len(args) == 0:
+        Registrador(print_info=True)
+    
+    # Registrador
+    if len(args) == 2 or args[0] == "-registrador":
+        if   args[1] == "-background" or args[1] == "-windowless":
+            console_window_control.hide_console_window()
+            Registrador(print_info=False)
+
+        elif args[1] == "-foreground" or args[1] == "-windowed":
+            console_window_control.show_console_window()
+            Registrador(print_info=True)
+        
+    # Serial Tester
+    elif len(args) == 1 and args[0] == "-show_received":
         SerialTester()
 
-    # Tester - Fuerza una respuesta UNEX_ANS, NAK, o TIMEOUT según se pase por argumento
+    # Tester Forced Answer
     elif len(args) == 2 and args[0] == "-respuesta_forzada" and args[1] in config_embedded.FORCED_ANSWERS.keys():
         SerialTester_ForceAnswer( config_embedded.FORCED_ANSWERS.get(args[1]) )
    
-    
-    
-    
-    
-    
 
-
+if __name__ == "__main__":
+    main()

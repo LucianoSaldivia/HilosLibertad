@@ -1,19 +1,15 @@
 @echo off
 
-@REM FOR /f %%p in ('where python') do SET python_path=%%p
-@REM echo Python esta en %python_path%
-@REM starts "%python_path%" "%~dp0/../Registrador.py" "-respuesta_forzada" "ack"
-@REM start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-respuesta_forzada" "ack"
+FOR /f %%p in ('where python') do SET python_path=%%p
+echo Python esta en %python_path%
 
-@REM FOR /f %%p in ('where pythonw') do SET pythonw_path=%%p
-@REM echo PythonW esta en %pythonw_path%
-@REM start "%python_path%" "%~dp0/../Registrador.py" "-respuesta_forzada" "ack"
-@REM start D:/Programas/Python/python.exe "%~dp0/../Registrador.py" "-respuesta_forzada" "ack"
+FOR /f %%p in ('where pythonw') do SET pythonw_path=%%p
+echo PythonW esta en %pythonw_path%
 
+@REM "%~dp0" resuelve el path completo hasta el directorio donde reside este archivo .bat
+echo %~dp0
 
-start "C:\Users\PabloDell\AppData\Local\Programs\Python\Python39\pythonw.exe" "%~dp0\..\Registrador.pyw"
-
-@REM pause
+pause
 
 
 
