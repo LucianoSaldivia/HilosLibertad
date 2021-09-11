@@ -20,11 +20,13 @@ def writeErrorLog(timestamp: datetime, type: str, last_ok_timestamp: datetime = 
     """
     
     if last_ok_timestamp is None:
-        end_log_line = "\n"
+        end_log_line = str()
     else:
-        end_log_line = str(last_ok_timestamp) + "\n"
+        end_log_line = str(last_ok_timestamp)
     
-    log_line = str(timestamp) + " - " + ErrorLogMsg.get(type) + end_log_line
+    log_line = str(timestamp) + " - " \
+                + ErrorLogMsg.get(type) + end_log_line \
+                + ". Error Log Code: " + type + ".\n"
     
     # Abro el archivo como "(a)ppend", "over(w)rite", o (x)"create"
     with open(log_file_relative_path, "a") as fd:

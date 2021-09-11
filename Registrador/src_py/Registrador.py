@@ -845,7 +845,7 @@ def main():
         Registrador(print_info=True)
     
     # Registrador
-    if len(args) == 2 or args[0] == "-registrador":
+    if len(args) == 2 and args[0] == "-registrador":
         if   args[1] == "-background" or args[1] == "-windowless":
             console_window_control.hideConsoleWindow()
             Registrador(print_info=False)
