@@ -403,7 +403,7 @@ def Registrador( print_info: bool = True ) -> None:
     Recibe las tramas, las procesa, y escribe en la base de datos todo lo util."""
 
     # Inicio la conexión con la base de datos
-    db_con = tryToWriteToDataBase()
+    db_con = tryToConnectToDataBase()
     print(f"Conectado a la base de datos: {config_SQL_Database.db_name}")
 
     # Abro el puerto serie
