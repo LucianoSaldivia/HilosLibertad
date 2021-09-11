@@ -10,12 +10,18 @@
 
     /* TIEMPOS --- LEER
 
+	#define DEBUG_MODE --> en types.h
+
     TIME_BETWEEN_FRAMES_MS >= 30 * TIMEOUT_TIME
             ----> el define de TIMEOUT_TIME está en dataSender.h
 
     */
-	//#define TIME_BETWEEN_FRAMES		((uint16_t) (5 * SEG))
-	#define TIME_BETWEEN_FRAMES		((uint16_t) (1 * MIN + 5 * MILISEG))
+
+ 	#if defined(DEBUG_MODE)
+		#define TIME_BETWEEN_FRAMES		((uint16_t) (5 * SEG))
+	#else
+		#define TIME_BETWEEN_FRAMES		((uint16_t) (1 * MIN + 5 * MILISEG))
+	#endif
 
 
     typedef enum MuxReaderStates{
