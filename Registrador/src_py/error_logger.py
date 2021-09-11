@@ -5,11 +5,11 @@ log_file_relative_path = "errors.log"
 
 # Posibles errores: Mensaje
 ErrorLogMsg = {
-    "DB_CONN":  "No se pudo conectar con la base de datos",
-    "DB_WRITE": "No se pudo escribir en la Base de Datos. Última conexión/escritura OK: ",
-    "USB_CONN": "No se pudo conectar con CH340 (Driver USB de la máquina)",
-    "USB_MUTE": "No se recibieron más datos de la máquina. Último dato recibido: ",
-    "USB_LOST": "Se perdió la conexión con la máquina. Último dato recibido: "
+    "DB_CONN":              "No se pudo conectar con la base de datos",
+    "DB_WRITE":             "No se pudo escribir en la Base de Datos. Última conexión/escritura OK: ",
+    "USB_CONN":             "No se pudo conectar con CH340 (Driver USB de la máquina)",
+    "USB_MUTE":             "No se recibieron más datos de la máquina. Último dato recibido: ",
+    "USB_HOT_UNPLUGGED":    "Se perdió la conexión con la máquina."
 }
 
 def writeErrorLog(timestamp: datetime, type: str, last_ok_timestamp: datetime = None, opt_msg: str = str()) -> None:

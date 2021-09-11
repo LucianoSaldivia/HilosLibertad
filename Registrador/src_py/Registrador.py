@@ -368,16 +368,33 @@ def Registrador( print_info: bool = True ) -> None:
     connected_to_usb = False
 
     # Abro el puerto serie
-    with serial.Serial( port = config_serial.PUERTO_SERIE_COM,
-                        baudrate = config_serial.SELECTED_BAUDRATE,
-                        parity = config_serial.SELECTED_PARITY,
-                        stopbits = config_serial.SELECTED_STOPBITS,
-                        bytesize = config_serial.SELECTED_BYTE_SIZE,
-                        timeout = DISCONNECTION_TIME 
-                        ) as serial_port:
-
+    try:
+        serial_port = serial.Serial( 
+            port = str(config_serial.get_CH340_Port().name),
+            baudrate = config_serial.SELECTED_BAUDRATE,
+            parity = config_serial.SELECTED_PARITY,
+            stopbits = config_serial.SELECTED_STOPBITS,
+            bytesize = config_serial.SELECTED_BYTE_SIZE,
+            timeout = DISCONNECTION_TIME 
+        )
+    except Exception as exception:
+        print("USB-Serial CH340 no encontrado...")
+        print(exception.args[0])
+        print()
+        error_timestamp = datetime.now()
+        error_logger.writeErrorLog( 
+            error_timestamp, 
+            "USB_CONN",
+            opt_msg=exception.args[0]
+        )
+        sys.exit(1)
+    else:
         connected_to_usb = True
-        
+        if print_info:
+            print("Conectado a la máquina (USB-Serial CH340)")
+
+
+    with serial_port:
         # Limpio cualquier basura previa en el puerto
         serial_port.flush()
         serial_port.reset_input_buffer()
@@ -391,14 +408,38 @@ def Registrador( print_info: bool = True ) -> None:
             # Si todo anda bien
             if not hubo_desconexion:
                 # Recibo hasta CHAR_FINISH_PDU, con DISCONNECTION_TIME segundos como límite
-                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
+                try:
+                    trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
+                except serial.serialutil.SerialException as serial_exception:
+                    print("USB-Serial CH340 desconectado...")
+                    print(serial_exception.args[0])
+                    print()
+                    error_timestamp = datetime.now()
+                    error_logger.writeErrorLog( 
+                        error_timestamp, 
+                        "USB_HOT_UNPLUGGED",
+                        opt_msg=serial_exception.args[0]
+                    )
+                    sys.exit(1)
+
             # Si hubo desconexion
             else:
                 # Saco el timeout
                 serial_port.timeout = None
                 # Recibo hasta CHAR_FINISH_PDU, sin límite de tiempo
-                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
-
+                try:
+                    trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
+                except serial.serialutil.SerialException as serial_exception:
+                    print("USB-Serial CH340 desconectado...")
+                    print(serial_exception.args[0])
+                    print()
+                    error_timestamp = datetime.now()
+                    error_logger.writeErrorLog( 
+                        error_timestamp, 
+                        "USB_HOT_UNPLUGGED",
+                        opt_msg=serial_exception.args[0]
+                    )
+                    sys.exit(1)
             
             # Si se recibió una trama completa
             if len(trama) >= config_embedded.BUFFER_SIZE_ONLY_DATA_MODE:
@@ -513,223 +554,14 @@ def Registrador( print_info: bool = True ) -> None:
         error_logger.writeErrorLog( datetime.now(), "USB_CONN" )
     else:
         error_logger.writeErrorLog( datetime.now(), "USB_LOST", curr_sample[0] ) 
-def SerialTester() -> None:
-    """Este programa simula ser el Registrador para el Embebido.
-    Muestra además en pantalla, los datos recibidos y si hay desconexiones."""
-
-    # Abro el puerto serie
-    with serial.Serial( port = config_serial.PUERTO_SERIE_COM,
-                        baudrate = config_serial.SELECTED_BAUDRATE,
-                        parity = config_serial.SELECTED_PARITY,
-                        stopbits = config_serial.SELECTED_STOPBITS,
-                        bytesize = config_serial.SELECTED_BYTE_SIZE,
-                        timeout = DISCONNECTION_TIME
-                        ) as serial_port:
-
-        # Limpio cualquier basura previa en el puerto
-        serial_port.flush()
-        serial_port.reset_input_buffer()
-
-        # Inicializo los contadores
-        contador_naks = 0
-        contador_tramas = 1
-
-        # Loop principal
-        trama = bytes()
-        hubo_desconexion = False
-        last_dt = datetime.now()
-        while 1:
-            
-            # Si todo anda bien
-            if not hubo_desconexion:
-                # Recibo hasta CHAR_FINISH_PDU, con DISCONNECTION_TIME segundos como límite
-                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
-            # Si hubo desconexion
-            else:
-                # Saco el timeout
-                serial_port.timeout = None
-                # Recibo hasta CHAR_FINISH_PDU, sin límite de tiempo
-                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
-            
-            # Si se recibió una trama completa
-            if len(trama) >= config_embedded.BUFFER_SIZE_ONLY_DATA_MODE:
-            
-                # Obtengo un timestamp
-                curr_dt = datetime.now()
-
-                # Chequeo el PDU
-                check = checkReceivedPDU(trama)
-            
-                # ACK
-                if check == True:
-                    # Respondo ACK
-                    serial_port.write(config_embedded.ACK)
-
-                    # Si se recompuso la conexion
-                    if hubo_desconexion:
-                        # Aviso de la reconexión
-                        print( "Se logro una nueva conexión. Empiezo a contar tramas de nuevo." )
-                        # Reseteo el contador de tramas
-                        contador_tramas = 1 
-                        # Reseteo acumuladores estadísticos
-                        resetAverage()
-                        resetStandardDeviation()
-                        # Reseteo el flag de desconexion
-                        hubo_desconexion = False
-                        # Pongo el timeout nuevamente
-                        serial_port.timeout = DISCONNECTION_TIME
-                    
-                    # Muestro los datos de la trama
-                    showAllDataAck( trama, contador_tramas, contador_naks, curr_dt, last_dt )
-                    
-                    # Guardo el timestamp como el último
-                    last_dt = curr_dt
-
-                    # Espero para limpiar el buffer de recepción, 
-                    time.sleep(CLEAR_RX_BUFFER_TIME)
-                    # Limpio el buffer de recepción por posible unex_ans recibida en el embebido
-                    serial_port.reset_input_buffer()
-                    # Limpio la trama para recibir una nueva
-                    trama = bytes()
-                
-                # NAK
-                else:
-                    # Respondo NAK
-                    serial_port.write(config_embedded.NAK)
-
-                    # Cuento el NAK
-                    contador_naks += 1
-
-                    # Muestro los datos de la trama
-                    showAllDataNak( trama, contador_tramas, contador_naks, curr_dt, last_dt )
-
-                    # Limpio la trama para recibir una nueva
-                    trama = bytes()
-
-                # Cuento la trama llegada (sin importar ACK o NAK)
-                contador_tramas += 1
-                    
-            # Sino se recibió una trama, hubo una DESCONEXIÓN
-            else:
-                # Seteo el flag de desconexion
-                hubo_desconexion = True
-
-                # Aviso de la desconexión
-                print( "DESCONEXIÓN: Al menos una trama se perdió!" )  
-
-    if serial_port.is_open:
-        serial_port.close()
-def SerialTester_ForceAnswer( forced_answer: bytes ) -> None:
-    """Este programa simula ser un "Registrador con problemas de comunicación" para el Embebido, 
-    respondiendo siempre FORCED_ANS, pudiendo ser NAK, UNEX_ANS, o incluso ACK o FORCE_TIMEOUT. 
-    Así, se pueden probar las distintas alarmas, mientas se siguen mostrando en pantalla los datos recibidos, y si hay desconexiones."""
-
-    # Abro el puerto serie
-    with serial.Serial( port = config_serial.PUERTO_SERIE_COM,
-                        baudrate = config_serial.SELECTED_BAUDRATE,
-                        parity = config_serial.SELECTED_PARITY,
-                        stopbits = config_serial.SELECTED_STOPBITS,
-                        bytesize = config_serial.SELECTED_BYTE_SIZE,
-                        timeout = DISCONNECTION_TIME
-                        ) as serial_port:
-
-        # Limpio cualquier basura previa en el puerto
-        serial_port.flush()
-        serial_port.reset_input_buffer()
-
-        # Inicializo los contadores
-        contador_naks = 0
-        contador_tramas = 1
-
-        # Loop principal
-        trama = bytes()
-        hubo_desconexion = False
-        last_dt = datetime.now()
-        while 1:
-            
-            # Si todo anda bien
-            if not hubo_desconexion:
-                # Recibo hasta CHAR_FINISH_PDU, con DISCONNECTION_TIME segundos como límite
-                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
-            # Si hubo desconexion
-            else:
-                # Saco el timeout
-                serial_port.timeout = None
-                # Recibo hasta CHAR_FINISH_PDU, sin límite de tiempo
-                trama += serial_port.read_until( config_embedded.CHAR_FINISH_PDU )
-            
-            # Si se recibió una trama completa
-            if len(trama) >= config_embedded.BUFFER_SIZE_ONLY_DATA_MODE:
-            
-                # Obtengo un timestamp
-                curr_dt = datetime.now()
-
-                # Chequeo el PDU
-                check = checkReceivedPDU(trama)
-            
-                # ACK
-                if check == True:
-                    # Respondo FORCED_ANS
-                    serial_port.write(forced_answer)
-
-                    # Si se recompuso la conexion
-                    if hubo_desconexion:
-                        # Aviso de la reconexión
-                        print( "Se logro una nueva conexión. Empiezo a contar tramas de nuevo." )
-                        # Reseteo el contador de tramas
-                        contador_tramas = 1 
-                        # Reseteo acumuladores estadísticos
-                        resetAverage()
-                        resetStandardDeviation()
-                        # Reseteo el flag de desconexion
-                        hubo_desconexion = False
-                        # Pongo el timeout nuevamente
-                        serial_port.timeout = DISCONNECTION_TIME
-                    
-                    # Muestro los datos de la trama
-                    showAllDataForcedAnswer( trama, contador_tramas, contador_naks, curr_dt, last_dt, forced_answer )
-                    
-                    # Guardo el timestamp como el último
-                    last_dt = curr_dt
-
-                    # No duerme ni limpia el buffer de recepción, para contar sólamente las respuestas forzadas, y no timeouts
-                    trama = bytes()
-                
-                # NAK
-                else:
-                    # Respondo NAK
-                    serial_port.write(forced_answer)
-
-                    # Cuento el NAK
-                    contador_naks += 1
-
-                    # Muestro los datos de la trama
-                    showAllDataForcedAnswer( trama, contador_tramas, contador_naks, curr_dt, last_dt, forced_answer )
-
-                    # Limpio la trama para recibir una nueva
-                    trama = bytes()
-
-                # Cuento la trama llegada (sin importar ACK o NAK)
-                contador_tramas += 1
-                    
-            # Sino se recibió una trama, hubo una DESCONEXIÓN
-            else:
-                # Seteo el flag de desconexion
-                hubo_desconexion = True
-
-                # Aviso de la desconexión
-                print( "DESCONEXIÓN: Al menos una trama se perdió!" )  
-
-    if serial_port.is_open:
-        serial_port.close()
-def SerialTester2_to_test( forced_answer: bytes = None ) -> None:
+def SerialTester( forced_answer: bytes = None ) -> None:
     """Este programa testea la conexión serie y la validez de las tramas.
     Si se le pasa forced_answer, responde SIEMPRE con éstos bytes sin importar que reciba, 
     de lo contrario, responde lo que corresponda.
     Muestra además en pantalla, los datos recibidos y si hay desconexiones."""
 
     # Abro el puerto serie
-    with serial.Serial( port = config_serial.PUERTO_SERIE_COM,
+    with serial.Serial( port = str(config_serial.get_CH340_Port().name),
                         baudrate = config_serial.SELECTED_BAUDRATE,
                         parity = config_serial.SELECTED_PARITY,
                         stopbits = config_serial.SELECTED_STOPBITS,
@@ -883,13 +715,11 @@ def main():
         
     # Serial Tester
     elif len(args) == 1 and args[0] == "-serial_tester":
-        # SerialTester()
-        SerialTester2_to_test()
+        SerialTester()
 
     # Tester Forced Answer
     elif len(args) == 2 and args[0] == "-respuesta_forzada" and args[1] in config_embedded.FORCED_ANSWERS.keys():
-        # SerialTester_ForceAnswer( config_embedded.FORCED_ANSWERS.get(args[1]) )
-        SerialTester2_to_test(forced_answer=config_embedded.FORCED_ANSWERS.get(args[1]))
+        SerialTester(forced_answer=config_embedded.FORCED_ANSWERS.get(args[1]))
    
 
 if __name__ == "__main__":

@@ -10,9 +10,10 @@ def get_CH340_Port() -> serial.tools.list_ports_common.ListPortInfo:
         if str(port.description).find("USB-Serial CH340"):
             print( "USB-Serial CH340 encontrado en el puerto " + str(port.name) )
             return port
+    raise Exception("USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.")
 
 # Puerto COM
-PUERTO_SERIE_COM = str(get_CH340_Port().name)
+# PUERTO_SERIE_COM = str(get_CH340_Port().name)
 #PUERTO_SERIE_COM = "COM6"
 
 
