@@ -152,6 +152,8 @@ void FSM_DataSender( DataSender *sender, DS_UartInterruptionFlags *flags ){
 						}
 						// Si no llegué a la cantidad máxima de NAKs por envío
 						else{
+							// Apago alarma previa
+							stopAlarm( &(sender->alarma) );
 							// Intento enviar nuevamente, todavía no se perdió el dato
 							_sendLoadedSample( sender, flags );
 							// Paso a esperar el fin de la transmisión

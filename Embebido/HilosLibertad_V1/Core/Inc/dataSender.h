@@ -9,7 +9,9 @@
 
     // Tiempo de Timeout
     #define TIMEOUT_TIME            ((uint32_t) (100 * MILISEG))
-    // Timeouts                 (+ probable)
+
+
+	// Timeouts                 (+ probable)
     #define MAX_TIMEOUTS            (uint8_t) 5
     #define MAX_DATA_LOSS_TIMEOUT   (uint8_t) 5
     #define TIMEOUT_ALARM_TYPE      (AlarmType) QUADRUPLE_BEEP
