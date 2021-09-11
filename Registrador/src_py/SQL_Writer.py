@@ -2,8 +2,9 @@
 
 import pyodbc
 import config_SQL_Database
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 import Registrador
+import error_logger
 
 
 # Tutoriales y fuentes:
@@ -45,13 +46,18 @@ def sessionStarted(conn, id_maq: int, timestamp: datetime):
 		timestamp como 'YYYY-DD-MM HH:MM:SS'
     """
 
-    print(f"Maq {id_maq}, sessionStarted")
-    cursor = conn.cursor()
+    # print(f"Maq {id_maq}, sessionStarted")
+    try: 
+        cursor = conn.cursor()
 
-    formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
-    # Ejecuto el procedimiento
-    cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_STARTED} {id_maq}, '{formatted_timestamp}'" )
-    conn.commit()
+        formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
+        # Ejecuto el procedimiento
+        cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_STARTED} {id_maq}, '{formatted_timestamp}'" )
+        conn.commit()
+    except:
+        error_timestamp = datetime.now()
+        print("Hubo un problema en la escritura a la base de datos...")
+        error_logger.writeErrorLog( error_timestamp, "DB_WRITE", error_timestamp - timedelta(minutes=5) )
 def sessionContinues(conn, id_maq: int, timestamp: datetime):
     """Llamo al procedimiento PROC_SESSION_CONTINUES como en el siguiente ejemplo:
     EXEC HL.sp_actualizarSesion 1, '2018-30-09 16:05:00'
@@ -59,13 +65,18 @@ def sessionContinues(conn, id_maq: int, timestamp: datetime):
         id_maq
 		timestamp como 'YYYY-DD-MM HH:MM:SS'
     """
-    print(f"Maq {id_maq}, sessionContinues")
-    cursor = conn.cursor()
+    # print(f"Maq {id_maq}, sessionContinues")
+    try: 
+        cursor = conn.cursor()
 
-    formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
-    # Ejecuto el procedimiento  
-    cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_CONTINUES} {id_maq}, '{formatted_timestamp}'" )
-    conn.commit()
+        formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
+        # Ejecuto el procedimiento  
+        cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_CONTINUES} {id_maq}, '{formatted_timestamp}'" )
+        conn.commit()
+    except:
+        error_timestamp = datetime.now()
+        print("Hubo un problema en la escritura a la base de datos...")
+        error_logger.writeErrorLog( error_timestamp, "DB_WRITE", error_timestamp - timedelta(minutes=5) )
 def sessionFinished(conn, id_maq: int, timestamp: datetime):
     """Llamo al procedimiento PROC_SESSION_FINISHED como en el siguiente ejemplo:
     EXEC HL.sp_terminarSesion 1, '2018-30-09 16:45:00'
@@ -73,13 +84,18 @@ def sessionFinished(conn, id_maq: int, timestamp: datetime):
         id_maq
 		timestamp como 'YYYY-DD-MM HH:MM:SS'
     """
-    print(f"Maq {id_maq}, sessionFinishes")
-    cursor = conn.cursor()
+    # print(f"Maq {id_maq}, sessionFinishes")
+    try: 
+        cursor = conn.cursor()
 
-    formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
-    # Ejecuto el procedimiento
-    cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_FINISHED} {id_maq}, '{formatted_timestamp}'" )
-    conn.commit()
+        formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
+        # Ejecuto el procedimiento
+        cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_FINISHED} {id_maq}, '{formatted_timestamp}'" )
+        conn.commit()
+    except:
+        error_timestamp = datetime.now()
+        print("Hubo un problema en la escritura a la base de datos...")
+        error_logger.writeErrorLog( error_timestamp, "DB_WRITE", error_timestamp - timedelta(minutes=5) )
 
 
 #   Clear Table Function
@@ -111,6 +127,8 @@ def connectToDatabase():
         return conn
     except:
         print("Hubo un problema en la conexión a la base de datos...")
+        error_logger.writeErrorLog( datetime.now(), "DB_CONN" )
+
 
 
 
@@ -569,8 +587,8 @@ if __name__ == "__main__":
         # selectAll(conn)
 
         selectAll(conn)
-        clearTable(conn, config_SQL_Database.table_name)
-        selectAll(conn)
+        # clearTable(conn, config_SQL_Database.table_name)
+        # selectAll(conn)
 
     print("Todo OK")
     

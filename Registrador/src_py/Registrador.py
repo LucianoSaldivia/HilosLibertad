@@ -8,11 +8,12 @@ import config_serial
 import config_embedded
 import config_SQL_Database
 import console_window_control
-from datetime import datetime
+from datetime import datetime, timedelta
 import enum
 import time
 import SQL_Writer
 from math import sqrt
+import error_logger
 
 
 # Configuración para escritura en Base
@@ -336,6 +337,8 @@ def Registrador( print_info: bool = True ) -> None:
     # Inicio la conexión con la base de datos
     db_con = SQL_Writer.connectToDatabase()
 
+    connected_to_usb = False
+
     # Abro el puerto serie
     with serial.Serial( port = config_serial.PUERTO_SERIE_COM,
                         baudrate = config_serial.SELECTED_BAUDRATE,
@@ -345,6 +348,8 @@ def Registrador( print_info: bool = True ) -> None:
                         timeout = DISCONNECTION_TIME 
                         ) as serial_port:
 
+        connected_to_usb = True
+        
         # Limpio cualquier basura previa en el puerto
         serial_port.flush()
         serial_port.reset_input_buffer()
@@ -445,6 +450,8 @@ def Registrador( print_info: bool = True ) -> None:
             else:
                 # Seteo el flag de desconexion
                 hubo_desconexion = True
+                error_logger.writeErrorLog( datetime.now(), "USB_MUTE", curr_sample[0] )
+
 
                 # Si hay tramas a escribir en la base
                 if tramas_a_escribir != 0:
@@ -459,7 +466,7 @@ def Registrador( print_info: bool = True ) -> None:
                     
                     if print_info:
                         # Muestro la tabla actualizada
-                        SQL_Writer.selectLast(db_con, 50)
+                        SQL_Writer.selectLast(db_con, config_SQL_Database.LAST_N_TO_SELECT)
                 # No hay tramas a escribir en la base
                 else:
                     if print_info:
@@ -473,9 +480,11 @@ def Registrador( print_info: bool = True ) -> None:
                 # Reseteo los reportes, por la misma razón
                 curr_report_list = list()
                 prev_report_list = list()
-
-    if serial_port.is_open:
-        serial_port.close()
+    
+    if not connected_to_usb: 
+        error_logger.writeErrorLog( datetime.now(), "USB_CONN" )
+    else:
+        error_logger.writeErrorLog( datetime.now(), "USB_LOST", curr_sample[0] ) 
 def SerialTester() -> None:
     """Este programa simula ser el Registrador para el Embebido.
     Muestra además en pantalla, los datos recibidos y si hay desconexiones."""
@@ -685,7 +694,130 @@ def SerialTester_ForceAnswer( forced_answer: bytes ) -> None:
 
     if serial_port.is_open:
         serial_port.close()
+def SerialTester2_to_test( forced_answer: bytes = None ) -> None:
+    """Este programa testea la conexión serie y la validez de las tramas.
+    Si se le pasa forced_answer, responde SIEMPRE con éstos bytes sin importar que reciba, 
+    de lo contrario, responde lo que corresponda.
+    Muestra además en pantalla, los datos recibidos y si hay desconexiones."""
 
+    # Abro el puerto serie
+    with serial.Serial( port = config_serial.PUERTO_SERIE_COM,
+                        baudrate = config_serial.SELECTED_BAUDRATE,
+                        parity = config_serial.SELECTED_PARITY,
+                        stopbits = config_serial.SELECTED_STOPBITS,
+                        bytesize = config_serial.SELECTED_BYTE_SIZE,
+                        timeout = DISCONNECTION_TIME
+                        ) as serial_port:
+
+        connected_to_usb = True
+
+        # Limpio cualquier basura previa en el puerto
+        serial_port.flush()
+        serial_port.reset_input_buffer()
+
+        # Inicializo los contadores
+        contador_naks = 0
+        contador_tramas = 1
+
+        # Loop principal
+        trama = bytes()
+        hubo_desconexion = False
+        last_dt = datetime.now()
+        while 1:
+            
+            # Si todo anda bien
+            if not hubo_desconexion:
+                # Recibo hasta CHAR_FINISH_PDU, con DISCONNECTION_TIME segundos como límite
+                trama += serial_port.read_until(config_embedded.CHAR_FINISH_PDU)
+            # Si hubo desconexion
+            else:
+                # Saco el timeout
+                serial_port.timeout = None
+                # Recibo hasta CHAR_FINISH_PDU, sin límite de tiempo
+                trama += serial_port.read_until(config_embedded.CHAR_FINISH_PDU)
+            
+            # Si se recibió una trama completa
+            if len(trama) >= config_embedded.BUFFER_SIZE_ONLY_DATA_MODE:
+            
+                # Obtengo un timestamp
+                curr_dt = datetime.now()
+
+                # Chequeo el PDU
+                check = checkReceivedPDU(trama)
+            
+                # ACK
+                if check == True:
+                    if forced_answer in config_embedded.FORCED_ANSWERS.values():
+                        # Respuesta forzada
+                        serial_port.write(forced_answer)
+                        #Muestro los datos de la trama
+                        showAllDataForcedAnswer(trama, contador_tramas, contador_naks, curr_dt, last_dt, forced_answer)
+                   
+                    else:
+                        # Testeo normal
+                        serial_port.write(config_embedded.ACK)
+                        # Muestro los datos de la trama
+                        showAllDataAck(trama, contador_tramas, contador_naks, curr_dt, last_dt)
+                        
+                    # Si se recompuso la conexion
+                    if hubo_desconexion:
+                        # Aviso de la reconexión
+                        print("Se logro una NUEVA CONEXIÓN con esta trama")
+                        # Reseteo el contador de tramas
+                        contador_tramas = 1 
+                        # Reseteo acumuladores estadísticos
+                        resetAverage()
+                        resetStandardDeviation()
+                        # Reseteo el flag de desconexion
+                        hubo_desconexion = False
+                        # Pongo el timeout nuevamente
+                        serial_port.timeout = DISCONNECTION_TIME
+
+                    # Guardo el timestamp como el último
+                    last_dt = curr_dt
+                    
+                    # Espero para limpiar el buffer de recepción, 
+                    time.sleep(CLEAR_RX_BUFFER_TIME)
+                    # Limpio el buffer de recepción por posible unex_ans recibida en el embebido
+                    serial_port.reset_input_buffer()
+                    # Limpio la trama para recibir una nueva
+                    trama = bytes()
+
+                # NAK
+                else:
+                    if forced_answer in config_embedded.FORCED_ANSWERS.values():
+                        # Respuesta forzada
+                        serial_port.write(forced_answer)
+                        #Muestro los datos de la trama
+                        showAllDataForcedAnswer(trama, contador_tramas, contador_naks, curr_dt, last_dt, forced_answer)
+                   
+                    else:
+                        # Testeo normal
+                        serial_port.write(config_embedded.NAK)
+                        # Muestro los datos de la trama
+                        showAllDataNak(trama, contador_tramas, contador_naks, curr_dt, last_dt)
+
+                    # Cuento el NAK
+                    contador_naks += 1
+                    # Limpio la trama para recibir una nueva
+                    trama = bytes()
+
+                # Cuento la trama llegada (sin importar ACK o NAK)
+                contador_tramas += 1
+                    
+            # Sino se recibió una trama, hubo una DESCONEXIÓN
+            else:
+                # Seteo el flag de desconexion
+                hubo_desconexion = True
+                error_logger.writeErrorLog(datetime.now(), "USB_MUTE", curr_dt)
+
+                # Aviso de la desconexión
+                print("DESCONEXIÓN: Al menos una trama se perdió!")                      
+                    
+    if not connected_to_usb:
+        error_logger.writeErrorLog(datetime.now(), "USB_CONN")
+    else:
+        error_logger.writeErrorLog(datetime.now(), "USB_LOST", curr_dt)
 
 # Función Principal
 def main():
@@ -698,7 +830,7 @@ def main():
             "-background" o "-windowless"   -> Para ejecutar en segundo plano
             "-foreground" o "-windowed"     -> Para mostrar consola con todos los mensajes
 
-    2. -show_received
+    2. -serial_tester
     Para mostrar los datos recibidos. No escribe en la base de datos.
 
     3. -respuesta_forzada <respuesta>
@@ -715,20 +847,22 @@ def main():
     # Registrador
     if len(args) == 2 or args[0] == "-registrador":
         if   args[1] == "-background" or args[1] == "-windowless":
-            console_window_control.hide_console_window()
+            console_window_control.hideConsoleWindow()
             Registrador(print_info=False)
 
         elif args[1] == "-foreground" or args[1] == "-windowed":
-            console_window_control.show_console_window()
+            console_window_control.showConsoleWindow()
             Registrador(print_info=True)
         
     # Serial Tester
-    elif len(args) == 1 and args[0] == "-show_received":
-        SerialTester()
+    elif len(args) == 1 and args[0] == "-serial_tester":
+        # SerialTester()
+        SerialTester2_to_test()
 
     # Tester Forced Answer
     elif len(args) == 2 and args[0] == "-respuesta_forzada" and args[1] in config_embedded.FORCED_ANSWERS.keys():
-        SerialTester_ForceAnswer( config_embedded.FORCED_ANSWERS.get(args[1]) )
+        # SerialTester_ForceAnswer( config_embedded.FORCED_ANSWERS.get(args[1]) )
+        SerialTester2_to_test(forced_answer=config_embedded.FORCED_ANSWERS.get(args[1]))
    
 
 if __name__ == "__main__":

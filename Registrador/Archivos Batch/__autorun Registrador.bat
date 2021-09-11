@@ -5,6 +5,6 @@
 
 @REM Busco el path de pythonw.exe
 FOR /f %%p in ('where pythonw') do SET pythonw_path=%%p
-start "%pythonw_path%" "%~dp0/../Registrador.py" "-registrador" "-windowless"
+start "%pythonw_path%" "%~dp0/../src_py/Registrador.py" "-registrador" "-windowless"
 
-@REM start D:/Programas/Python/pythonw.exe "%~dp0/../Registrador.py" "-registrador" "-windowless"
+@REM start D:/Programas/Python/pythonw.exe "%~dp0/../src_py/Registrador.py" "-registrador" "-windowless"
