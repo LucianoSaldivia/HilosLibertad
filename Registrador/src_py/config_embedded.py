@@ -1,8 +1,15 @@
 # config_embedded.py
 
+# ¿Modo de Debug? (para tiempo entre tramas)
+DEBUG_MODE = True
+
 # Tiempos del Embebido (pero en Segundos)
+if DEBUG_MODE:
+    TIME_BETWEEN_FRAMES = 5
+else:
+    TIME_BETWEEN_FRAMES = 60
 TIMEOUT_TIME = 0.1
-TIME_BETWEEN_FRAMES = 60
+
 # TIME_BETWEEN_FRAMES = 5
 
 # Caracter de fin de trama
