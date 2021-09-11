@@ -236,21 +236,34 @@ def writeDatabaseFromReports(report_list: list, db_con: any):
     # Recorro todos los reportes
     for reporte in report_list:
         
-        # Si la máquina es una de las conectadas, escribo en la base
-        if reporte[0] in config_boards.CONNECTED_MAQS:
+        try: 
+            # Si la máquina es una de las conectadas, escribo en la base
+            if reporte[0] in config_boards.CONNECTED_MAQS:
 
-            # Reporte de continuación de sesión
-            if   reporte[1] == Event.SESSION_CONTINUES:
-                SQL_Writer.sessionContinues( db_con, reporte[0], reporte[2] )
+                # Reporte de continuación de sesión
+                if   reporte[1] == Event.SESSION_CONTINUES:
+                    SQL_Writer.sessionContinues( db_con, reporte[0], reporte[2] )
+                
+                # Reporte de inicio de sesión
+                elif reporte[1] == Event.SESSION_STARTED:
+                    SQL_Writer.sessionStarted( db_con, reporte[0], reporte[2] )
+                
+                # Reporte de final de sesión
+                elif reporte[1] == Event.SESSION_FINISHED:
+                    SQL_Writer.sessionFinished( db_con, reporte[0], reporte[2] )
+        except Exception as exception:
+            print("Error al intentar escribir en la base de datos:")
+            print(exception.args[0])
+            print()
+            error_timestamp = datetime.now()
+            error_logger.writeErrorLog( 
+                error_timestamp, 
+                "DB_WRITE", 
+                error_timestamp - timedelta(seconds=MAX_FRAMES_TO_WRITE*config_embedded.TIME_BETWEEN_FRAMES),
+                opt_msg=exception.args[0]
+            )
+            sys.exit(1)
             
-            # Reporte de inicio de sesión
-            elif reporte[1] == Event.SESSION_STARTED:
-                SQL_Writer.sessionStarted( db_con, reporte[0], reporte[2] )
-            
-            # Reporte de final de sesión
-            elif reporte[1] == Event.SESSION_FINISHED:
-                SQL_Writer.sessionFinished( db_con, reporte[0], reporte[2] )
-
     # Limpio la lista de reportes
     report_list.clear()
 
@@ -335,7 +348,22 @@ def Registrador( print_info: bool = True ) -> None:
     curr_report_list = list()
 
     # Inicio la conexión con la base de datos
-    db_con = SQL_Writer.connectToDatabase()
+    try:
+        db_con = SQL_Writer.connectToDatabase()
+    except Exception as exception:
+        print("Error al intentar conectarse con la base de datos:")
+        print(exception.args[0])
+        print()
+        error_timestamp = datetime.now()
+        error_logger.writeErrorLog( 
+            error_timestamp, 
+            "DB_CONN", 
+            opt_msg=exception.args[0]
+        )
+        sys.exit(1)
+    else:
+        if print_info:
+            print("Conectado a la base de datos: " + config_SQL_Database.db_name)
 
     connected_to_usb = False
 
@@ -758,11 +786,20 @@ def SerialTester2_to_test( forced_answer: bytes = None ) -> None:
                         serial_port.write(config_embedded.ACK)
                         # Muestro los datos de la trama
                         showAllDataAck(trama, contador_tramas, contador_naks, curr_dt, last_dt)
+                        # Espero para limpiar el buffer de recepción, 
+                        time.sleep(CLEAR_RX_BUFFER_TIME)
+                        # Limpio el buffer de recepción por posible unex_ans recibida en el embebido
+                        serial_port.reset_input_buffer()
+
+                    # Guardo el timestamp como el último
+                    last_dt = curr_dt                    
+                    # Limpio la trama para recibir una nueva
+                    trama = bytes()
                         
                     # Si se recompuso la conexion
                     if hubo_desconexion:
                         # Aviso de la reconexión
-                        print("Se logro una NUEVA CONEXIÓN con esta trama")
+                        print("Se logro una NUEVA CONEXIÓN con esta trama\n\n")
                         # Reseteo el contador de tramas
                         contador_tramas = 1 
                         # Reseteo acumuladores estadísticos
@@ -772,16 +809,6 @@ def SerialTester2_to_test( forced_answer: bytes = None ) -> None:
                         hubo_desconexion = False
                         # Pongo el timeout nuevamente
                         serial_port.timeout = DISCONNECTION_TIME
-
-                    # Guardo el timestamp como el último
-                    last_dt = curr_dt
-                    
-                    # Espero para limpiar el buffer de recepción, 
-                    time.sleep(CLEAR_RX_BUFFER_TIME)
-                    # Limpio el buffer de recepción por posible unex_ans recibida en el embebido
-                    serial_port.reset_input_buffer()
-                    # Limpio la trama para recibir una nueva
-                    trama = bytes()
 
                 # NAK
                 else:

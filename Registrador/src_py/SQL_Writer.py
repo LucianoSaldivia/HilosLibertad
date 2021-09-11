@@ -5,6 +5,7 @@ import config_SQL_Database
 from datetime import datetime, timedelta
 import Registrador
 import error_logger
+import sys
 
 
 # Tutoriales y fuentes:
@@ -55,9 +56,7 @@ def sessionStarted(conn, id_maq: int, timestamp: datetime):
         cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_STARTED} {id_maq}, '{formatted_timestamp}'" )
         conn.commit()
     except:
-        error_timestamp = datetime.now()
-        print("Hubo un problema en la escritura a la base de datos...")
-        error_logger.writeErrorLog( error_timestamp, "DB_WRITE", error_timestamp - timedelta(minutes=5) )
+        raise Exception("Falló la llamada al Stored Procedure: " + config_SQL_Database.PROC_SESSION_STARTED + ".")
 def sessionContinues(conn, id_maq: int, timestamp: datetime):
     """Llamo al procedimiento PROC_SESSION_CONTINUES como en el siguiente ejemplo:
     EXEC HL.sp_actualizarSesion 1, '2018-30-09 16:05:00'
@@ -74,9 +73,7 @@ def sessionContinues(conn, id_maq: int, timestamp: datetime):
         cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_CONTINUES} {id_maq}, '{formatted_timestamp}'" )
         conn.commit()
     except:
-        error_timestamp = datetime.now()
-        print("Hubo un problema en la escritura a la base de datos...")
-        error_logger.writeErrorLog( error_timestamp, "DB_WRITE", error_timestamp - timedelta(minutes=5) )
+        raise Exception("Falló la llamada al Stored Procedure: " + config_SQL_Database.PROC_SESSION_CONTINUES + ".")
 def sessionFinished(conn, id_maq: int, timestamp: datetime):
     """Llamo al procedimiento PROC_SESSION_FINISHED como en el siguiente ejemplo:
     EXEC HL.sp_terminarSesion 1, '2018-30-09 16:45:00'
@@ -93,10 +90,8 @@ def sessionFinished(conn, id_maq: int, timestamp: datetime):
         cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_FINISHED} {id_maq}, '{formatted_timestamp}'" )
         conn.commit()
     except:
-        error_timestamp = datetime.now()
-        print("Hubo un problema en la escritura a la base de datos...")
-        error_logger.writeErrorLog( error_timestamp, "DB_WRITE", error_timestamp - timedelta(minutes=5) )
-
+        raise Exception("Falló la llamada al Stored Procedure: " + config_SQL_Database.PROC_SESSION_FINISHED + ".")
+        
 
 #   Clear Table Function
 def clearTable(conn, table: str):
@@ -124,11 +119,9 @@ def connectToDatabase():
 
     try:
         conn = pyodbc.connect(connection_str)
-        return conn
+        return conn 
     except:
-        print("Hubo un problema en la conexión a la base de datos...")
-        error_logger.writeErrorLog( datetime.now(), "DB_CONN" )
-
+        raise Exception("Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name")
 
 
 
@@ -226,7 +219,6 @@ def test1(conn):
 
     clearTable(conn, config_SQL_Database.table_name)
     print("Table cleared OK")
-
 def test2(conn):
     """Prueba de bug encontrado:
     El update ordena por última HoraFecha, pero si hay dos máquinas que terminan en la misma HoraFecha
@@ -279,7 +271,6 @@ def test2(conn):
 
 
     pass
-
 def test3(conn):
     """Prueba de bug encontrado:
     El update ordena por última HoraFecha, pero si hay dos máquinas que terminan en la misma HoraFecha
@@ -351,7 +342,6 @@ def test3(conn):
 
 
     pass
-
 def test4(conn):
     """Creo sesiones (como están en el docs.sheet de drive) para testear
     la función que obtiene minutos activos de una máquina."""
@@ -397,7 +387,6 @@ def test4(conn):
         conn=conn, 
         n=5
     )
-
 def test5(conn):
     """Creo sesiones (como están en el NUEVO docs.sheet de drive) para testear
     la función que obtiene minutos activos de las máquinas."""
