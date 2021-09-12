@@ -9,10 +9,10 @@ release_log_file_relative_path = "\\..\\Logs\\release_errors.log"
 # Posibles errores: Mensaje
 ErrorLogMsg = {
     "DB_CONN":              "No se pudo conectar con la base de datos",
-    "DB_WRITE":             "No se pudo escribir en la Base de Datos. Ultima conexión/escritura OK: ",
-    "USB_CONN":             "No se pudo conectar con CH340 (Driver USB de la maquina)",
-    "USB_MUTE":             "No se recibieron mas datos de la maquina. Maquina apagada o desconectada. Ultimo dato recibido: ",
-    "USB_HOT_UNPLUGGED":    "Se perdio la conexion con la maquina"
+    "DB_WRITE":             "No se pudo escribir en la Base de Datos. Última conexión/escritura OK: ",
+    "USB_CONN":             "No se pudo conectar con CH340 (Driver USB de la máquina)",
+    "USB_MUTE":             "No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: ",
+    "USB_HOT_UNPLUGGED":    "Se perdió la conexión con la máquina"
 }
 
 error_type_max_chars = len( max(ErrorLogMsg.keys(), key=len) )
@@ -37,13 +37,6 @@ def writeErrorLog(timestamp: datetime, type: str, last_ok_timestamp: datetime=No
     error_type_format = "{:<%d}" %error_type_max_chars
     log_line += "Error: " + error_type_format.format(type) + " -> " + ErrorLogMsg.get(type)
     log_line += last_ok_timestamp_str + ". " + opt_msg + "\n"
-
-
-    # log_line = (
-    #     str(timestamp) + " - " + "Error: " + type 
-    #     + " - " + ErrorLogMsg.get(type) + 
-    #     last_ok_timestamp_str + ". " + opt_msg + "\n"
-    # )
 
     # Abro el archivo como "(a)ppend", "over(w)rite", o (x)"create"
     file_path = os.path.dirname( os.path.abspath(sys.argv[0]) )
