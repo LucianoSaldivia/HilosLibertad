@@ -1,0 +1,6 @@
+2021-09-11 22:18:26.307903 -> Error: USB_HOT_UNPLUGGED -> Se perdio la conexion con la maquina. test_msg
+2021-09-11 22:18:37.320399 -> Error: USB_MUTE          -> No se recibieron mas datos de la maquina. Ultimo dato recibido: . test_msg
+2021-09-11 22:18:41.468639 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la maquina). test_msg
+2021-09-11 22:18:45.701437 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. test_msg
+2021-09-11 22:18:55.612327 -> Error: DB_WRITE          -> No se pudo escribir en la Base de Datos. Ultima conexi�n/escritura OK: . test_msg
+    

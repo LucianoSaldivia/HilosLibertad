@@ -313,7 +313,7 @@ def showAllDataForcedAnswer( trama: bytes, contador_tramas: int, contador_naks: 
 
 
 #       Funciones que detectan errores
-def tryToConnectToDataBase():
+def tryToConnectToDataBase(debug_mode: bool=False):
     try:
         db_con = SQL_Writer.connectToDatabase()
     except Exception as exception:
@@ -322,14 +322,15 @@ def tryToConnectToDataBase():
         print()
         error_timestamp = datetime.now()
         error_logger.writeErrorLog( 
-            error_timestamp, 
-            "DB_CONN", 
-            opt_msg=exception.args[0]
+            timestamp = error_timestamp, 
+            type = "DB_CONN", 
+            opt_msg = exception.args[0],
+            debug = debug_mode
         )
         sys.exit(1)
     else:
         return db_con
-def tryToWriteToDataBase(db_conn, report: list):
+def tryToWriteToDataBase(db_conn, report: list, debug_mode: bool=False):
     """Intenta escribir en la base, si hay una excepción, se guarda en el archivo .log.
     
     El reporte para cada máquina:
@@ -350,13 +351,14 @@ def tryToWriteToDataBase(db_conn, report: list):
         print()
         error_timestamp = datetime.now()
         error_logger.writeErrorLog( 
-            error_timestamp, 
-            "DB_WRITE", 
-            error_timestamp - timedelta(seconds=MAX_FRAMES_TO_WRITE*config_embedded.TIME_BETWEEN_FRAMES),
-            opt_msg=exception.args[0]
+            timestamp = error_timestamp, 
+            type = "DB_WRITE", 
+            last_ok_timestamp = error_timestamp - timedelta(seconds=MAX_FRAMES_TO_WRITE*config_embedded.TIME_BETWEEN_FRAMES),
+            opt_msg = exception.args[0],
+            debug = debug_mode
         )
         sys.exit(1)
-def tryToOpenSerialPort():
+def tryToOpenSerialPort(debug_mode: bool=False):
     try:
         port = serial.Serial( 
             port = str(config_serial.get_CH340_Port().name),
@@ -372,14 +374,15 @@ def tryToOpenSerialPort():
         print()
         error_timestamp = datetime.now()
         error_logger.writeErrorLog( 
-            error_timestamp, 
-            "USB_CONN",
-            opt_msg=exception.args[0]
+            timestamp = error_timestamp, 
+            type = "USB_CONN",
+            opt_msg = exception.args[0],
+            debug = debug_mode
         )
         sys.exit(1)
     else:
         return port
-def tryToReadSerialPort(port):
+def tryToReadSerialPort(port, debug_mode: bool=False):
     try:
         trama = port.read_until( config_embedded.CHAR_FINISH_PDU )
     except serial.serialutil.SerialException as serial_exception:
@@ -388,9 +391,10 @@ def tryToReadSerialPort(port):
         print()
         error_timestamp = datetime.now()
         error_logger.writeErrorLog( 
-            error_timestamp, 
-            "USB_HOT_UNPLUGGED",
-            opt_msg=serial_exception.args[0]
+            timestamp = error_timestamp, 
+            type = "USB_HOT_UNPLUGGED",
+            opt_msg = serial_exception.args[0],
+            debug = debug_mode
         )
         sys.exit(1)
     else:
@@ -519,7 +523,12 @@ def Registrador( print_info: bool = True ) -> None:
             else:
                 # Seteo el flag de desconexion
                 hubo_desconexion = True
-                error_logger.writeErrorLog( datetime.now(), "USB_MUTE", curr_sample[0] )
+                error_logger.writeErrorLog( 
+                    timestamp = datetime.now(), 
+                    type = "USB_MUTE", 
+                    last_ok_timestamp = curr_sample[0],
+                    debug = False 
+                )
 
 
                 # Si hay tramas a escribir en la base
@@ -556,7 +565,7 @@ def SerialTester( forced_answer: bytes = None ) -> None:
     Muestra además en pantalla, los datos recibidos y si hay desconexiones."""
 
     # Abro el puerto serie
-    serial_port = tryToOpenSerialPort()
+    serial_port = tryToOpenSerialPort(debug_mode=True)
     print("Conectado a la máquina (USB-Serial CH340)")
     
 
@@ -578,14 +587,14 @@ def SerialTester( forced_answer: bytes = None ) -> None:
             # Si todo anda bien
             if not hubo_desconexion:
                 # Recibo hasta CHAR_FINISH_PDU, con DISCONNECTION_TIME segundos como límite
-                trama += tryToReadSerialPort(serial_port)
+                trama += tryToReadSerialPort(serial_port, debug_mode=True)
 
             # Si hubo desconexion
             else:
                 # Saco el timeout
                 serial_port.timeout = None
                 # Recibo hasta CHAR_FINISH_PDU, sin límite de tiempo
-                trama += tryToReadSerialPort(serial_port)
+                trama += tryToReadSerialPort(serial_port, debug_mode=True)
             
             # Si se recibió una trama completa
             if len(trama) >= config_embedded.BUFFER_SIZE_ONLY_DATA_MODE:
@@ -659,7 +668,12 @@ def SerialTester( forced_answer: bytes = None ) -> None:
             else:
                 # Seteo el flag de desconexion
                 hubo_desconexion = True
-                error_logger.writeErrorLog(datetime.now(), "USB_MUTE", curr_dt)
+                error_logger.writeErrorLog(
+                    timestamp = datetime.now(), 
+                    type = "USB_MUTE", 
+                    last_ok_timestamp = curr_dt,
+                    debug = True
+                )
 
                 # Aviso de la desconexión
                 print("DESCONEXION: Al menos una trama se perdio!")                      

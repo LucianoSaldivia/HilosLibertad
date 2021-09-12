@@ -1,0 +1,6 @@
+2021-09-11 22:31:14.575065 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la maquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2021-09-11 22:31:49.945241 -> Error: USB_MUTE          -> No se recibieron mas datos de la maquina. Ultimo dato recibido: 2021-09-11 22:31:24.940182. 
+2021-09-11 22:41:28.298342 -> Error: USB_HOT_UNPLUGGED -> Se perdio la conexion con la maquina. ClearCommError failed (PermissionError(13, 'Acceso denegado.', None, 5))
+2021-09-11 22:45:19.452293 -> Error: USB_HOT_UNPLUGGED -> Se perdio la conexion con la maquina. GetOverlappedResult failed (PermissionError(13, 'Acceso denegado.', None, 5))
+2021-09-11 22:47:21.231367 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la maquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2021-09-11 23:51:51.847328 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la maquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
