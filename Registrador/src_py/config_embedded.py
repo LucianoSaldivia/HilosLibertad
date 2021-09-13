@@ -1,7 +1,7 @@
 # config_embedded.py
 
 # ¿Modo de Debug? (para tiempo entre tramas)
-DEBUG_MODE = True
+DEBUG_MODE = False
 
 # Tiempos del Embebido (pero en Segundos)
 if DEBUG_MODE:
