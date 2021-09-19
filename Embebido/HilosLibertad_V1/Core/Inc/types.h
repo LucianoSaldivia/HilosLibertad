@@ -7,7 +7,7 @@
 
 
 	// muxReader.h -> #if defined(DEBUG_MODE) ...
-	#define DEBUG_MODE
+	//#define DEBUG_MODE
 
 	#define MILISEG                         ((int) 1)
     #define SEG                             ((int) 1000 * MILISEG)
