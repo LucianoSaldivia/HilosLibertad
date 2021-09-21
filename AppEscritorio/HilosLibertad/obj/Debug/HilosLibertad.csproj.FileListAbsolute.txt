@@ -29,4 +29,3 @@ D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.exe.manifes
 D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.application
 D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.exe
 D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.pdb
-D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.csproj.AssemblyReference.cache

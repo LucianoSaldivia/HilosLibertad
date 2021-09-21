@@ -7,7 +7,9 @@ Se hace así:
 2. Poner los siguientes comandos:
 	cd publish
 	cd "Application Files"
-	cd HilosLibertad_1_0_0_13
+	*cd HilosLibertad_1_0_0_13
+		*si la versión es la 1.0.0.13, entonces va esa.
+		*si la versión es la X.Y.Z.W, entonces va cd HilosLibertad_X_Y_Z_W
 	mage -sign HilosLibertad.exe.manifest -CertFile ..\..\..\HilosLibertad\HilosLibertad_1_TemporaryKey.pfx -Password hash123
 
 Comentarios del último comando:
