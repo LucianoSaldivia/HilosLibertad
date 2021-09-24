@@ -1,7 +1,7 @@
 # config_SQL_Database.py
 
 device_name = "(local)"
-db_name = "DB_EJEMPLO"
+db_name = "DB_HILOS_LIBERTAD"
 table_name = "HL.registros"
 
 

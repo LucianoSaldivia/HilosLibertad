@@ -6,6 +6,7 @@
 !*.gitignore
 !*.py
 !*.bat
+!*.vbs
 !*.code-workspace
 !*.log
 
