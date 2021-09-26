@@ -315,7 +315,14 @@ namespace HilosLibertad
             // Formo el string completo con el formato "YYYY-DD-MM"
             string YYYYMMDD = YYYY + "-" + DD + "-" + MM;
 
-            return YYYYMMDD;
+            // return YYYYMMDD;          // "2021-23-09"
+
+            
+            // Corrección formato de fecha yanqui asqueroso --> parece que en SQL Server 2014 el formato de fecha es así...
+            string YYYYMMDD_POSTA = YYYY + "-" + MM + "-" + DD;
+            // return YYYYMMDD;
+            return YYYYMMDD_POSTA;       // "2021-09-23"
+
         }
 
         // Dado un DateTimePicker, devuelve el string del horario "HH:MM:00"
@@ -402,5 +409,9 @@ namespace HilosLibertad
             frm_eM.Show();
         }
 
+        private void lbl_CantidadTotalHorasMaquina_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

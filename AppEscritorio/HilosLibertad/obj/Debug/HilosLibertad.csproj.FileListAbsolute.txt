@@ -29,3 +29,20 @@ D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.exe.manifes
 D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.application
 D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.exe
 D:\HilosLibertad\AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.pdb
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.csproj.AssemblyReference.cache
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.frm_Home.resources
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.frm_EdicionDeSectores.resources
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.frm_EdicionDeMaquinas.resources
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.Properties.Resources.resources
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.csproj.GenerateResource.cache
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.exe
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.pdb
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\bin\Debug\HilosLibertad.exe.config
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\bin\Debug\HilosLibertad.exe
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\bin\Debug\HilosLibertad.pdb
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.csproj.CoreCompileInputs.cache
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\bin\Debug\HilosLibertad.exe.manifest
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\bin\Debug\HilosLibertad.application
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.TrustInfo.xml
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.exe.manifest
+C:\___PRUEBAS HL AppEscritorio\HilosLibertad\obj\Debug\HilosLibertad.application
