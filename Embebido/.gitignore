@@ -13,6 +13,7 @@
 !*.ioc
 !*.project
 !*.cproject
+!*.ld
 !*.mxproject
 !USB-CH340 Driver/**
 
