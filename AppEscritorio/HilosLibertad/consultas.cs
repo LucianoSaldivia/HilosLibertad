@@ -26,12 +26,14 @@ namespace HilosLibertad
         // UN ÚNICO INTERVALO · TIEMPOS POR MÁQUINA
         public DataTable llenarTabla_UnUnicoIntervalo_TiemposPorMaquina(string STRING_FECHAyHORARIO_INICIAL, string STRING_FECHAyHORARIO_FINAL, string STRING_MAQUINA_NUMERO, string STRING_MAQUINA_NOMBRE, string STRING_SECTOR_NOMBRE)
         {
+            // NO ANDA
             string c1_casoUnicoIntervalo = "EXECUTE HL.sp_mostrarTiemposPorMaquina_1intervalo " + 
                                                             STRING_FECHAyHORARIO_INICIAL + ", " + 
                                                             STRING_FECHAyHORARIO_FINAL + ", " +
                                                             "'" + STRING_MAQUINA_NUMERO + "' , " +
                                                             "'" + STRING_MAQUINA_NOMBRE + "' , " +
                                                             "'" + STRING_SECTOR_NOMBRE + "'";
+
             SqlDataAdapter da = new SqlDataAdapter(c1_casoUnicoIntervalo, cn.LeerCadena());
             DataTable dt = new DataTable();
             da.Fill(dt);

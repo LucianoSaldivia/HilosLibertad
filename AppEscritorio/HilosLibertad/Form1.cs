@@ -234,7 +234,8 @@ namespace HilosLibertad
         public void acomodarFormatoDGVs() {
             dgv_TiemposPorMaquina.Columns["#"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgv_TiemposPorMaquina.Columns["TIEMPO ENCENDIDA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgv_TiemposPorMaquina.Columns["% APAGADA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            //dgv_TiemposPorMaquina.Columns["% APAGADA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposPorMaquina.Columns["% ENCENDIDA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgv_TiemposPorMaquina.AutoResizeColumns();
             dgv_TiemposPorMaquina.ClearSelection();
 
@@ -315,7 +316,14 @@ namespace HilosLibertad
             // Formo el string completo con el formato "YYYY-DD-MM"
             string YYYYMMDD = YYYY + "-" + DD + "-" + MM;
 
-            return YYYYMMDD;
+            // return YYYYMMDD;          // "2021-23-09"
+
+            
+            // Corrección formato de fecha yanqui asqueroso --> parece que en SQL Server 2014 el formato de fecha es así...
+            string YYYYMMDD_POSTA = YYYY + "-" + MM + "-" + DD;
+            // return YYYYMMDD;
+            return YYYYMMDD_POSTA;       // "2021-09-23"
+
         }
 
         // Dado un DateTimePicker, devuelve el string del horario "HH:MM:00"
@@ -402,5 +410,39 @@ namespace HilosLibertad
             frm_eM.Show();
         }
 
+        private void lbl_CantidadTotalHorasMaquina_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_CopiarAlPortapapeles_TiemposMaqSec_Click(object sender, EventArgs e)
+        {
+            /*
+            IDataObject clips = new DataObject();
+            clips.SetData(dgv_TiemposPorMaquina.GetClipboardContent());
+            clips.SetData(dgv_TiemposPorSector.GetClipboardContent());
+
+            //clips.SetData(DataFormats.Text, dgv_TiemposPorMaquina);
+            //clips.SetData(DataFormats.Rtf, dgv_TiemposPorSector);
+            Clipboard.SetDataObject(clips, true);
+            */
+            
+
+            /*
+            dgv.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+            DataObject dataObj = dgv.GetClipboardContent();
+            if (dataObj != null)
+                Clipboard.SetDataObject(dataObj);
+            */
+
+
+            /*
+            IDataObject clips = new DataObject();
+            clips.SetData(DataFormats.Text, MyString);
+            clips.SetData(DataFormats.Rtf, MyRtf);
+            Clipboard.SetDataObject(clips, true);
+            */
+
+        }
     }
 }
