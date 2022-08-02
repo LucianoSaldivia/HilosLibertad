@@ -29,6 +29,7 @@ namespace HilosLibertad
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -67,7 +68,7 @@ namespace HilosLibertad
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas = new System.Windows.Forms.Button();
             this.lbl_Linea = new System.Windows.Forms.Label();
             this.pic_logo = new System.Windows.Forms.PictureBox();
-            this.btn_CopiarAlPortapapeles_TiemposMaqSec = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_TiemposPorMaquina)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_TiemposPorSector)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_TiemposTotales)).BeginInit();
@@ -535,23 +536,17 @@ namespace HilosLibertad
             this.pic_logo.TabIndex = 106;
             this.pic_logo.TabStop = false;
             // 
-            // btn_CopiarAlPortapapeles_TiemposMaqSec
+            // timer1
             // 
-            this.btn_CopiarAlPortapapeles_TiemposMaqSec.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CopiarAlPortapapeles_TiemposMaqSec.Location = new System.Drawing.Point(713, 548);
-            this.btn_CopiarAlPortapapeles_TiemposMaqSec.Name = "btn_CopiarAlPortapapeles_TiemposMaqSec";
-            this.btn_CopiarAlPortapapeles_TiemposMaqSec.Size = new System.Drawing.Size(69, 61);
-            this.btn_CopiarAlPortapapeles_TiemposMaqSec.TabIndex = 108;
-            this.btn_CopiarAlPortapapeles_TiemposMaqSec.Text = "Copiar";
-            this.btn_CopiarAlPortapapeles_TiemposMaqSec.UseVisualStyleBackColor = true;
-            this.btn_CopiarAlPortapapeles_TiemposMaqSec.Click += new System.EventHandler(this.btn_CopiarAlPortapapeles_TiemposMaqSec_Click);
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 10000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // frm_Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1044, 702);
-            this.Controls.Add(this.btn_CopiarAlPortapapeles_TiemposMaqSec);
             this.Controls.Add(this.lbl_Linea);
             this.Controls.Add(this.pic_logo);
             this.Controls.Add(this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas);
@@ -626,7 +621,7 @@ namespace HilosLibertad
         private System.Windows.Forms.TextBox txt_NombreDeLaMaquina;
         private System.Windows.Forms.PictureBox pic_logo;
         private System.Windows.Forms.Label lbl_Linea;
-        private System.Windows.Forms.Button btn_CopiarAlPortapapeles_TiemposMaqSec;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

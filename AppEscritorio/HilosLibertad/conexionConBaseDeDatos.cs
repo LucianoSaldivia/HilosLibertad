@@ -18,20 +18,25 @@ namespace HilosLibertad
 
             // Se crea el objeto de tipo SqlConnection
             // Dentro del constructor se va a invocar a la variable "única" que guarda la cadena de conexión, creada previamente
-            SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["unica"].ConnectionString);
+            SqlConnection cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["unica"].ConnectionString);
 
             // Se agrega una validación:
             // Si el estado del objeto de conexión es abierto, se cierra.
             // Si es cerrado, se abre.
-            if (cn.State == ConnectionState.Open) {
-                cn.Close();
+            if (cnx.State == ConnectionState.Open) {
+                cnx.Close();
             }
             else {
-                cn.Open();
+                cnx.Open();
             }
             
             // Se retorna el objeto de conexión (esté abierto o cerrado)
-            return cn;
+            return cnx;
+        }
+
+        public void cerrarConexion(SqlConnection c)
+        {
+            c.Close();
         }
     }
     

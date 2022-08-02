@@ -1,5 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HilosLibertad
@@ -11,6 +18,9 @@ namespace HilosLibertad
             InitializeComponent();
         }
 
+        Consultas con = new Consultas();
+        // Creamos el objeto de la clase Conexion y la instanciamos
+        Conexion cn = new Conexion();
 
         public bool yaSeSetearonInicialmenteLasFechasYFranjasHorarias = false;
 
@@ -238,6 +248,7 @@ namespace HilosLibertad
             dgv_TiemposPorMaquina.Columns["% ENCENDIDA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgv_TiemposPorMaquina.AutoResizeColumns();
             dgv_TiemposPorMaquina.ClearSelection();
+            cambiarColorDGVMaq(dgv_TiemposPorMaquina);
 
             dgv_TiemposPorSector.Columns["TIEMPO ENCENDIDO"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgv_TiemposPorSector.AutoResizeColumns();
@@ -443,6 +454,51 @@ namespace HilosLibertad
             Clipboard.SetDataObject(clips, true);
             */
 
+        }
+
+        // Se cambian los colores de las filas del DataGridView de las máquinas.
+        // El criterio es el tiempo transcurrido en minutos desde el último registro de encendido.
+        // Si ese lapso es menor o igual a 5 minutos, entonces la fila se pinta de verde.
+        // Si ese lapso es mayor a 5 minutos, entonces la fila se pinta de rojo.
+        public void cambiarColorDGVMaq(DataGridView dgv)
+        {
+            int cantFilas = dgv.Rows.Count;       // cantidad de filas del dataGridView
+            for (int i = 0; i < cantFilas; i++)
+            {
+                int mins = getMinsONtilNow_NumMaq(i + 1);
+
+                if (mins <= 5)  // "Cells[0]" --> la primera columna
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(185, 248, 218);   // fondo verde claro
+                    dgv.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(11, 117, 66);     // texto verde oscuro
+                }
+                else
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(247, 215, 212);   // fondo rojo claro
+                    dgv.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(194, 49, 36);     // texto rojo oscuro
+                }
+            }
+        }
+
+        // Se crea nueva función para obtener la cantidad de minutos...
+        public int getMinsONtilNow_NumMaq(int numMaq)
+        {
+            string cons = "SELECT HL.f_getMinsONSinceLastReg(" + numMaq + ") AS 'mm'";
+            SqlConnection sql_con = cn.LeerCadena();
+            SqlCommand comm = new SqlCommand(cons, sql_con);
+            SqlDataReader dr = comm.ExecuteReader();
+            int w = 0;
+            if (dr.Read())
+            {
+                w = int.Parse(dr["mm"].ToString());
+            }
+            cn.cerrarConexion(sql_con);
+            return w;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            ejecutar();
         }
     }
 }
