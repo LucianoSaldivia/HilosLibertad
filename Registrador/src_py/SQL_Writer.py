@@ -51,7 +51,8 @@ def sessionStarted(conn, id_maq: int, timestamp: datetime):
     try: 
         cursor = conn.cursor()
 
-        formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
+        # formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
+        formatted_timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
         # Ejecuto el procedimiento
         cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_STARTED} {id_maq}, '{formatted_timestamp}'" )
         conn.commit()
@@ -68,7 +69,8 @@ def sessionContinues(conn, id_maq: int, timestamp: datetime):
     try: 
         cursor = conn.cursor()
 
-        formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
+        # formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
+        formatted_timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
         # Ejecuto el procedimiento  
         cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_CONTINUES} {id_maq}, '{formatted_timestamp}'" )
         conn.commit()
@@ -85,7 +87,8 @@ def sessionFinished(conn, id_maq: int, timestamp: datetime):
     try: 
         cursor = conn.cursor()
 
-        formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
+        # formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
+        formatted_timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
         # Ejecuto el procedimiento
         cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_FINISHED} {id_maq}, '{formatted_timestamp}'" )
         conn.commit()
@@ -562,6 +565,29 @@ def test5(conn):
 
     # Muestro todo para chequear los registros y los horarios
     selectAll(conn)
+def test6(conn):
+    """Prueba de inserción (transaction)
+    """
+
+    try: 
+        cursor = conn.cursor()
+
+        # Ejecuto el procedimiento     
+        # cursor.execute( f"""
+        #     BEGIN TRANSACTION 
+        #         INSERT INTO HL.registros (
+        #             idMaquina, fechaHoraEncendida,		fechaHoraUltimoRegistroEncendida,	fueApagadaPorOperarioOPorFallaParticular) VALUES(
+        #             18,		   '2022-04-30 12:00:00',	'2022-04-30 13:00:00',				0)""" )
+        # conn.commit()
+
+        selectLast(conn, 5)
+
+        cursor.execute( f"ROLLBACK TRANSACTION" )
+        conn.commit()
+
+
+    except:
+        raise Exception("Falló la llamada al Stored Procedure: " + config_SQL_Database.PROC_SESSION_STARTED + ".")
 
 
 
@@ -569,15 +595,15 @@ if __name__ == "__main__":
 
     with connectToDatabase() as conn:
 
-        # selectAll(conn)
+        selectLast(conn, 5)
 
         # selectAll(conn)
-        # test5(conn)
+        test6(conn)
         # selectAll(conn)
-
-        selectAll(conn)
-        # clearTable(conn, config_SQL_Database.table_name)
         # selectAll(conn)
+        # clearTable(conn, config_SQL_Database.table_name)       
+        
+        selectLast(conn, 5)
 
     print("Todo OK")
     

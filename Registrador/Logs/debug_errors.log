@@ -1,0 +1,6 @@
+2022-05-02 10:28:30.836301 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM4': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-05-02 10:28:38.183267 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM4': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-05-02 12:24:11.204260 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-02 12:19:09.783052. 
+2022-05-06 10:20:46.648647 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM4': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-05-06 10:50:26.879961 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-06 10:45:25.466336. 
+2022-05-06 11:44:13.252897 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-06 11:39:11.839476. 

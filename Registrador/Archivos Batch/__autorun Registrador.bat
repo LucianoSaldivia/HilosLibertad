@@ -3,8 +3,5 @@
 
 @echo off
 
-@REM Busco el path de pythonw.exe
-FOR /f %%p in ('where pythonw') do SET pythonw_path=%%p
-start "%pythonw_path%" "%~dp0/../src_py/Registrador.py" "-registrador" "-windowless"
-
-@REM start D:/Programas/Python/pythonw.exe "%~dp0/../src_py/Registrador.py" "-registrador" "-windowless"
+@REM Buscar el path de python.exe
+"C:\Users\Seven 22-01-15\AppData\Local\Programs\Python\Python38\python.exe" "%~dp0\\..\\src_py\\Registrador.py" "-registrador" "-windowless"

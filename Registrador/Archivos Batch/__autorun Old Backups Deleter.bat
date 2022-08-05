@@ -3,8 +3,5 @@
 
 @echo off
 
-@REM Busco el path de python.exe
-FOR /f %%p in ('where python') do SET python_path=%%p
-start "%python_path%" "%~dp0/../Old Backups Deleter/old_backups_deleter.py" "-no_debug"
-
-@REM start D:/Programas/Python/python.exe "%~dp0/../Old Backups Deleter/old_backups_deleter.py" "-no_debug"
+@REM Buscar el path de python.exe
+"C:\Users\Seven 22-01-15\AppData\Local\Programs\Python\Python38\python.exe" "%~dp0/../Old Backups Deleter/old_backups_deleter.py" "-no_debug"

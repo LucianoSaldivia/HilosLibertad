@@ -3,17 +3,598 @@
 2021-09-13 18:30:09.351563 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-09-13 18:29:42.928127. 
 2021-09-16 19:07:34.906073 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
 2021-09-19 17:56:13.100202 -> Error: USB_HOT_UNPLUGGED -> Se perdió la conexión con la máquina. GetOverlappedResult failed (PermissionError(13, 'Acceso denegado.', None, 5))
-2021-09-24 13:30:45.054002 -> Error: USB_HOT_UNPLUGGED -> Se perdió la conexión con la máquina. GetOverlappedResult failed (PermissionError(13, 'Acceso denegado.', None, 5))
-2021-09-28 22:18:42.123089 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-09-29 22:16:31.531971 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-09-30 22:10:23.319893 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-10-06 21:14:30.831008 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-10-14 18:47:48.985863 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-10-21 17:58:37.199635 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-10-28 17:51:30.059643 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-11-11 18:24:28.908631 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-12-04 15:39:02.275966 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-12-09 09:10:42.197053 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-12-09 20:36:17.880133 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-12-10 09:47:48.278677 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
-2021-12-22 09:39:19.114724 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2021-09-24 12:39:38.839861 -> Error: USB_HOT_UNPLUGGED -> Se perdió la conexión con la máquina. GetOverlappedResult failed (PermissionError(13, 'Acceso denegado.', None, 5))
+2021-09-24 19:58:19.175125 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-09-24 19:57:19.130620. 
+
+
+-- Se deja la máquina instalada por un período de prueba
+
+
+2021-09-27 07:44:16.664255 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-09-27 07:43:16.635350. 
+2021-09-27 07:46:16.644064 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-09-27 07:45:16.646359. 
+2021-09-27 07:47:16.657369 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-09-27 07:46:16.784464. 
+2021-09-28 16:38:18.527182 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-09-30 11:18:45.708294 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-09-30 11:17:45.676454. 
+2021-09-30 11:27:45.708992 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-09-30 11:26:45.696779. 
+2021-10-01 07:35:48.804070 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-01 07:34:48.806365. 
+2021-10-01 07:36:48.801775 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-01 07:35:48.897670. 
+2021-10-01 07:37:48.815079 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-01 07:36:49.004575. 
+2021-10-05 11:32:44.299314 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-05 11:31:44.222706. 
+2021-10-06 14:58:48.529750 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-06 14:57:48.501832. 
+2021-10-06 14:59:48.508871 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-06 14:58:49.340951. 
+2021-10-18 13:53:53.123830 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-18 13:52:53.097601. 
+2021-10-18 13:54:53.099107 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-18 13:53:53.781833. 
+2021-10-21 12:06:50.869140 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-10-22 09:34:32.924511 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-22 09:29:31.441685. 
+2021-10-22 17:19:44.435195 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-22 17:18:44.420481. 
+2021-10-26 08:53:26.978904 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-26 08:48:26.541021. 
+2021-10-28 20:47:33.064316 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-28 20:46:33.040502. 
+2021-10-28 20:49:33.055928 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-28 20:48:33.046322. 
+2021-10-28 20:50:33.045745 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-28 20:49:33.183129. 
+2021-10-28 20:52:33.060367 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-28 20:51:33.053748. 
+2021-10-28 20:53:33.054977 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-28 20:52:33.280168. 
+2021-10-28 20:54:33.071597 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-28 20:53:33.101777. 
+2021-10-28 20:55:33.070009 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-28 20:54:33.083597. 
+2021-10-29 15:15:35.986311 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-29 15:14:35.977946. 
+2021-10-29 17:10:36.277246 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-29 17:09:36.274537. 
+2021-10-29 17:11:36.280154 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-10-29 17:10:36.464447. 
+2021-11-01 13:59:20.508331 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-01 13:58:20.496310. 
+2021-11-02 13:08:24.195835 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-02 13:07:24.114634. 
+2021-11-03 06:03:26.871212 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-03 06:02:26.786503. 
+2021-11-03 06:04:26.793921 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-03 06:03:27.635614. 
+2021-11-03 16:51:01.765688 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-03 16:50:28.491399. 
+2021-11-04 07:46:30.819011 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-04 07:45:30.794891. 
+2021-11-04 07:47:30.792327 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-04 07:46:31.536613. 
+2021-11-05 08:43:34.712385 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-05 08:42:34.683989. 
+2021-11-05 14:14:38.827562 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-11-05 14:28:45.527856 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-11-05 14:34:26.144382 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-11-05 14:34:33.118995 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-11-05 14:47:45.797768 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-11-05 15:01:29.257278 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2021-11-05 15:02:39.594216 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-05 14:56:30.953555. 
+2021-11-05 15:55:39.730865 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-05 15:54:39.733759. 
+2021-11-08 16:33:38.257535 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-08 16:32:38.224354. 
+2021-11-10 15:35:45.656794 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-10 15:34:45.578358. 
+2021-11-10 15:36:45.581222 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-10 15:35:47.672909. 
+2021-11-10 15:37:45.584654 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-10 15:36:45.845237. 
+2021-11-10 15:38:45.587086 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-10 15:37:45.750663. 
+2021-11-10 18:08:46.035246 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-10 18:07:45.973219. 
+2021-11-11 13:42:49.042583 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-11 13:41:49.035896. 
+2021-11-16 06:26:45.824657 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-16 06:25:45.802748. 
+2021-11-17 11:40:54.498044 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-11-17 14:54:03.526056 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-17 14:53:50.879333. 
+2021-11-18 07:07:53.402486 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-18 07:06:53.405695. 
+2021-11-18 07:19:53.432168 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-18 07:18:53.435144. 
+2021-11-18 07:20:53.439162 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-18 07:19:53.510168. 
+2021-11-18 07:21:53.431376 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-18 07:20:53.454762. 
+2021-11-18 07:22:53.439753 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-18 07:21:53.462576. 
+2021-11-18 07:23:53.448136 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-18 07:22:53.455354. 
+2021-11-18 07:24:53.443345 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-18 07:23:53.463736. 
+2021-11-18 07:26:53.445759 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-18 07:25:53.441395. 
+2021-11-19 16:05:58.595847 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-19 16:04:58.570137. 
+2021-11-19 16:06:58.573758 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-19 16:05:59.890650. 
+2021-11-19 16:07:58.578265 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-19 16:06:58.636158. 
+2021-11-24 05:57:00.992792 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-24 05:56:00.990285. 
+2021-11-24 06:59:01.143883 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-24 06:58:01.153972. 
+2021-11-24 07:00:01.154791 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-24 06:59:01.276684. 
+2021-11-24 08:32:01.397336 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-24 08:31:01.397231. 
+2021-11-24 13:44:02.224689 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-24 13:43:02.215505. 
+2021-11-24 15:00:03.623372 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-11-24 15:22:00.186527 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-24 15:17:00.182403. 
+2021-11-25 10:42:54.265975 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-11-27 09:08:34.058693 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-27 09:07:34.052786. 
+2021-11-30 06:34:34.661779 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-30 06:33:34.658466. 
+2021-11-30 06:35:34.667889 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-30 06:34:34.942579. 
+2021-11-30 07:19:34.776621 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-30 07:18:34.785710. 
+2021-11-30 07:33:34.819964 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-30 07:32:34.809254. 
+2021-11-30 07:38:34.830532 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-30 07:37:34.826620. 
+2021-11-30 18:33:09.291362 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-11-30 18:32:36.521887. 
+2021-12-01 15:46:39.881415 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-01 15:45:39.877300. 
+2021-12-02 08:12:42.453907 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-02 08:11:42.449400. 
+2021-12-02 08:13:42.458215 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-02 08:12:42.812707. 
+2021-12-03 11:33:46.794751 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-03 11:32:46.729517. 
+2021-12-03 11:37:46.742154 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-03 11:36:46.730342. 
+2021-12-03 11:38:46.741769 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-03 11:37:47.043555. 
+2021-12-03 11:39:46.746633 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-03 11:38:46.913370. 
+2021-12-04 23:55:18.581940 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-04 23:54:52.350893. 
+2021-12-06 06:33:36.244275 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-06 06:32:36.234363. 
+2021-12-06 08:17:37.880464 -> Error: DB_WRITE          -> No se pudo escribir en la Base de Datos. Última conexión/escritura OK: 2021-12-06 08:12:37.880464. Falló la llamada al Stored Procedure: HL.sp_insertarSesion.
+2021-12-06 08:30:24.351826 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-12-06 08:48:35.951947 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-06 08:47:35.954242. 
+2021-12-06 08:50:35.971162 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-06 08:49:35.956166. 
+2021-12-06 08:51:35.969392 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-06 08:50:40.444417. 
+2021-12-06 08:52:35.971525 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-06 08:51:35.986393. 
+2021-12-06 22:45:02.932948 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-06 22:44:38.123904. 
+2021-12-09 10:15:47.556418 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-09 10:14:47.420508. 
+2021-12-11 02:39:54.505324 -> Error: DB_WRITE          -> No se pudo escribir en la Base de Datos. Última conexión/escritura OK: 2021-12-11 02:34:54.505324. Falló la llamada al Stored Procedure: HL.sp_insertarSesion.
+2021-12-17 14:38:10.706802 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-17 14:37:10.670276. 
+2021-12-17 14:47:10.697050 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-17 14:46:10.702332. 
+2021-12-17 14:50:10.699000 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-17 14:49:10.700886. 
+2021-12-20 09:33:18.354712 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-12-20 09:40:24.721136 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-20 09:35:24.713097. 
+2021-12-20 12:19:49.827293 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-20 12:18:49.830644. 
+2021-12-20 12:20:49.837132 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-20 12:19:50.201693. 
+2021-12-21 06:21:52.705791 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-21 06:20:52.697276. 
+2021-12-21 06:22:52.714505 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-21 06:21:53.048992. 
+2021-12-21 06:24:52.706738 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-21 06:23:52.705822. 
+2021-12-27 08:39:31.191839 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2021-12-27 10:15:34.397754 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+
+-- Cambio de Sector (Urdidora) y cambio de desencadenador del task scheduler (2m despuéss del inicio del sistema)
+
+
+2021-12-27 17:12:15.019381 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2021-12-27 17:12:19.418589 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2021-12-29 11:27:36.305050 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-29 11:26:36.306945. 
+2021-12-30 08:44:39.800130 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-30 08:43:39.802425. 
+2021-12-30 09:00:39.841404 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2021-12-30 08:59:39.843699. 
+2022-01-04 08:05:41.658127 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-01-04 08:00:41.654004. 
+2022-01-04 09:06:29.744704 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-01-04 09:01:29.742378. 
+2022-01-11 13:20:12.035052 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2022-01-11 13:45:10.217487 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-01-11 13:40:10.216218. 
+2022-01-12 08:51:50.849846 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-01-12 08:46:50.848249. 
+2022-01-13 08:58:27.460507 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-01-13 08:53:27.459110. 
+2022-01-13 11:40:25.550627 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-01-13 11:35:25.549093. 
+2022-01-14 09:00:58.874257 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2022-01-17 09:08:11.085023 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-01-17 09:03:11.078100. 
+2022-01-19 06:22:24.179092 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-01-19 06:21:24.128181. 
+2022-01-31 17:46:33.807278 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-01-31 17:45:33.795046. 
+2022-02-01 13:19:37.042555 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-01 13:18:36.884733. 
+2022-02-01 13:28:36.910316 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-01 13:27:36.911094. 
+2022-02-01 13:31:36.925415 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-01 13:30:36.908589. 
+2022-02-01 17:51:37.614284 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-01 17:50:37.601268. 
+2022-02-02 12:35:18.441578 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-02 12:30:18.426374. 
+2022-02-02 16:51:18.812624 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-02 16:50:18.822246. 
+2022-02-03 07:45:21.197254 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 07:44:21.194140. 
+2022-02-03 07:46:21.190165 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 07:45:21.306454. 
+2022-02-03 07:47:21.203272 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 07:46:21.252565. 
+2022-02-03 07:58:21.227681 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 07:57:21.233166. 
+2022-02-03 07:59:21.228786 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 07:58:21.306681. 
+2022-02-03 08:00:21.233703 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 07:59:21.291186. 
+2022-02-03 08:01:21.233614 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 08:00:21.264903. 
+2022-02-03 08:02:21.233522 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 08:01:21.264814. 
+2022-02-03 08:03:21.238028 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 08:02:21.280322. 
+2022-02-03 08:04:21.235737 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 08:03:21.284828. 
+2022-02-03 08:05:21.244852 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 08:04:21.282537. 
+2022-02-03 08:06:21.249760 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-03 08:05:21.276052. 
+2022-02-04 08:25:25.093627 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-04 08:24:25.083839. 
+2022-02-04 08:27:25.098861 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-04 08:26:25.094030. 
+2022-02-04 08:28:25.103053 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-04 08:27:25.332861. 
+2022-02-04 08:29:25.103081 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-04 08:28:25.259053. 
+2022-02-04 08:37:25.126755 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-04 08:36:25.126717. 
+2022-02-04 08:40:25.135633 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-04 08:39:25.120203. 
+2022-02-04 11:56:25.646288 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-04 11:55:25.636923. 
+2022-02-07 06:46:36.062695 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:45:36.026786. 
+2022-02-07 06:47:36.032006 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:46:36.998697. 
+2022-02-07 06:48:36.039314 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:47:36.250406. 
+2022-02-07 06:49:36.033226 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:48:36.101714. 
+2022-02-07 06:50:36.031335 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:49:36.126826. 
+2022-02-07 06:52:36.035956 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:51:36.040045. 
+2022-02-07 06:53:36.037467 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:52:36.223157. 
+2022-02-07 06:56:36.047604 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:55:36.048296. 
+2022-02-07 06:57:36.059913 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:56:36.188004. 
+2022-02-07 06:58:36.057824 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:57:36.137913. 
+2022-02-07 06:59:36.062939 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:58:36.151424. 
+2022-02-07 07:00:36.070247 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 06:59:36.094139. 
+2022-02-07 07:01:36.060956 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 07:00:36.117048. 
+2022-02-07 07:02:36.069666 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 07:01:36.185756. 
+2022-02-07 07:03:36.064775 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 07:02:36.210066. 
+2022-02-07 07:04:36.081886 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 07:03:36.173975. 
+2022-02-07 07:05:36.072996 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 07:04:36.175486. 
+2022-02-07 07:06:36.075308 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-07 07:05:36.228996. 
+2022-02-08 20:37:41.977854 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-08 20:36:41.910943. 
+2022-02-09 18:11:45.293655 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-09 18:10:45.262949. 
+2022-02-09 18:12:45.276566 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-09 18:11:47.696663. 
+2022-02-09 18:13:45.280077 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-09 18:12:45.696568. 
+2022-02-09 18:14:45.281790 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-09 18:13:45.702881. 
+2022-02-09 18:18:45.279622 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-09 18:17:45.285512. 
+2022-02-10 09:29:47.704322 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-10 09:28:47.677889. 
+2022-02-10 09:30:47.677753 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-10 09:29:52.492596. 
+2022-02-14 11:17:28.233562 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-14 11:16:28.198506. 
+2022-02-18 08:52:43.098181 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-18 08:51:43.068747. 
+2022-02-18 08:56:43.080907 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-18 08:55:43.081475. 
+2022-02-18 20:21:44.862944 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-18 20:20:44.865239. 
+2022-02-18 20:23:44.873953 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-18 20:22:44.876249. 
+2022-02-18 20:24:44.871658 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-18 20:23:44.967553. 
+2022-02-18 20:26:44.882667 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-18 20:25:44.884963. 
+2022-02-21 12:37:34.236710 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-21 12:36:34.196135. 
+2022-02-21 12:40:34.210218 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-21 12:39:34.202297. 
+2022-02-21 13:13:34.299859 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-21 13:12:34.299380. 
+2022-02-22 19:11:38.937608 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-22 19:10:38.941429. 
+2022-02-22 19:12:38.941813 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-22 19:11:39.360209. 
+2022-02-22 19:15:38.947394 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-22 19:14:38.944810. 
+2022-02-22 19:16:38.943771 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-22 19:15:39.245795. 
+2022-02-25 15:32:42.308834 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-02-25 16:12:27.183609 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-25 16:02:08.867625. 
+2022-02-25 16:12:31.217842 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-02-25 16:12:39.459458 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-02-25 17:02:45.182948 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-02-25 17:07:13.703842 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-02-25 17:02:13.702093. 
+2022-03-02 09:27:51.528002 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-03-02 09:48:22.896070 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-02 09:43:22.873941. 
+2022-03-02 10:32:01.251496 -> Error: USB_HOT_UNPLUGGED -> Se perdió la conexión con la máquina. GetOverlappedResult failed (PermissionError(13, 'Acceso denegado.', None, 5))
+2022-03-02 10:37:45.525757 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-02 10:32:45.523186. 
+2022-03-02 10:46:31.237588 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-03-02 12:32:43.036459 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-02 12:27:43.025369. 
+2022-03-02 12:33:30.644147 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-03-02 12:33:33.122753 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-03-02 12:37:40.156396 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-03-02 12:38:13.687782 -> Error: USB_HOT_UNPLUGGED -> Se perdió la conexión con la máquina. GetOverlappedResult failed (PermissionError(13, 'Acceso denegado.', None, 5))
+2022-03-03 10:47:26.768830 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-03 10:42:26.752251. 
+2022-03-03 10:48:59.719421 -> Error: USB_HOT_UNPLUGGED -> Se perdió la conexión con la máquina. GetOverlappedResult failed (PermissionError(13, 'Acceso denegado.', None, 5))
+2022-03-03 10:54:47.684705 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-03 10:49:47.676530. 
+2022-03-03 10:57:25.577856 -> Error: USB_HOT_UNPLUGGED -> Se perdió la conexión con la máquina. GetOverlappedResult failed (PermissionError(13, 'Acceso denegado.', None, 5))
+2022-03-03 13:55:44.365725 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-03 13:50:44.356772. 
+2022-03-03 13:57:00.539865 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM4': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-03-03 13:58:22.265817 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM4': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-03-03 13:58:41.823453 -> Error: USB_HOT_UNPLUGGED -> Se perdió la conexión con la máquina. GetOverlappedResult failed (PermissionError(13, 'Acceso denegado.', None, 5))
+2022-03-08 08:27:43.525180 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2022-03-08 16:25:01.447463 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-08 16:24:01.456746. 
+2022-03-10 16:18:09.001020 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-10 16:17:08.949571. 
+2022-03-10 16:19:08.957199 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-10 16:18:10.114842. 
+2022-03-10 16:39:09.004074 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-10 16:38:09.002435. 
+2022-03-14 18:43:56.337110 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:42:56.322283. 
+2022-03-14 18:44:56.336530 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:43:56.742710. 
+2022-03-14 18:45:56.339559 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:44:56.414530. 
+2022-03-14 18:52:56.356927 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:51:56.348303. 
+2022-03-14 18:53:56.362154 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:52:56.497728. 
+2022-03-14 18:54:56.366575 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:53:56.408954. 
+2022-03-14 18:55:56.356202 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:54:56.397775. 
+2022-03-14 18:56:56.362420 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:55:56.403002. 
+2022-03-14 18:57:56.366841 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:56:56.393620. 
+2022-03-14 18:58:56.368271 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:57:56.398041. 
+2022-03-14 18:59:56.376308 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:58:56.399471. 
+2022-03-14 19:00:56.381134 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 18:59:56.407508. 
+2022-03-14 20:00:56.531267 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 19:59:56.523044. 
+2022-03-14 20:01:56.541089 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 20:00:56.546867. 
+2022-03-14 20:02:56.542717 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 20:01:56.563690. 
+2022-03-14 20:03:56.537142 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 20:02:56.595918. 
+2022-03-14 20:04:56.542364 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 20:03:56.646342. 
+2022-03-14 20:05:56.548984 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-14 20:04:56.713965. 
+2022-03-15 12:05:59.039227 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-15 12:04:59.027513. 
+2022-03-15 13:29:59.262596 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-15 13:28:59.261402. 
+2022-03-23 06:07:07.221755 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-23 06:06:07.225042. 
+2022-03-23 15:55:00.713362 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-23 15:43:08.723035. 
+2022-03-23 16:09:16.988485 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-23 16:04:16.984362. 
+2022-03-25 08:37:10.383708 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-25 08:32:10.373614. 
+2022-03-30 08:35:00.887915 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-03-30 08:30:00.886004. 
+2022-03-31 08:31:20.115375 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2022-04-01 08:39:06.745947 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-04-01 08:34:06.740699. 
+2022-04-04 08:41:26.342488 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-04-04 08:36:41.806299. 
+2022-04-05 09:57:55.891398 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-04-05 09:52:55.885474. 
+2022-04-06 08:32:08.624632 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-04-06 08:27:08.617403. 
+2022-04-07 08:31:31.866017 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-04-07 08:23:10.156606. 
+2022-04-08 09:18:28.665291 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-04-08 09:13:28.662699. 
+2022-04-11 08:36:17.916496 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-04-11 08:31:17.915048. 
+2022-04-12 09:23:10.032068 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-04-12 09:18:10.027945. 
+2022-04-13 08:33:06.166924 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-04-13 08:28:06.162801. 
+2022-04-14 10:02:44.475100 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2022-04-18 08:15:01.746053 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2022-04-20 18:27:54.286079 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-04-20 18:22:52.852719. 
+2022-04-26 09:52:09.226411 -> Error: USB_HOT_UNPLUGGED -> Se perdió la conexión con la máquina. GetOverlappedResult failed (PermissionError(13, 'Acceso denegado.', None, 5))
+2022-04-27 08:24:02.204589 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2022-04-28 08:14:14.180941 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2022-04-29 08:15:26.961243 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2022-05-02 08:25:47.170049 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2022-05-02 12:51:11.112096 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-02 12:46:11.097061. 
+2022-05-02 13:08:08.835849 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-02 13:03:07.421190. 
+2022-05-03 08:37:14.510733 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-03 08:32:14.507998. 
+2022-05-05 08:38:33.856476 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-05 08:33:33.852672. 
+2022-05-05 15:51:37.020005 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-05 15:46:37.018123. 
+2022-05-06 08:44:57.888193 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-06 08:39:57.873770. 
+2022-05-09 08:19:40.194760 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2022-05-09 15:17:29.798772 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2022-05-10 08:33:41.990963 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2022-05-11 08:24:36.135802 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2022-05-12 08:25:56.383539 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). USB-Serial CH340 no detectado en ningún puerto. Compruebe conexión y Driver.
+2022-05-12 15:13:59.757328 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-12 15:12:59.744350. 
+2022-05-12 17:18:00.074911 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-12 17:17:00.077206. 
+2022-05-13 16:16:03.586251 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-13 16:15:03.587711. 
+2022-05-13 16:17:03.591074 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-13 16:16:03.771253. 
+2022-05-13 16:18:03.594506 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-13 16:17:03.627076. 
+2022-05-13 16:19:03.582886 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-13 16:18:04.013530. 
+2022-05-13 16:24:03.609980 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-13 16:23:03.608274. 
+2022-05-16 08:39:59.324978 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-16 08:34:59.320855. 
+2022-05-16 19:22:12.582250 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-16 19:21:12.584545. 
+2022-05-16 19:23:12.595555 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-16 19:22:12.629050. 
+2022-05-16 19:24:12.593259 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-16 19:23:12.642355. 
+2022-05-16 19:25:12.590964 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-16 19:24:12.624459. 
+2022-05-16 19:26:12.588668 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-16 19:25:12.622164. 
+2022-05-17 07:32:14.438037 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 07:31:14.440333. 
+2022-05-17 07:33:14.435742 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 07:32:14.594038. 
+2022-05-17 09:18:14.708135 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 09:17:14.710430. 
+2022-05-17 09:19:14.721439 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 09:18:14.723735. 
+2022-05-17 09:20:14.719144 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 09:19:14.752639. 
+2022-05-17 09:21:14.716849 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 09:20:14.750344. 
+2022-05-17 09:22:14.714553 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 09:21:14.748049. 
+2022-05-17 09:24:14.725562 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 09:23:14.727858. 
+2022-05-17 09:38:14.758836 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 09:37:14.761131. 
+2022-05-17 09:41:14.763752 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 09:40:14.766048. 
+2022-05-17 10:22:14.870243 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 10:21:14.872539. 
+2022-05-17 10:35:14.902803 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 10:34:14.905099. 
+2022-05-17 11:15:15.021021 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 11:14:15.016911. 
+2022-05-17 11:16:15.008329 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 11:15:15.114622. 
+2022-05-17 11:19:15.023845 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 11:18:15.026140. 
+2022-05-17 11:52:15.113106 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 11:51:15.099802. 
+2022-05-17 14:55:15.594978 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 14:54:15.563672. 
+2022-05-17 14:56:15.575285 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 14:55:15.984979. 
+2022-05-17 15:06:15.600342 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 15:05:15.596637. 
+2022-05-17 15:07:15.601047 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 15:06:15.615942. 
+2022-05-17 15:08:15.606752 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 15:07:15.632247. 
+2022-05-17 15:11:15.615669 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-17 15:10:15.611964. 
+2022-05-19 11:44:22.438014 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-19 11:43:22.397108. 
+2022-05-19 12:29:22.532463 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-19 12:28:22.508157. 
+2022-05-20 14:45:26.574762 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-20 14:44:26.543456. 
+2022-05-24 12:43:21.089673 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-24 12:42:21.068368. 
+2022-05-24 12:44:21.078783 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-24 12:43:21.479674. 
+2022-05-24 12:45:21.072090 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-24 12:44:21.094383. 
+2022-05-26 06:46:27.491795 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-26 06:45:27.456890. 
+2022-05-26 06:52:27.467225 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-26 06:51:27.464520. 
+2022-05-26 06:58:27.487256 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-26 06:57:27.478551. 
+2022-05-26 06:59:27.487163 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-26 06:58:27.627656. 
+2022-05-26 07:00:27.500671 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-26 06:59:27.518363. 
+2022-05-26 07:09:27.521226 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-26 07:08:27.515318. 
+2022-05-26 07:11:27.524036 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-26 07:10:27.524931. 
+2022-05-27 13:01:32.088192 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-27 13:00:32.084487. 
+2022-05-30 07:49:20.721709 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-30 07:48:20.703602. 
+2022-05-30 07:50:20.711814 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-30 07:49:21.049310. 
+2022-05-30 19:27:22.498424 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-30 19:26:22.479119. 
+2022-05-30 19:28:22.483330 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-30 19:27:22.919624. 
+2022-05-30 19:32:22.501150 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-30 19:31:22.495445. 
+2022-05-31 10:41:24.828409 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-31 10:40:24.824704. 
+2022-05-31 10:44:24.826726 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-31 10:43:24.822219. 
+2022-05-31 10:45:24.836147 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-31 10:44:24.935926. 
+2022-05-31 10:46:24.834869 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-31 10:45:24.879149. 
+2022-05-31 10:47:24.838574 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-05-31 10:46:24.850469. 
+2022-06-01 14:30:29.090814 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-01 14:29:29.060504. 
+2022-06-02 17:10:33.213093 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-02 17:09:33.144173. 
+2022-06-02 17:11:33.142207 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-02 17:10:33.634293. 
+2022-06-03 07:36:35.371638 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-03 07:35:35.368321. 
+2022-06-06 08:59:36.791278 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-06 08:54:36.779344. 
+2022-06-08 16:18:21.576846 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-08 16:17:21.547941. 
+2022-06-08 18:24:21.874648 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-08 18:23:21.876943. 
+2022-06-08 18:25:21.872352 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-08 18:24:21.952648. 
+2022-06-09 09:05:24.126839 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-09 09:04:24.113534. 
+2022-06-09 09:06:24.124544 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-09 09:05:24.126839. 
+2022-06-09 09:08:24.135553 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-09 09:07:24.122248. 
+2022-06-10 09:46:03.218940 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-10 09:41:03.214817. 
+2022-06-10 17:40:54.640865 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-10 17:39:54.641160. 
+2022-06-10 17:41:54.638570 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-10 17:40:54.750065. 
+2022-06-13 09:28:53.230321 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-13 09:27:53.201416. 
+2022-06-13 11:13:53.480372 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-13 11:12:53.482465. 
+2022-06-13 11:14:53.478076 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-13 11:13:53.480372. 
+2022-06-13 11:25:53.510447 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-13 11:24:53.512742. 
+2022-06-13 18:26:54.571986 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-13 18:25:54.574282. 
+2022-06-14 18:03:58.184448 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:02:58.171144. 
+2022-06-14 18:04:58.182153 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:03:58.449649. 
+2022-06-14 18:05:58.179857 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:04:58.197753. 
+2022-06-14 18:06:58.177562 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:05:58.195458. 
+2022-06-14 18:07:58.175267 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:06:58.208762. 
+2022-06-14 18:08:58.188571 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:07:58.206467. 
+2022-06-14 18:09:58.186276 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:08:58.219771. 
+2022-06-14 18:10:58.183981 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:09:58.217476. 
+2022-06-14 18:11:58.197285 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:10:58.215181. 
+2022-06-14 18:12:58.194990 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:11:58.228485. 
+2022-06-14 18:13:58.192694 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:12:58.226190. 
+2022-06-14 18:14:58.205999 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:13:58.239495. 
+2022-06-14 18:15:58.203704 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:14:58.237199. 
+2022-06-14 18:16:58.201408 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:15:58.234904. 
+2022-06-14 18:31:58.244978 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:30:58.247273. 
+2022-06-14 18:32:58.242682 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:31:58.244978. 
+2022-06-14 18:33:58.255987 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:32:58.273882. 
+2022-06-14 18:34:58.253691 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:33:58.271587. 
+2022-06-14 18:35:58.251396 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:34:58.269291. 
+2022-06-14 18:36:58.249101 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:35:58.282596. 
+2022-06-14 18:37:58.262405 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:36:58.295901. 
+2022-06-14 18:39:58.257815 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:38:58.260110. 
+2022-06-14 18:46:58.288547 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-14 18:45:58.275242. 
+2022-06-15 09:49:00.573911 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-15 09:48:00.564003. 
+2022-06-15 09:50:00.571616 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-15 09:49:00.667511. 
+2022-06-15 09:52:00.575228 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-15 09:51:00.569320. 
+2022-06-15 14:58:25.879085 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-15 14:53:25.874962. 
+2022-06-21 06:59:49.883451 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 06:58:49.863018. 
+2022-06-21 07:13:49.901498 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 07:12:49.899066. 
+2022-06-21 07:14:49.902930 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 07:13:50.051506. 
+2022-06-21 07:15:49.906362 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 07:14:49.922931. 
+2022-06-21 07:16:49.907793 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 07:15:49.934363. 
+2022-06-21 07:18:49.913657 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 07:17:49.912226. 
+2022-06-21 07:19:49.916089 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 07:18:50.055666. 
+2022-06-21 09:38:50.271130 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 09:37:50.270699. 
+2022-06-21 09:39:50.274562 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 09:38:50.436140. 
+2022-06-21 09:51:50.304746 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 09:50:50.304314. 
+2022-06-21 09:52:50.307178 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 09:51:50.414752. 
+2022-06-21 09:54:50.313042 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 09:53:50.310610. 
+2022-06-21 09:55:50.314474 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 09:54:50.447049. 
+2022-06-21 15:22:51.143721 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 15:21:51.143289. 
+2022-06-21 15:23:51.146153 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 15:22:51.223725. 
+2022-06-21 15:24:51.148585 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 15:23:51.172154. 
+2022-06-21 15:25:51.152017 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 15:24:51.171586. 
+2022-06-21 15:26:51.153449 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 15:25:51.176018. 
+2022-06-21 15:27:51.156881 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 15:26:51.172450. 
+2022-06-21 15:29:51.161744 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 15:28:51.160313. 
+2022-06-21 15:30:51.163176 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-21 15:29:51.251750. 
+2022-06-22 07:17:53.555231 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-22 07:16:53.552799. 
+2022-06-22 07:19:53.560095 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-22 07:18:53.559663. 
+2022-06-22 07:20:53.562527 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-22 07:19:53.602098. 
+2022-06-22 08:25:53.727604 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-22 08:24:53.726172. 
+2022-06-22 08:26:53.730036 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-22 08:25:53.735604. 
+2022-06-22 09:59:53.966207 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-22 09:58:53.964775. 
+2022-06-22 10:00:53.968639 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-22 09:59:54.074213. 
+2022-06-22 12:43:54.401593 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-22 12:42:54.375076. 
+2022-06-24 17:37:02.534852 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-24 17:36:02.450142. 
+2022-06-24 17:38:02.457561 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-24 17:37:02.987253. 
+2022-06-27 07:30:49.862106 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-27 07:29:49.842995. 
+2022-06-30 19:49:02.704403 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-30 19:48:02.680094. 
+2022-06-30 19:51:02.672427 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-30 19:50:02.676318. 
+2022-06-30 19:52:02.682939 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-06-30 19:51:02.750428. 
+2022-07-01 15:06:05.622654 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 15:05:05.592542. 
+2022-07-01 15:07:05.605168 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 15:06:06.215455. 
+2022-07-01 15:08:05.597277 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 15:07:05.620768. 
+2022-07-01 15:09:05.610190 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 15:08:05.628477. 
+2022-07-01 15:35:05.678975 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 15:34:05.667463. 
+2022-07-01 15:36:05.679085 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 15:35:05.959775. 
+2022-07-01 15:55:05.733633 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 15:54:05.715126. 
+2022-07-01 15:56:05.717949 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 15:55:05.967634. 
+2022-07-01 15:57:05.726267 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 15:56:05.749149. 
+2022-07-01 15:58:05.727976 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 15:57:05.741867. 
+2022-07-01 16:00:05.732002 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 15:59:05.739487. 
+2022-07-01 16:01:05.734910 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 16:00:05.825602. 
+2022-07-01 17:06:05.908687 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-01 17:05:05.899779. 
+2022-07-06 13:58:01.759645 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-06 13:57:01.732930. 
+2022-07-06 13:59:01.740167 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-06 13:58:02.321246. 
+2022-07-06 14:00:01.751481 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-06 13:59:01.802568. 
+2022-07-06 14:01:01.751802 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-06 14:00:01.845081. 
+2022-07-06 14:02:01.748511 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-06 14:01:01.845402. 
+2022-07-06 15:02:01.916212 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-06 15:01:01.901295. 
+2022-07-07 07:25:04.398853 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-07 07:24:04.376742. 
+2022-07-07 11:01:04.950075 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-07 11:00:04.923567. 
+2022-07-08 18:30:09.759331 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-08 18:29:09.697622. 
+2022-07-08 18:31:09.706438 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-08 18:30:10.944933. 
+2022-07-08 18:32:09.712944 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-08 18:31:09.815638. 
+2022-07-08 18:33:09.703856 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-08 18:32:09.759745. 
+2022-07-11 12:02:57.876590 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-11 12:01:57.868475. 
+2022-07-11 12:03:57.858901 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-11 12:02:58.640991. 
+2022-07-11 12:06:57.868835 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-11 12:05:57.876122. 
+2022-07-11 12:07:57.881549 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-11 12:06:58.056036. 
+2022-07-11 12:09:57.876993 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-11 12:08:57.881064. 
+2022-07-11 12:28:57.945526 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-11 12:27:57.923802. 
+2022-07-11 12:29:57.925031 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-11 12:28:58.148326. 
+2022-07-11 12:30:57.927344 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-11 12:29:58.018631. 
+2022-07-11 12:31:57.933450 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-11 12:30:58.020944. 
+2022-07-11 12:32:57.940961 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-11 12:31:58.073850. 
+2022-07-13 20:08:06.402587 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-13 20:07:06.378816. 
+2022-07-15 08:59:52.758840 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM5': PermissionError(13, 'Acceso denegado.', None, 5)
+2022-07-15 10:03:17.078401 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-15 09:58:15.668052. 
+2022-07-15 10:13:33.657078 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-15 10:08:32.245750. 
+2022-07-19 09:43:21.194286 -> Error: USB_HOT_UNPLUGGED -> Se perdió la conexión con la máquina. GetOverlappedResult failed (PermissionError(13, 'Acceso denegado.', None, 5))
+2022-07-19 10:07:16.492197 -> Error: DB_CONN           -> No se pudo conectar con la base de datos. Datos de la base, mal cargados. config_SQL_Database -> device_name o db_name
+2022-07-25 15:29:11.822017 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-25 15:28:11.824312. 
+2022-07-25 15:30:11.829123 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-25 15:29:12.414818. 
+2022-07-25 15:31:11.825629 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-25 15:30:11.860323. 
+2022-07-25 18:12:12.236190 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-25 18:11:12.238485. 
+2022-07-27 08:26:18.097341 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 08:25:18.021636. 
+2022-07-27 08:30:18.025759 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 08:29:18.028054. 
+2022-07-27 08:32:18.036768 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 08:31:18.023464. 
+2022-07-27 08:33:18.034473 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 08:32:18.114768. 
+2022-07-27 08:49:18.074751 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 08:48:18.077046. 
+2022-07-27 09:21:18.157726 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 09:20:18.160021. 
+2022-07-27 13:30:18.787369 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:29:18.789665. 
+2022-07-27 13:31:18.785074 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:30:18.880970. 
+2022-07-27 13:32:18.782779 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:31:18.800674. 
+2022-07-27 13:33:18.796083 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:32:18.813979. 
+2022-07-27 13:34:18.793788 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:33:18.827283. 
+2022-07-27 13:35:18.791492 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:34:18.840588. 
+2022-07-27 13:36:18.804797 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:35:18.822693. 
+2022-07-27 13:37:18.802502 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:36:18.820397. 
+2022-07-27 13:38:18.800206 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:37:18.818102. 
+2022-07-27 13:39:18.813511 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:38:18.831406. 
+2022-07-27 13:40:18.811216 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:39:18.829111. 
+2022-07-27 13:41:18.808920 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:40:18.842416. 
+2022-07-27 13:50:18.835062 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:49:18.837357. 
+2022-07-27 13:51:18.832766 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:50:18.928662. 
+2022-07-27 13:52:18.846071 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 13:51:18.863966. 
+2022-07-27 14:20:18.906600 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 14:19:18.908896. 
+2022-07-27 16:16:19.209299 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:15:19.211595. 
+2022-07-27 16:17:19.207004 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:16:19.271699. 
+2022-07-27 16:20:19.208321 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:19:19.218013. 
+2022-07-27 16:21:19.221625 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:20:19.317521. 
+2022-07-27 16:24:19.221942 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:23:19.224238. 
+2022-07-27 16:25:19.235247 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:24:19.315542. 
+2022-07-27 16:26:19.232952 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:25:19.250847. 
+2022-07-27 16:27:19.230656 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:26:19.248552. 
+2022-07-27 16:28:19.228361 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:27:19.261856. 
+2022-07-27 16:29:19.241665 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:28:19.259561. 
+2022-07-27 16:42:19.272635 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:41:19.274930. 
+2022-07-27 16:43:19.267141 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:42:19.553435. 
+2022-07-27 16:44:19.280446 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:43:19.298341. 
+2022-07-27 16:45:19.278150 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:44:19.296046. 
+2022-07-27 16:51:19.290582 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:50:19.292877. 
+2022-07-27 16:52:19.303887 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:51:19.399782. 
+2022-07-27 16:53:19.301591 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:52:19.319487. 
+2022-07-27 16:54:19.299296 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:53:19.317191. 
+2022-07-27 16:55:19.297000 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:54:19.330496. 
+2022-07-27 16:57:19.308010 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:56:19.310305. 
+2022-07-27 16:58:19.305714 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:57:19.401610. 
+2022-07-27 16:59:19.319019 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:58:19.336914. 
+2022-07-27 17:00:19.316724 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 16:59:19.334619. 
+2022-07-27 17:01:19.314428 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 17:00:19.332324. 
+2022-07-27 17:02:19.327733 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 17:01:19.345628. 
+2022-07-27 18:44:19.581808 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 18:43:19.584103. 
+2022-07-27 18:50:19.599235 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 18:49:19.601531. 
+2022-07-27 18:51:19.596940 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 18:50:19.677236. 
+2022-07-27 18:52:19.594645 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 18:51:19.612540. 
+2022-07-27 18:53:19.607949 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 18:52:19.625845. 
+2022-07-27 18:54:19.605654 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 18:53:19.623549. 
+2022-07-27 18:55:19.603359 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 18:54:19.652454. 
+2022-07-27 18:56:19.616663 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 18:55:19.634559. 
+2022-07-27 18:57:19.614368 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 18:56:19.632263. 
+2022-07-27 19:04:19.629500 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 19:03:19.631796. 
+2022-07-27 19:05:19.627205 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 19:04:19.723100. 
+2022-07-27 19:06:19.640509 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 19:05:19.658405. 
+2022-07-27 19:07:19.638214 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 19:06:19.656109. 
+2022-07-27 19:08:19.635919 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 19:07:19.653814. 
+2022-07-27 19:10:19.646928 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 19:09:19.649223. 
+2022-07-27 19:11:19.644632 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 19:10:19.740528. 
+2022-07-27 19:12:19.657937 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 19:11:19.675833. 
+2022-07-27 19:13:19.655642 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 19:12:19.689137. 
+2022-07-27 20:16:19.811636 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:15:19.813931. 
+2022-07-27 20:17:19.824940 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:16:19.920836. 
+2022-07-27 20:18:19.822645 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:17:19.840540. 
+2022-07-27 20:19:19.820349 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:18:19.838245. 
+2022-07-27 20:20:19.818054 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:19:19.835949. 
+2022-07-27 20:25:19.837777 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:24:19.840073. 
+2022-07-27 20:26:19.835482 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:25:19.837777. 
+2022-07-27 20:28:19.846491 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:27:19.848786. 
+2022-07-27 20:29:19.844196 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:28:19.940091. 
+2022-07-27 20:30:19.857500 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:29:19.859796. 
+2022-07-27 20:31:19.855205 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:30:19.873100. 
+2022-07-27 20:32:19.852909 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:31:19.870805. 
+2022-07-27 20:33:19.866214 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:32:19.868510. 
+2022-07-27 20:34:19.863919 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:33:19.881814. 
+2022-07-27 20:35:19.861623 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:34:19.895119. 
+2022-07-27 20:36:19.859328 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:35:19.877223. 
+2022-07-27 20:37:19.872633 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-27 20:36:19.890528. 
+2022-07-28 18:19:23.149972 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 18:18:23.152267. 
+2022-07-28 19:17:23.300442 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:16:23.302737. 
+2022-07-28 19:21:23.306860 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:20:23.309155. 
+2022-07-28 19:22:23.304565 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:21:23.400460. 
+2022-07-28 19:23:23.317869 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:22:23.335765. 
+2022-07-28 19:24:23.315574 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:23:23.333469. 
+2022-07-28 19:25:23.313278 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:24:23.331174. 
+2022-07-28 19:26:23.326583 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:25:23.344479. 
+2022-07-28 19:27:23.324288 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:26:23.342183. 
+2022-07-28 19:28:23.321992 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:27:23.339888. 
+2022-07-28 19:29:23.335297 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:28:23.353192. 
+2022-07-28 19:30:23.333002 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:29:23.350897. 
+2022-07-28 19:31:23.330706 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:30:23.379802. 
+2022-07-28 19:32:23.344011 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:31:23.361906. 
+2022-07-28 19:33:23.341715 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:32:23.359611. 
+2022-07-28 19:34:23.339420 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:33:23.357315. 
+2022-07-28 19:35:23.352725 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:34:23.370620. 
+2022-07-28 19:36:23.350429 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:35:23.368325. 
+2022-07-28 19:37:23.348134 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:36:23.366029. 
+2022-07-28 19:38:23.345839 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:37:23.363734. 
+2022-07-28 19:39:23.359143 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:38:23.377039. 
+2022-07-28 19:40:23.356848 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:39:23.374743. 
+2022-07-28 19:41:23.354552 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:40:23.372448. 
+2022-07-28 19:42:23.367857 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:41:23.385752. 
+2022-07-28 19:43:23.365562 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:42:23.383457. 
+2022-07-28 19:44:23.363266 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:43:23.381162. 
+2022-07-28 19:45:23.376571 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:44:23.394466. 
+2022-07-28 19:46:23.374276 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:45:23.392171. 
+2022-07-28 19:47:23.371980 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:46:23.389876. 
+2022-07-28 19:48:23.385285 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:47:23.403180. 
+2022-07-28 19:49:23.382989 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:48:23.400885. 
+2022-07-28 19:50:23.380694 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:49:23.398589. 
+2022-07-28 19:51:23.378399 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:50:23.396294. 
+2022-07-28 19:52:23.391703 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-07-28 19:51:23.409599. 
+2022-08-03 08:26:40.627371 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-08-03 08:25:40.629667. 
+2022-08-04 08:35:44.260943 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-08-04 08:34:44.263238. 
+2022-08-05 08:47:47.945943 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-08-05 08:46:47.944238. 
+2022-08-05 08:49:47.956952 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-08-05 08:48:47.943648. 
+2022-08-05 08:50:47.954657 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-08-05 08:49:48.034953. 
+2022-08-05 08:51:47.952362 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-08-05 08:50:47.970257. 
+2022-08-05 08:52:47.965666 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-08-05 08:51:47.967962. 
+2022-08-05 08:53:47.963371 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-08-05 08:52:47.981266. 
+2022-08-05 10:43:50.823672 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2022-08-05 10:38:48.230066. 
