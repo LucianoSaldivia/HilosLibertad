@@ -102,7 +102,7 @@ namespace HilosLibertad
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgv_TiemposPorMaquina.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_TiemposPorMaquina.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_TiemposPorMaquina.Location = new System.Drawing.Point(479, 55);
+            this.dgv_TiemposPorMaquina.Location = new System.Drawing.Point(476, 36);
             this.dgv_TiemposPorMaquina.Name = "dgv_TiemposPorMaquina";
             this.dgv_TiemposPorMaquina.ReadOnly = true;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -115,7 +115,7 @@ namespace HilosLibertad
             this.dgv_TiemposPorMaquina.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_TiemposPorMaquina.RowHeadersVisible = false;
             this.dgv_TiemposPorMaquina.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgv_TiemposPorMaquina.Size = new System.Drawing.Size(529, 487);
+            this.dgv_TiemposPorMaquina.Size = new System.Drawing.Size(529, 531);
             this.dgv_TiemposPorMaquina.TabIndex = 6;
             // 
             // dgv_TiemposPorSector
@@ -131,7 +131,7 @@ namespace HilosLibertad
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgv_TiemposPorSector.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgv_TiemposPorSector.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_TiemposPorSector.Location = new System.Drawing.Point(479, 575);
+            this.dgv_TiemposPorSector.Location = new System.Drawing.Point(476, 577);
             this.dgv_TiemposPorSector.Name = "dgv_TiemposPorSector";
             this.dgv_TiemposPorSector.ReadOnly = true;
             this.dgv_TiemposPorSector.RowHeadersVisible = false;
@@ -143,21 +143,23 @@ namespace HilosLibertad
             // 
             this.lbl_CantidadHorasPorMaquina.AutoSize = true;
             this.lbl_CantidadHorasPorMaquina.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CantidadHorasPorMaquina.Location = new System.Drawing.Point(476, 32);
+            this.lbl_CantidadHorasPorMaquina.Location = new System.Drawing.Point(386, 25);
             this.lbl_CantidadHorasPorMaquina.Name = "lbl_CantidadHorasPorMaquina";
             this.lbl_CantidadHorasPorMaquina.Size = new System.Drawing.Size(89, 17);
             this.lbl_CantidadHorasPorMaquina.TabIndex = 28;
             this.lbl_CantidadHorasPorMaquina.Text = "Por Máquina:";
+            this.lbl_CantidadHorasPorMaquina.Visible = false;
             // 
             // lbl_CantidadHorasPorSector
             // 
             this.lbl_CantidadHorasPorSector.AutoSize = true;
             this.lbl_CantidadHorasPorSector.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CantidadHorasPorSector.Location = new System.Drawing.Point(476, 552);
+            this.lbl_CantidadHorasPorSector.Location = new System.Drawing.Point(464, 691);
             this.lbl_CantidadHorasPorSector.Name = "lbl_CantidadHorasPorSector";
             this.lbl_CantidadHorasPorSector.Size = new System.Drawing.Size(74, 17);
             this.lbl_CantidadHorasPorSector.TabIndex = 29;
             this.lbl_CantidadHorasPorSector.Text = "Por Sector:";
+            this.lbl_CantidadHorasPorSector.Visible = false;
             // 
             // dgv_TiemposTotales
             // 
@@ -172,18 +174,18 @@ namespace HilosLibertad
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgv_TiemposTotales.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgv_TiemposTotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_TiemposTotales.Location = new System.Drawing.Point(807, 582);
+            this.dgv_TiemposTotales.Location = new System.Drawing.Point(849, 643);
             this.dgv_TiemposTotales.Name = "dgv_TiemposTotales";
             this.dgv_TiemposTotales.ReadOnly = true;
             this.dgv_TiemposTotales.RowHeadersVisible = false;
             this.dgv_TiemposTotales.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgv_TiemposTotales.Size = new System.Drawing.Size(210, 47);
+            this.dgv_TiemposTotales.Size = new System.Drawing.Size(156, 47);
             this.dgv_TiemposTotales.TabIndex = 30;
             // 
             // lbl_CantidadTotalHorasMaquina
             // 
             this.lbl_CantidadTotalHorasMaquina.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CantidadTotalHorasMaquina.Location = new System.Drawing.Point(804, 558);
+            this.lbl_CantidadTotalHorasMaquina.Location = new System.Drawing.Point(846, 617);
             this.lbl_CantidadTotalHorasMaquina.Name = "lbl_CantidadTotalHorasMaquina";
             this.lbl_CantidadTotalHorasMaquina.Size = new System.Drawing.Size(142, 23);
             this.lbl_CantidadTotalHorasMaquina.TabIndex = 31;
@@ -466,7 +468,7 @@ namespace HilosLibertad
             this.editarMáquinasToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1044, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1024, 25);
             this.menuStrip1.TabIndex = 101;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -487,40 +489,43 @@ namespace HilosLibertad
             // btn_CopiarAlPortapapeles_TiemposPorMaquina
             // 
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Location = new System.Drawing.Point(963, 32);
+            this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Location = new System.Drawing.Point(1011, 28);
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Name = "btn_CopiarAlPortapapeles_TiemposPorMaquina";
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Size = new System.Drawing.Size(51, 23);
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.TabIndex = 103;
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Text = "Copiar";
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.UseVisualStyleBackColor = true;
+            this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Visible = false;
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Click += new System.EventHandler(this.btn_CopiarAlPortapapeles_TiemposPorMaquina_Click);
             // 
             // btn_CopiarAlPortapapeles_TiemposPorSector
             // 
             this.btn_CopiarAlPortapapeles_TiemposPorSector.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CopiarAlPortapapeles_TiemposPorSector.Location = new System.Drawing.Point(656, 552);
+            this.btn_CopiarAlPortapapeles_TiemposPorSector.Location = new System.Drawing.Point(711, 636);
             this.btn_CopiarAlPortapapeles_TiemposPorSector.Name = "btn_CopiarAlPortapapeles_TiemposPorSector";
             this.btn_CopiarAlPortapapeles_TiemposPorSector.Size = new System.Drawing.Size(51, 23);
             this.btn_CopiarAlPortapapeles_TiemposPorSector.TabIndex = 104;
             this.btn_CopiarAlPortapapeles_TiemposPorSector.Text = "Copiar";
             this.btn_CopiarAlPortapapeles_TiemposPorSector.UseVisualStyleBackColor = true;
+            this.btn_CopiarAlPortapapeles_TiemposPorSector.Visible = false;
             this.btn_CopiarAlPortapapeles_TiemposPorSector.Click += new System.EventHandler(this.btn_CopiarAlPortapapeles_TiemposPorSector_Click);
             // 
             // btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas
             // 
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Location = new System.Drawing.Point(967, 558);
+            this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Location = new System.Drawing.Point(954, 588);
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Name = "btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas";
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Size = new System.Drawing.Size(51, 23);
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.TabIndex = 105;
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Text = "Copiar";
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.UseVisualStyleBackColor = true;
+            this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Visible = false;
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Click += new System.EventHandler(this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas_Click);
             // 
             // lbl_Linea
             // 
             this.lbl_Linea.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lbl_Linea.Location = new System.Drawing.Point(456, 46);
+            this.lbl_Linea.Location = new System.Drawing.Point(453, 46);
             this.lbl_Linea.Name = "lbl_Linea";
             this.lbl_Linea.Size = new System.Drawing.Size(2, 640);
             this.lbl_Linea.TabIndex = 107;
@@ -546,7 +551,7 @@ namespace HilosLibertad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1044, 702);
+            this.ClientSize = new System.Drawing.Size(1024, 702);
             this.Controls.Add(this.lbl_Linea);
             this.Controls.Add(this.pic_logo);
             this.Controls.Add(this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas);

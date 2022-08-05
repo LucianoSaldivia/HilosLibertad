@@ -161,6 +161,7 @@ namespace HilosLibertad
                 {
                     pintarTodosLosObjetosDeColor(Color.Black);
                     llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                    dgv_TiemposPorMaquina.Sort(dgv_TiemposPorMaquina.Columns["SECTOR"], ListSortDirection.Ascending);
                     acomodarFormatoDGVs();
                 }
             }
@@ -172,6 +173,7 @@ namespace HilosLibertad
                     {
                         pintarTodosLosObjetosDeColor(Color.Black); 
                         llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                        dgv_TiemposPorMaquina.Sort(dgv_TiemposPorMaquina.Columns["SECTOR"], ListSortDirection.Ascending);
                         acomodarFormatoDGVs();
                     }
                     else
@@ -180,6 +182,7 @@ namespace HilosLibertad
                         {
                             pintarTodosLosObjetosDeColor(Color.Black);
                             llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                            dgv_TiemposPorMaquina.Sort(dgv_TiemposPorMaquina.Columns["SECTOR"], ListSortDirection.Ascending);
                             acomodarFormatoDGVs();
                         }
                         else
@@ -188,12 +191,14 @@ namespace HilosLibertad
                             {
                                 pintarTodosLosObjetosDeColor(Color.Black);
                                 llenarTablas_casoVERDE(str_FyH_INI, str_FyH_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                                dgv_TiemposPorMaquina.Sort(dgv_TiemposPorMaquina.Columns["SECTOR"], ListSortDirection.Ascending);
                                 acomodarFormatoDGVs();
                             }
                             else
                             {
                                 pintarTodosLosObjetosDeColor(Color.Black);
                                 llenarTablas_casoAZUL(str_F_INI, str_F_FIN, str_H_INI, str_H_FIN, str_FILTRO_NUMERO_MAQUINA, str_FILTRO_NOMBRE_MAQUINA, str_FILTRO_NOMBRE_SECTOR);
+                                dgv_TiemposPorMaquina.Sort(dgv_TiemposPorMaquina.Columns["SECTOR"], ListSortDirection.Ascending);
                                 acomodarFormatoDGVs();
                             }
                         }
@@ -207,6 +212,9 @@ namespace HilosLibertad
                     limpiarTablas();
                 }
             }
+            // dgv_TiemposPorMaquina.Sort(dgv_TiemposPorMaquina.Columns["SECTOR"], ListSortDirection.Ascending);
+            // acomodarFormatoDGVs();
+
         }
 
 
@@ -465,8 +473,10 @@ namespace HilosLibertad
             int cantFilas = dgv.Rows.Count;       // cantidad de filas del dataGridView
             for (int i = 0; i < cantFilas; i++)
             {
-                int mins = getMinsONtilNow_NumMaq(i + 1);
-
+                int ptr = int.Parse(dgv.Rows[i].Cells[0].Value.ToString());
+                int mins = getMinsONtilNow_NumMaq(ptr);
+                // int mins = getMinsONtilNow_NumMaq(i + 1);
+                
                 if (mins <= 5)  // "Cells[0]" --> la primera columna
                 {
                     dgv.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(185, 248, 218);   // fondo verde claro
