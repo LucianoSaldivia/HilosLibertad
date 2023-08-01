@@ -1,4 +1,13 @@
 --------	Embebido    --------
++ STM32_CUBE_IDE Para evitar errores al debuggear/correr un proyecto en la placa:
+	1. Abrir opciones de Debug (en la flecha a la derecha del botón "Debug |v|")
+	2. Debug Configurations
+	3. Pestaña Debugger
+	4. Debug probe -> Elegir ST-LINK (OpenOCD)
+	5. En la sección "Configuration Script", tocar "Show generator options..."
+	6. Reset Mode -> Software System Reset (En la sección Mode Setup, dentro de Generator Options)
+
+
 + Driver para conversor USB <-> RS485
 Tutorial:
 	https://www.youtube.com/watch?v=3Hqu0T8qEy8
