@@ -7,12 +7,12 @@
 
     /* TIEMPOS --- LEER
 
-    TIME_TO_CAPTURE_MS: es el tiempo (en milisegundos) entre cada lectura de las entradas EN CRUDO
+    TIME_TO_CAPTURE: es el tiempo (en milisegundos) entre cada lectura de las entradas EN CRUDO
             ----> el define de TIME_BETWEEN_READS_MS está en muxReader.h
 
     */
     #define SAMPLES_TO_VALIDATE     ((uint16_t) 5)
-    #define TIME_TO_CAPTURE      	((uint32_t) 1 * MILISEG)
+    #define TIME_TO_CAPTURE      	((uint32_t) 10 * MILISEG)
     #define INIT_STATES             ((uint64_t) 0)
 
    

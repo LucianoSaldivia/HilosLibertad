@@ -17,10 +17,10 @@
     /* GPIOS LIBRES */
     #ifndef _GROUP_FREE_
     #define _GROUP_FREE_
-        #define PORT_FREE_1     GPIOA
-        #define PIN_FREE_1      GPIO_PIN_1
-        #define PORT_FREE_2     GPIOA
-        #define PIN_FREE_2      GPIO_PIN_2
+        #define PORT_FREE_1     GPIOA       // Usado
+        #define PIN_FREE_1      GPIO_PIN_1	// Usado
+        #define PORT_FREE_2     GPIOA		// Usado
+        #define PIN_FREE_2      GPIO_PIN_2	// Usado
         #define PORT_FREE_3     GPIOA
         #define PIN_FREE_3      GPIO_PIN_3
         #define PORT_FREE_4     GPIOA
@@ -36,13 +36,14 @@
     #define _GROUP_INPUTS_WXYZ_
 	// DEBEN SER (No Pull-Up and No Pull-Down)
         // Inputs 0 (W0, X0, Y0, Z0)
+            // Y0 cambiado por A2, originalmente era B7 (GPIO quemada)
         #define PORT_W0     GPIOB
         #define PIN_W0      GPIO_PIN_5
         #define PORT_X0     GPIOB
         #define PIN_X0      GPIO_PIN_6
-        #define PORT_Y0     GPIOB
-        #define PIN_Y0      GPIO_PIN_7
-        #define PORT_Z0     GPIOB
+		#define PORT_Y0     PORT_FREE_2/* GPIOB */
+        #define PIN_Y0      PIN_FREE_2/* GPIO_PIN_7 */
+		#define PORT_Z0     GPIOB
         #define PIN_Z0      GPIO_PIN_8     
         // Inputs 1 (W1, X1, Y1, Z1)
             // W1 cambiado por A1, originalmente era A12 (GPIO quemada)
