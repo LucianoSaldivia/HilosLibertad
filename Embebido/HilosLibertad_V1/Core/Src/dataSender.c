@@ -36,7 +36,6 @@ void initDataSender( DataSender *sender, UART_HandleTypeDef *uart ){
 
 // FSM del enviador de datos
 void FSM_DataSender( DataSender *sender, DS_UartInterruptionFlags *flags ){
-
 	// Refresco la alarma
 	FSM_Alarm( &(sender->alarma) );
 	
@@ -142,10 +141,10 @@ void FSM_DataSender( DataSender *sender, DS_UartInterruptionFlags *flags ){
 							sender->data_loss_naks_ctr ++;
 							// Si llegué a la cantidad máxima de datos perdidos por NAKs consecutivos
 							if( sender->data_loss_naks_ctr >= MAX_DATA_LOSS_NAK ){
-							// Disparo la alarma si estaba apagada o si había otra (ahí la pisa)
-							if( alarmIsOff(&(sender->alarma)) || getAlarmType(&(sender->alarma)) != NAK_ALARM_TYPE ){
-								fireAlarm( &(sender->alarma), NAK_ALARM_TYPE );
-							}
+								// Disparo la alarma si estaba apagada o si había otra (ahí la pisa)
+								if( alarmIsOff(&(sender->alarma)) || getAlarmType(&(sender->alarma)) != NAK_ALARM_TYPE ){
+									fireAlarm( &(sender->alarma), NAK_ALARM_TYPE );
+								}
 								// Dejo MAX_DATA_LOSS_NAK como techo del contador (satura en ese número)
 								sender->data_loss_naks_ctr = MAX_DATA_LOSS_NAK;
 							}
