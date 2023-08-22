@@ -60,6 +60,7 @@ Link para el archivo:
 Paquetes instalados:
     "pip install pyserial" (import serial)
     "pip install crc8" (import crc8)
+    "pip install pyodbc" (import pyodbc)
 
 Terminados:
     + EstadosEventosSesiones
