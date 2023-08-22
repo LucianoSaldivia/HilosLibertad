@@ -66,14 +66,8 @@ def writeErrorLog(timestamp: datetime, type: str, last_ok_timestamp: datetime = 
         fd.write( log_line )
         print( log_line )
 
-def test_error_log():
-    writeErrorLog( datetime.now(), ErrorLogMsg.get("DB_WRITE"), datetime.now() - timedelta(minutes=5) )
-
 def main():
-    BOARD0_MAQ = list( range(1     , 16 + 1) ) # if BOARD0 else list()
-    BOARD1_MAQ = list( range(16 + 1, 23 + 1) ) # if BOARD1 else list()
-
-    print(BOARD0_MAQ + BOARD1_MAQ)
+    writeErrorLog( datetime.now(), ErrorLogMsg.get("DB_WRITE"), datetime.now() - timedelta(minutes=5) )
 
 if __name__ == "__main__":
     main()

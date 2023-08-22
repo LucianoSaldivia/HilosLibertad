@@ -44,15 +44,16 @@ def sessionStarted(conn, id_maq: int, timestamp: datetime):
     EXEC HL.sp_insertarSesion 1, '2018-30-09 16:00:00'
     donde le paso:
         id_maq
-		timestamp como 'YYYY-DD-MM HH:MM:SS'
+		timestamp como 'YYYY-MM-DD HH:MM:SS'
+    # El formato anterior (SQL2014) era -> timestamp como 'YYYY-DD-MM HH:MM:SS'
+    # El formato nuevo es (SQL2019) es  -> timestamp como 'YYYY-MM-DDTHH:MM:SS' - Notar la T
     """
 
     # print(f"Maq {id_maq}, sessionStarted")
     try: 
         cursor = conn.cursor()
 
-        # formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
-        formatted_timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        formatted_timestamp = timestamp.strftime("%Y-%m-%dT%H:%M:%S")
         # Ejecuto el procedimiento
         cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_STARTED} {id_maq}, '{formatted_timestamp}'" )
         conn.commit()
@@ -63,14 +64,15 @@ def sessionContinues(conn, id_maq: int, timestamp: datetime):
     EXEC HL.sp_actualizarSesion 1, '2018-30-09 16:05:00'
     donde le paso:
         id_maq
-		timestamp como 'YYYY-DD-MM HH:MM:SS'
+		timestamp como 'YYYY-MM-DD HH:MM:SS'
+    # El formato anterior (SQL2014) era -> timestamp como 'YYYY-DD-MM HH:MM:SS'
+    # El formato nuevo es (SQL2019) es  -> timestamp como 'YYYY-MM-DDTHH:MM:SS' - Notar la T
     """
     # print(f"Maq {id_maq}, sessionContinues")
     try: 
         cursor = conn.cursor()
 
-        # formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
-        formatted_timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        formatted_timestamp = timestamp.strftime("%Y-%m-%dT%H:%M:%S")
         # Ejecuto el procedimiento  
         cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_CONTINUES} {id_maq}, '{formatted_timestamp}'" )
         conn.commit()
@@ -81,14 +83,15 @@ def sessionFinished(conn, id_maq: int, timestamp: datetime):
     EXEC HL.sp_terminarSesion 1, '2018-30-09 16:45:00'
     donde le paso:
         id_maq
-		timestamp como 'YYYY-DD-MM HH:MM:SS'
+		timestamp como 'YYYY-MM-DD HH:MM:SS'
+    # El formato anterior (SQL2014) era -> timestamp como 'YYYY-DD-MM HH:MM:SS'
+    # El formato nuevo es (SQL2019) es  -> timestamp como 'YYYY-MM-DDTHH:MM:SS' - Notar la T
     """
     # print(f"Maq {id_maq}, sessionFinishes")
     try: 
         cursor = conn.cursor()
 
-        # formatted_timestamp = timestamp.strftime("%Y-%d-%m %H:%M:%S")
-        formatted_timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        formatted_timestamp = timestamp.strftime("%Y-%m-%dT%H:%M:%S")
         # Ejecuto el procedimiento
         cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_FINISHED} {id_maq}, '{formatted_timestamp}'" )
         conn.commit()
@@ -565,29 +568,6 @@ def test5(conn):
 
     # Muestro todo para chequear los registros y los horarios
     selectAll(conn)
-def test6(conn):
-    """Prueba de inserción (transaction)
-    """
-
-    try: 
-        cursor = conn.cursor()
-
-        # Ejecuto el procedimiento     
-        # cursor.execute( f"""
-        #     BEGIN TRANSACTION 
-        #         INSERT INTO HL.registros (
-        #             idMaquina, fechaHoraEncendida,		fechaHoraUltimoRegistroEncendida,	fueApagadaPorOperarioOPorFallaParticular) VALUES(
-        #             18,		   '2022-04-30 12:00:00',	'2022-04-30 13:00:00',				0)""" )
-        # conn.commit()
-
-        selectLast(conn, 5)
-
-        cursor.execute( f"ROLLBACK TRANSACTION" )
-        conn.commit()
-
-
-    except:
-        raise Exception("Falló la llamada al Stored Procedure: " + config_SQL_Database.PROC_SESSION_STARTED + ".")
 
 
 
@@ -595,15 +575,15 @@ if __name__ == "__main__":
 
     with connectToDatabase() as conn:
 
-        selectLast(conn, 5)
+        # selectAll(conn)
+
+        selectAll(conn)
+        test1(conn)
+        selectAll(conn)
 
         # selectAll(conn)
-        test6(conn)
+        # clearTable(conn, config_SQL_Database.table_name)
         # selectAll(conn)
-        # selectAll(conn)
-        # clearTable(conn, config_SQL_Database.table_name)       
-        
-        selectLast(conn, 5)
 
     print("Todo OK")
     

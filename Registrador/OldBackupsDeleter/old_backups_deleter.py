@@ -4,8 +4,9 @@ import sys
 import os
 from pathlib import Path
 
-FILES_DIRECTORY = "E:\\Backups_DB\\"
-FILE_TYPE = ".BAK"
+
+FILES_DIRECTORY = "E:/Luciano/BACKUP_DB_HILOSLIBERTAD/"
+FILE_TYPE = ".bak"
 NUMBER_OF_FILES_NOT_TO_DELETE = 5
 
 
@@ -24,7 +25,7 @@ def getFilesList(path: str, file_type: str) -> list:
 def getFilesList_NewestFirst(path: str, file_type: str) -> list:
     files = list()
     for file in os.listdir(path):
-        if os.path.isfile(os.path.join(path, file)) and (file_type.lower() in file.lower()):
+        if os.path.isfile(os.path.join(path, file)) and (file_type in file):
             files.append( path + file )
 
     return files[::-1]

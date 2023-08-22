@@ -560,6 +560,7 @@ def Registrador( print_info: bool = True ) -> None:
                 prev_report_list = list()
 def SerialTester( forced_answer: bytes = None ) -> None:
     """Este programa testea la conexión serie y la validez de las tramas.
+    NO ESCRIBE EN LA BASE DE DATOS - Sólo testea la conexión serie.
     Si se le pasa forced_answer, responde SIEMPRE con éstos bytes sin importar que reciba, 
     de lo contrario, responde lo que corresponda.
     Muestra además en pantalla, los datos recibidos y si hay desconexiones."""
@@ -724,4 +725,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    # SerialTester()
