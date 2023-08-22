@@ -89,15 +89,5 @@ namespace HilosLibertad.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap logoNUEVO_7_blanco_por_fuera_RECORTE_MÁS1 {
-            get {
-                object obj = ResourceManager.GetObject("logoNUEVO 7-blanco_por_fuera RECORTE_MÁS1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

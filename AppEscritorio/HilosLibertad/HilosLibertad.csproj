@@ -13,7 +13,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>D:\HilosLibertad\AppEscritorio\publishLOCAL\</PublishUrl>
+    <PublishUrl>D:\HilosLibertad\AppEscritorio\publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>25</ApplicationRevision>
+    <ApplicationRevision>15</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -62,7 +62,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>logoNUEVO 2-sin_slogan.ico</ApplicationIcon>
@@ -114,6 +114,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -175,7 +176,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logoNUEVO 2-sin_slogan.ico" />
-    <None Include="Resources\logoNUEVO 7-blanco_por_fuera RECORTE_MÁS1.png" />
     <None Include="Resources\logoNUEVO 7-blanco_por_fuera RECORTE_MÁS.png" />
     <None Include="Resources\logoNUEVO 6-blanco_por_fuera RECORTE.png" />
     <None Include="Resources\logoNUEVO 8-blanco_por_fuera_PETISO_MÁS.png" />
