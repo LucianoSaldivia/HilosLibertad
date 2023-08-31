@@ -1,1 +1,1 @@
-"C:\HilosLibertad-Saldivia\HilosLibertad-1.0\Registrador\Ejecutables\Nuevos_cmd\__autorun_OldBackupsDeleter.cmd"
+"C:\HLSaldivia\Registrador\Ejecutables\Nuevos_cmd\__autorun_OldBackupsDeleter.cmd"
