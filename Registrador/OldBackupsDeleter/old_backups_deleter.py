@@ -5,9 +5,9 @@ import os
 from pathlib import Path
 
 
-FILES_DIRECTORY = "E:/Luciano/BACKUP_DB_HILOSLIBERTAD/"
+FILES_DIRECTORY = "C:/HLSaldivia/BACKUP_DB_HILOSLIBERTAD/"
 FILE_TYPE = ".bak"
-NUMBER_OF_FILES_NOT_TO_DELETE = 5
+NUMBER_OF_FILES_NOT_TO_DELETE = 3
 
 
 # Funciones listadoras de entradas/archivos
