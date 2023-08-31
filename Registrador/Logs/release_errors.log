@@ -18,3 +18,6 @@
 2023-08-22 11:57:20.330935 -> Error: DB_WRITE          -> No se pudo escribir en la Base de Datos. Última conexión/escritura OK: 2023-08-22 11:52:20.330935. Falló la llamada al Stored Procedure: HL.sp_insertarSesion.
 2023-08-22 12:19:36.318317 -> Error: DB_WRITE          -> No se pudo escribir en la Base de Datos. Última conexión/escritura OK: 2023-08-22 12:14:36.318317. Falló la llamada al Stored Procedure: HL.sp_insertarSesion.
 2023-08-22 13:07:13.481423 -> Error: USB_MUTE          -> No se recibieron más datos de la máquina. Máquina apagada o desconectada. Último dato recibido: 2023-08-22 13:06:13.482558. 
+2023-08-31 09:04:13.906437 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2023-08-31 09:04:18.453029 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)
+2023-08-31 09:05:02.013895 -> Error: USB_CONN          -> No se pudo conectar con CH340 (Driver USB de la máquina). could not open port 'COM3': PermissionError(13, 'Acceso denegado.', None, 5)

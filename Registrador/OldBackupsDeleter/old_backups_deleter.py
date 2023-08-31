@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 
 
-FILES_DIRECTORY = "C:/HLSaldivia/BACKUP_DB_HILOSLIBERTAD/"
+FILES_DIRECTORY = "C:/HLSaldivia/DB/BACKUP_DB_HILOSLIBERTAD/"
 FILE_TYPE = ".bak"
 NUMBER_OF_FILES_NOT_TO_DELETE = 3
 
