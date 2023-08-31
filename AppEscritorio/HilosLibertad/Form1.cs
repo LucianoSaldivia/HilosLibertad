@@ -16,6 +16,7 @@ namespace HilosLibertad
         public frm_Home()
         {
             InitializeComponent();
+            this.dgv_TiemposPorMaquina.DataBindingComplete += this.dgv_TiemposPorMaquina_DataBindingComplete;
         }
 
         Consultas con = new Consultas();
@@ -464,7 +465,10 @@ namespace HilosLibertad
             int cantFilas = dgv.Rows.Count;       // cantidad de filas del dataGridView
             for (int i = 0; i < cantFilas; i++)
             {
-                int mins = getMinsONtilNow_NumMaq(i + 1);
+                int numMaqUsuario = Convert.ToInt32(dgv.Rows[i].Cells[0].Value);
+                int idMQ = get_idMaquina_from_numeroMaquinaUSUARIO(numMaqUsuario);
+
+                int mins = getMinsONtilNow_NumMaq(idMQ);
 
                 if (mins <= 5)  // "Cells[0]" --> la primera columna
                 {
@@ -495,13 +499,37 @@ namespace HilosLibertad
             return w;
         }
 
-        private void dgv_TiemposPorMaquina_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        // Se crea una función para obtener, a partir de numeroMaquinaUSUARIO, la idMaquina
+        public int get_idMaquina_from_numeroMaquinaUSUARIO(int numMaq)
         {
-
+            string cons = "SELECT m.idMaquina AS 'nmq'" +
+                          "FROM HL.maquinas m " +
+                          "WHERE m.numeroMaquinaUSUARIO = " + numMaq;
+            SqlConnection sql_con = cn.LeerCadena();
+            SqlCommand comm = new SqlCommand(cons, sql_con);
+            SqlDataReader dr = comm.ExecuteReader();
+            int w = 0;
+            if (dr.Read())
+            {
+                w = int.Parse(dr["nmq"].ToString());
+            }
+            cn.cerrarConexion(sql_con);
+            return w;
         }
 
-        private void dgv_TiemposPorMaquina_Sorted(object sender, EventArgs e)
+
+        private void dgv_TiemposPorMaquina_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            
+        }
+
+
+        private void dgv_TiemposPorMaquina_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            //cambiarColorDGVMaq(dgv_TiemposPorMaquina);
+            //Console.WriteLine("ALGO");
+            //Console.WriteLine(dgv_TiemposPorMaquina.Rows[0].Cells[1].Value.ToString());
+
             cambiarColorDGVMaq(dgv_TiemposPorMaquina);
         }
     }
