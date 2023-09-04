@@ -7,6 +7,7 @@ import config_boards
 import config_serial
 import config_embedded
 import config_SQL_Database
+import config_relay_types
 import console_window_control
 from datetime import datetime, timedelta
 import enum
@@ -80,7 +81,7 @@ def showReceivedPDU(PDU_bytes: bytes) -> None:
 def bytes_to_bit_str(data: bytes, rango: range) -> str: 
     bit_str = str()
     for byte in rango:
-        for bit in reversed( range(0, 8)):
+        for bit in reversed( range(0, 8) ):
             bit_str += str( ( data[byte] & (1 << bit) ) >> bit )
         bit_str += " "
     return bit_str
@@ -125,10 +126,23 @@ def getSamplesFromFrame(frame: bytes, timestamp: datetime) -> list:
     for byte_in_frame in range(7, -1, -1):
         # Desde el LSB hasta el MSB
         for bit_in_byte in range(0, 8):
-            # Agrego el valor correspondiente (0 -> STOPPED; 1 -> WORKING)
-            sample.append( State.WORKING 
-                    if ( frame[byte_in_frame] & (0x01 << bit_in_byte) ) 
+            # 1 +                                   -> Pasa la posición del bit (0~63) a idMAQ (1~64)
+            # bit_in_byte + 8 * (7-byte_in_frame)   -> Devuelve la posición del bit (0~63)
+            idMAQ_curr = 1 + bit_in_byte + 8 * (7-byte_in_frame)
+
+            # Estado del bit leído (0 o 1)
+            bit_state = bool((frame[byte_in_frame] & (0x01 << bit_in_byte)) >> bit_in_byte)
+            
+            # Tipo de Relay configurado (NORMAL_ABIERTO o NORMAL_CERRADO)
+            relay_type = bool(config_relay_types.RELAY_TYPE[idMAQ_curr])
+            
+            # Obtengo el estado de la máquina a partir del estado del bit y el tipo de relay
+            estado = ( State.WORKING
+                    if ( bit_state ^ relay_type )
                     else State.STOPPED )
+            
+            # Agrego el valor correspondiente (0 -> STOPPED; 1 -> WORKING)
+            sample.append( estado )
 
     # Retorno la lista Sample completa
     return sample
@@ -684,7 +698,7 @@ def main():
     """
     Este programa puede tomar hasta 2 argumentos por línea de comandos:
 
-    1. -registrador <window?>
+    1. -registrador <window>
     Para escribir en la base de datos.
         Las opciones para <window?> son: 
             "-background" o "-windowless"   -> Para ejecutar en segundo plano
