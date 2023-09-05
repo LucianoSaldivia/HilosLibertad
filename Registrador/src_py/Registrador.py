@@ -183,7 +183,7 @@ def getReportsFromSample(curr_sample: list, last_sample: list, last_reports: lis
                         new_reports.append( [id, Event.SESSION_FINISHED, curr_sample[0]] )
                     
                     # Máquina de STOPPED a WORKING -> SESSION_STARTED
-                    elif   last_sample[id] == State.STOPPED and curr_sample[id] == State.WORKING: 
+                    elif last_sample[id] == State.STOPPED and curr_sample[id] == State.WORKING: 
                         new_reports.append( [id, Event.SESSION_STARTED, curr_sample[0]] )
             
             # Retorno los reportes nuevos
@@ -257,6 +257,11 @@ def writeDatabaseFromReports(report_list: list, db_con: any):
                 
     # Limpio la lista de reportes
     report_list.clear()
+# Mostrar los reportes en pantalla
+def showReports(report_list: list):
+    # Muestro los reportes pasados
+    for reporte in report_list:
+        print(f"idMAQ: {reporte[0]:02d}, Evento: {reporte[1]}, \t Timestamp: {reporte[2]}")
 
 
 #       Funciones estadísticas para _serial_tester() y _serial_tester_force_answer()
@@ -498,6 +503,9 @@ def Registrador( print_info: bool = True ) -> None:
                     
                     # Genero/actualizo la lista de Reportes
                     curr_report_list = getReportsFromSample(curr_sample, prev_sample, prev_report_list)
+                    if print_info:
+                        # Muestro los reportes acumulados
+                        showReports(curr_report_list)
                         
                     # Si tengo todas las tramas para escribir
                     if tramas_a_escribir >= MAX_FRAMES_TO_WRITE:
