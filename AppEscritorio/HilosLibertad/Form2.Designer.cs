@@ -73,7 +73,7 @@ namespace HilosLibertad
             this.dgv_Sectores.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_Sectores.RowHeadersVisible = false;
             this.dgv_Sectores.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgv_Sectores.Size = new System.Drawing.Size(104, 91);
+            this.dgv_Sectores.Size = new System.Drawing.Size(105, 114);
             this.dgv_Sectores.TabIndex = 10;
             // 
             // lbl_SectoresAhoraGuardados
@@ -91,7 +91,7 @@ namespace HilosLibertad
             this.btn_GuardarCambios.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_GuardarCambios.Location = new System.Drawing.Point(124, 100);
             this.btn_GuardarCambios.Name = "btn_GuardarCambios";
-            this.btn_GuardarCambios.Size = new System.Drawing.Size(133, 34);
+            this.btn_GuardarCambios.Size = new System.Drawing.Size(149, 34);
             this.btn_GuardarCambios.TabIndex = 8;
             this.btn_GuardarCambios.Text = "Guardar cambios";
             this.btn_GuardarCambios.UseVisualStyleBackColor = true;
@@ -104,7 +104,7 @@ namespace HilosLibertad
             this.cmb_Sector.FormattingEnabled = true;
             this.cmb_Sector.Location = new System.Drawing.Point(181, 78);
             this.cmb_Sector.Name = "cmb_Sector";
-            this.cmb_Sector.Size = new System.Drawing.Size(137, 25);
+            this.cmb_Sector.Size = new System.Drawing.Size(139, 25);
             this.cmb_Sector.TabIndex = 2;
             this.cmb_Sector.SelectedIndexChanged += new System.EventHandler(this.cmb_Sector_SelectedIndexChanged);
             // 
@@ -151,7 +151,7 @@ namespace HilosLibertad
             this.txt_ID.MaxLength = 255;
             this.txt_ID.Name = "txt_ID";
             this.txt_ID.ReadOnly = true;
-            this.txt_ID.Size = new System.Drawing.Size(178, 25);
+            this.txt_ID.Size = new System.Drawing.Size(194, 25);
             this.txt_ID.TabIndex = 5;
             // 
             // lbl_ID
@@ -170,7 +170,7 @@ namespace HilosLibertad
             this.txt_Nombre.Location = new System.Drawing.Point(79, 63);
             this.txt_Nombre.MaxLength = 255;
             this.txt_Nombre.Name = "txt_Nombre";
-            this.txt_Nombre.Size = new System.Drawing.Size(178, 25);
+            this.txt_Nombre.Size = new System.Drawing.Size(194, 25);
             this.txt_Nombre.TabIndex = 7;
             // 
             // lbl_EdicionDeSectores
@@ -187,7 +187,7 @@ namespace HilosLibertad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(364, 413);
+            this.ClientSize = new System.Drawing.Size(337, 413);
             this.Controls.Add(this.cmb_Sector);
             this.Controls.Add(this.lbl_ElegirSectorAEditar);
             this.Controls.Add(this.lbl_EdicionDeSectores);

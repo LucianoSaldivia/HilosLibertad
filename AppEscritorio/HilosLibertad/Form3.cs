@@ -36,10 +36,31 @@ namespace HilosLibertad
             cmb_Maquina.ValueMember = "idMaquina";
         }
 
+        // Se crea una función para obtener, a partir de numeroMaquinaUSUARIO, la idMaquina
+        public int get_idMaquina_from_nombreMaquinaUSUARIO(string nomMaq)
+        {
+            string cons = "SELECT m.idMaquina AS 'nmq'" +
+                          "FROM HL.maquinas m " +
+                          "WHERE m.nombreMaquinaUSUARIO = '" + nomMaq + "'";
+            SqlConnection sql_con = cn.LeerCadena();
+            SqlCommand comm = new SqlCommand(cons, sql_con);
+            SqlDataReader dr = comm.ExecuteReader();
+            int w = 0;
+            if (dr.Read())
+            {
+                w = int.Parse(dr["nmq"].ToString());
+            }
+            cn.cerrarConexion(sql_con);
+            return w;
+        }
+
         public int ID_MAQUINA_SELECCIONADA;
         private void cmb_Maquina_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ID_MAQUINA_SELECCIONADA = cmb_Maquina.SelectedIndex + 1;      // El índice del ComboBox empieza el 0, pero el idSector empieza en 1: por eso se agrega el 1.
+            ID_MAQUINA_SELECCIONADA = get_idMaquina_from_nombreMaquinaUSUARIO(cmb_Maquina.GetItemText(cmb_Maquina.SelectedItem));
+            //Console.WriteLine("\ncmb_Maquina.GetItemText(cmb_Maquina.SelectedItem): " + cmb_Maquina.GetItemText(cmb_Maquina.SelectedItem));
+            //Console.WriteLine("ID_MAQUINA_SELECCIONADA: " + ID_MAQUINA_SELECCIONADA);
+
             string consulta = "EXECUTE HL.sp_cargarTXTmaquinas " + ID_MAQUINA_SELECCIONADA + "";
             SqlCommand c = new SqlCommand(consulta, cn.LeerCadena());
             SqlDataReader dr = c.ExecuteReader();
@@ -54,7 +75,11 @@ namespace HilosLibertad
 
         private void btn_GuardarCambios_Click(object sender, EventArgs e)
         {
-            ID_MAQUINA_SELECCIONADA = cmb_Maquina.SelectedIndex + 1;      // El índice del ComboBox empieza el 0, pero el idSector empieza en 1: por eso se agrega el 1.
+            ID_MAQUINA_SELECCIONADA = get_idMaquina_from_nombreMaquinaUSUARIO(cmb_Maquina.GetItemText(cmb_Maquina.SelectedItem));
+            //Console.WriteLine("\ncmb_Maquina.GetItemText(cmb_Maquina.SelectedItem): " + cmb_Maquina.GetItemText(cmb_Maquina.SelectedItem));
+            //Console.WriteLine("ID_MAQUINA_SELECCIONADA: " + ID_MAQUINA_SELECCIONADA);
+
+            //ID_MAQUINA_SELECCIONADA = cmb_Maquina.SelectedIndex + 1;      // El índice del ComboBox empieza el 0, pero el idSector empieza en 1: por eso se agrega el 1.
             string NUMERO_MAQUINA = txt_Numero.Text;
             string NOMBRE_MAQUINA = txt_Nombre.Text;
             string DESCRIPCION_MAQUINA = txt_Descripcion.Text;
