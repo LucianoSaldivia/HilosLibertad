@@ -131,9 +131,7 @@ def testSoporteTipoDeRelay():
                 relay_type = bool(config_relay_types.RELAY_TYPE[idMAQ_curr])
                 
                 # Obtengo el estado de la máquina a partir del estado del bit y el tipo de relay
-                estado = ( State.WORKING
-                        if ( bit_state ^ relay_type )
-                        else State.STOPPED )
+                estado = State.WORKING if ( bit_state ^ relay_type ) else State.STOPPED
                 
                 # Agrego el valor correspondiente (0 -> STOPPED; 1 -> WORKING)
                 sample.append( estado )
@@ -164,17 +162,17 @@ def testSoporteTipoDeRelay():
 
     print( f"Received: " + bit_str)
 
-    sample = getSamplesFromFrame1(frame, datetime.now())
-    # sample = getSamplesFromFrame2(frame, datetime.now())
+    # sample = getSamplesFromFrame1(frame, datetime.now())
+    sample = getSamplesFromFrame2(frame, datetime.now())
 
-    # Tipo de cada sample
-    print(type(sample[-1]))
+    # Tipo de cada sample: <flag 'State'>
+    # print(type(sample[-1]))   # <flag 'State'>
 
     for i, estado in enumerate(sample):
         if i == 0:
             print(f"\tSample datetime: {estado}")
         else:
-            print(f"idMAQ: {i:02d} -> Estado: {estado} --- RelayType = {config_relay_types.RELAY_TYPE[i]}")
+            print(f"idMAQ: {i:02d} -> Estado: {repr(estado)} --- RelayType = {repr(config_relay_types.RELAY_TYPE[i])}")
 
 
 def main():
