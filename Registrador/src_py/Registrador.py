@@ -261,7 +261,7 @@ def writeDatabaseFromReports(report_list: list, db_con: any):
 def showReports(report_list: list):
     # Muestro los reportes pasados
     for reporte in report_list:
-        print(f"idMAQ: {reporte[0]:02d}, Evento: {reporte[1]}, \t Timestamp: {reporte[2]}")
+        print(f"idMAQ: {reporte[0]:02d}, Evento: {repr(reporte[1])}, \t Timestamp: {reporte[2]}")
 
 
 #       Funciones estadísticas para _serial_tester() y _serial_tester_force_answer()
