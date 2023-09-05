@@ -77,7 +77,7 @@ def showReceivedPDU(PDU_bytes: bytes) -> None:
                         + chr(PDU_bytes[16]) \
                         + chr(PDU_bytes[17]) \
                         + " " # U:00       
-    print( f"Received: " + bits_string + ascii_string )
+    print( f"Recibido: " + bits_string + ascii_string )
 def bytes_to_bit_str(data: bytes, rango: range) -> str: 
     bit_str = str()
     for byte in rango:
@@ -259,6 +259,7 @@ def writeDatabaseFromReports(report_list: list, db_con: any):
     report_list.clear()
 # Mostrar los reportes en pantalla
 def showReports(report_list: list):
+    print("Reportes a escribir en la base de datos en la próxima escritura:")
     # Muestro los reportes pasados
     for reporte in report_list:
         print(f"idMAQ: {reporte[0]:02d}, Evento: {repr(reporte[1])}, \t Timestamp: {reporte[2]}")
@@ -485,8 +486,8 @@ def Registrador( print_info: bool = True ) -> None:
                         serial_port.timeout = DISCONNECTION_TIME
 
                     if print_info:
-                        # Aviso que se recibió la trama
-                        print("Trama recibida")
+                        # Aviso que se recibió la trama con respuesta ACK
+                        print("Trama recibida (Respuesta: ACK)")
                         # Muestro la trama recibida
                         showReceivedPDU( trama )
 
@@ -535,6 +536,8 @@ def Registrador( print_info: bool = True ) -> None:
                     serial_port.write(config_embedded.NAK)
 
                     if print_info:
+                        # Aviso que se recibió la trama con respuesta NAK
+                        print("Trama recibida (Respuesta: \t NAK)")
                         # Muestro la trama recibida
                         showReceivedPDU(trama)
 
