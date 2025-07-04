@@ -183,4 +183,12 @@ def main():
     
 
 if __name__ == "__main__":
-    main()
+    # main()
+    a = range(0, 16)
+    print(list(a))
+    a = range(16, 32)
+    print(list(a))
+    a = range(32, 48)
+    print(list(a))
+    a = range(48, 64)
+    print(list(a))

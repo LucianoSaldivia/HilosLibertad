@@ -128,7 +128,7 @@ def getSamplesFromFrame(frame: bytes, timestamp: datetime) -> list:
         for bit_in_byte in range(0, 8):
             # 1 +                                   -> Pasa la posición del bit (0~63) a idMAQ (1~64)
             # bit_in_byte + 8 * (7-byte_in_frame)   -> Devuelve la posición del bit (0~63)
-            idMAQ_curr = 1 + bit_in_byte + 8 * (7-byte_in_frame)
+            idMAQ_curr = bit_in_byte + 8 * (7-byte_in_frame)
 
             # Estado del bit leído (0 o 1)
             bit_state = bool((frame[byte_in_frame] & (0x01 << bit_in_byte)) >> bit_in_byte)
@@ -176,15 +176,15 @@ def getReportsFromSample(curr_sample: list, last_sample: list, last_reports: lis
                     
                     # Máquina de WORKING a WORKING -> SESSION_CONTINUES
                     if last_sample[id] == State.WORKING and curr_sample[id] == State.WORKING:
-                        new_reports.append( [id, Event.SESSION_CONTINUES, curr_sample[0]] )
+                        new_reports.append( [id-1, Event.SESSION_CONTINUES, curr_sample[0]] )
 
                     # Máquina de WORKING a STOPPED -> SESSION_FINISHED
                     elif last_sample[id] == State.WORKING and curr_sample[id] == State.STOPPED:
-                        new_reports.append( [id, Event.SESSION_FINISHED, curr_sample[0]] )
+                        new_reports.append( [id-1, Event.SESSION_FINISHED, curr_sample[0]] )
                     
                     # Máquina de STOPPED a WORKING -> SESSION_STARTED
                     elif last_sample[id] == State.STOPPED and curr_sample[id] == State.WORKING: 
-                        new_reports.append( [id, Event.SESSION_STARTED, curr_sample[0]] )
+                        new_reports.append( [id-1, Event.SESSION_STARTED, curr_sample[0]] )
             
             # Retorno los reportes nuevos
             return new_reports
@@ -215,17 +215,17 @@ def getReportsFromSample(curr_sample: list, last_sample: list, last_reports: lis
                         # Si no se encontró ningún "SESSION_CONTINUES", es porque es el primero
                         if flag_found_and_updated == False:
                             # Agrego el reporte de SESSION_CONTINUES
-                            last_reports.append( [id, Event.SESSION_CONTINUES, curr_sample[0]] )
+                            last_reports.append( [id-1, Event.SESSION_CONTINUES, curr_sample[0]] )
 
                     # Máquina de WORKING a STOPPED -> SESSION_FINISHED
                     elif last_sample[id] == State.WORKING and curr_sample[id] == State.STOPPED:
                         # Agrego el reporte de SESSION_FINISHED
-                        last_reports.append( [id, Event.SESSION_FINISHED, curr_sample[0]] )
+                        last_reports.append( [id-1, Event.SESSION_FINISHED, curr_sample[0]] )
                     
                     # Máquina de STOPPED a WORKING -> SESSION_STARTED
                     elif   last_sample[id] == State.STOPPED and curr_sample[id] == State.WORKING: 
                         # Agrego el reporte de SESSION_STARTED
-                        last_reports.append( [id, Event.SESSION_STARTED, curr_sample[0]] )
+                        last_reports.append( [id-1, Event.SESSION_STARTED, curr_sample[0]] )
             
             # Retorno la lista de reportes actualizada
             return last_reports   
