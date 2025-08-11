@@ -161,6 +161,7 @@ namespace HilosLibertad
             return dt;
         }
 
+
         public DataTable llenarComboBox_Maquinas()
         {
             string consulta = "EXECUTE HL.sp_llenarCMBmaquinas";

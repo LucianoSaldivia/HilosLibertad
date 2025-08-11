@@ -249,18 +249,20 @@ namespace HilosLibertad
         // Se acomoda el formato de los DataGridView para su correcta disposición
         public void acomodarFormatoDGVs() {
             dgv_TiemposPorMaquina.Columns["#"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgv_TiemposPorMaquina.Columns["TIEMPO ENCENDIDA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposPorMaquina.Columns["TIEMPO ENC. [HH:MM]"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             //dgv_TiemposPorMaquina.Columns["% APAGADA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgv_TiemposPorMaquina.Columns["% ENCENDIDA"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposPorMaquina.Columns["% ENC."].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposPorMaquina.Columns["METROS FABRICADOS"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgv_TiemposPorMaquina.AutoResizeColumns();
             dgv_TiemposPorMaquina.ClearSelection();
             cambiarColorDGVMaq(dgv_TiemposPorMaquina);
 
-            dgv_TiemposPorSector.Columns["TIEMPO ENCENDIDO"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposPorSector.Columns["TIEMPO ENC. [HH:MM]"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposPorSector.Columns["% ENC."].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgv_TiemposPorSector.AutoResizeColumns();
             dgv_TiemposPorSector.ClearSelection();
 
-            dgv_TiemposTotales.Columns["TIEMPO ENCENDIDAS"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv_TiemposTotales.Columns["TIEMPO ENC. [HH:MM]"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgv_TiemposTotales.AutoResizeColumns();
             dgv_TiemposTotales.ClearSelection();
         }
@@ -331,11 +333,13 @@ namespace HilosLibertad
             string DD = (DD_int >= 10) ? (DD_int.ToString()) : ("0" + DD_int.ToString());
 
             // Formo el string completo con el formato "YYYY-DD-MM"
-            string YYYYMMDD = YYYY + "-" + DD + "-" + MM;
+            //string YYYYMMDD = YYYY + "-" + DD + "-" + MM; //old
+            string YYYYMMDD = YYYY + "-" + MM + "-" + DD; //new //se pone el formato "YYYY-MM-DD" para que sea compatible con SQL Server
 
-            return YYYYMMDD;      // "2021-23-09" ejemplo
+            //return YYYYMMDD;      // "2021-23-09" ejemplo
+            return YYYYMMDD;      // "2021-09-23" ejemplo
 
-            
+
         }
 
         // Dado un DateTimePicker, devuelve el string del horario "HH:MM:00"
@@ -520,7 +524,7 @@ namespace HilosLibertad
 
         private void dgv_TiemposPorMaquina_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+            dgv_TiemposPorMaquina.AllowUserToAddRows = false;
         }
 
 
@@ -532,5 +536,6 @@ namespace HilosLibertad
 
             cambiarColorDGVMaq(dgv_TiemposPorMaquina);
         }
+
     }
 }
