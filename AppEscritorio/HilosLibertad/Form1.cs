@@ -536,6 +536,6 @@ namespace HilosLibertad
 
             cambiarColorDGVMaq(dgv_TiemposPorMaquina);
         }
-
+        
     }
 }

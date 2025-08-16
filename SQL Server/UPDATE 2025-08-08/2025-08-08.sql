@@ -368,26 +368,9 @@ END
 GO
 
 
+/*
 
-
--------------------------------------------CONFIRMADO-FIN
-
-
-
-
-
-
-
-
-
-
-
-
--------------------------------------------PRUEBAS-INICIO
-
-
-
-
+*/
 -- SP Tiempos por Sector · 1 intervalo
 CREATE OR ALTER PROCEDURE HL.sp_mostrarTiemposPorSector_1intervalo
 	@STR_FyH_INI DATETIME,			-- string de FECHAyHORARIO inicial en formato 'YYYY-DD-MM HH:MM:00'
@@ -467,4 +450,125 @@ SELECT COUNT(*) AS 'CANT_MAQxSECTOR'
 FROM HL.maquinas m JOIN HL.sectores s ON m.idSector = s.idSector
 WHERE s.nombreSectorUSUARIO = 'Cordoneras'
 GROUP BY s.nombreSectorUSUARIO
+
+
+
+/*
+Se agrega AUDITORÍA:
+	(1) Se crean dos tablas adicionales: HL.sectores_au y HL.maquinas_au.		
+	(2) Se crean 2 (uno para cada tabla) triggers para que, ante un UPDATE:
+		- primero se registren los valores viejos.
+		- luego se registren los valores nuevos.
+*/
+
+--1/2: Se crean las tablas adicionales
+CREATE TABLE HL.sectores_au(
+	id NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY,
+	idSector NUMERIC(5,0) REFERENCES HL.sectores,
+	fechaHora SMALLDATETIME NOT NULL,
+	tipoDeInformacion VARCHAR(3) NOT NULL, --'OLD' o 'NEW'
+	nombreSectorUSUARIO NVARCHAR(255) NOT NULL
+)
+GO
+
+CREATE TABLE HL.maquinas_au(
+	id NUMERIC(18,0) IDENTITY(1,1) PRIMARY KEY,
+	idMaquina NUMERIC(5,0) REFERENCES HL.maquinas,
+	fechaHora SMALLDATETIME NOT NULL,
+	tipoDeInformacion VARCHAR(3) NOT NULL, --'OLD' o 'NEW'
+	idSector NUMERIC(5,0) REFERENCES HL.sectores,
+	numeroMaquinaUSUARIO SMALLINT,
+	nombreMaquinaUSUARIO NVARCHAR(255),
+	descripcionMaquinaUSUARIO NVARCHAR(255),
+	metrosPorMinutoProducidosUSUARIO NUMERIC(5,0)
+)
+GO
+
+--2/2: Se crean los triggers correspondientes
+CREATE TRIGGER HL.t_au_sectores ON HL.sectores
+AFTER UPDATE
+AS
+BEGIN
+	DECLARE @idSector NUMERIC(5,0),
+			@nombreSectorUSUARIO_OLD NVARCHAR(255),
+			@nombreSectorUSUARIO_NEW NVARCHAR(255)
+	DECLARE cur CURSOR FOR
+		SELECT d.idSector, d.nombreSectorUSUARIO, i.nombreSectorUSUARIO
+		FROM deleted d JOIN inserted i ON (d.idSector = i.idSector)
+	OPEN cur
+	FETCH NEXT FROM cur INTO @idSector, @nombreSectorUSUARIO_OLD, @nombreSectorUSUARIO_NEW
+	WHILE (@@FETCH_STATUS = 0) BEGIN
+		INSERT INTO HL.sectores_au (idSector, fechaHora, tipoDeInformacion, nombreSectorUSUARIO) VALUES (@idSector, GETDATE(), 'OLD', @nombreSectorUSUARIO_OLD)
+		INSERT INTO HL.sectores_au (idSector, fechaHora, tipoDeInformacion, nombreSectorUSUARIO) VALUES (@idSector, GETDATE(), 'NEW', @nombreSectorUSUARIO_NEW)
+		FETCH NEXT FROM cur INTO @idSector, @nombreSectorUSUARIO_OLD, @nombreSectorUSUARIO_NEW
+	END
+	CLOSE cur
+	DEALLOCATE cur
+END
+GO
+				--pruebas del trigger
+				SELECT * FROM HL.sectores
+				SELECT * FROM HL.sectores_au
+
+				BEGIN TRANSACTION
+					UPDATE HL.sectores SET nombreSectorUSUARIO = nombreSectorUSUARIO + '___'
+					SELECT * FROM HL.sectores
+					SELECT * FROM HL.sectores_au
+					ROLLBACK
+
+CREATE TRIGGER HL.t_au_maquinas ON HL.maquinas
+AFTER UPDATE
+AS
+BEGIN
+	DECLARE @idMaq NUMERIC(5,0),
+			@idSec_OLD NUMERIC(5,0), @numMaqUS_OLD SMALLINT, @nomMaqUS_OLD NVARCHAR(255), @descMaqUS_OLD NVARCHAR(255), @mpmprodUS_OLD NUMERIC(5,0),
+			@idSec_NEW NUMERIC(5,0), @numMaqUS_NEW SMALLINT, @nomMaqUS_NEW NVARCHAR(255), @descMaqUS_NEW NVARCHAR(255), @mpmprodUS_NEW NUMERIC(5,0)
+	DECLARE cur CURSOR FOR
+		SELECT d.idMaquina,
+			   d.idSector, d.numeroMaquinaUSUARIO, d.nombreMaquinaUSUARIO, d.descripcionMaquinaUSUARIO, d.metrosPorMinutoProducidosUSUARIO,
+			   i.idSector, i.numeroMaquinaUSUARIO, i.nombreMaquinaUSUARIO, i.descripcionMaquinaUSUARIO, i.metrosPorMinutoProducidosUSUARIO
+		FROM deleted d JOIN inserted i ON (d.idMaquina = i.idMaquina)
+	OPEN cur
+	FETCH NEXT FROM cur INTO @idMaq, @idSec_OLD, @numMaqUS_OLD, @nomMaqUS_OLD, @descMaqUS_OLD, @mpmprodUS_OLD, @idSec_NEW, @numMaqUS_NEW, @nomMaqUS_NEW, @descMaqUS_NEW, @mpmprodUS_NEW
+	WHILE (@@FETCH_STATUS = 0) BEGIN
+		INSERT INTO HL.maquinas_au (idMaquina, fechaHora, tipoDeInformacion, idSector, numeroMaquinaUSUARIO, nombreMaquinaUSUARIO, descripcionMaquinaUSUARIO, metrosPorMinutoProducidosUSUARIO)
+			VALUES (@idMaq, GETDATE(), 'OLD', @idSec_OLD, @numMaqUS_OLD, @nomMaqUS_OLD, @descMaqUS_OLD, @mpmprodUS_OLD)
+		INSERT INTO HL.maquinas_au (idMaquina, fechaHora, tipoDeInformacion, idSector, numeroMaquinaUSUARIO, nombreMaquinaUSUARIO, descripcionMaquinaUSUARIO, metrosPorMinutoProducidosUSUARIO)
+			VALUES (@idMaq, GETDATE(), 'NEW', @idSec_NEW, @numMaqUS_NEW, @nomMaqUS_NEW, @descMaqUS_NEW, @mpmprodUS_NEW)
+		FETCH NEXT FROM cur INTO @idMaq, @idSec_OLD, @numMaqUS_OLD, @nomMaqUS_OLD, @descMaqUS_OLD, @mpmprodUS_OLD, @idSec_NEW, @numMaqUS_NEW, @nomMaqUS_NEW, @descMaqUS_NEW, @mpmprodUS_NEW
+	END
+	CLOSE cur
+	DEALLOCATE cur
+END
+GO
+				--pruebas del trigger
+				SELECT * FROM HL.maquinas
+				SELECT * FROM HL.maquinas_au
+
+				BEGIN TRANSACTION
+					UPDATE HL.maquinas SET
+										numeroMaquinaUSUARIO = numeroMaquinaUSUARIO + 100,
+										nombreMaquinaUSUARIO = nombreMaquinaUSUARIO + '___',
+										descripcionMaquinaUSUARIO = descripcionMaquinaUSUARIO + '___',
+										metrosPorMinutoProducidosUSUARIO = metrosPorMinutoProducidosUSUARIO + 100,
+										idSector = 4
+					SELECT * FROM HL.maquinas
+					SELECT * FROM HL.maquinas_au
+					--CORREGIR, HAY UN ERROR EN EL TRIGGER
+					ROLLBACK
+					
+
+/*
+FIN AUDITORÍA
+*/
+
+
+
+/*
+Script del JOB/TRABAJO para Agente SQL Server
+- NO EJECUTAR ACÁ.
+- ES PARA COPIAR Y PEGAR EN LA CONFIGURACIÓN DEL JOB/TRABAJO
+- Va comentado por las dudas:
+	--DELETE FROM HL.registros WHERE DATEDIFF(DAY, fechaHoraEncendida, GETDATE()) > 180
+*/
 

@@ -40,11 +40,7 @@ namespace HilosLibertad
             cmb_Sector.DisplayMember = "nombreSectorUSUARIO";
             cmb_Sector.ValueMember = "idSector";
 
-            txt_Numero.ReadOnly = true;
-            txt_Nombre.ReadOnly = true;
-            txt_MetrosPorMinuto.ReadOnly = true;
-            txt_Descripcion.ReadOnly = true;
-            cmb_Sector.Enabled = false;
+            grp_EdicionDeLaMaquina.Enabled = false;
         }
 
         // Se crea una función para obtener, a partir de numeroMaquinaUSUARIO, la idMaquina
@@ -65,14 +61,38 @@ namespace HilosLibertad
             return w;
         }
 
+        public string getNombreSectorFromIdMaquina(int idMaq)
+        {
+            string cons = "SELECT s.nombreSectorUSUARIO AS 'nse' " +
+                          "FROM HL.maquinas m JOIN HL.sectores s ON (m.idSector = s.idSector) " +
+                          "WHERE m.idMaquina = " + idMaq;
+            SqlConnection sql_con = cn.LeerCadena();
+            SqlCommand comm = new SqlCommand(cons, sql_con);
+            SqlDataReader dr = comm.ExecuteReader();
+            string w = "";
+            if (dr.Read())
+            {
+                w = dr["nse"].ToString();
+            }
+            cn.cerrarConexion(sql_con);
+            return w;
+        }
+
         public int ID_MAQUINA_SELECCIONADA;
+
+        /*
+         * cont cuenta la cantidad de veces que un valor del txt_Numero sufre un cambio tras ser seleccionado desde el cmb_Maquina.
+         * Cuando se selecciona un ítem del cmb_Maquina, se pone en 0 (se reinicia). Incrementará su valor en 1 por cada vez que el txt_Numero sufra una modificación.
+         * numeroMaquinaRegistrado contiene el numeroMaquinaUSUARIO asociado al ítem seleccionado del combo.
+         * Su valor es actualizado al seleccionarse un ítem del cmb_Maquina y se mantendrá igual mientras no se haya seleccionado otro ítem de dicho comboBox.
+         */
+        public int cont = 0;
+        public string numeroMaquinaRegistrado = "";
+        
+
         private void cmb_Maquina_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txt_Numero.ReadOnly = false;
-            txt_Nombre.ReadOnly = false;
-            txt_MetrosPorMinuto.ReadOnly = false;
-            txt_Descripcion.ReadOnly = false;
-            cmb_Sector.Enabled = true;
+            grp_EdicionDeLaMaquina.Enabled = true;
 
             ID_MAQUINA_SELECCIONADA = get_idMaquina_from_nombreMaquinaUSUARIO(cmb_Maquina.GetItemText(cmb_Maquina.SelectedItem));
             //Console.WriteLine("\ncmb_Maquina.GetItemText(cmb_Maquina.SelectedItem): " + cmb_Maquina.GetItemText(cmb_Maquina.SelectedItem));
@@ -91,23 +111,102 @@ namespace HilosLibertad
             }
 
             cmb_Sector.SelectedIndex = cmb_Sector.FindStringExact(getNombreSectorFromIdMaquina(ID_MAQUINA_SELECCIONADA));
+
+            cont = 0;
+            numeroMaquinaRegistrado = txt_Numero.Text;
         }
 
-        public string getNombreSectorFromIdMaquina(int idMaq)
+        private void txt_Numero_TextChanged(object sender, EventArgs e)
         {
-            string cons = "SELECT s.nombreSectorUSUARIO AS 'nse' " +
-                          "FROM HL.maquinas m JOIN HL.sectores s ON (m.idSector = s.idSector) " +
-                          "WHERE m.idMaquina = " + idMaq;
-            SqlConnection sql_con = cn.LeerCadena();
-            SqlCommand comm = new SqlCommand(cons, sql_con);
-            SqlDataReader dr = comm.ExecuteReader();
-            string w = "";
-            if (dr.Read())
+            cont = cont + 1;
+
+            string consulta_string = "SELECT COUNT(*) AS 'Q' FROM (SELECT m.numeroMaquinaUSUARIO FROM HL.maquinas m EXCEPT SELECT m.numeroMaquinaUSUARIO FROM HL.maquinas m WHERE m.numeroMaquinaUSUARIO = '" + numeroMaquinaRegistrado + "') w WHERE w.numeroMaquinaUSUARIO = '" + txt_Numero.Text + "'";
+            // Cantidad de máquinas que hay en la tabla con el mismo número del textBox
+
+            //string consulta_string = "SELECT COUNT(*) AS 'Q' FROM HL.maquinas m WHERE m.numeroMaquinaUSUARIO = '" + Convert.ToInt32(txt_Numero.Text) + "'";
+            // no anda
+
+            //string consulta_string = "SELECT COUNT(*) AS 'Q' FROM (SELECT m.numeroMaquinaUSUARIO AS col_1 FROM HL.maquinas m UNION ALL SELECT '" + txt_Numero.Text + "') x WHERE x.col_1 = '" + txt_Numero.Text + "'";
+            // ?
+
+            //string consulta_string = "SELECT COUNT(*) AS 'Q' FROM (SELECT '" + Convert.ToInt32(txt_Numero.Text) + "' AS col_1 UNION ALL SELECT m.numeroMaquinaUSUARIO FROM HL.maquinas m) x WHERE x.col_1 = '" + Convert.ToInt32(txt_Numero.Text) + "'";
+            // no anda
+
+            int CANTIDAD = 0;
+            SqlCommand c = new SqlCommand(consulta_string, cn.LeerCadena());
+            SqlDataReader dr = c.ExecuteReader();
+
+            if (dr.Read()) CANTIDAD = Convert.ToInt32(dr["Q"]);
+
+            if (CANTIDAD >= 1 && cont >= 2) // Si en la tabla Maquinas hay más de un número con el mismo valor que el del textBox (CANTIDAD >= 1) y el número ingresado en el textBox se cambió al menos una vez (cont >= 2), entonces...
             {
-                w = dr["nse"].ToString();
+                // número ocupado: ya hay una máquina con ese número
+                pintarNumeroMaquinaDeColor(Color.Crimson);
+
+                lbl_Nombre.Enabled = false;
+                txt_Nombre.Enabled = false;
+                lbl_MetrosPorMinuto.Enabled = false;
+                txt_MetrosPorMinuto.Enabled = false;
+                lbl_Descripcion.Enabled = false;
+                txt_Descripcion.Enabled = false;
+                lbl_Sector.Enabled = false;
+                cmb_Sector.Enabled = false;
+                btn_GuardarCambios.Enabled = false;
             }
-            cn.cerrarConexion(sql_con);
-            return w;
+            else
+            {
+                // número disponible: ninguna máquina tiene ese número por el momento
+                pintarNumeroMaquinaDeColor(Color.Black);
+
+                lbl_Nombre.Enabled = true;
+                txt_Nombre.Enabled = true;
+                lbl_MetrosPorMinuto.Enabled = true;
+                txt_MetrosPorMinuto.Enabled = true;
+                lbl_Descripcion.Enabled = true;
+                txt_Descripcion.Enabled = true;
+                lbl_Sector.Enabled = true;
+                cmb_Sector.Enabled = true;
+                btn_GuardarCambios.Enabled = true;
+            }
+
+        }
+        private void txt_Nombre_TextChanged(object sender, EventArgs e)
+        {
+            string consulta_string = "SELECT COUNT(*) AS 'Q' FROM HL.maquinas m WHERE m.nombreMaquinaUSUARIO = '" + txt_Nombre.Text + "' AND m.nombreMaquinaUSUARIO <> '" + cmb_Maquina.Text + "'";  // Cantidad de máquinas que hay en la tabla con el mismo nombre del textBox
+            int CANTIDAD = 0;
+            SqlCommand c = new SqlCommand(consulta_string, cn.LeerCadena());
+            SqlDataReader dr = c.ExecuteReader();
+
+            if (dr.Read()) CANTIDAD = Convert.ToInt32(dr["Q"]);
+
+            if (CANTIDAD >= 1) // nombre ocupado: ya hay un sector con ese nombre
+            {
+                pintarNombreMaquinaDeColor(Color.Crimson);
+
+                lbl_Numero.Enabled = false;
+                txt_Numero.Enabled = false; 
+                lbl_MetrosPorMinuto.Enabled = false;
+                txt_MetrosPorMinuto.Enabled = false;
+                lbl_Descripcion.Enabled = false;
+                txt_Descripcion.Enabled = false;
+                lbl_Sector.Enabled = false;
+                cmb_Sector.Enabled = false;
+                btn_GuardarCambios.Enabled = false;
+            }
+            else // nombre disponible: ningún sector tiene ese nombre por el momento
+            {
+                pintarNombreMaquinaDeColor(Color.Black);
+
+                lbl_Numero.Enabled = true;
+                txt_Numero.Enabled = true;
+                lbl_MetrosPorMinuto.Enabled = true;
+                txt_MetrosPorMinuto.Enabled = true;
+                lbl_Descripcion.Enabled = true;
+                txt_Descripcion.Enabled = true;
+                lbl_Sector.Enabled = true;
+                cmb_Sector.Enabled = true;
+                btn_GuardarCambios.Enabled = true;
+            }
         }
 
         private void btn_GuardarCambios_Click(object sender, EventArgs e)
@@ -134,6 +233,20 @@ namespace HilosLibertad
             cmb_Maquina.DataSource = con.llenarComboBox_Maquinas();
         }
 
+
+        private void pintarNumeroMaquinaDeColor(Color c)      // Red o ControlText, por ejemplo
+        {
+            lbl_Numero.ForeColor = c; 
+            txt_Numero.ForeColor = c;            
+        }
+
+        private void pintarNombreMaquinaDeColor(Color c)      // Red o ControlText, por ejemplo
+        {
+            lbl_Nombre.ForeColor = c; 
+            txt_Nombre.ForeColor = c;            
+        }
+
+
         // Se permite únicamente el ingreso de números, junto con el backspace y el delete.
         private void txt_Numero_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -146,5 +259,6 @@ namespace HilosLibertad
                 return;
             }
         }
+
     }
 }
