@@ -1,0 +1,55 @@
+Cambios pedidos por Ariel:
+
+- Permitir que a las máquinas se les pueda cambiar el Sector.
+	AppEscritorio > Formulario de Edición de Máquinas:
+	Se agrega un comboBox…
+
+- Transformar strings de duración en números: pasar de "6h 43min" a "6:43".
+	Se cambian las 2 consultas que se muestran en la AppEscritorio: desglose por máquinas y desglose por sector.
+
+- Cambiar lo que devuelve la consulta del desglose por sector.
+	Debe tener 3 columnas: (1) Sector, (2) Tiempo encendido de todas las máquinas de ese sector durante la franja diaria/horaria indicada y (3) Porcentaje de tiempo encendido (tiempo en que todas las máquinas de ese sector están encendidas respecto del total de la franja diaria/horaria).
+
+- Permitir que el usuario pueda cambiarle, a cada máquina, la cantidad de metros por minuto que ésta produce.
+	DB > tabla Maquinas > se agrega una nueva columna metrosPorMinutoProducidosUSUARIO de tipo NUMERIC(5,0).
+	AppEscritorio > Formulario principal > se actualiza la consulta para traer la nueva columna.
+	AppEscritorio > Formulario de Edición de Máquinas > se agrega el campo nuevo.
+
+- Dejar de backuppear la BD. Ya no es necesario persistir los datos (tabla Registros) de más de 180 días de edad.
+	Se debe cancelar el resguardo automático configurado anteriormente.
+	Se debe crear un JOB/TRABAJO de SQL Server para que se borren tales registros.
+
+
+
+Cambios míos:
+
+- Agregar auditoría.
+	Se crean dos tablas (sectores_au y maquinas_au), donde se registrarán todos los cambios que vaya haciendo el usuario sobre los sectores y las máquinas.
+	Se crean los triggers necesarios para que, ante un UPDATE en la tabla sectores/maquinas, se registre lo correspondiente en sectores_au/maquinas_au.
+
+- Impedir que haya 2 o más sectores con el mismo nombre.
+	Si se repite, se pinta de rojo el campo en cuestión, se inhabilita el botón Guardar (para impedir el UPDATE correspondiente).
+- Impedir que haya 2 o más máquinas con el mismo nombre.
+	Si se repite, se pinta de rojo el campo en cuestión, se inhabilitan los demás campos junto con el botón Guardar (para impedir el UPDATE correspondiente).
+- Impedir que haya 2 o más máquinas con el mismo número.
+	Si se repite, se pinta de rojo el campo en cuestión, se inhabilitan los demás campos junto con el botón Guardar (para impedir el UPDATE correspondiente).
+
+- Se mejora la UI.
+
+
+
+
+
+Pasos y consideraciones para aplicar los cambios estando allá:
+
+- Considerar la interpretación de las fechas (no es lo mismo YYYY-DD-MM que YYYY-MM-DD): revisar código (Form1.cs línea 337 o por ahí): https://github.com/LucianoSaldivia/HilosLibertad/commit/c7f5e3e2f01dfd2ad6a9bd788b7b24f4cad67898#diff-06df3cf41cf401c510516c0ac9d7a06a5c21a513fe6524e17cc5d2eb00f545d6R336
+
+Primero, hacer un git pull.
+
+Abrir Visual Studio y verificar si la AppEscritorio ejecuta todo como corresponde.
+
+Eliminar plan de mantenimiento actual.
+
+Agregar JOB de SQL Server con su definición.
+
+Generar el ejecutable y exportarlo.
