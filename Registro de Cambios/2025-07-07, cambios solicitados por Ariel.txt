@@ -52,4 +52,4 @@ Eliminar plan de mantenimiento actual.
 
 Agregar JOB de SQL Server con su definición.
 
-Generar el ejecutable y exportarlo.
+Generar el ejecutable, exportarlo e instalarlo.
