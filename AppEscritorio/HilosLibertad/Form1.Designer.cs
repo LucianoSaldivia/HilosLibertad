@@ -84,10 +84,9 @@ namespace HilosLibertad
             // 
             this.dtp_FechaInicial.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtp_FechaInicial.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtp_FechaInicial.Location = new System.Drawing.Point(115, 38);
-            this.dtp_FechaInicial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtp_FechaInicial.Location = new System.Drawing.Point(86, 31);
             this.dtp_FechaInicial.Name = "dtp_FechaInicial";
-            this.dtp_FechaInicial.Size = new System.Drawing.Size(329, 29);
+            this.dtp_FechaInicial.Size = new System.Drawing.Size(248, 25);
             this.dtp_FechaInicial.TabIndex = 3;
             this.dtp_FechaInicial.ValueChanged += new System.EventHandler(this.dtp_FechaInicial_ValueChanged);
             // 
@@ -104,8 +103,7 @@ namespace HilosLibertad
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgv_TiemposPorMaquina.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_TiemposPorMaquina.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_TiemposPorMaquina.Location = new System.Drawing.Point(7, 36);
-            this.dgv_TiemposPorMaquina.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgv_TiemposPorMaquina.Location = new System.Drawing.Point(5, 29);
             this.dgv_TiemposPorMaquina.Name = "dgv_TiemposPorMaquina";
             this.dgv_TiemposPorMaquina.ReadOnly = true;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -119,7 +117,7 @@ namespace HilosLibertad
             this.dgv_TiemposPorMaquina.RowHeadersVisible = false;
             this.dgv_TiemposPorMaquina.RowHeadersWidth = 51;
             this.dgv_TiemposPorMaquina.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgv_TiemposPorMaquina.Size = new System.Drawing.Size(929, 656);
+            this.dgv_TiemposPorMaquina.Size = new System.Drawing.Size(707, 533);
             this.dgv_TiemposPorMaquina.TabIndex = 25;
             this.dgv_TiemposPorMaquina.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv_TiemposPorMaquina_DataBindingComplete);
             // 
@@ -136,14 +134,13 @@ namespace HilosLibertad
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgv_TiemposPorSector.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgv_TiemposPorSector.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_TiemposPorSector.Location = new System.Drawing.Point(7, 36);
-            this.dgv_TiemposPorSector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgv_TiemposPorSector.Location = new System.Drawing.Point(5, 29);
             this.dgv_TiemposPorSector.Name = "dgv_TiemposPorSector";
             this.dgv_TiemposPorSector.ReadOnly = true;
             this.dgv_TiemposPorSector.RowHeadersVisible = false;
             this.dgv_TiemposPorSector.RowHeadersWidth = 51;
             this.dgv_TiemposPorSector.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgv_TiemposPorSector.Size = new System.Drawing.Size(445, 142);
+            this.dgv_TiemposPorSector.Size = new System.Drawing.Size(334, 115);
             this.dgv_TiemposPorSector.TabIndex = 22;
             // 
             // dgv_TiemposTotales
@@ -159,24 +156,22 @@ namespace HilosLibertad
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgv_TiemposTotales.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgv_TiemposTotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_TiemposTotales.Location = new System.Drawing.Point(725, 831);
-            this.dgv_TiemposTotales.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgv_TiemposTotales.Location = new System.Drawing.Point(544, 675);
             this.dgv_TiemposTotales.Name = "dgv_TiemposTotales";
             this.dgv_TiemposTotales.ReadOnly = true;
             this.dgv_TiemposTotales.RowHeadersVisible = false;
             this.dgv_TiemposTotales.RowHeadersWidth = 51;
             this.dgv_TiemposTotales.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgv_TiemposTotales.Size = new System.Drawing.Size(209, 58);
+            this.dgv_TiemposTotales.Size = new System.Drawing.Size(157, 47);
             this.dgv_TiemposTotales.TabIndex = 30;
             this.dgv_TiemposTotales.Visible = false;
             // 
             // lbl_CantidadTotalHorasMaquina
             // 
             this.lbl_CantidadTotalHorasMaquina.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_CantidadTotalHorasMaquina.Location = new System.Drawing.Point(721, 780);
-            this.lbl_CantidadTotalHorasMaquina.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_CantidadTotalHorasMaquina.Location = new System.Drawing.Point(541, 634);
             this.lbl_CantidadTotalHorasMaquina.Name = "lbl_CantidadTotalHorasMaquina";
-            this.lbl_CantidadTotalHorasMaquina.Size = new System.Drawing.Size(157, 48);
+            this.lbl_CantidadTotalHorasMaquina.Size = new System.Drawing.Size(118, 39);
             this.lbl_CantidadTotalHorasMaquina.TabIndex = 31;
             this.lbl_CantidadTotalHorasMaquina.Text = "Todas las Máquinas:";
             this.lbl_CantidadTotalHorasMaquina.Visible = false;
@@ -188,11 +183,9 @@ namespace HilosLibertad
             this.grp_FiltroFecha.Controls.Add(this.dtp_FechaFinal);
             this.grp_FiltroFecha.Controls.Add(this.dtp_FechaInicial);
             this.grp_FiltroFecha.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grp_FiltroFecha.Location = new System.Drawing.Point(20, 50);
-            this.grp_FiltroFecha.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grp_FiltroFecha.Location = new System.Drawing.Point(15, 41);
             this.grp_FiltroFecha.Name = "grp_FiltroFecha";
-            this.grp_FiltroFecha.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.grp_FiltroFecha.Size = new System.Drawing.Size(460, 128);
+            this.grp_FiltroFecha.Size = new System.Drawing.Size(345, 104);
             this.grp_FiltroFecha.TabIndex = 1;
             this.grp_FiltroFecha.TabStop = false;
             this.grp_FiltroFecha.Text = "Filtro por Fecha";
@@ -202,10 +195,9 @@ namespace HilosLibertad
             this.lbl_FechaFinal.AutoSize = true;
             this.lbl_FechaFinal.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_FechaFinal.ForeColor = System.Drawing.Color.Black;
-            this.lbl_FechaFinal.Location = new System.Drawing.Point(64, 81);
-            this.lbl_FechaFinal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_FechaFinal.Location = new System.Drawing.Point(48, 66);
             this.lbl_FechaFinal.Name = "lbl_FechaFinal";
-            this.lbl_FechaFinal.Size = new System.Drawing.Size(49, 23);
+            this.lbl_FechaFinal.Size = new System.Drawing.Size(37, 17);
             this.lbl_FechaFinal.TabIndex = 4;
             this.lbl_FechaFinal.Text = "Final:";
             this.lbl_FechaFinal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -214,10 +206,9 @@ namespace HilosLibertad
             // 
             this.lbl_FechaInicial.AutoSize = true;
             this.lbl_FechaInicial.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_FechaInicial.Location = new System.Drawing.Point(59, 41);
-            this.lbl_FechaInicial.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_FechaInicial.Location = new System.Drawing.Point(44, 33);
             this.lbl_FechaInicial.Name = "lbl_FechaInicial";
-            this.lbl_FechaInicial.Size = new System.Drawing.Size(55, 23);
+            this.lbl_FechaInicial.Size = new System.Drawing.Size(41, 17);
             this.lbl_FechaInicial.TabIndex = 2;
             this.lbl_FechaInicial.Text = "Inicio:";
             this.lbl_FechaInicial.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -225,10 +216,9 @@ namespace HilosLibertad
             // dtp_FechaFinal
             // 
             this.dtp_FechaFinal.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtp_FechaFinal.Location = new System.Drawing.Point(115, 78);
-            this.dtp_FechaFinal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtp_FechaFinal.Location = new System.Drawing.Point(86, 63);
             this.dtp_FechaFinal.Name = "dtp_FechaFinal";
-            this.dtp_FechaFinal.Size = new System.Drawing.Size(329, 29);
+            this.dtp_FechaFinal.Size = new System.Drawing.Size(248, 25);
             this.dtp_FechaFinal.TabIndex = 5;
             this.dtp_FechaFinal.ValueChanged += new System.EventHandler(this.dtp_FechaFinal_ValueChanged);
             // 
@@ -242,10 +232,9 @@ namespace HilosLibertad
             "15",
             "30",
             "45"});
-            this.cmb_MinutoFinal.Location = new System.Drawing.Point(391, 38);
-            this.cmb_MinutoFinal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_MinutoFinal.Location = new System.Drawing.Point(293, 31);
             this.cmb_MinutoFinal.Name = "cmb_MinutoFinal";
-            this.cmb_MinutoFinal.Size = new System.Drawing.Size(55, 28);
+            this.cmb_MinutoFinal.Size = new System.Drawing.Size(42, 23);
             this.cmb_MinutoFinal.TabIndex = 12;
             this.cmb_MinutoFinal.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoFinal_SelectedIndexChanged);
             // 
@@ -259,10 +248,9 @@ namespace HilosLibertad
             "15",
             "30",
             "45"});
-            this.cmb_MinutoInicial.Location = new System.Drawing.Point(169, 38);
-            this.cmb_MinutoInicial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_MinutoInicial.Location = new System.Drawing.Point(127, 31);
             this.cmb_MinutoInicial.Name = "cmb_MinutoInicial";
-            this.cmb_MinutoInicial.Size = new System.Drawing.Size(55, 28);
+            this.cmb_MinutoInicial.Size = new System.Drawing.Size(42, 23);
             this.cmb_MinutoInicial.TabIndex = 9;
             this.cmb_MinutoInicial.SelectedIndexChanged += new System.EventHandler(this.cmb_MinutoInicial_SelectedIndexChanged);
             // 
@@ -296,10 +284,9 @@ namespace HilosLibertad
             "21",
             "22",
             "23"});
-            this.cmb_HoraFinal.Location = new System.Drawing.Point(337, 38);
-            this.cmb_HoraFinal.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_HoraFinal.Location = new System.Drawing.Point(253, 31);
             this.cmb_HoraFinal.Name = "cmb_HoraFinal";
-            this.cmb_HoraFinal.Size = new System.Drawing.Size(55, 28);
+            this.cmb_HoraFinal.Size = new System.Drawing.Size(42, 23);
             this.cmb_HoraFinal.TabIndex = 11;
             this.cmb_HoraFinal.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraFinal_SelectedIndexChanged);
             // 
@@ -334,10 +321,9 @@ namespace HilosLibertad
             "21",
             "22",
             "23"});
-            this.cmb_HoraInicial.Location = new System.Drawing.Point(115, 38);
-            this.cmb_HoraInicial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_HoraInicial.Location = new System.Drawing.Point(86, 31);
             this.cmb_HoraInicial.Name = "cmb_HoraInicial";
-            this.cmb_HoraInicial.Size = new System.Drawing.Size(55, 28);
+            this.cmb_HoraInicial.Size = new System.Drawing.Size(42, 23);
             this.cmb_HoraInicial.TabIndex = 8;
             this.cmb_HoraInicial.Tag = "";
             this.cmb_HoraInicial.SelectedIndexChanged += new System.EventHandler(this.cmb_HoraInicial_SelectedIndexChanged);
@@ -349,32 +335,28 @@ namespace HilosLibertad
             this.grp_FiltroMaquinas.Controls.Add(this.lbl_NumeroDeLaMaquina);
             this.grp_FiltroMaquinas.Controls.Add(this.lbl_NombreDeLaMaquina);
             this.grp_FiltroMaquinas.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grp_FiltroMaquinas.Location = new System.Drawing.Point(20, 295);
-            this.grp_FiltroMaquinas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grp_FiltroMaquinas.Location = new System.Drawing.Point(15, 240);
             this.grp_FiltroMaquinas.Name = "grp_FiltroMaquinas";
-            this.grp_FiltroMaquinas.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.grp_FiltroMaquinas.Size = new System.Drawing.Size(460, 127);
+            this.grp_FiltroMaquinas.Size = new System.Drawing.Size(345, 103);
             this.grp_FiltroMaquinas.TabIndex = 13;
             this.grp_FiltroMaquinas.TabStop = false;
             this.grp_FiltroMaquinas.Text = "Filtro de Máquinas";
             // 
             // txt_NumeroDeLaMaquina
             // 
-            this.txt_NumeroDeLaMaquina.Location = new System.Drawing.Point(233, 38);
-            this.txt_NumeroDeLaMaquina.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txt_NumeroDeLaMaquina.Location = new System.Drawing.Point(175, 31);
             this.txt_NumeroDeLaMaquina.MaxLength = 255;
             this.txt_NumeroDeLaMaquina.Name = "txt_NumeroDeLaMaquina";
-            this.txt_NumeroDeLaMaquina.Size = new System.Drawing.Size(213, 29);
+            this.txt_NumeroDeLaMaquina.Size = new System.Drawing.Size(161, 25);
             this.txt_NumeroDeLaMaquina.TabIndex = 15;
             this.txt_NumeroDeLaMaquina.TextChanged += new System.EventHandler(this.txt_NumeroDeLaMaquina_TextChanged);
             // 
             // txt_NombreDeLaMaquina
             // 
-            this.txt_NombreDeLaMaquina.Location = new System.Drawing.Point(233, 78);
-            this.txt_NombreDeLaMaquina.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txt_NombreDeLaMaquina.Location = new System.Drawing.Point(175, 63);
             this.txt_NombreDeLaMaquina.MaxLength = 255;
             this.txt_NombreDeLaMaquina.Name = "txt_NombreDeLaMaquina";
-            this.txt_NombreDeLaMaquina.Size = new System.Drawing.Size(213, 29);
+            this.txt_NombreDeLaMaquina.Size = new System.Drawing.Size(161, 25);
             this.txt_NombreDeLaMaquina.TabIndex = 17;
             this.txt_NombreDeLaMaquina.TextChanged += new System.EventHandler(this.txt_NombreDeLaMaquina_TextChanged);
             // 
@@ -382,10 +364,9 @@ namespace HilosLibertad
             // 
             this.lbl_NumeroDeLaMaquina.AutoSize = true;
             this.lbl_NumeroDeLaMaquina.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_NumeroDeLaMaquina.Location = new System.Drawing.Point(40, 41);
-            this.lbl_NumeroDeLaMaquina.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NumeroDeLaMaquina.Location = new System.Drawing.Point(30, 33);
             this.lbl_NumeroDeLaMaquina.Name = "lbl_NumeroDeLaMaquina";
-            this.lbl_NumeroDeLaMaquina.Size = new System.Drawing.Size(191, 23);
+            this.lbl_NumeroDeLaMaquina.Size = new System.Drawing.Size(147, 17);
             this.lbl_NumeroDeLaMaquina.TabIndex = 14;
             this.lbl_NumeroDeLaMaquina.Text = "Número de la Máquina:";
             this.lbl_NumeroDeLaMaquina.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -394,21 +375,19 @@ namespace HilosLibertad
             // 
             this.lbl_NombreDeLaMaquina.AutoSize = true;
             this.lbl_NombreDeLaMaquina.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_NombreDeLaMaquina.Location = new System.Drawing.Point(40, 81);
-            this.lbl_NombreDeLaMaquina.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NombreDeLaMaquina.Location = new System.Drawing.Point(30, 66);
             this.lbl_NombreDeLaMaquina.Name = "lbl_NombreDeLaMaquina";
-            this.lbl_NombreDeLaMaquina.Size = new System.Drawing.Size(191, 23);
+            this.lbl_NombreDeLaMaquina.Size = new System.Drawing.Size(148, 17);
             this.lbl_NombreDeLaMaquina.TabIndex = 16;
             this.lbl_NombreDeLaMaquina.Text = "Nombre de la Máquina:";
             this.lbl_NombreDeLaMaquina.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txt_NombreDelSector
             // 
-            this.txt_NombreDelSector.Location = new System.Drawing.Point(231, 38);
-            this.txt_NombreDelSector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txt_NombreDelSector.Location = new System.Drawing.Point(173, 31);
             this.txt_NombreDelSector.MaxLength = 255;
             this.txt_NombreDelSector.Name = "txt_NombreDelSector";
-            this.txt_NombreDelSector.Size = new System.Drawing.Size(213, 29);
+            this.txt_NombreDelSector.Size = new System.Drawing.Size(161, 25);
             this.txt_NombreDelSector.TabIndex = 20;
             this.txt_NombreDelSector.TextChanged += new System.EventHandler(this.txt_NombreDelSector_TextChanged);
             // 
@@ -416,10 +395,9 @@ namespace HilosLibertad
             // 
             this.lbl_NombreDelSector.AutoSize = true;
             this.lbl_NombreDelSector.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_NombreDelSector.Location = new System.Drawing.Point(69, 41);
-            this.lbl_NombreDelSector.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NombreDelSector.Location = new System.Drawing.Point(52, 33);
             this.lbl_NombreDelSector.Name = "lbl_NombreDelSector";
-            this.lbl_NombreDelSector.Size = new System.Drawing.Size(158, 23);
+            this.lbl_NombreDelSector.Size = new System.Drawing.Size(123, 17);
             this.lbl_NombreDelSector.TabIndex = 19;
             this.lbl_NombreDelSector.Text = "Nombre del Sector:";
             this.lbl_NombreDelSector.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -434,11 +412,9 @@ namespace HilosLibertad
             this.grp_FiltroFranjaHoraria.Controls.Add(this.cmb_HoraFinal);
             this.grp_FiltroFranjaHoraria.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grp_FiltroFranjaHoraria.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.grp_FiltroFranjaHoraria.Location = new System.Drawing.Point(20, 194);
-            this.grp_FiltroFranjaHoraria.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grp_FiltroFranjaHoraria.Location = new System.Drawing.Point(15, 158);
             this.grp_FiltroFranjaHoraria.Name = "grp_FiltroFranjaHoraria";
-            this.grp_FiltroFranjaHoraria.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.grp_FiltroFranjaHoraria.Size = new System.Drawing.Size(460, 86);
+            this.grp_FiltroFranjaHoraria.Size = new System.Drawing.Size(345, 70);
             this.grp_FiltroFranjaHoraria.TabIndex = 6;
             this.grp_FiltroFranjaHoraria.TabStop = false;
             this.grp_FiltroFranjaHoraria.Text = "Filtro por Franja Horaria";
@@ -447,10 +423,9 @@ namespace HilosLibertad
             // 
             this.lbl_HorarioFinal.AutoSize = true;
             this.lbl_HorarioFinal.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_HorarioFinal.Location = new System.Drawing.Point(285, 39);
-            this.lbl_HorarioFinal.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_HorarioFinal.Location = new System.Drawing.Point(214, 32);
             this.lbl_HorarioFinal.Name = "lbl_HorarioFinal";
-            this.lbl_HorarioFinal.Size = new System.Drawing.Size(49, 23);
+            this.lbl_HorarioFinal.Size = new System.Drawing.Size(37, 17);
             this.lbl_HorarioFinal.TabIndex = 10;
             this.lbl_HorarioFinal.Text = "Final:";
             this.lbl_HorarioFinal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -459,10 +434,9 @@ namespace HilosLibertad
             // 
             this.lbl_HorarioInicial.AutoSize = true;
             this.lbl_HorarioInicial.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_HorarioInicial.Location = new System.Drawing.Point(59, 39);
-            this.lbl_HorarioInicial.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_HorarioInicial.Location = new System.Drawing.Point(44, 32);
             this.lbl_HorarioInicial.Name = "lbl_HorarioInicial";
-            this.lbl_HorarioInicial.Size = new System.Drawing.Size(55, 23);
+            this.lbl_HorarioInicial.Size = new System.Drawing.Size(41, 17);
             this.lbl_HorarioInicial.TabIndex = 7;
             this.lbl_HorarioInicial.Text = "Inicio:";
             this.lbl_HorarioInicial.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -477,32 +451,31 @@ namespace HilosLibertad
             this.editarMáquinasToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1476, 31);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1120, 25);
             this.menuStrip1.TabIndex = 101;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // editarSectoresToolStripMenuItem
             // 
             this.editarSectoresToolStripMenuItem.Name = "editarSectoresToolStripMenuItem";
-            this.editarSectoresToolStripMenuItem.Size = new System.Drawing.Size(137, 27);
+            this.editarSectoresToolStripMenuItem.Size = new System.Drawing.Size(108, 21);
             this.editarSectoresToolStripMenuItem.Text = "Editar Sectores";
             this.editarSectoresToolStripMenuItem.Click += new System.EventHandler(this.editarSectoresToolStripMenuItem_Click);
             // 
             // editarMáquinasToolStripMenuItem
             // 
             this.editarMáquinasToolStripMenuItem.Name = "editarMáquinasToolStripMenuItem";
-            this.editarMáquinasToolStripMenuItem.Size = new System.Drawing.Size(147, 27);
+            this.editarMáquinasToolStripMenuItem.Size = new System.Drawing.Size(115, 21);
             this.editarMáquinasToolStripMenuItem.Text = "Editar Máquinas";
             this.editarMáquinasToolStripMenuItem.Click += new System.EventHandler(this.editarMáquinasToolStripMenuItem_Click);
             // 
             // btn_CopiarAlPortapapeles_TiemposPorMaquina
             // 
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Location = new System.Drawing.Point(877, 0);
-            this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Location = new System.Drawing.Point(670, 0);
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Name = "btn_CopiarAlPortapapeles_TiemposPorMaquina";
-            this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Size = new System.Drawing.Size(68, 28);
+            this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Size = new System.Drawing.Size(51, 23);
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.TabIndex = 26;
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.Text = "Copiar";
             this.btn_CopiarAlPortapapeles_TiemposPorMaquina.UseVisualStyleBackColor = true;
@@ -511,10 +484,9 @@ namespace HilosLibertad
             // btn_CopiarAlPortapapeles_TiemposPorSector
             // 
             this.btn_CopiarAlPortapapeles_TiemposPorSector.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CopiarAlPortapapeles_TiemposPorSector.Location = new System.Drawing.Point(393, 0);
-            this.btn_CopiarAlPortapapeles_TiemposPorSector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_CopiarAlPortapapeles_TiemposPorSector.Location = new System.Drawing.Point(295, 0);
             this.btn_CopiarAlPortapapeles_TiemposPorSector.Name = "btn_CopiarAlPortapapeles_TiemposPorSector";
-            this.btn_CopiarAlPortapapeles_TiemposPorSector.Size = new System.Drawing.Size(68, 28);
+            this.btn_CopiarAlPortapapeles_TiemposPorSector.Size = new System.Drawing.Size(51, 23);
             this.btn_CopiarAlPortapapeles_TiemposPorSector.TabIndex = 23;
             this.btn_CopiarAlPortapapeles_TiemposPorSector.Text = "Copiar";
             this.btn_CopiarAlPortapapeles_TiemposPorSector.UseVisualStyleBackColor = true;
@@ -523,10 +495,9 @@ namespace HilosLibertad
             // btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas
             // 
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Location = new System.Drawing.Point(867, 802);
-            this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Location = new System.Drawing.Point(650, 652);
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Name = "btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas";
-            this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Size = new System.Drawing.Size(68, 28);
+            this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Size = new System.Drawing.Size(51, 23);
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.TabIndex = 105;
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.Text = "Copiar";
             this.btn_CopiarAlPortapapeles_TiemposDeTodasLasMaquinas.UseVisualStyleBackColor = true;
@@ -537,8 +508,7 @@ namespace HilosLibertad
             // 
             this.pic_logo.Image = global::HilosLibertad.Properties.Resources.logoNUEVO_6_blanco_por_fuera_RECORTE;
             this.pic_logo.InitialImage = null;
-            this.pic_logo.Location = new System.Drawing.Point(1053, 652);
-            this.pic_logo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pic_logo.Location = new System.Drawing.Point(790, 530);
             this.pic_logo.Name = "pic_logo";
             this.pic_logo.Size = new System.Drawing.Size(577, 296);
             this.pic_logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -551,11 +521,11 @@ namespace HilosLibertad
             this.grp_desglosePorSector.Controls.Add(this.dgv_TiemposPorSector);
             this.grp_desglosePorSector.Controls.Add(this.btn_CopiarAlPortapapeles_TiemposPorSector);
             this.grp_desglosePorSector.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.grp_desglosePorSector.Location = new System.Drawing.Point(20, 564);
-            this.grp_desglosePorSector.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grp_desglosePorSector.Location = new System.Drawing.Point(15, 458);
+            this.grp_desglosePorSector.Margin = new System.Windows.Forms.Padding(2);
             this.grp_desglosePorSector.Name = "grp_desglosePorSector";
-            this.grp_desglosePorSector.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grp_desglosePorSector.Size = new System.Drawing.Size(460, 187);
+            this.grp_desglosePorSector.Padding = new System.Windows.Forms.Padding(2);
+            this.grp_desglosePorSector.Size = new System.Drawing.Size(345, 152);
             this.grp_desglosePorSector.TabIndex = 21;
             this.grp_desglosePorSector.TabStop = false;
             this.grp_desglosePorSector.Text = "Desglose por Sector";
@@ -565,11 +535,11 @@ namespace HilosLibertad
             this.grp_desglosePorMaquina.Controls.Add(this.dgv_TiemposPorMaquina);
             this.grp_desglosePorMaquina.Controls.Add(this.btn_CopiarAlPortapapeles_TiemposPorMaquina);
             this.grp_desglosePorMaquina.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grp_desglosePorMaquina.Location = new System.Drawing.Point(512, 50);
-            this.grp_desglosePorMaquina.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grp_desglosePorMaquina.Location = new System.Drawing.Point(384, 41);
+            this.grp_desglosePorMaquina.Margin = new System.Windows.Forms.Padding(2);
             this.grp_desglosePorMaquina.Name = "grp_desglosePorMaquina";
-            this.grp_desglosePorMaquina.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grp_desglosePorMaquina.Size = new System.Drawing.Size(944, 700);
+            this.grp_desglosePorMaquina.Padding = new System.Windows.Forms.Padding(2);
+            this.grp_desglosePorMaquina.Size = new System.Drawing.Size(720, 569);
             this.grp_desglosePorMaquina.TabIndex = 24;
             this.grp_desglosePorMaquina.TabStop = false;
             this.grp_desglosePorMaquina.Text = "Desglose por Máquina";
@@ -579,20 +549,20 @@ namespace HilosLibertad
             this.grp_FiltroSectores.Controls.Add(this.txt_NombreDelSector);
             this.grp_FiltroSectores.Controls.Add(this.lbl_NombreDelSector);
             this.grp_FiltroSectores.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.grp_FiltroSectores.Location = new System.Drawing.Point(20, 438);
-            this.grp_FiltroSectores.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.grp_FiltroSectores.Location = new System.Drawing.Point(15, 356);
+            this.grp_FiltroSectores.Margin = new System.Windows.Forms.Padding(2);
             this.grp_FiltroSectores.Name = "grp_FiltroSectores";
-            this.grp_FiltroSectores.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.grp_FiltroSectores.Size = new System.Drawing.Size(460, 86);
+            this.grp_FiltroSectores.Padding = new System.Windows.Forms.Padding(2);
+            this.grp_FiltroSectores.Size = new System.Drawing.Size(345, 70);
             this.grp_FiltroSectores.TabIndex = 18;
             this.grp_FiltroSectores.TabStop = false;
             this.grp_FiltroSectores.Text = "Filtro de Sectores";
             // 
             // frm_Home
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1476, 768);
+            this.ClientSize = new System.Drawing.Size(1120, 622);
             this.Controls.Add(this.grp_FiltroSectores);
             this.Controls.Add(this.grp_desglosePorMaquina);
             this.Controls.Add(this.grp_desglosePorSector);
@@ -608,7 +578,6 @@ namespace HilosLibertad
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frm_Home";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hilos Libertad";

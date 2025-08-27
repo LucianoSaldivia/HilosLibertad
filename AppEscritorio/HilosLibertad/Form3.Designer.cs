@@ -60,10 +60,9 @@ namespace HilosLibertad
             // 
             this.lbl_EdicionDeMaquinas.AutoSize = true;
             this.lbl_EdicionDeMaquinas.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_EdicionDeMaquinas.Location = new System.Drawing.Point(1323, 671);
-            this.lbl_EdicionDeMaquinas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_EdicionDeMaquinas.Location = new System.Drawing.Point(992, 545);
             this.lbl_EdicionDeMaquinas.Name = "lbl_EdicionDeMaquinas";
-            this.lbl_EdicionDeMaquinas.Size = new System.Drawing.Size(270, 37);
+            this.lbl_EdicionDeMaquinas.Size = new System.Drawing.Size(210, 30);
             this.lbl_EdicionDeMaquinas.TabIndex = 99;
             this.lbl_EdicionDeMaquinas.Text = "Edición de Máquinas";
             this.lbl_EdicionDeMaquinas.Visible = false;
@@ -73,10 +72,9 @@ namespace HilosLibertad
             this.cmb_Maquina.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_Maquina.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb_Maquina.FormattingEnabled = true;
-            this.cmb_Maquina.Location = new System.Drawing.Point(293, 27);
-            this.cmb_Maquina.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_Maquina.Location = new System.Drawing.Point(220, 22);
             this.cmb_Maquina.Name = "cmb_Maquina";
-            this.cmb_Maquina.Size = new System.Drawing.Size(280, 29);
+            this.cmb_Maquina.Size = new System.Drawing.Size(211, 25);
             this.cmb_Maquina.TabIndex = 2;
             this.cmb_Maquina.SelectedIndexChanged += new System.EventHandler(this.cmb_Maquina_SelectedIndexChanged);
             // 
@@ -84,10 +82,9 @@ namespace HilosLibertad
             // 
             this.lbl_ElegirMaquinaAEditar.AutoSize = true;
             this.lbl_ElegirMaquinaAEditar.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_ElegirMaquinaAEditar.Location = new System.Drawing.Point(137, 32);
-            this.lbl_ElegirMaquinaAEditar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_ElegirMaquinaAEditar.Location = new System.Drawing.Point(103, 26);
             this.lbl_ElegirMaquinaAEditar.Name = "lbl_ElegirMaquinaAEditar";
-            this.lbl_ElegirMaquinaAEditar.Size = new System.Drawing.Size(146, 23);
+            this.lbl_ElegirMaquinaAEditar.Size = new System.Drawing.Size(115, 17);
             this.lbl_ElegirMaquinaAEditar.TabIndex = 1;
             this.lbl_ElegirMaquinaAEditar.Text = "Máquina a editar:";
             // 
@@ -105,11 +102,9 @@ namespace HilosLibertad
             this.grp_EdicionDeLaMaquina.Controls.Add(this.lbl_Numero);
             this.grp_EdicionDeLaMaquina.Controls.Add(this.btn_GuardarCambios);
             this.grp_EdicionDeLaMaquina.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grp_EdicionDeLaMaquina.Location = new System.Drawing.Point(27, 78);
-            this.grp_EdicionDeLaMaquina.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grp_EdicionDeLaMaquina.Location = new System.Drawing.Point(20, 63);
             this.grp_EdicionDeLaMaquina.Name = "grp_EdicionDeLaMaquina";
-            this.grp_EdicionDeLaMaquina.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.grp_EdicionDeLaMaquina.Size = new System.Drawing.Size(548, 289);
+            this.grp_EdicionDeLaMaquina.Size = new System.Drawing.Size(411, 235);
             this.grp_EdicionDeLaMaquina.TabIndex = 3;
             this.grp_EdicionDeLaMaquina.TabStop = false;
             this.grp_EdicionDeLaMaquina.Text = "Edición de la Máquina";
@@ -119,70 +114,63 @@ namespace HilosLibertad
             this.cmb_Sector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_Sector.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb_Sector.FormattingEnabled = true;
-            this.cmb_Sector.Location = new System.Drawing.Point(267, 187);
-            this.cmb_Sector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_Sector.Location = new System.Drawing.Point(200, 152);
             this.cmb_Sector.Name = "cmb_Sector";
-            this.cmb_Sector.Size = new System.Drawing.Size(268, 29);
+            this.cmb_Sector.Size = new System.Drawing.Size(202, 25);
             this.cmb_Sector.TabIndex = 13;
             // 
             // lbl_Sector
             // 
             this.lbl_Sector.AutoSize = true;
             this.lbl_Sector.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Sector.Location = new System.Drawing.Point(195, 191);
-            this.lbl_Sector.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Sector.Location = new System.Drawing.Point(146, 155);
             this.lbl_Sector.Name = "lbl_Sector";
-            this.lbl_Sector.Size = new System.Drawing.Size(62, 23);
+            this.lbl_Sector.Size = new System.Drawing.Size(48, 17);
             this.lbl_Sector.TabIndex = 12;
             this.lbl_Sector.Text = "Sector:";
             // 
             // txt_MetrosPorMinuto
             // 
-            this.txt_MetrosPorMinuto.Location = new System.Drawing.Point(267, 111);
-            this.txt_MetrosPorMinuto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txt_MetrosPorMinuto.Location = new System.Drawing.Point(200, 90);
             this.txt_MetrosPorMinuto.MaxLength = 255;
             this.txt_MetrosPorMinuto.Name = "txt_MetrosPorMinuto";
-            this.txt_MetrosPorMinuto.Size = new System.Drawing.Size(268, 29);
+            this.txt_MetrosPorMinuto.Size = new System.Drawing.Size(202, 25);
             this.txt_MetrosPorMinuto.TabIndex = 9;
             // 
             // lbl_MetrosPorMinuto
             // 
             this.lbl_MetrosPorMinuto.AutoSize = true;
             this.lbl_MetrosPorMinuto.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_MetrosPorMinuto.Location = new System.Drawing.Point(11, 114);
-            this.lbl_MetrosPorMinuto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_MetrosPorMinuto.Location = new System.Drawing.Point(8, 93);
             this.lbl_MetrosPorMinuto.Name = "lbl_MetrosPorMinuto";
-            this.lbl_MetrosPorMinuto.Size = new System.Drawing.Size(241, 23);
+            this.lbl_MetrosPorMinuto.Size = new System.Drawing.Size(188, 17);
             this.lbl_MetrosPorMinuto.TabIndex = 8;
             this.lbl_MetrosPorMinuto.Text = "Metros fabricados por minuto:";
             // 
             // txt_Descripcion
             // 
-            this.txt_Descripcion.Location = new System.Drawing.Point(267, 149);
-            this.txt_Descripcion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txt_Descripcion.Location = new System.Drawing.Point(200, 121);
             this.txt_Descripcion.MaxLength = 255;
             this.txt_Descripcion.Name = "txt_Descripcion";
-            this.txt_Descripcion.Size = new System.Drawing.Size(268, 29);
+            this.txt_Descripcion.Size = new System.Drawing.Size(202, 25);
             this.txt_Descripcion.TabIndex = 11;
             // 
             // lbl_Descripcion
             // 
             this.lbl_Descripcion.AutoSize = true;
             this.lbl_Descripcion.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Descripcion.Location = new System.Drawing.Point(153, 153);
-            this.lbl_Descripcion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Descripcion.Location = new System.Drawing.Point(115, 124);
             this.lbl_Descripcion.Name = "lbl_Descripcion";
-            this.lbl_Descripcion.Size = new System.Drawing.Size(102, 23);
+            this.lbl_Descripcion.Size = new System.Drawing.Size(79, 17);
             this.lbl_Descripcion.TabIndex = 10;
             this.lbl_Descripcion.Text = "Descripción:";
             // 
             // txt_Nombre
             // 
-            this.txt_Nombre.Location = new System.Drawing.Point(267, 73);
-            this.txt_Nombre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txt_Nombre.Location = new System.Drawing.Point(200, 59);
             this.txt_Nombre.MaxLength = 255;
             this.txt_Nombre.Name = "txt_Nombre";
-            this.txt_Nombre.Size = new System.Drawing.Size(268, 29);
+            this.txt_Nombre.Size = new System.Drawing.Size(202, 25);
             this.txt_Nombre.TabIndex = 7;
             this.txt_Nombre.TextChanged += new System.EventHandler(this.txt_Nombre_TextChanged);
             // 
@@ -190,20 +178,18 @@ namespace HilosLibertad
             // 
             this.lbl_Nombre.AutoSize = true;
             this.lbl_Nombre.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Nombre.Location = new System.Drawing.Point(181, 76);
-            this.lbl_Nombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Nombre.Location = new System.Drawing.Point(136, 62);
             this.lbl_Nombre.Name = "lbl_Nombre";
-            this.lbl_Nombre.Size = new System.Drawing.Size(77, 23);
+            this.lbl_Nombre.Size = new System.Drawing.Size(60, 17);
             this.lbl_Nombre.TabIndex = 6;
             this.lbl_Nombre.Text = "Nombre:";
             // 
             // txt_Numero
             // 
-            this.txt_Numero.Location = new System.Drawing.Point(267, 34);
-            this.txt_Numero.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txt_Numero.Location = new System.Drawing.Point(200, 28);
             this.txt_Numero.MaxLength = 4;
             this.txt_Numero.Name = "txt_Numero";
-            this.txt_Numero.Size = new System.Drawing.Size(268, 29);
+            this.txt_Numero.Size = new System.Drawing.Size(202, 25);
             this.txt_Numero.TabIndex = 5;
             this.txt_Numero.TextChanged += new System.EventHandler(this.txt_Numero_TextChanged);
             this.txt_Numero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_Numero_KeyPress);
@@ -212,20 +198,18 @@ namespace HilosLibertad
             // 
             this.lbl_Numero.AutoSize = true;
             this.lbl_Numero.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_Numero.Location = new System.Drawing.Point(183, 38);
-            this.lbl_Numero.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Numero.Location = new System.Drawing.Point(137, 31);
             this.lbl_Numero.Name = "lbl_Numero";
-            this.lbl_Numero.Size = new System.Drawing.Size(77, 23);
+            this.lbl_Numero.Size = new System.Drawing.Size(59, 17);
             this.lbl_Numero.TabIndex = 4;
             this.lbl_Numero.Text = "Número:";
             // 
             // btn_GuardarCambios
             // 
             this.btn_GuardarCambios.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_GuardarCambios.Location = new System.Drawing.Point(267, 239);
-            this.btn_GuardarCambios.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_GuardarCambios.Location = new System.Drawing.Point(200, 194);
             this.btn_GuardarCambios.Name = "btn_GuardarCambios";
-            this.btn_GuardarCambios.Size = new System.Drawing.Size(273, 42);
+            this.btn_GuardarCambios.Size = new System.Drawing.Size(205, 34);
             this.btn_GuardarCambios.TabIndex = 14;
             this.btn_GuardarCambios.Text = "Guardar cambios";
             this.btn_GuardarCambios.UseVisualStyleBackColor = true;
@@ -235,12 +219,11 @@ namespace HilosLibertad
             // 
             this.txt_ID.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.txt_ID.ForeColor = System.Drawing.SystemColors.InactiveCaption;
-            this.txt_ID.Location = new System.Drawing.Point(1357, 636);
-            this.txt_ID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txt_ID.Location = new System.Drawing.Point(1018, 517);
             this.txt_ID.MaxLength = 255;
             this.txt_ID.Name = "txt_ID";
             this.txt_ID.ReadOnly = true;
-            this.txt_ID.Size = new System.Drawing.Size(268, 22);
+            this.txt_ID.Size = new System.Drawing.Size(202, 20);
             this.txt_ID.TabIndex = 98;
             this.txt_ID.Visible = false;
             // 
@@ -249,10 +232,9 @@ namespace HilosLibertad
             this.lbl_ID.AutoSize = true;
             this.lbl_ID.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_ID.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.lbl_ID.Location = new System.Drawing.Point(1400, 600);
-            this.lbl_ID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_ID.Location = new System.Drawing.Point(1050, 488);
             this.lbl_ID.Name = "lbl_ID";
-            this.lbl_ID.Size = new System.Drawing.Size(31, 23);
+            this.lbl_ID.Size = new System.Drawing.Size(23, 17);
             this.lbl_ID.TabIndex = 96;
             this.lbl_ID.Text = "ID:";
             this.lbl_ID.Visible = false;
@@ -261,10 +243,9 @@ namespace HilosLibertad
             // 
             this.lbl_MaquinasAhoraGuardadas.AutoSize = true;
             this.lbl_MaquinasAhoraGuardadas.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_MaquinasAhoraGuardadas.Location = new System.Drawing.Point(1325, 708);
-            this.lbl_MaquinasAhoraGuardadas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_MaquinasAhoraGuardadas.Location = new System.Drawing.Point(994, 575);
             this.lbl_MaquinasAhoraGuardadas.Name = "lbl_MaquinasAhoraGuardadas";
-            this.lbl_MaquinasAhoraGuardadas.Size = new System.Drawing.Size(222, 23);
+            this.lbl_MaquinasAhoraGuardadas.Size = new System.Drawing.Size(173, 17);
             this.lbl_MaquinasAhoraGuardadas.TabIndex = 97;
             this.lbl_MaquinasAhoraGuardadas.Text = "Máquinas ahora guardadas:";
             this.lbl_MaquinasAhoraGuardadas.Visible = false;
@@ -282,34 +263,31 @@ namespace HilosLibertad
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgv_Maquinas.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_Maquinas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_Maquinas.Location = new System.Drawing.Point(8, 30);
-            this.dgv_Maquinas.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgv_Maquinas.Location = new System.Drawing.Point(6, 24);
             this.dgv_Maquinas.Name = "dgv_Maquinas";
             this.dgv_Maquinas.ReadOnly = true;
             this.dgv_Maquinas.RowHeadersVisible = false;
             this.dgv_Maquinas.RowHeadersWidth = 51;
             this.dgv_Maquinas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgv_Maquinas.Size = new System.Drawing.Size(795, 698);
+            this.dgv_Maquinas.Size = new System.Drawing.Size(701, 567);
             this.dgv_Maquinas.TabIndex = 16;
             // 
             // grp_MaquinasActuales
             // 
             this.grp_MaquinasActuales.Controls.Add(this.dgv_Maquinas);
             this.grp_MaquinasActuales.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.grp_MaquinasActuales.Location = new System.Drawing.Point(596, 27);
-            this.grp_MaquinasActuales.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grp_MaquinasActuales.Location = new System.Drawing.Point(447, 22);
             this.grp_MaquinasActuales.Name = "grp_MaquinasActuales";
-            this.grp_MaquinasActuales.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.grp_MaquinasActuales.Size = new System.Drawing.Size(812, 735);
+            this.grp_MaquinasActuales.Size = new System.Drawing.Size(713, 597);
             this.grp_MaquinasActuales.TabIndex = 15;
             this.grp_MaquinasActuales.TabStop = false;
             this.grp_MaquinasActuales.Text = "Máquinas actuales";
             // 
             // frm_EdicionDeMaquinas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1431, 779);
+            this.ClientSize = new System.Drawing.Size(1176, 633);
             this.Controls.Add(this.grp_MaquinasActuales);
             this.Controls.Add(this.cmb_Maquina);
             this.Controls.Add(this.lbl_ElegirMaquinaAEditar);
@@ -320,7 +298,6 @@ namespace HilosLibertad
             this.Controls.Add(this.lbl_ID);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frm_EdicionDeMaquinas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hilos Libertad · Edición de Máquinas";

@@ -333,8 +333,8 @@ namespace HilosLibertad
             string DD = (DD_int >= 10) ? (DD_int.ToString()) : ("0" + DD_int.ToString());
 
             // Formo el string completo con el formato "YYYY-DD-MM"
-            //string YYYYMMDD = YYYY + "-" + DD + "-" + MM; //old
-            string YYYYMMDD = YYYY + "-" + MM + "-" + DD; //new //se pone el formato "YYYY-MM-DD" para que sea compatible con SQL Server
+            string YYYYMMDD = YYYY + "-" + DD + "-" + MM; //old
+            //string YYYYMMDD = YYYY + "-" + MM + "-" + DD; //new //se pone el formato "YYYY-MM-DD" para que sea compatible con SQL Server
 
             //return YYYYMMDD;      // "2021-23-09" ejemplo
             return YYYYMMDD;      // "2021-09-23" ejemplo

@@ -105,6 +105,6 @@ namespace HilosLibertad
             txt_Nombre.ForeColor = c;
             lab_Nombre.ForeColor = c;
         }
-
+                
     }
 }
