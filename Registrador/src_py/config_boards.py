@@ -14,7 +14,6 @@ step = 1 # auxiliar para formar las listas a partir de range
 ###################################################
 ###################################################
 BOARD0_MAQ = list( range( 0, 16, step) ) if BOARD0 else list()
-BOARD0_MAQ.remove( 2) # Bornera sin Máquina conectada
 BOARD0_MAQ.remove(10) # Bornera sin Máquina conectada
 BOARD1_MAQ = list( range(16, 32, step) ) if BOARD1 else list()
 BOARD1_MAQ.remove(22) # Bornera sin Máquina conectada
