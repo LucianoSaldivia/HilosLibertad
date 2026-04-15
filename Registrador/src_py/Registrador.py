@@ -247,6 +247,10 @@ def writeDatabaseFromReports(report_list: list, db_con: any):
     Sólo se toman en cuenta las máquinas conectadas, según la lista CONNECTED_MAQS del archivo boards.py.
     """
     
+    # Elimina reportes repetidos
+    lista_reportes = []
+    [lista_reportes.append(item) for item in report_list if item not in lista_reportes]
+        
     # Recorro todos los reportes
     for reporte in report_list:
         
@@ -261,6 +265,7 @@ def writeDatabaseFromReports(report_list: list, db_con: any):
 def showReports(report_list: list):
     print("Reportes a escribir en la base de datos en la próxima escritura:")
     # Muestro los reportes pasados
+    # print(report_list[0]) # COMENTAR ESTO
     for reporte in report_list:
         print(f"idMAQ: {reporte[0]:02d}, Evento: {repr(reporte[1])}, \t Timestamp: {reporte[2]}")
 
@@ -374,7 +379,7 @@ def tryToWriteToDataBase(db_conn, report: list, debug_mode: bool=False):
             timestamp = error_timestamp, 
             type = "DB_WRITE", 
             last_ok_timestamp = error_timestamp - timedelta(seconds=MAX_FRAMES_TO_WRITE*config_embedded.TIME_BETWEEN_FRAMES),
-            opt_msg = exception.args[0],
+            opt_msg = exception.args[0] + f"\n. {report}",
             debug = debug_mode
         )
         sys.exit(1)

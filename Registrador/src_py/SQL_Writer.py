@@ -55,6 +55,7 @@ def sessionStarted(conn, id_maq: int, timestamp: datetime):
 
         formatted_timestamp = timestamp.strftime("%Y-%m-%dT%H:%M:%S")
         # Ejecuto el procedimiento
+        print( f"EXEC {config_SQL_Database.PROC_SESSION_STARTED} {id_maq}, '{formatted_timestamp}'" ) # Comentar esto 
         cursor.execute( f"EXEC {config_SQL_Database.PROC_SESSION_STARTED} {id_maq}, '{formatted_timestamp}'" )
         conn.commit()
     except:
